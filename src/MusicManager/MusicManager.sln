@@ -1,0 +1,101 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Presentation", "MusicManager.Presentation\MusicManager.Presentation.csproj", "{16D7F42D-4DA1-4AA9-9361-036BCB04EBC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Applications", "MusicManager.Applications\MusicManager.Applications.csproj", "{E6722153-C183-4010-82AB-315DB6182D89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Domain", "MusicManager.Domain\MusicManager.Domain.csproj", "{E4F89499-833A-45BC-B469-71BB067525D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Domain.Test", "MusicManager.Domain.Test\MusicManager.Domain.Test.csproj", "{5F422BC1-0685-42B9-AD4A-EF8FD0B38511}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Applications.Test", "MusicManager.Applications.Test\MusicManager.Applications.Test.csproj", "{4358683C-18EF-4286-AE1D-38A6320313F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Presentation.Test", "MusicManager.Presentation.Test\MusicManager.Presentation.Test.csproj", "{4091873C-9332-4A5B-A72A-96CF5D81EB9D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7158263D-65E2-491A-92B9-91A6F290A6E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EDB29476-09E3-4A9D-BEA2-F79B063DCA21}"
+	ProjectSection(SolutionItems) = preProject
+		CodeAnalysisDictionary.xml = CodeAnalysisDictionary.xml
+		CodeCoverage.runsettings = CodeCoverage.runsettings
+		MusicManager.ruleset = MusicManager.ruleset
+		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{7B8C0659-1472-436B-A120-6ABA217A5782}"
+	ProjectSection(SolutionItems) = preProject
+		Documentation\Changelog.txt = Documentation\Changelog.txt
+		Documentation\Checklist.txt = Documentation\Checklist.txt
+		Documentation\License.txt = Documentation\License.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs09
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = MusicManager.Applications.Test\\MusicManager.Applications.Test.csproj
+		SccProjectTopLevelParentUniqueName1 = MusicManager.sln
+		SccProjectName1 = MusicManager.Applications.Test
+		SccLocalPath1 = MusicManager.Applications.Test
+		SccProjectUniqueName2 = MusicManager.Applications\\MusicManager.Applications.csproj
+		SccProjectName2 = MusicManager.Applications
+		SccLocalPath2 = MusicManager.Applications
+		SccProjectUniqueName3 = MusicManager.Domain.Test\\MusicManager.Domain.Test.csproj
+		SccProjectTopLevelParentUniqueName3 = MusicManager.sln
+		SccProjectName3 = MusicManager.Domain.Test
+		SccLocalPath3 = MusicManager.Domain.Test
+		SccProjectUniqueName4 = MusicManager.Domain\\MusicManager.Domain.csproj
+		SccProjectName4 = MusicManager.Domain
+		SccLocalPath4 = MusicManager.Domain
+		SccProjectUniqueName5 = MusicManager.Presentation.Test\\MusicManager.Presentation.Test.csproj
+		SccProjectTopLevelParentUniqueName5 = MusicManager.sln
+		SccProjectName5 = MusicManager.Presentation.Test
+		SccLocalPath5 = MusicManager.Presentation.Test
+		SccProjectUniqueName6 = MusicManager.Presentation\\MusicManager.Presentation.csproj
+		SccProjectName6 = MusicManager.Presentation
+		SccLocalPath6 = MusicManager.Presentation
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16D7F42D-4DA1-4AA9-9361-036BCB04EBC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16D7F42D-4DA1-4AA9-9361-036BCB04EBC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16D7F42D-4DA1-4AA9-9361-036BCB04EBC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16D7F42D-4DA1-4AA9-9361-036BCB04EBC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6722153-C183-4010-82AB-315DB6182D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6722153-C183-4010-82AB-315DB6182D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6722153-C183-4010-82AB-315DB6182D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6722153-C183-4010-82AB-315DB6182D89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4F89499-833A-45BC-B469-71BB067525D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4F89499-833A-45BC-B469-71BB067525D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4F89499-833A-45BC-B469-71BB067525D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4F89499-833A-45BC-B469-71BB067525D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F422BC1-0685-42B9-AD4A-EF8FD0B38511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F422BC1-0685-42B9-AD4A-EF8FD0B38511}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F422BC1-0685-42B9-AD4A-EF8FD0B38511}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F422BC1-0685-42B9-AD4A-EF8FD0B38511}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4358683C-18EF-4286-AE1D-38A6320313F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4358683C-18EF-4286-AE1D-38A6320313F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4358683C-18EF-4286-AE1D-38A6320313F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4358683C-18EF-4286-AE1D-38A6320313F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4091873C-9332-4A5B-A72A-96CF5D81EB9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4091873C-9332-4A5B-A72A-96CF5D81EB9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4091873C-9332-4A5B-A72A-96CF5D81EB9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4091873C-9332-4A5B-A72A-96CF5D81EB9D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5F422BC1-0685-42B9-AD4A-EF8FD0B38511} = {7158263D-65E2-491A-92B9-91A6F290A6E1}
+		{4358683C-18EF-4286-AE1D-38A6320313F6} = {7158263D-65E2-491A-92B9-91A6F290A6E1}
+		{4091873C-9332-4A5B-A72A-96CF5D81EB9D} = {7158263D-65E2-491A-92B9-91A6F290A6E1}
+	EndGlobalSection
+EndGlobal

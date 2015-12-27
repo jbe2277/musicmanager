@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4358683C-18EF-4286-AE1D-38A6320313F6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Test.MusicManager.Applications</RootNamespace>
+    <AssemblyName>Test.MusicManager.Applications</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Output\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Output\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Windows" />
+    <Reference Include="System.Runtime.WindowsRuntime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5.1\System.Runtime.WindowsRuntime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WpfApplicationFramework, Version=3.1.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
+      <HintPath>..\packages\waf.3.1.0\lib\net45\WpfApplicationFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WpfApplicationFramework.UnitTesting, Version=3.1.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
+      <HintPath>..\packages\waf.testing.3.1.0\lib\net45\WpfApplicationFramework.UnitTesting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Controllers\ModuleControllerTest.cs" />
+    <Compile Include="Controllers\MusicPropertiesControllerTest.cs" />
+    <Compile Include="Controllers\PlayerControllerTest.cs" />
+    <Compile Include="Controllers\PlaylistControllerTest.cs" />
+    <Compile Include="Controllers\PlaylistControllerIntegrationTest.cs" />
+    <Compile Include="Data\FileSystemWatcherServiceTest.cs" />
+    <Compile Include="Data\SequenceEqualityComparerTest.cs" />
+    <Compile Include="Data\SupportedFileTypesTest.cs" />
+    <Compile Include="Services\ManagerStatusServiceTest.cs" />
+    <Compile Include="Services\MusicTitleHelperTest.cs" />
+    <Compile Include="Services\SettingsProviderTest.cs" />
+    <Compile Include="Services\ShellServiceTest.cs" />
+    <Compile Include="UnitTesting\ApplicationsTest.cs" />
+    <Compile Include="Controllers\ManagerControllerTest.cs" />
+    <Compile Include="Controllers\TranscodingControllerTest.cs" />
+    <Compile Include="DataModels\FolderItemTest.cs" />
+    <Compile Include="Data\MockFileSystemWatcherService.cs" />
+    <Compile Include="Data\MockMusicFileContext.cs" />
+    <Compile Include="Data\MockTranscoder.cs" />
+    <Compile Include="Data\StringListConverterTest.cs" />
+    <Compile Include="Data\TranscoderTest.cs" />
+    <Compile Include="DisposableTest.cs" />
+    <Compile Include="UnitTesting\IntegrationTest.cs" />
+    <Compile Include="Services\MockEnvironmentService.cs" />
+    <Compile Include="DataModels\MusicFileDataModelTest.cs" />
+    <Compile Include="DataModels\SearchFilterDataModelTest.cs" />
+    <Compile Include="Data\FolderHelperTest.cs" />
+    <Compile Include="Data\MusicFileContextTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MockClipboardService.cs" />
+    <Compile Include="UnitTesting\UnitTestLevel.cs" />
+    <Compile Include="ViewModels\InfoViewModelTest.cs" />
+    <Compile Include="ViewModels\ManagerViewModelTest.cs" />
+    <Compile Include="ViewModels\MusicPropertiesViewModelTest.cs" />
+    <Compile Include="ViewModels\PlaylistViewModelTest.cs" />
+    <Compile Include="ViewModels\ShellViewModelTest.cs" />
+    <Compile Include="Views\MockInfoView.cs" />
+    <Compile Include="Views\MockManagerView.cs" />
+    <Compile Include="Views\MockMusicPropertiesView.cs" />
+    <Compile Include="Views\MockPlayerView.cs" />
+    <Compile Include="Views\MockPlaylistView.cs" />
+    <Compile Include="Views\MockShellView.cs" />
+    <Compile Include="Views\MockTranscodingListView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CodeAnalysisDictionary.xml">
+      <Link>Properties\CodeAnalysisDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\TestFlac.flac">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MusicManager.Applications\MusicManager.Applications.csproj">
+      <Project>{e6722153-c183-4010-82ab-315db6182d89}</Project>
+      <Name>MusicManager.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MusicManager.Domain.Test\MusicManager.Domain.Test.csproj">
+      <Project>{5f422bc1-0685-42b9-ad4a-ef8fd0b38511}</Project>
+      <Name>MusicManager.Domain.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MusicManager.Domain\MusicManager.Domain.csproj">
+      <Project>{e4f89499-833a-45bc-b469-71bb067525d1}</Project>
+      <Name>MusicManager.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Files\Corrupt.wma">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\TestAAC.m4a">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\TestMP3.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\TestMP4.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\TestWAV.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\TestWMA.wma">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
