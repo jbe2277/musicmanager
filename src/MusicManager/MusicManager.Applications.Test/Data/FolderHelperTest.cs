@@ -21,9 +21,6 @@ namespace Test.MusicManager.Applications.Data
             Assert.AreEqual(@"C:\Users", FolderHelper.GetFolderFromLocalizedPathAsync(@"C:\Benutzer").GetResult().Path);
             Assert.AreEqual(@"C:\Users\Public", FolderHelper.GetFolderFromLocalizedPathAsync(@"C:/Benutzer/Öffentlich/").GetResult().Path);
             Assert.AreEqual(@"C:\Users\Public", FolderHelper.GetFolderFromLocalizedPathAsync(@"C:\Benutzer\Öffentlich").GetResult().Path);
-
-            Assert.AreEqual(@"\\localhost\Users\Public\Music", FolderHelper.GetFolderFromLocalizedPathAsync(@"\\localhost\Users\Public\Music").GetResult().Path);
-            Assert.AreEqual(@"\\localhost\Users\Public\Music", FolderHelper.GetFolderFromLocalizedPathAsync(@"\\localhost\Users\Öffentlich\Öffentliche Musik").GetResult().Path);
         }
 
         [TestMethod, TestCategory("GermanWindows")] // This Test Method runs only on a german Windows
@@ -35,8 +32,6 @@ namespace Test.MusicManager.Applications.Data
             Assert.AreEqual(@"C:\Benutzer", FolderHelper.GetDisplayPath(@"C:\Users\").GetResult());
             
             Assert.AreEqual(@"C:\Benutzer\Öffentlich", FolderHelper.GetDisplayPath(@"C:/Users/Public").GetResult());
-
-            Assert.AreEqual(@"\\localhost\Users\Öffentlich\Öffentliche Musik", FolderHelper.GetDisplayPath(@"\\localhost\Users\Public\Music").GetResult());
         }
 
         [TestMethod]
