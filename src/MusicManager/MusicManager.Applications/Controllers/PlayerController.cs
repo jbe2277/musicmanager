@@ -203,11 +203,11 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void PlaylistManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "CurrentItem")
+            if (e.PropertyName == nameof(PlaylistManager.CurrentItem))
             {
                 playerService.PlayingMusicFile = PlaylistManager.CurrentItem != null ? PlaylistManager.CurrentItem.MusicFile : null;
             }
-            else if (new[] { "CanPreviousItem", "CanNextItem" }.Contains(e.PropertyName))
+            else if (new[] { nameof(PlaylistManager.CanPreviousItem), nameof(PlaylistManager.CanNextItem) }.Contains(e.PropertyName))
             {
                 UpdateCommands();
             }

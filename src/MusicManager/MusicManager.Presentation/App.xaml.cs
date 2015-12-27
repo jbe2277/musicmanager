@@ -124,7 +124,7 @@ namespace Waf.MusicManager.Presentation
             if (!isTerminating)
             {
                 MessageBox.Show(string.Format(CultureInfo.CurrentCulture,
-                        Waf.MusicManager.Presentation.Properties.Resources.UnknownError, e.ToString()),
+                        Presentation.Properties.Resources.UnknownError, e.ToString()),
                     ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

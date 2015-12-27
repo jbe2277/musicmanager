@@ -5,9 +5,6 @@ namespace Waf.MusicManager.Domain.MusicFiles
 {
     public class MusicMetadata : Entity
     {
-        private readonly bool isSupported;
-        private readonly TimeSpan duration;
-        private readonly long bitrate;
         private IReadOnlyList<string> artists = new string[0];
         private string title = "";
         private uint rating;
@@ -24,9 +21,9 @@ namespace Waf.MusicManager.Domain.MusicFiles
         
         private MusicMetadata(TimeSpan duration, long bitrate, bool isSupported)
         {
-            this.isSupported = isSupported;
-            this.duration = duration;
-            this.bitrate = bitrate;
+            IsSupported = isSupported;
+            Duration = duration;
+            Bitrate = bitrate;
         }
 
         public MusicMetadata(TimeSpan duration, long bitrate) : this(duration, bitrate, true)
@@ -39,7 +36,7 @@ namespace Waf.MusicManager.Domain.MusicFiles
         }
         
 
-        public bool IsSupported { get { return isSupported; } }
+        public bool IsSupported { get; }
 
         public IReadOnlyList<string> Artists
         {
@@ -53,7 +50,7 @@ namespace Waf.MusicManager.Domain.MusicFiles
             set { SetPropertyAndTrackChanges(ref title, value); }
         }
 
-        public TimeSpan Duration { get { return duration; } }
+        public TimeSpan Duration { get; }
 
         public uint Rating
         {
@@ -85,7 +82,7 @@ namespace Waf.MusicManager.Domain.MusicFiles
             set { SetPropertyAndTrackChanges(ref genre, value); }
         }
 
-        public long Bitrate { get { return bitrate; } }
+        public long Bitrate { get; }
 
         public string AlbumArtist
         {

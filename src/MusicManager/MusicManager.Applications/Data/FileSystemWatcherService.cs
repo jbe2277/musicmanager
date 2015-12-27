@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading.Tasks;
 using Waf.MusicManager.Domain;
@@ -52,17 +51,17 @@ namespace Waf.MusicManager.Applications.Data
 
         protected virtual void OnCreated(FileSystemEventArgs e)
         {
-            if (Created != null) { Created(this, e); }
+            Created?.Invoke(this, e);
         }
 
         protected virtual void OnRenamed(RenamedEventArgs e)
         {
-            if (Renamed != null) { Renamed(this, e); }
+            Renamed?.Invoke(this, e);
         }
 
         protected virtual void OnDeleted(FileSystemEventArgs e)
         {
-            if (Deleted != null) { Deleted(this, e); }
+            Deleted?.Invoke(this, e);
         }
 
         private void WatcherCreated(object sender, FileSystemEventArgs e)

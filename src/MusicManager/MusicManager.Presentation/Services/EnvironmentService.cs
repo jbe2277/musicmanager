@@ -14,19 +14,17 @@ namespace Waf.MusicManager.Presentation.Services
         private readonly Lazy<IReadOnlyList<string>> musicFilesToLoad;
         private readonly Lazy<string> profilePath;
         private readonly Lazy<string> appSettingsPath;
-        private readonly string musicPath;
-        private readonly string publicMusicPath;
 
 
         public EnvironmentService()
         {
-            this.musicFilesToLoad = new Lazy<IReadOnlyList<string>>(() => Environment.GetCommandLineArgs().Skip(1).ToArray());
-            this.profilePath = new Lazy<string>(() =>
+            musicFilesToLoad = new Lazy<IReadOnlyList<string>>(() => Environment.GetCommandLineArgs().Skip(1).ToArray());
+            profilePath = new Lazy<string>(() =>
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationInfo.Company, ApplicationInfo.ProductName, "ProfileOptimization"));
-            this.appSettingsPath = new Lazy<string>(() => 
+            appSettingsPath = new Lazy<string>(() => 
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationInfo.Company, ApplicationInfo.ProductName, "Settings"));
-            this.musicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-            this.publicMusicPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
+            MusicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+            PublicMusicPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
         }
 
 
@@ -36,8 +34,8 @@ namespace Waf.MusicManager.Presentation.Services
 
         public string AppSettingsPath { get { return appSettingsPath.Value; } }
 
-        public string MusicPath { get { return musicPath; } }
+        public string MusicPath { get; }
 
-        public string PublicMusicPath { get { return publicMusicPath; } }
+        public string PublicMusicPath { get; }
     }
 }

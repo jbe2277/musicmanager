@@ -36,7 +36,7 @@ namespace Waf.MusicManager.Presentation.Controls
             Selector selector = element as Selector;
             if (selector == null)
             {
-                throw new ArgumentException("The attached property SelectedItems can only be used with a Selector.");
+                throw new ArgumentException("The attached property SelectedItems can only be used with a Selector.", nameof(element));
             }
             TryCleanUpOldItem(selector);
             try

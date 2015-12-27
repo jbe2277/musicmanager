@@ -6,8 +6,6 @@ namespace Waf.MusicManager.Domain.Transcoding
 {
     public class TranscodeItem : Model
     {
-        private readonly MusicFile source;
-        private readonly string destinationFileName;
         private TranscodeStatus transcodeStatus;
         private double progress;
         private Exception error;
@@ -15,15 +13,15 @@ namespace Waf.MusicManager.Domain.Transcoding
 
         public TranscodeItem(MusicFile source, string destinationFileName)
         {
-            this.source = source;
-            this.destinationFileName = destinationFileName;
+            Source = source;
+            DestinationFileName = destinationFileName;
             UpdateStatus();
         }
 
 
-        public MusicFile Source { get { return source; } }
+        public MusicFile Source { get; }
 
-        public string DestinationFileName { get { return destinationFileName; } }
+        public string DestinationFileName { get; }
 
         public TranscodeStatus TranscodeStatus
         {
@@ -60,19 +58,19 @@ namespace Waf.MusicManager.Domain.Transcoding
         {
             if (Error != null) 
             { 
-                TranscodeStatus = Transcoding.TranscodeStatus.Error; 
+                TranscodeStatus = TranscodeStatus.Error; 
             }
             else if (Progress == 0) 
             { 
-                TranscodeStatus = Transcoding.TranscodeStatus.Pending; 
+                TranscodeStatus = TranscodeStatus.Pending; 
             }
             else if (Progress < 1) 
             { 
-                TranscodeStatus = Transcoding.TranscodeStatus.InProgress; 
+                TranscodeStatus = TranscodeStatus.InProgress; 
             }
             else 
             { 
-                TranscodeStatus = Transcoding.TranscodeStatus.Completed; 
+                TranscodeStatus = TranscodeStatus.Completed; 
             }
         }
     }

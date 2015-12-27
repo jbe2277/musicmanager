@@ -11,7 +11,7 @@ namespace Waf.MusicManager.Presentation.Controls
     public class PathLabel : Label
     {
         public static readonly DependencyProperty PathProperty =
-            DependencyProperty.Register("Path", typeof(string), typeof(PathLabel), new FrameworkPropertyMetadata("", PathChangedHandler));
+            DependencyProperty.Register(nameof(Path), typeof(string), typeof(PathLabel), new FrameworkPropertyMetadata("", PathChangedHandler));
 
 
         private readonly TextBlock textBlock;
@@ -19,8 +19,8 @@ namespace Waf.MusicManager.Presentation.Controls
 
         public PathLabel()
         {
-            this.textBlock = new TextBlock();
-            this.SizeChanged += SizeChangedHandler;
+            textBlock = new TextBlock();
+            SizeChanged += SizeChangedHandler;
         }
 
 

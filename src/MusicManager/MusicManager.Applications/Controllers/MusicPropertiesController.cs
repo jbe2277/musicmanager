@@ -93,7 +93,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private async void PlaylistManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "CurrentItem")
+            if (e.PropertyName == nameof(PlaylistManager.CurrentItem))
             {
                 await SaveMusicFilesToSaveAfterPlayingAsync();
             }

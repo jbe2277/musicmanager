@@ -99,7 +99,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         private void MusicFilePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "IsMetadataLoaded")
+            if (e.PropertyName == nameof(MusicFile.IsMetadataLoaded))
             {
                 MetadataLoaded();
             }
@@ -107,7 +107,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         private void MetadataPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Title" || e.PropertyName == "Artists")
+            if (e.PropertyName == nameof(MusicMetadata.Title) || e.PropertyName == nameof(MusicMetadata.Artists))
             {
                 autoFillFromFileNameCommand.RaiseCanExecuteChanged();
             }

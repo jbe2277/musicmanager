@@ -7,12 +7,9 @@ namespace Waf.MusicManager.Applications.DataModels
 {
     public class MusicFileDataModel : Model
     {
-        private readonly MusicFile musicFile;
-
-
         public MusicFileDataModel(MusicFile musicFile)
         {
-            this.musicFile = musicFile;
+            MusicFile = musicFile;
             if (musicFile.IsMetadataLoaded)
             {
                 MetadataLoaded();
@@ -24,7 +21,7 @@ namespace Waf.MusicManager.Applications.DataModels
         }
 
 
-        public MusicFile MusicFile { get { return musicFile; } }
+        public MusicFile MusicFile { get; }
 
         public string ArtistsString 
         { 
@@ -38,24 +35,24 @@ namespace Waf.MusicManager.Applications.DataModels
 
         private void MetadataLoaded()
         {
-            PropertyChangedEventManager.AddHandler(musicFile.Metadata, MetadataPropertyChanged, "");
+            PropertyChangedEventManager.AddHandler(MusicFile.Metadata, MetadataPropertyChanged, "");
         }
 
         private void MusicFilePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "IsMetadataLoaded")
+            if (e.PropertyName == nameof(MusicFile.IsMetadataLoaded))
             {
-                PropertyChangedEventManager.RemoveHandler(musicFile, MusicFilePropertyChanged, "");
+                PropertyChangedEventManager.RemoveHandler(MusicFile, MusicFilePropertyChanged, "");
                 MetadataLoaded();
-                RaisePropertyChanged("ArtistsString");
+                RaisePropertyChanged(nameof(ArtistsString));
             }
         }
 
         private void MetadataPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Artists")
+            if (e.PropertyName == nameof(MusicMetadata.Artists))
             {
-                RaisePropertyChanged("ArtistsString");
+                RaisePropertyChanged(nameof(ArtistsString));
             }
         }
     }

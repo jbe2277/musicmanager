@@ -223,7 +223,7 @@ namespace Waf.MusicManager.Domain.Playlists
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
-            if (new[] { "CurrentItem", "Repeat", "Shuffle" }.Contains(e.PropertyName))
+            if (new[] { nameof(CurrentItem), nameof(Repeat), nameof(Shuffle) }.Contains(e.PropertyName))
             {
                 UpdateCanPreviousAndCanNextItem();
             }
@@ -294,7 +294,7 @@ namespace Waf.MusicManager.Domain.Playlists
 
         private void MusicFilePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "IsMetadataLoaded")
+            if (e.PropertyName == nameof(MusicFile.IsMetadataLoaded))
             {
                 ((MusicFile)sender).PropertyChanged -= MusicFilePropertyChanged;
                 UpdateTotalDuration();

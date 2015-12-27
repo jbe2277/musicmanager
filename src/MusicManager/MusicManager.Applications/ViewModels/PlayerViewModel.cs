@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Waf.Applications;
 using System.Windows.Input;
@@ -12,8 +11,6 @@ namespace Waf.MusicManager.Applications.ViewModels
     [Export]
     public class PlayerViewModel : ViewModel<IPlayerView>
     {
-        private readonly IShellService shellService;
-        private readonly IPlayerService playerService;
         private PlaylistManager playlistManager;
         private ICommand previousTrackCommand;
         private ICommand nextTrackCommand;
@@ -24,14 +21,14 @@ namespace Waf.MusicManager.Applications.ViewModels
         [ImportingConstructor]
         public PlayerViewModel(IPlayerView view, IShellService shellService, IPlayerService playerService) : base(view)
         {
-            this.shellService = shellService;
-            this.playerService = playerService;
+            ShellService = shellService;
+            PlayerService = playerService;
         }
 
 
-        public IShellService ShellService { get { return shellService; } }
+        public IShellService ShellService { get; }
 
-        public IPlayerService PlayerService { get { return playerService; } }
+        public IPlayerService PlayerService { get; }
 
         public PlaylistManager PlaylistManager
         {

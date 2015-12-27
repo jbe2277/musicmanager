@@ -25,9 +25,9 @@ namespace Waf.MusicManager.Presentation.Views
         public PlaylistView()
         {
             InitializeComponent();
-            this.viewModel = new Lazy<PlaylistViewModel>(() => ViewHelper.GetViewModel<PlaylistViewModel>(this));
-            this.listBoxDragDropHelper = new ListBoxDragDropHelper<PlaylistItem>(playlistListBox, MoveItems, TryGetInsertItems, InsertItems);
-            this.Loaded += FirstTimeLoadedHandler;
+            viewModel = new Lazy<PlaylistViewModel>(() => ViewHelper.GetViewModel<PlaylistViewModel>(this));
+            listBoxDragDropHelper = new ListBoxDragDropHelper<PlaylistItem>(playlistListBox, MoveItems, TryGetInsertItems, InsertItems);
+            Loaded += FirstTimeLoadedHandler;
         }
 
         
@@ -42,7 +42,7 @@ namespace Waf.MusicManager.Presentation.Views
         public void FocusSelectedItem()
         {
             var listBoxItem = (ListBoxItem)playlistListBox.ItemContainerGenerator.ContainerFromItem(playlistListBox.SelectedItem);
-            if (listBoxItem != null) { listBoxItem.Focus(); }
+            listBoxItem?.Focus();
         }
 
         public void ScrollIntoView(PlaylistItem item)
@@ -58,7 +58,7 @@ namespace Waf.MusicManager.Presentation.Views
 
         private void PlaylistManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "CurrentItem")
+            if (e.PropertyName == nameof(PlaylistManager.CurrentItem))
             {
                 if (ViewModel.PlaylistManager.CurrentItem != null)
                 {

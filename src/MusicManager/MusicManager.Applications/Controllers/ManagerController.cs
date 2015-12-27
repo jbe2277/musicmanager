@@ -217,12 +217,12 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void FolderBrowserPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "UserPath")
+            if (e.PropertyName == nameof(FolderBrowserDataModel.UserPath))
             {
                 // This might throw an exception => shown in the Path TextBox as validation error.
                 ManagerViewModel.FolderBrowser.CurrentPath = GetFolderFromPath(ManagerViewModel.FolderBrowser.UserPath).Path;
             }
-            if (e.PropertyName == "CurrentPath")
+            if (e.PropertyName == nameof(FolderBrowserDataModel.CurrentPath))
             {
                 navigateDirectoryUpCommand.RaiseCanExecuteChanged();
                 ManagerViewModel.FolderBrowser.UserPath = FolderHelper.GetDisplayPath(ManagerViewModel.FolderBrowser.CurrentPath).GetResult();
@@ -234,7 +234,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void SearchFilterPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "UserSearchFilter" || e.PropertyName == "ApplicationSearchFilter")
+            if (e.PropertyName == nameof(SearchFilterDataModel.UserSearchFilter) || e.PropertyName == nameof(SearchFilterDataModel.ApplicationSearchFilter))
             {
                 var userSearchFilter = ManagerViewModel.SearchFilter.UserSearchFilter;
                 var applicationSearchFilter = ManagerViewModel.SearchFilter.ApplicationSearchFilter;

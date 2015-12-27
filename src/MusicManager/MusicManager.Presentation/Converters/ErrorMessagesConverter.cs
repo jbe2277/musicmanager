@@ -12,7 +12,7 @@ namespace Waf.MusicManager.Presentation.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            IEnumerable<Tuple<Exception, string>> errorMessages = values == null ? null : values.FirstOrDefault() as IEnumerable<Tuple<Exception, string>>;
+            IEnumerable<Tuple<Exception, string>> errorMessages = values?.FirstOrDefault() as IEnumerable<Tuple<Exception, string>>;
             if (errorMessages != null)
             {
                 string message = errorMessages.Any() ? errorMessages.Last().Item2 : "";

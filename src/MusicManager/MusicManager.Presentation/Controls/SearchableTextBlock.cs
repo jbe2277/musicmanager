@@ -11,16 +11,16 @@ namespace Waf.MusicManager.Presentation.Controls
     public class SearchableTextBlock : TextBlock
     {
         public static new readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(string.Empty, ControlPropertyChangedCallback));
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(string.Empty, ControlPropertyChangedCallback));
 
         public static readonly DependencyProperty SearchTextProperty =
-            DependencyProperty.Register("SearchText", typeof(string), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(string.Empty, ControlPropertyChangedCallback));
+            DependencyProperty.Register(nameof(SearchText), typeof(string), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(string.Empty, ControlPropertyChangedCallback));
 
         public static readonly DependencyProperty HighlightBackgroundProperty =
-            DependencyProperty.Register("HighlightBackground", typeof(Brush), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(Brushes.Orange, ControlPropertyChangedCallback));
+            DependencyProperty.Register(nameof(HighlightBackground), typeof(Brush), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(Brushes.Orange, ControlPropertyChangedCallback));
 
         public static readonly DependencyProperty IsMatchCaseProperty =
-            DependencyProperty.Register("IsMatchCase", typeof(bool), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(false, ControlPropertyChangedCallback));
+            DependencyProperty.Register(nameof(IsMatchCase), typeof(bool), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(false, ControlPropertyChangedCallback));
 
 
         private IReadOnlyList<string> textParts = new string[0];

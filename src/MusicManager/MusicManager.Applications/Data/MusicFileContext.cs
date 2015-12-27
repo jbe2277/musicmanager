@@ -132,18 +132,18 @@ namespace Waf.MusicManager.Applications.Data
             var changedProperties = metadata.GetChanges();
             foreach (var sharedMetadata in musicFile.SharedMusicFiles.Select(x => x.Metadata))
             {
-                if (changedProperties.Contains("Artists")) { sharedMetadata.Artists = metadata.Artists; }
-                if (changedProperties.Contains("Title")) { sharedMetadata.Title = metadata.Title; }
-                if (changedProperties.Contains("Rating")) { sharedMetadata.Rating = metadata.Rating; }
-                if (changedProperties.Contains("Album")) { sharedMetadata.Album = metadata.Album; }
-                if (changedProperties.Contains("TrackNumber")) { sharedMetadata.TrackNumber = metadata.TrackNumber; }
-                if (changedProperties.Contains("Year")) { sharedMetadata.Year = metadata.Year; }
-                if (changedProperties.Contains("Genre")) { sharedMetadata.Genre = metadata.Genre; }
-                if (changedProperties.Contains("AlbumArtist")) { sharedMetadata.AlbumArtist = metadata.AlbumArtist; }
-                if (changedProperties.Contains("Publisher")) { sharedMetadata.Publisher = metadata.Publisher; }
-                if (changedProperties.Contains("Subtitle")) { sharedMetadata.Subtitle = metadata.Subtitle; }
-                if (changedProperties.Contains("Composers")) { sharedMetadata.Composers = metadata.Composers; }
-                if (changedProperties.Contains("Conductors")) { sharedMetadata.Conductors = metadata.Conductors; }
+                if (changedProperties.Contains(nameof(MusicMetadata.Artists))) { sharedMetadata.Artists = metadata.Artists; }
+                if (changedProperties.Contains(nameof(MusicMetadata.Title))) { sharedMetadata.Title = metadata.Title; }
+                if (changedProperties.Contains(nameof(MusicMetadata.Rating))) { sharedMetadata.Rating = metadata.Rating; }
+                if (changedProperties.Contains(nameof(MusicMetadata.Album))) { sharedMetadata.Album = metadata.Album; }
+                if (changedProperties.Contains(nameof(MusicMetadata.TrackNumber))) { sharedMetadata.TrackNumber = metadata.TrackNumber; }
+                if (changedProperties.Contains(nameof(MusicMetadata.Year))) { sharedMetadata.Year = metadata.Year; }
+                if (changedProperties.Contains(nameof(MusicMetadata.Genre))) { sharedMetadata.Genre = metadata.Genre; }
+                if (changedProperties.Contains(nameof(MusicMetadata.AlbumArtist))) { sharedMetadata.AlbumArtist = metadata.AlbumArtist; }
+                if (changedProperties.Contains(nameof(MusicMetadata.Publisher))) { sharedMetadata.Publisher = metadata.Publisher; }
+                if (changedProperties.Contains(nameof(MusicMetadata.Subtitle))) { sharedMetadata.Subtitle = metadata.Subtitle; }
+                if (changedProperties.Contains(nameof(MusicMetadata.Composers))) { sharedMetadata.Composers = metadata.Composers; }
+                if (changedProperties.Contains(nameof(MusicMetadata.Conductors))) { sharedMetadata.Conductors = metadata.Conductors; }
             }
         }
 

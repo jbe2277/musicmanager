@@ -50,7 +50,7 @@ namespace Waf.MusicManager.Applications.Services
 
         protected virtual void OnTranscodingTaskCreated(TranscodingTaskEventArgs e)
         {
-            if (TranscodingTaskCreated != null) { TranscodingTaskCreated(this, e); }
+            TranscodingTaskCreated?.Invoke(this, e);
         }
     }
 }

@@ -250,7 +250,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void PlaylistViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "SelectedPlaylistItem")
+            if (e.PropertyName == nameof(PlaylistViewModel.SelectedPlaylistItem))
             {
                 UpdateCommands();
             }

@@ -14,13 +14,13 @@ namespace Waf.MusicManager.Presentation.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBlock))]
         public static bool GetAutoToolTip(DependencyObject element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null) { throw new ArgumentNullException(nameof(element)); }
             return (bool)element.GetValue(AutoToolTipProperty);
         }
 
         public static void SetAutoToolTip(DependencyObject element, bool value)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null) { throw new ArgumentNullException(nameof(element)); }
             element.SetValue(AutoToolTipProperty, value);
         }
 
@@ -29,7 +29,7 @@ namespace Waf.MusicManager.Presentation.Controls
             TextBlock textBlock = element as TextBlock;
             if (textBlock == null)
             {
-                throw new ArgumentException("The attached property AutoToolTip can only be used with a TextBlock.");
+                throw new ArgumentException("The attached property AutoToolTip can only be used with a TextBlock.", nameof(element));
             }
             if (textBlock.TextTrimming == TextTrimming.None)
             {

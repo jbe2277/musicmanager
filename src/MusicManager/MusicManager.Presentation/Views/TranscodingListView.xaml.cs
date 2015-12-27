@@ -28,9 +28,9 @@ namespace Waf.MusicManager.Presentation.Views
         public TranscodingListView()
         {
             InitializeComponent();
-            this.viewModel = new Lazy<TranscodingListViewModel>(() => ViewHelper.GetViewModel<TranscodingListViewModel>(this));
-            this.listBoxDragDropHelper = new ListBoxDragDropHelper<TranscodeItem>(transcodingListBox, null, TryGetInsertItems, InsertItems);
-            this.Loaded += FirstTimeLoadedHandler;
+            viewModel = new Lazy<TranscodingListViewModel>(() => ViewHelper.GetViewModel<TranscodingListViewModel>(this));
+            listBoxDragDropHelper = new ListBoxDragDropHelper<TranscodeItem>(transcodingListBox, null, TryGetInsertItems, InsertItems);
+            Loaded += FirstTimeLoadedHandler;
         }
 
 
@@ -43,13 +43,13 @@ namespace Waf.MusicManager.Presentation.Views
             transcodeItemsCollectionView = (ListCollectionView)CollectionViewSource.GetDefaultView(ViewModel.TranscodingManager.TranscodeItems);
 
             transcodeItemsCollectionView.IsLiveSorting = true;
-            transcodeItemsCollectionView.LiveSortingProperties.Add("TranscodeStatus");
-            var statusSortDescription = new SortDescription("TranscodeStatus", ListSortDirection.Ascending);
+            transcodeItemsCollectionView.LiveSortingProperties.Add(nameof(TranscodeItem.TranscodeStatus));
+            var statusSortDescription = new SortDescription(nameof(TranscodeItem.TranscodeStatus), ListSortDirection.Ascending);
             transcodeItemsCollectionView.SortDescriptions.Add(statusSortDescription);
 
             transcodeItemsCollectionView.IsLiveGrouping = true;
-            transcodeItemsCollectionView.LiveGroupingProperties.Add("TranscodeStatus");
-            var statusGroupDescription = new PropertyGroupDescription("TranscodeStatus");
+            transcodeItemsCollectionView.LiveGroupingProperties.Add(nameof(TranscodeItem.TranscodeStatus));
+            var statusGroupDescription = new PropertyGroupDescription(nameof(TranscodeItem.TranscodeStatus));
             transcodeItemsCollectionView.GroupDescriptions.Add(statusGroupDescription);
 
             foreach (var item in ViewModel.TranscodingManager.TranscodeItems)
@@ -102,7 +102,7 @@ namespace Waf.MusicManager.Presentation.Views
         
         private void TranscodeItemPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "TranscodeStatus")
+            if (e.PropertyName == nameof(TranscodeItem.TranscodeStatus))
             {
                 transcodeItemsCollectionView.Refresh();  // Workaround because live shaping does not support to sort groupings.
             }

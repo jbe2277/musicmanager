@@ -16,8 +16,6 @@ namespace Waf.MusicManager.Applications.ViewModels
     [Export]
     public class ShellViewModel : ViewModel<IShellView>
     {
-        private readonly IShellService shellService;
-        private readonly IPlayerService playerService;
         private readonly AppSettings settings;
         private readonly ObservableCollection<Tuple<Exception, string>> errors;
         private readonly DelegateCommand exitCommand;
@@ -30,13 +28,13 @@ namespace Waf.MusicManager.Applications.ViewModels
         public ShellViewModel(IShellView view, IShellService shellService, IPlayerService playerService)
             : base(view)
         {
-            this.shellService = shellService;
-            this.playerService = playerService;
-            this.settings = shellService.Settings;
-            this.errors = new ObservableCollection<Tuple<Exception, string>>();
-            this.exitCommand = new DelegateCommand(Close);
-            this.closeErrorCommand = new DelegateCommand(CloseError);
-            this.garbageCollectorCommand = new DelegateCommand(GC.Collect);
+            ShellService = shellService;
+            PlayerService = playerService;
+            settings = shellService.Settings;
+            errors = new ObservableCollection<Tuple<Exception, string>>();
+            exitCommand = new DelegateCommand(Close);
+            closeErrorCommand = new DelegateCommand(CloseError);
+            garbageCollectorCommand = new DelegateCommand(GC.Collect);
 
             errors.CollectionChanged += ErrorsCollectionChanged;
             view.Closed += ViewClosed;
@@ -57,9 +55,9 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public string Title { get { return ApplicationInfo.ProductName; } }
 
-        public IShellService ShellService { get { return shellService; } }
+        public IShellService ShellService { get; }
 
-        public IPlayerService PlayerService { get { return playerService; } }
+        public IPlayerService PlayerService { get; }
 
         public IReadOnlyList<Tuple<Exception, string>> Errors { get { return errors; } }
 
@@ -114,11 +112,11 @@ namespace Waf.MusicManager.Applications.ViewModels
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
-            if (e.PropertyName == "DetailsView")
+            if (e.PropertyName == nameof(DetailsView))
             {
-                RaisePropertyChanged("IsMusicPropertiesViewVisible");
-                RaisePropertyChanged("IsPlaylistViewVisible");
-                RaisePropertyChanged("IsTranscodingListViewVisible");
+                RaisePropertyChanged(nameof(IsMusicPropertiesViewVisible));
+                RaisePropertyChanged(nameof(IsPlaylistViewVisible));
+                RaisePropertyChanged(nameof(IsTranscodingListViewVisible));
             }
         }
 
@@ -132,7 +130,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         private void ErrorsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            RaisePropertyChanged("LastError");
+            RaisePropertyChanged(nameof(LastError));
         }
 
         private void ViewClosed(object sender, EventArgs e)

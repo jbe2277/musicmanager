@@ -12,6 +12,7 @@ using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Applications.Views;
 using Waf.MusicManager.Domain;
+using Waf.MusicManager.Domain.Playlists;
 
 namespace Waf.MusicManager.Presentation.Views
 {
@@ -57,9 +58,9 @@ namespace Waf.MusicManager.Presentation.Views
             Loaded += FirstTimeLoadedHandler;
         }
 
-        
-        private PlayerViewModel ViewModel { get { return viewModel.Value; } }
 
+        private PlayerViewModel ViewModel { get { return viewModel.Value; } }
+        
 
         public TimeSpan GetPosition() { return mediaPlayer.Position; }
 
@@ -116,7 +117,7 @@ namespace Waf.MusicManager.Presentation.Views
         
         private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Volume")
+            if (e.PropertyName == nameof(PlayerViewModel.Volume))
             {
                 mediaPlayer.Volume = ViewModel.Volume;
             }
@@ -157,7 +158,7 @@ namespace Waf.MusicManager.Presentation.Views
 
         private void PlaylistManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "CurrentItem")
+            if (e.PropertyName == nameof(PlaylistManager.CurrentItem))
             {
                 OpenCurrentItem();
                 playPauseCommand.RaiseCanExecuteChanged();

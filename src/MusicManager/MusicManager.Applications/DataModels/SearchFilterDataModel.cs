@@ -163,13 +163,14 @@ namespace Waf.MusicManager.Applications.DataModels
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
-            if (e.PropertyName != "DisplaySearchFilter" && e.PropertyName != "ApplicationSearchFilter")
+            if (e.PropertyName != nameof(DisplaySearchFilter) && e.PropertyName != nameof(ApplicationSearchFilter))
             {
-                RaisePropertyChanged("DisplaySearchFilter");
+                RaisePropertyChanged(nameof(DisplaySearchFilter));
             }
-            if (new[] { "ArtistFilter", "TitleFilter", "AlbumFilter", "GenreFilter", "RatingFilterOperator", "RatingFilter", "FromYearFilter", "ToYearFilter" }.Contains(e.PropertyName))
+            if (new[] { nameof(ArtistFilter), nameof(TitleFilter), nameof(AlbumFilter), nameof(GenreFilter), nameof(RatingFilterOperator), nameof(RatingFilter),
+                    nameof(FromYearFilter), nameof(ToYearFilter) }.Contains(e.PropertyName))
             {
-                RaisePropertyChanged("ApplicationSearchFilter");
+                RaisePropertyChanged(nameof(ApplicationSearchFilter));
             }
         }
 

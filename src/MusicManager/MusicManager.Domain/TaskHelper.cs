@@ -26,7 +26,7 @@ namespace Waf.MusicManager.Domain
         // Similar as Task.WhenAll but the task completes after the first one throws an exception (does not wait for all other tasks to complete).
         public static Task WhenAllFast(IEnumerable<Task> tasks)
         {
-            if (tasks == null) { throw new ArgumentNullException("tasks"); }
+            if (tasks == null) { throw new ArgumentNullException(nameof(tasks)); }
 
             var tasksArray = tasks.ToArray();
             var taskCompletionSource = new TaskCompletionSource<object>();

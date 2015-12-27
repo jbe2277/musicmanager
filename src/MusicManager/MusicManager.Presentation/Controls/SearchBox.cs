@@ -16,13 +16,13 @@ namespace Waf.MusicManager.Presentation.Controls
         /// Identifies the Text dependency property.
         /// </summary>
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(SearchBox), new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(SearchBox), new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
         /// Identifies the HintText dependency property.
         /// </summary>
         public static readonly DependencyProperty HintTextProperty =
-            DependencyProperty.Register("HintText", typeof(string), typeof(SearchBox), new FrameworkPropertyMetadata(""));
+            DependencyProperty.Register(nameof(HintText), typeof(string), typeof(SearchBox), new FrameworkPropertyMetadata(""));
 
 
         private TextBox searchTextBox;

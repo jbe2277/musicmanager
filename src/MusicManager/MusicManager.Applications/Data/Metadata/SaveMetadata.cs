@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Waf.MusicManager.Domain;
@@ -30,18 +29,18 @@ namespace Waf.MusicManager.Applications.Data.Metadata
             MusicProperties musicProperties = await file.Properties.GetMusicPropertiesAsync();
 
             var customProperties = new Dictionary<string, object>();
-            if (changedProperties.Contains("Title")) { ApplyTitle(musicProperties, customProperties, metadata.Title); }
-            if (changedProperties.Contains("Artists")) { ApplyArtists(musicProperties, customProperties, metadata.Artists); }
-            if (changedProperties.Contains("Rating")) { ApplyRating(musicProperties, customProperties, metadata.Rating); }
-            if (changedProperties.Contains("Album")) { ApplyAlbum(musicProperties, customProperties, metadata.Album); }
-            if (changedProperties.Contains("TrackNumber")) { ApplyTrackNumber(musicProperties, customProperties, metadata.TrackNumber); }
-            if (changedProperties.Contains("Year")) { ApplyYear(musicProperties, customProperties, metadata.Year); }
-            if (changedProperties.Contains("Genre")) { ApplyGenre(musicProperties, customProperties, metadata.Genre); }
-            if (changedProperties.Contains("AlbumArtist")) { ApplyAlbumArtist(musicProperties, customProperties, metadata.AlbumArtist); }
-            if (changedProperties.Contains("Publisher")) { ApplyPublisher(musicProperties, customProperties, metadata.Publisher); }
-            if (changedProperties.Contains("Subtitle")) { ApplySubtitle(musicProperties, customProperties, metadata.Subtitle); }
-            if (changedProperties.Contains("Composers")) { ApplyComposers(musicProperties, customProperties, metadata.Composers); }
-            if (changedProperties.Contains("Conductors")) { ApplyConductors(musicProperties, customProperties, metadata.Conductors); }
+            if (changedProperties.Contains(nameof(MusicMetadata.Title))) { ApplyTitle(musicProperties, customProperties, metadata.Title); }
+            if (changedProperties.Contains(nameof(MusicMetadata.Artists))) { ApplyArtists(musicProperties, customProperties, metadata.Artists); }
+            if (changedProperties.Contains(nameof(MusicMetadata.Rating))) { ApplyRating(musicProperties, customProperties, metadata.Rating); }
+            if (changedProperties.Contains(nameof(MusicMetadata.Album))) { ApplyAlbum(musicProperties, customProperties, metadata.Album); }
+            if (changedProperties.Contains(nameof(MusicMetadata.TrackNumber))) { ApplyTrackNumber(musicProperties, customProperties, metadata.TrackNumber); }
+            if (changedProperties.Contains(nameof(MusicMetadata.Year))) { ApplyYear(musicProperties, customProperties, metadata.Year); }
+            if (changedProperties.Contains(nameof(MusicMetadata.Genre))) { ApplyGenre(musicProperties, customProperties, metadata.Genre); }
+            if (changedProperties.Contains(nameof(MusicMetadata.AlbumArtist))) { ApplyAlbumArtist(musicProperties, customProperties, metadata.AlbumArtist); }
+            if (changedProperties.Contains(nameof(MusicMetadata.Publisher))) { ApplyPublisher(musicProperties, customProperties, metadata.Publisher); }
+            if (changedProperties.Contains(nameof(MusicMetadata.Subtitle))) { ApplySubtitle(musicProperties, customProperties, metadata.Subtitle); }
+            if (changedProperties.Contains(nameof(MusicMetadata.Composers))) { ApplyComposers(musicProperties, customProperties, metadata.Composers); }
+            if (changedProperties.Contains(nameof(MusicMetadata.Conductors))) { ApplyConductors(musicProperties, customProperties, metadata.Conductors); }
 
             Logger.Verbose("SaveMetadata.SaveChangesAsync:Save: {0}", musicFile.FileName);
             await musicProperties.SavePropertiesAsync(customProperties);

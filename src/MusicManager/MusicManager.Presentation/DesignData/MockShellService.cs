@@ -65,7 +65,7 @@ namespace Waf.MusicManager.Presentation.DesignData
 
         protected virtual void OnClosing(CancelEventArgs e)
         {
-            if (Closing != null) { Closing(this, e); }
+            Closing?.Invoke(this, e);
         }
     }
 }

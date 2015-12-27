@@ -1,18 +1,17 @@
 ﻿using System.Windows;
 using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 
 namespace Waf.MusicManager.Presentation.Controls
 {
     public class RatingItem : ButtonBase
     {
         private static readonly DependencyPropertyKey IsMouseOverRatingPropertyKey =
-            DependencyProperty.RegisterReadOnly("IsMouseOverRating", typeof(bool), typeof(RatingItem), new FrameworkPropertyMetadata(false));
+            DependencyProperty.RegisterReadOnly(nameof(IsMouseOverRating), typeof(bool), typeof(RatingItem), new FrameworkPropertyMetadata(false));
 
         public static readonly DependencyProperty IsMouseOverRatingProperty = IsMouseOverRatingPropertyKey.DependencyProperty;
 
         private static readonly DependencyPropertyKey RatingItemStatePropertyKey =
-            DependencyProperty.RegisterReadOnly("RatingItemState", typeof(RatingItemState), typeof(RatingItem), new FrameworkPropertyMetadata(RatingItemState.Empty));
+            DependencyProperty.RegisterReadOnly(nameof(RatingItemState), typeof(RatingItemState), typeof(RatingItem), new FrameworkPropertyMetadata(RatingItemState.Empty));
 
         public static readonly DependencyProperty RatingItemStateProperty = RatingItemStatePropertyKey.DependencyProperty;
         

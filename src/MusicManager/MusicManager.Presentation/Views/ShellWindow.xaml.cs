@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Applications.Views;
 
@@ -80,7 +81,7 @@ namespace Waf.MusicManager.Presentation.Views
 
         private void PlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "IsPlayCommand")
+            if (e.PropertyName == nameof(IPlayerService.IsPlayCommand))
             {
                 UpdatePlayPauseButton();
             }
@@ -100,7 +101,7 @@ namespace Waf.MusicManager.Presentation.Views
 
         private void ShellServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "IsApplicationBusy")
+            if (e.PropertyName == nameof(IShellService.IsApplicationBusy))
             {
                 if (ViewModel.ShellService.IsApplicationBusy)
                 {        
