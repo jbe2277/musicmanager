@@ -15,7 +15,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>..\..\Output\Publish\</PublishUrl>
+    <PublishUrl>..\..\..\..\musicmanager-pages\clickonce\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -25,13 +25,13 @@
     <UpdatePeriodically>true</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://wmm.codeplex.com/releases/clickonce/</InstallUrl>
-    <SupportUrl>http://wmm.codeplex.com/</SupportUrl>
+    <InstallUrl>https://jbe2277.github.io/musicmanager/clickonce/</InstallUrl>
+    <SupportUrl>https://jbe2277.github.io/musicmanager</SupportUrl>
     <ProductName>Waf Music Manager</ProductName>
     <PublisherName>Waf</PublisherName>
     <SuiteName>Waf Music Manager</SuiteName>
     <ApplicationRevision>100</ApplicationRevision>
-    <ApplicationVersion>1.2.0.100</ApplicationVersion>
+    <ApplicationVersion>1.2.1.100</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
