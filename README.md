@@ -1,2 +1,2 @@
-# musicmanager
-The Waf Music Manager is a simple and fast application that makes fun to manage the local music collection.
+# Waf Music Manager
+Please see [jbe2277.github.io/musicmanager](https://jbe2277.github.io/musicmanager) for more information.
