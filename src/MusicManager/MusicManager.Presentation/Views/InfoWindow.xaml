@@ -44,12 +44,12 @@
 
                 <Label Content="{x:Static p:Resources.License}" Grid.Row="2"/>
                 <Label Grid.Column="1" Grid.Row="2">
-                    <Hyperlink Command="{Binding ShowWebsiteCommand}" CommandParameter="http://wmm.codeplex.com/license">Microsoft Public License (Ms-PL)</Hyperlink>
+                    <Hyperlink Command="{Binding ShowWebsiteCommand}" CommandParameter="https://github.com/jbe2277/musicmanager/blob/master/LICENSE">The MIT License (MIT)</Hyperlink>
                 </Label>
 
                 <Label Content="{x:Static p:Resources.Website}" Grid.Row="3"/>
                 <Label Grid.Column="1" Grid.Row="3">
-                    <Hyperlink Command="{Binding ShowWebsiteCommand}" CommandParameter="http://wmm.codeplex.com">http://wmm.codeplex.com</Hyperlink>
+                    <Hyperlink Command="{Binding ShowWebsiteCommand}" CommandParameter="https://jbe2277.github.io/musicmanager">https://jbe2277.github.io/musicmanager</Hyperlink>
                 </Label>
 
                 <Label Content="{x:Static p:Resources.OperatingSystem}" Grid.Row="4"/>
