@@ -43,12 +43,12 @@
       <HintPath>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5.1\System.Runtime.WindowsRuntime.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="WpfApplicationFramework, Version=3.1.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
-      <HintPath>..\packages\waf.3.1.0\lib\net45\WpfApplicationFramework.dll</HintPath>
+    <Reference Include="WpfApplicationFramework, Version=3.2.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
+      <HintPath>..\packages\waf.3.2.0\lib\net45\WpfApplicationFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WpfApplicationFramework.UnitTesting, Version=3.1.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
-      <HintPath>..\packages\waf.testing.3.1.0\lib\net45\WpfApplicationFramework.UnitTesting.dll</HintPath>
+    <Reference Include="WpfApplicationFramework.UnitTesting, Version=3.2.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
+      <HintPath>..\packages\waf.testing.3.2.0\lib\net45\WpfApplicationFramework.UnitTesting.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

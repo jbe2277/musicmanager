@@ -37,12 +37,12 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="WindowsBase" />
-    <Reference Include="WpfApplicationFramework, Version=3.1.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
-      <HintPath>..\packages\waf.3.1.0\lib\net45\WpfApplicationFramework.dll</HintPath>
+    <Reference Include="WpfApplicationFramework, Version=3.2.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
+      <HintPath>..\packages\waf.3.2.0\lib\net45\WpfApplicationFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WpfApplicationFramework.UnitTesting, Version=3.1.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
-      <HintPath>..\packages\waf.testing.3.1.0\lib\net45\WpfApplicationFramework.UnitTesting.dll</HintPath>
+    <Reference Include="WpfApplicationFramework.UnitTesting, Version=3.2.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
+      <HintPath>..\packages\waf.testing.3.2.0\lib\net45\WpfApplicationFramework.UnitTesting.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -73,9 +73,6 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MusicManager.Applications\MusicManager.Applications.csproj">
       <Project>{e6722153-c183-4010-82ab-315db6182d89}</Project>
       <Name>MusicManager.Applications</Name>
@@ -92,6 +89,9 @@
       <Project>{16d7f42d-4da1-4aa9-9361-036bcb04ebc0}</Project>
       <Name>MusicManager.Presentation</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
