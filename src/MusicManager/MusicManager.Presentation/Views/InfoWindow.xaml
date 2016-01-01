@@ -49,7 +49,7 @@
 
                 <Label Content="{x:Static p:Resources.Website}" Grid.Row="3"/>
                 <Label Grid.Column="1" Grid.Row="3">
-                    <Hyperlink Command="{Binding ShowWebsiteCommand}" CommandParameter="https://jbe2277.github.io/musicmanager">https://jbe2277.github.io/musicmanager</Hyperlink>
+                    <Hyperlink Command="{Binding ShowWebsiteCommand}" CommandParameter="https://jbe2277.github.io/musicmanager">jbe2277.github.io/musicmanager</Hyperlink>
                 </Label>
 
                 <Label Content="{x:Static p:Resources.OperatingSystem}" Grid.Row="4"/>
