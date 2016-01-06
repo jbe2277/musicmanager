@@ -2,6 +2,10 @@ Changelog
 ---------
 
 
+Version 1.4.0.1 (Milestone 1)
+- TODO
+
+
 Version 1.3.0.100 (Release)
 - Change license from Microsoft Public License (Ms-PL) to MIT License (MIT).
 - Improve converter view by grouping the tasks.
