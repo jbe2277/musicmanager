@@ -8,6 +8,13 @@
              xmlns:dd="clr-namespace:Waf.MusicManager.Presentation.DesignData"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SamplePlayerViewModel, IsDesignTimeCreatable=True}"
              d:DesignWidth="800" Height="58" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+
+    <UserControl.Resources>
+        <ContextMenu x:Key="CurrentMusicFileContextMenu">
+            <MenuItem Command="{Binding ShowMusicPropertiesCommand}" Header="{x:Static p:Resources.ShowDetails}"/>
+        </ContextMenu>
+    </UserControl.Resources>
+    
     <Grid Margin="10,5,5,7">
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -35,8 +42,9 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="{Binding PlaylistManager.CurrentItem.MusicFile.Metadata.Artists, Converter={StaticResource StringListToStringConverter}, ConverterParameter=ListSeparator}" 
-                   TextTrimming="CharacterEllipsis" Grid.Row="0" Grid.Column="0" ctrl:ToolTipBehavior.AutoToolTip="True"/>
-        <TextBlock TextTrimming="CharacterEllipsis" Grid.Row="1" Grid.Column="0" ctrl:ToolTipBehavior.AutoToolTip="True">
+                   TextTrimming="CharacterEllipsis" Grid.Row="0" Grid.Column="0" ctrl:ToolTipBehavior.AutoToolTip="True" ContextMenu="{StaticResource CurrentMusicFileContextMenu}" />
+
+        <TextBlock TextTrimming="CharacterEllipsis" Grid.Row="1" Grid.Column="0" ctrl:ToolTipBehavior.AutoToolTip="True" ContextMenu="{StaticResource CurrentMusicFileContextMenu}">
             <TextBlock.Text>
                 <MultiBinding Converter="{StaticResource MusicTitleConverter}">
                     <Binding Path="PlaylistManager.CurrentItem.MusicFile.FileName"/>
