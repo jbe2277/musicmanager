@@ -350,4 +350,7 @@ Diese Anwendung benötigt Windows 8.1 oder neuer.</value>
   <data name="Pending" xml:space="preserve">
     <value>Bevorstehend</value>
   </data>
+  <data name="ShowPlaylist" xml:space="preserve">
+    <value>Playlist anzeigen</value>
+  </data>
 </root>

@@ -115,6 +115,7 @@
     <Compile Include="Services\IManagerStatusService.cs" />
     <Compile Include="Services\IMusicPropertiesService.cs" />
     <Compile Include="Services\IPlayerService.cs" />
+    <Compile Include="Services\IPlaylistService.cs" />
     <Compile Include="Services\IPresentationService.cs" />
     <Compile Include="Services\ISelectionService.cs" />
     <Compile Include="Services\ISettingsProvider.cs" />

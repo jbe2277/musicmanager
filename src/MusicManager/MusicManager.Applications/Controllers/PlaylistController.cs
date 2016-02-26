@@ -19,8 +19,8 @@ using Windows.Storage;
 
 namespace Waf.MusicManager.Applications.Controllers
 {
-    [Export]
-    internal class PlaylistController
+    [Export, Export(typeof(IPlaylistService))]
+    internal class PlaylistController : IPlaylistService
     {
         private readonly IFileDialogService fileDialogService;
         private readonly IShellService shellService;
@@ -101,6 +101,17 @@ namespace Waf.MusicManager.Applications.Controllers
         public void Shutdown()
         {
             PlaylistSettings.ReplaceAll(PlaylistManager.Items.Select(x => x.MusicFile.FileName));
+        }
+
+        public void TrySelectMusicFile(MusicFile musicFile)
+        {
+            var playlistItem = PlaylistManager.Items.FirstOrDefault(x => x.MusicFile == musicFile);
+            if (playlistItem != null)
+            {
+                PlaylistViewModel.SelectedPlaylistItem = playlistItem;
+                PlaylistViewModel.ScrollIntoView();
+                PlaylistViewModel.FocusSelectedItem();
+            }
         }
 
         private bool CanPlaySelected()

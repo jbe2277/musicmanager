@@ -151,6 +151,11 @@ namespace Waf.MusicManager.Applications.ViewModels
             ViewCore.FocusSelectedItem();
         }
 
+        public void ScrollIntoView()
+        {
+            ViewCore.ScrollIntoView(PlaylistManager.CurrentItem);
+        }
+
         private void SearchNext()
         {
             SearchTextCore(SearchMode.Next);

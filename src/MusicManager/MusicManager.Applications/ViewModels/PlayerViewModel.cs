@@ -16,6 +16,7 @@ namespace Waf.MusicManager.Applications.ViewModels
         private ICommand nextTrackCommand;
         private ICommand infoCommand;
         private ICommand showMusicPropertiesCommand;
+        private ICommand showPlaylistCommand;
         private double volume;
 
         
@@ -60,7 +61,13 @@ namespace Waf.MusicManager.Applications.ViewModels
             get { return showMusicPropertiesCommand; }
             set { SetProperty(ref showMusicPropertiesCommand, value); }
         }
-
+        
+        public ICommand ShowPlaylistCommand
+        {
+            get { return showPlaylistCommand; }
+            set { SetProperty(ref showPlaylistCommand, value); }
+        }
+        
         public double Volume
         {
             get { return volume; }

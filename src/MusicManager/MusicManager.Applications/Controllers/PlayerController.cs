@@ -20,6 +20,7 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly IEnvironmentService environmentService;
         private readonly PlayerService playerService;
         private readonly IMusicPropertiesService musicPropertiesService;
+        private readonly IPlaylistService playlistService;
         private readonly Lazy<PlayerViewModel> playerViewModel;
         private readonly ExportFactory<InfoViewModel> infoViewModelFactory;
         private readonly DelegateCommand playAllCommand;
@@ -28,19 +29,21 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly DelegateCommand enqueueSelectedCommand;
         private readonly DelegateCommand previousTrackCommand;
         private readonly DelegateCommand nextTrackCommand;
-        private readonly DelegateCommand showMusicPropertiesCommand;
         private readonly DelegateCommand infoCommand;
+        private readonly DelegateCommand showMusicPropertiesCommand;
+        private readonly DelegateCommand showPlaylistCommand;
         
         
         [ImportingConstructor]
         public PlayerController(IShellService shellService, IEnvironmentService environmentService, ISelectionService selectionService, PlayerService playerService,
-            IMusicPropertiesService musicPropertiesService, Lazy<PlayerViewModel> playerViewModel, ExportFactory<InfoViewModel> infoViewModelFactory)
+            IMusicPropertiesService musicPropertiesService, IPlaylistService playlistService, Lazy<PlayerViewModel> playerViewModel, ExportFactory<InfoViewModel> infoViewModelFactory)
         {
             this.shellService = shellService;
             this.environmentService = environmentService;
             this.selectionService = selectionService;
             this.playerService = playerService;
             this.musicPropertiesService = musicPropertiesService;
+            this.playlistService = playlistService;
             this.playerViewModel = playerViewModel;
             this.infoViewModelFactory = infoViewModelFactory;
             this.playAllCommand = new DelegateCommand(PlayAll, CanPlayAll);
@@ -51,6 +54,7 @@ namespace Waf.MusicManager.Applications.Controllers
             this.nextTrackCommand = new DelegateCommand(NextTrack, CanNextTrack);
             this.infoCommand = new DelegateCommand(ShowInfo);
             this.showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
+            this.showPlaylistCommand = new DelegateCommand(ShowPlaylistCommand);
         }
 
 
@@ -79,6 +83,7 @@ namespace Waf.MusicManager.Applications.Controllers
             PlayerViewModel.NextTrackCommand = nextTrackCommand;
             PlayerViewModel.InfoCommand = infoCommand;
             PlayerViewModel.ShowMusicPropertiesCommand = showMusicPropertiesCommand;
+            PlayerViewModel.ShowPlaylistCommand = showPlaylistCommand;
             
             shellService.PlayerView = PlayerViewModel.View;
 
@@ -210,6 +215,12 @@ namespace Waf.MusicManager.Applications.Controllers
         {
             musicPropertiesService.SelectMusicFiles(new[] { PlaylistManager.CurrentItem?.MusicFile }.Where(x => x != null).ToArray());
             shellService.ShowMusicPropertiesView();
+        }
+
+        private void ShowPlaylistCommand()
+        {
+            playlistService.TrySelectMusicFile(PlaylistManager.CurrentItem?.MusicFile);
+            shellService.ShowPlaylistView();
         }
 
         private void PlaylistManagerPropertyChanged(object sender, PropertyChangedEventArgs e)

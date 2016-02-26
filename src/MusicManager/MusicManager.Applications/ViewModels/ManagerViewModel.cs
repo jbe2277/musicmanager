@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.IO;
 using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.Views;
-using Waf.MusicManager.Domain;
-using Windows.Storage;
 
 namespace Waf.MusicManager.Applications.ViewModels
 {

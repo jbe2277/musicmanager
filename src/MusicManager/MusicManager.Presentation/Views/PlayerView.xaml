@@ -12,6 +12,7 @@
     <UserControl.Resources>
         <ContextMenu x:Key="CurrentMusicFileContextMenu">
             <MenuItem Command="{Binding ShowMusicPropertiesCommand}" Header="{x:Static p:Resources.ShowDetails}"/>
+            <MenuItem Command="{Binding ShowPlaylistCommand}" Header="{x:Static p:Resources.ShowPlaylist}"/>
         </ContextMenu>
     </UserControl.Resources>
     

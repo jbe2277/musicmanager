@@ -350,4 +350,7 @@
   <data name="Pending" xml:space="preserve">
     <value>Pending</value>
   </data>
+  <data name="ShowPlaylist" xml:space="preserve">
+    <value>Show playlist</value>
+  </data>
 </root>
