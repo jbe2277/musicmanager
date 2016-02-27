@@ -326,17 +326,17 @@ Diese Anwendung benötigt Windows 8.1 oder neuer.</value>
   <data name="Year" xml:space="preserve">
     <value>Jahr</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Löschen</value>
+  <data name="DeleteKey" xml:space="preserve">
+    <value>Entf</value>
   </data>
   <data name="From" xml:space="preserve">
     <value>Von</value>
   </data>
-  <data name="Return" xml:space="preserve">
+  <data name="ReturnKey" xml:space="preserve">
     <value>Enter</value>
   </data>
-  <data name="ShiftReturn" xml:space="preserve">
-    <value>Umschalt + Enter</value>
+  <data name="ShiftReturnKey" xml:space="preserve">
+    <value>Umschalt+Enter</value>
   </data>
   <data name="To" xml:space="preserve">
     <value>Bis</value>

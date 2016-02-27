@@ -215,8 +215,8 @@
                     <Setter Property="ContextMenu">
                         <Setter.Value>
                             <ContextMenu>
-                                <MenuItem Command="{Binding PlayerService.PlaySelectedCommand}" Header="{x:Static p:Resources.PlaySelection}" InputGestureText="{x:Static p:Resources.Return}"/>
-                                <MenuItem Command="{Binding PlayerService.EnqueueSelectedCommand}" Header="{x:Static p:Resources.EnqueueSelection}" InputGestureText="{x:Static p:Resources.ShiftReturn}"/>
+                                <MenuItem Command="{Binding PlayerService.PlaySelectedCommand}" Header="{x:Static p:Resources.PlaySelection}" InputGestureText="{x:Static p:Resources.ReturnKey}"/>
+                                <MenuItem Command="{Binding PlayerService.EnqueueSelectedCommand}" Header="{x:Static p:Resources.EnqueueSelection}" InputGestureText="{x:Static p:Resources.ShiftReturnKey}"/>
                                 <MenuItem Command="{Binding TranscodingService.ConvertToMp3SelectedCommand}" Header="{x:Static p:Resources.ConvertToMP3}"/>
                                 <Separator/>
                                 <MenuItem Command="{Binding ShowMusicPropertiesCommand}" Header="{x:Static p:Resources.ShowDetails}"/>

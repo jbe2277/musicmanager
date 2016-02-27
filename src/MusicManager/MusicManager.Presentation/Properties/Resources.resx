@@ -326,16 +326,16 @@
   <data name="Year" xml:space="preserve">
     <value>Year</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="DeleteKey" xml:space="preserve">
+    <value>Del</value>
   </data>
   <data name="From" xml:space="preserve">
     <value>From</value>
   </data>
-  <data name="Return" xml:space="preserve">
+  <data name="ReturnKey" xml:space="preserve">
     <value>Return</value>
   </data>
-  <data name="ShiftReturn" xml:space="preserve">
+  <data name="ShiftReturnKey" xml:space="preserve">
     <value>Shift+Return</value>
   </data>
   <data name="To" xml:space="preserve">

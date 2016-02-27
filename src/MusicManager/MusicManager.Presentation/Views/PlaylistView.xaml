@@ -55,8 +55,8 @@
                     <Setter Property="ContextMenu">
                         <Setter.Value>
                             <ContextMenu>
-                                <MenuItem Command="{Binding PlaySelectedCommand}" Header="{x:Static p:Resources.Play}" InputGestureText="{x:Static p:Resources.Return}"/>
-                                <MenuItem Command="{Binding RemoveSelectedCommand}" Header="{x:Static p:Resources.RemoveSelected}" InputGestureText="{x:Static p:Resources.Delete}"/>
+                                <MenuItem Command="{Binding PlaySelectedCommand}" Header="{x:Static p:Resources.Play}" InputGestureText="{x:Static p:Resources.ReturnKey}"/>
+                                <MenuItem Command="{Binding RemoveSelectedCommand}" Header="{x:Static p:Resources.RemoveSelected}" InputGestureText="{x:Static p:Resources.DeleteKey}"/>
                                 <Separator/>
                                 <MenuItem Command="{Binding ShowMusicPropertiesCommand}" Header="{x:Static p:Resources.ShowDetails}"/>
                             </ContextMenu>

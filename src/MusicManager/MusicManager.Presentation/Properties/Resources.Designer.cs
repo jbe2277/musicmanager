@@ -214,11 +214,11 @@ namespace Waf.MusicManager.Presentation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete.
+        ///   Looks up a localized string similar to Del.
         /// </summary>
-        public static string Delete {
+        public static string DeleteKey {
             get {
-                return ResourceManager.GetString("Delete", resourceCulture);
+                return ResourceManager.GetString("DeleteKey", resourceCulture);
             }
         }
         
@@ -594,9 +594,9 @@ namespace Waf.MusicManager.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Return.
         /// </summary>
-        public static string Return {
+        public static string ReturnKey {
             get {
-                return ResourceManager.GetString("Return", resourceCulture);
+                return ResourceManager.GetString("ReturnKey", resourceCulture);
             }
         }
         
@@ -639,9 +639,9 @@ namespace Waf.MusicManager.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Shift+Return.
         /// </summary>
-        public static string ShiftReturn {
+        public static string ShiftReturnKey {
             get {
-                return ResourceManager.GetString("ShiftReturn", resourceCulture);
+                return ResourceManager.GetString("ShiftReturnKey", resourceCulture);
             }
         }
         
