@@ -353,4 +353,7 @@ Diese Anwendung benötigt Windows 8.1 oder neuer.</value>
   <data name="ShowPlaylist" xml:space="preserve">
     <value>Playlist anzeigen</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
 </root>

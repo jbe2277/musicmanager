@@ -26,8 +26,9 @@ namespace Waf.MusicManager.Applications.ViewModels
         private ICommand loadRecursiveCommand;
         private ICommand navigateToSelectedSubDirectoryCommand;
         private ICommand showMusicPropertiesCommand;
-        
-        
+        private ICommand deleteSelectedFilesCommand;
+
+
         [ImportingConstructor]
         public ManagerViewModel(IManagerView view, Lazy<ISelectionService> selectionService, IManagerStatusService managerStatusService, 
             IPlayerService playerService, ITranscodingService transcodingService)
@@ -103,6 +104,12 @@ namespace Waf.MusicManager.Applications.ViewModels
         {
             get { return showMusicPropertiesCommand; }
             set { SetProperty(ref showMusicPropertiesCommand, value); }
+        }
+
+        public ICommand DeleteSelectedFilesCommand
+        {
+            get { return deleteSelectedFilesCommand; }
+            set { SetProperty(ref deleteSelectedFilesCommand, value); }
         }
 
 

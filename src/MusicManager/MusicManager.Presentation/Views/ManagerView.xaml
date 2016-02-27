@@ -209,6 +209,7 @@
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding PlayerService.PlaySelectedCommand}" Key="Return"/>
                 <KeyBinding Command="{Binding PlayerService.EnqueueSelectedCommand}" Key="Return" Modifiers="Shift"/>
+                <KeyBinding Command="{Binding DeleteSelectedFilesCommand}" Key="Delete"/>
             </DataGrid.InputBindings>
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
@@ -217,7 +218,9 @@
                             <ContextMenu>
                                 <MenuItem Command="{Binding PlayerService.PlaySelectedCommand}" Header="{x:Static p:Resources.PlaySelection}" InputGestureText="{x:Static p:Resources.ReturnKey}"/>
                                 <MenuItem Command="{Binding PlayerService.EnqueueSelectedCommand}" Header="{x:Static p:Resources.EnqueueSelection}" InputGestureText="{x:Static p:Resources.ShiftReturnKey}"/>
+                                <Separator/>
                                 <MenuItem Command="{Binding TranscodingService.ConvertToMp3SelectedCommand}" Header="{x:Static p:Resources.ConvertToMP3}"/>
+                                <MenuItem Command="{Binding DeleteSelectedFilesCommand}" Header="{x:Static p:Resources.Delete}" InputGestureText="{x:Static p:Resources.DeleteKey}"/>
                                 <Separator/>
                                 <MenuItem Command="{Binding ShowMusicPropertiesCommand}" Header="{x:Static p:Resources.ShowDetails}"/>
                             </ContextMenu>

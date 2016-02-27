@@ -120,6 +120,9 @@
   <data name="AbortRunningConverts" xml:space="preserve">
     <value>Möchten Sie die Konvertierung abbrechen und die Applikation beenden?</value>
   </data>
+  <data name="CouldNotDeleteFile" xml:space="preserve">
+    <value>Die Datei {0} kann nicht gelöscht werden.</value>
+  </data>
   <data name="CouldNotLoadPlaylist" xml:space="preserve">
     <value>Die Playlist konnte nicht geladen werden. Wahrscheinlich wurden nicht alle Musikdateien gefunden.</value>
   </data>

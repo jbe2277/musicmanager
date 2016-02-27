@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Waf.Applications;
 using Waf.MusicManager.Applications.Data;
 using Waf.MusicManager.Applications.DataModels;
+using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Domain;
@@ -38,6 +39,7 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly DelegateCommand loadRecursiveCommand;
         private readonly DelegateCommand navigateToSelectedSubDirectoryCommand;
         private readonly DelegateCommand showMusicPropertiesCommand;
+        private readonly DelegateCommand deleteSelectedFilesCommand;
         private CancellationTokenSource updateMusicFilesCancellation;
         
 
@@ -61,6 +63,7 @@ namespace Waf.MusicManager.Applications.Controllers
             this.loadRecursiveCommand = new DelegateCommand(LoadRecursive);
             this.navigateToSelectedSubDirectoryCommand = new DelegateCommand(NavigateToSelectedSubDirectory);
             this.showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
+            this.deleteSelectedFilesCommand = new DelegateCommand(DeleteSelectedFiles);
         }
 
 
@@ -83,6 +86,7 @@ namespace Waf.MusicManager.Applications.Controllers
             ManagerViewModel.LoadRecursiveCommand = loadRecursiveCommand;
             ManagerViewModel.NavigateToSelectedSubDirectoryCommand = navigateToSelectedSubDirectoryCommand;
             ManagerViewModel.ShowMusicPropertiesCommand = showMusicPropertiesCommand;
+            ManagerViewModel.DeleteSelectedFilesCommand = deleteSelectedFilesCommand;
             ManagerViewModel.FolderBrowser.PropertyChanged += FolderBrowserPropertyChanged;
             ManagerViewModel.SearchFilter.PropertyChanged += SearchFilterPropertyChanged;
 
@@ -150,6 +154,27 @@ namespace Waf.MusicManager.Applications.Controllers
         private void ShowMusicProperties()
         {
             shellService.ShowMusicPropertiesView();
+        }
+
+        private void DeleteSelectedFiles()
+        {
+            foreach (var musicFile in selectionService.SelectedMusicFiles)
+            {
+                DeleteFileAsync(musicFile.MusicFile.FileName);
+            }
+        }
+
+        private async void DeleteFileAsync(string fileName)
+        {
+            try
+            {
+                var file = await StorageFile.GetFileFromPathAsync(fileName);
+                await file.DeleteAsync();
+            }
+            catch (Exception ex)
+            {
+                shellService.ShowError(ex, Resources.CouldNotDeleteFile, fileName);
+            }
         }
 
         private void UpdateSubDirectories()

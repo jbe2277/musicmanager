@@ -120,6 +120,9 @@
   <data name="AbortRunningConverts" xml:space="preserve">
     <value>Do you want to abort the running converts and close the application?</value>
   </data>
+  <data name="CouldNotDeleteFile" xml:space="preserve">
+    <value>Could not delete the file {0}.</value>
+  </data>
   <data name="CouldNotLoadPlaylist" xml:space="preserve">
     <value>The playlist could not be loaded. Maybe some referenced music files do not exist anymore.</value>
   </data>
