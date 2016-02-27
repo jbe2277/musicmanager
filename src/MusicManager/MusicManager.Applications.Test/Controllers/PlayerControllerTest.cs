@@ -18,6 +18,8 @@ using Waf.MusicManager.Domain.Playlists;
 
 namespace Test.MusicManager.Applications.Controllers
 {
+    // TODO: Add unit tests
+
     [TestClass]
     public class PlayerControllerTest : ApplicationsTest
     {
@@ -196,6 +198,20 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsTrue(showInfoViewCalled);
 
             MockInfoView.ShowDialogAction = null;
+        }
+
+        [TestMethod]
+        public void ShowMusicProperties()
+        {
+            controller.Run();
+            viewModel.PlayerService.PlayAllCommand.Execute(null);
+
+            bool showMusicPropertiesViewAction = false;
+            shellService.ShowMusicPropertiesViewAction = () => { showMusicPropertiesViewAction = true; };
+            viewModel.ShowMusicPropertiesCommand.Execute(null);
+            Assert.IsTrue(showMusicPropertiesViewAction);
+            var musicPropertiesViewModel = Container.GetExportedValue<MusicPropertiesViewModel>();
+            Assert.AreEqual(playlistManager.CurrentItem.MusicFile, musicPropertiesViewModel.MusicFile);
         }
     }
 }
