@@ -18,8 +18,6 @@ using Waf.MusicManager.Domain.Playlists;
 
 namespace Test.MusicManager.Applications.Controllers
 {
-    // TODO: Add unit tests
-
     [TestClass]
     public class PlayerControllerTest : ApplicationsTest
     {
@@ -31,7 +29,7 @@ namespace Test.MusicManager.Applications.Controllers
         private PlayerViewModel viewModel;
         private PlaylistManager playlistManager;
         private PlaylistSettings playlistSettings;
-        
+
 
         protected override void OnInitialize()
         {
@@ -45,7 +43,7 @@ namespace Test.MusicManager.Applications.Controllers
             };
             selectionService = Container.GetExportedValue<SelectionService>();
             selectionService.Initialize(musicFiles);
-            
+
             playlistManager = new PlaylistManager();
             playlistSettings = new PlaylistSettings();
             controller = Container.GetExportedValue<PlayerController>();
@@ -55,6 +53,7 @@ namespace Test.MusicManager.Applications.Controllers
 
             shellService = Container.GetExportedValue<ShellService>();
             shellService.ShowPlaylistViewAction = () => { };
+            shellService.ShowMusicPropertiesViewAction = () => { };
             view = (MockPlayerView)shellService.PlayerView;
             viewModel = ViewHelper.GetViewModel<PlayerViewModel>(view);
         }
@@ -65,7 +64,7 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsNull(playlistManager.CurrentItem);
             base.OnCleanup();
         }
-        
+
 
         [TestMethod]
         public void PassMusicFileViaCommandLineParameter()
@@ -82,7 +81,7 @@ namespace Test.MusicManager.Applications.Controllers
             playerService.IsPlayCommand = true;
             bool playPauseCommandCalled = false;
             playerService.PlayPauseCommand = new DelegateCommand(() => playPauseCommandCalled = true);
-            
+
             controller.Run();
             Assert.AreEqual(musicFiles[0], playlistManager.CurrentItem.MusicFile);
             Assert.IsTrue(playPauseCommandCalled);
@@ -123,7 +122,7 @@ namespace Test.MusicManager.Applications.Controllers
             playerService.IsPlayCommand = true;
             bool playPauseCommandCalled = false;
             playerService.PlayPauseCommand = new DelegateCommand(() => playPauseCommandCalled = true);
-            
+
             bool showPlaylistViewCalled = false;
             shellService.ShowPlaylistViewAction = () => showPlaylistViewCalled = true;
 
@@ -149,7 +148,7 @@ namespace Test.MusicManager.Applications.Controllers
             // Enqueue the selected music file
             bool showPlaylistViewCalled = false;
             shellService.ShowPlaylistViewAction = () => showPlaylistViewCalled = true;
-            
+
             viewModel.PlayerService.EnqueueSelectedCommand.Execute(null);
             Assert.IsTrue(showPlaylistViewCalled);
             Assert.AreEqual(musicFiles.First(), playlistManager.Items.Single().MusicFile);
@@ -193,7 +192,7 @@ namespace Test.MusicManager.Applications.Controllers
             controller.Run();
             bool showInfoViewCalled = false;
             MockInfoView.ShowDialogAction = view => showInfoViewCalled = true;
-            
+
             viewModel.InfoCommand.Execute(null);
             Assert.IsTrue(showInfoViewCalled);
 
@@ -206,12 +205,32 @@ namespace Test.MusicManager.Applications.Controllers
             controller.Run();
             viewModel.PlayerService.PlayAllCommand.Execute(null);
 
-            bool showMusicPropertiesViewAction = false;
-            shellService.ShowMusicPropertiesViewAction = () => { showMusicPropertiesViewAction = true; };
+            bool showMusicPropertiesViewActionCalled = false;
+            shellService.ShowMusicPropertiesViewAction = () => { showMusicPropertiesViewActionCalled = true; };
             viewModel.ShowMusicPropertiesCommand.Execute(null);
-            Assert.IsTrue(showMusicPropertiesViewAction);
+            Assert.IsTrue(showMusicPropertiesViewActionCalled);
             var musicPropertiesViewModel = Container.GetExportedValue<MusicPropertiesViewModel>();
             Assert.AreEqual(playlistManager.CurrentItem.MusicFile, musicPropertiesViewModel.MusicFile);
+        }
+
+        [TestMethod]
+        public void ShowPlaylist()
+        {
+            controller.Run();
+            viewModel.PlayerService.PlayAllCommand.Execute(null);
+            shellService.ShowMusicPropertiesView();
+
+            var playlistController = Container.GetExportedValue<PlaylistController>();
+            playlistController.PlaylistManager = playlistManager;
+            playlistController.Initialize();
+
+            bool showPlaylistViewActionCalled = false;
+            shellService.ShowPlaylistViewAction = () => { showPlaylistViewActionCalled = true; };
+            viewModel.ShowPlaylistCommand.Execute(null);
+            Assert.IsTrue(showPlaylistViewActionCalled);
+
+            var playlistViewModel = Container.GetExportedValue<PlaylistViewModel>();
+            Assert.AreEqual(playlistManager.CurrentItem, playlistViewModel.SelectedPlaylistItem);
         }
     }
 }

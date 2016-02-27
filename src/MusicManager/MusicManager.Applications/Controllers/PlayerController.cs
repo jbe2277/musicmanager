@@ -54,7 +54,7 @@ namespace Waf.MusicManager.Applications.Controllers
             this.nextTrackCommand = new DelegateCommand(NextTrack, CanNextTrack);
             this.infoCommand = new DelegateCommand(ShowInfo);
             this.showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
-            this.showPlaylistCommand = new DelegateCommand(ShowPlaylistCommand);
+            this.showPlaylistCommand = new DelegateCommand(ShowPlaylist);
         }
 
 
@@ -217,7 +217,7 @@ namespace Waf.MusicManager.Applications.Controllers
             shellService.ShowMusicPropertiesView();
         }
 
-        private void ShowPlaylistCommand()
+        private void ShowPlaylist()
         {
             playlistService.TrySelectMusicFile(PlaylistManager.CurrentItem?.MusicFile);
             shellService.ShowPlaylistView();
