@@ -154,7 +154,7 @@ namespace Waf.MusicManager.Applications.Controllers
             
             if (allFilesSavedCompletion != null && !musicFilesToSaveAfterPlaying.Any())
             {
-                allFilesSavedCompletion.SetResult(null);
+                allFilesSavedCompletion.TrySetResult(null);
             }
         }
 
