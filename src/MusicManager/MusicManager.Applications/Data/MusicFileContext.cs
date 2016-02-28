@@ -77,9 +77,7 @@ namespace Waf.MusicManager.Applications.Data
             MusicProperties musicProperties = await file.Properties.GetMusicPropertiesAsync().AsTask().ConfigureAwait(false);
 
             var readMetadata = SupportedFileTypes.GetReadMetadata(file.FileType);
-            var musicMetadata = await readMetadata.CreateMusicMetadata(musicProperties, CancellationToken.None);
-            musicMetadata.ClearChanges();
-            return musicMetadata;
+            return await readMetadata.CreateMusicMetadata(musicProperties, CancellationToken.None);
         }
 
         public MusicFile CreateFromMultiple(IEnumerable<MusicFile> musicFiles)
@@ -101,7 +99,7 @@ namespace Waf.MusicManager.Applications.Data
 
             var duration = GetSharedValueOrDefault(musicFiles, x => x.Metadata.Duration);
             var bitrate = GetSharedValueOrDefault(musicFiles, x => x.Metadata.Bitrate);        
-            var metadata = new MusicMetadata(duration, bitrate)
+            return new MusicMetadata(duration, bitrate)
             {
                 Title = GetSharedValueOrDefault(musicFiles, x => x.Metadata.Title) ?? "",
                 Artists = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Metadata.Artists, SequenceEqualityComparer<string>.Default) ?? new string[0],
@@ -116,9 +114,6 @@ namespace Waf.MusicManager.Applications.Data
                 Composers = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Metadata.Composers, SequenceEqualityComparer<string>.Default) ?? new string[0],
                 Conductors = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Metadata.Conductors, SequenceEqualityComparer<string>.Default) ?? new string[0]
             };
-
-            metadata.ClearChanges();
-            return metadata;
         }
 
         public void ApplyChanges(MusicFile musicFile)

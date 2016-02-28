@@ -49,6 +49,8 @@
     <Compile Include="MusicFiles\Entity.cs" />
     <Compile Include="MusicFiles\Genres.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="MusicFiles\IChangeTrackerService.cs" />
+    <Compile Include="MusicFiles\ServiceLocator.cs" />
     <Compile Include="Playlists\IRandomService.cs" />
     <Compile Include="MusicFiles\MusicFile.cs" />
     <Compile Include="MusicFiles\MusicMetadata.cs" />

@@ -110,6 +110,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\ApplicationBusyContext.cs" />
+    <Compile Include="Services\ChangeTrackerService.cs" />
     <Compile Include="Services\IClipboardService.cs" />
     <Compile Include="Services\IEnvironmentService.cs" />
     <Compile Include="Services\IManagerStatusService.cs" />

@@ -9,10 +9,18 @@ namespace Test.MusicManager.Domain.MusicFiles
     [TestClass]
     public class EntityTest : DomainTest
     {
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+            ServiceLocator.RegisterInstance<IChangeTrackerService>(new MockChangeTrackerService());
+        }
+
+
         [TestMethod]
         public void ChangeTrackerTest()
         {
             var entity = new MockEntity();
+            entity.EntityLoadCompleted();
             Assert.IsFalse(entity.HasChanges);
             var changesSnapshot1 = entity.GetChanges();
             Assert.IsFalse(changesSnapshot1.Any());

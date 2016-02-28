@@ -10,6 +10,7 @@ using Waf.MusicManager.Applications;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
+using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Test.MusicManager.Applications.UnitTesting
 {
@@ -44,6 +45,8 @@ namespace Test.MusicManager.Applications.UnitTesting
 
             ShellService shellService = Container.GetExportedValue<ShellService>();
             shellService.Settings = new AppSettings();
+
+            ServiceLocator.RegisterInstance<IChangeTrackerService>(new ChangeTrackerService());
         }
 
         protected override void OnCleanup()

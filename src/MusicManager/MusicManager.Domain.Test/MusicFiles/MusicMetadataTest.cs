@@ -31,7 +31,7 @@ namespace Test.MusicManager.Domain.MusicFiles
 
             metadata1.ApplyValuesFrom(metadata2);
 
-            TestHelper.AssertHaveEqualPropertyValues(metadata2, metadata1);
+            TestHelper.AssertHaveEqualPropertyValues(metadata2, metadata1, p => p.Name != nameof(MusicMetadata.Parent));
         }
 
         [TestMethod]

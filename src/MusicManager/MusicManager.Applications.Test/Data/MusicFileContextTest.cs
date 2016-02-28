@@ -72,7 +72,7 @@ namespace Test.MusicManager.Applications.Data
 
             Assert.AreNotEqual(musicFile, musicFile2);
             Assert.AreNotEqual(musicFile.Metadata, musicFile2.Metadata);
-            TestHelper.AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata);
+            TestHelper.AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
         }
 
         private void SetMusicFileData(MusicFile musicFile)
@@ -150,7 +150,7 @@ namespace Test.MusicManager.Applications.Data
 
             Assert.AreNotEqual(musicFile, musicFile2);
             Assert.AreNotEqual(musicFile.Metadata, musicFile2.Metadata);
-            TestHelper.AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata);
+            TestHelper.AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
         }
 
         [TestMethod, TestCategory("IntegrationTest")]
@@ -179,8 +179,8 @@ namespace Test.MusicManager.Applications.Data
             ctx.ApplyChanges(sharedMusicFile);
             Assert.IsTrue(musicFile2.Metadata.Artists.Any());
 
-            TestHelper.AssertHaveEqualPropertyValues(sharedMusicFile.Metadata, musicFile1.Metadata);
-            TestHelper.AssertHaveEqualPropertyValues(sharedMusicFile.Metadata, musicFile2.Metadata);
+            TestHelper.AssertHaveEqualPropertyValues(sharedMusicFile.Metadata, musicFile1.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
+            TestHelper.AssertHaveEqualPropertyValues(sharedMusicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
 
 
             musicFile1.Metadata.Title = "Title1";

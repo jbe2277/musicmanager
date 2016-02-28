@@ -34,7 +34,9 @@ namespace Waf.MusicManager.Domain.MusicFiles
         {
             return new MusicMetadata(duration, bitrate, false);
         }
-        
+
+
+        public object Parent { get; set; }
 
         public bool IsSupported { get; }
 

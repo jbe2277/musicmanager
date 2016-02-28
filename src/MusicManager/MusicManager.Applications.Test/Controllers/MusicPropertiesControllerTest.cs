@@ -66,6 +66,8 @@ namespace Test.MusicManager.Applications.Controllers
                 () => selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]));
             Assert.AreEqual(musicFiles[0], viewModel.MusicFile);
 
+            viewModel.MusicFile.Metadata.Rating = 33;
+
             // Extend the selection by adding the second music file
             
             // First the controller saves changes of the previous selected music file
@@ -99,7 +101,7 @@ namespace Test.MusicManager.Applications.Controllers
         [TestMethod]
         public void SaveChangesErrorTest()
         {
-            selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]);
+            selectionService.MusicFiles[0].MusicFile.Metadata.Rating = 33;
 
             var exception = new InvalidOperationException("Test");
             musicFileContext.SaveChangesAsyncAction = mf =>
@@ -129,6 +131,8 @@ namespace Test.MusicManager.Applications.Controllers
         {
             selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]);
             selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[1]);
+            selectionService.MusicFiles[0].MusicFile.Metadata.Rating = 33;
+            selectionService.MusicFiles[1].MusicFile.Metadata.Rating = 33;
 
             var saveChangesCalled = 0;
             var musicFileToSave = musicFiles[1];
@@ -136,6 +140,7 @@ namespace Test.MusicManager.Applications.Controllers
             {
                 saveChangesCalled++;
                 Assert.AreEqual(musicFileToSave, mf);
+                musicFileToSave.Metadata.ClearChanges();
                 return Task.FromResult((object)null);
             };
 
@@ -150,6 +155,8 @@ namespace Test.MusicManager.Applications.Controllers
             playlistManager.CurrentItem = new PlaylistItem(musicFiles[1]);
             Context.WaitFor(() => saveChangesCalled == 2, TimeSpan.FromSeconds(1));
 
+            selectionService.MusicFiles[0].MusicFile.Metadata.Rating = 50;
+            selectionService.MusicFiles[1].MusicFile.Metadata.Rating = 50;
             selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]);
             selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[1]);
             Assert.AreEqual(3, saveChangesCalled);
@@ -157,6 +164,8 @@ namespace Test.MusicManager.Applications.Controllers
             // Shutdown adds two tasks: 
             //   1. save selected file
             //   2. save unsaved files because they were played until now
+            selectionService.MusicFiles[0].MusicFile.Metadata.Rating = 75;
+            selectionService.MusicFiles[1].MusicFile.Metadata.Rating = 75;
             var shellService = Container.GetExportedValue<ShellService>();
             musicFileToSave = musicFiles[0];
             controller.Shutdown();

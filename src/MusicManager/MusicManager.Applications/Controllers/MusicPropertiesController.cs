@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Waf.MusicManager.Applications.Data;
@@ -23,6 +22,7 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly IMusicFileContext musicFileContext;
         private readonly ISelectionService selectionService;
         private readonly Lazy<MusicPropertiesViewModel> musicPropertiesViewModel;
+        private readonly ChangeTrackerService changeTrackerService;
         private readonly HashSet<MusicFile> musicFilesToSaveAfterPlaying;
         private TaskCompletionSource<object> allFilesSavedCompletion;
         
@@ -34,6 +34,7 @@ namespace Waf.MusicManager.Applications.Controllers
             this.musicFileContext = musicFileContext;
             this.selectionService = selectionService;
             this.musicPropertiesViewModel = musicPropertiesViewModel;
+            this.changeTrackerService = new ChangeTrackerService();
             this.musicFilesToSaveAfterPlaying = new HashSet<MusicFile>();
         }
 
@@ -45,6 +46,8 @@ namespace Waf.MusicManager.Applications.Controllers
 
         public void Initialize()
         {
+            ServiceLocator.RegisterInstance<IChangeTrackerService>(changeTrackerService);
+
             PlaylistManager.PropertyChanged += PlaylistManagerPropertyChanged;
             ((INotifyCollectionChanged)selectionService.SelectedMusicFiles).CollectionChanged += SelectedMusicFilesCollectionChanged;
             shellService.MusicPropertiesView = MusicPropertiesViewModel.View;
@@ -52,7 +55,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         public void Shutdown()
         {
-            var task = SaveCurrentSelectedFileAsync();
+            var task = SaveDirtyFilesAsync();
             shellService.AddTaskToCompleteBeforeShutdown(task);
 
             if (musicFilesToSaveAfterPlaying.Any())
@@ -65,7 +68,7 @@ namespace Waf.MusicManager.Applications.Controllers
         public void SelectMusicFiles(IReadOnlyList<MusicFile> musicFiles)
         {
             // Do not wait for the operation to complete. Continue immediately.
-            SaveCurrentSelectedFileAsync().IgnoreResult();
+            SaveDirtyFilesAsync().IgnoreResult();
             
             if (musicFiles.Count() <= 1)
             {
@@ -77,18 +80,18 @@ namespace Waf.MusicManager.Applications.Controllers
             }
         }
 
-        private Task SaveCurrentSelectedFileAsync()
+        private async Task SaveDirtyFilesAsync()
         {
             musicFileContext.ApplyChanges(MusicPropertiesViewModel.MusicFile);
-            return SaveChangesAsync(MusicPropertiesViewModel.MusicFile);
+
+            var tasks = changeTrackerService.GetEntitiesWithChanges().Cast<MusicMetadata>().Select(x => SaveChangesAsync((MusicFile)x.Parent));
+            await Task.WhenAll(tasks);
         }
 
         private async Task SaveMusicFilesToSaveAfterPlayingAsync()
         {
-            foreach (var musicFile in musicFilesToSaveAfterPlaying.ToArray())
-            {
-                await SaveChangesAsync(musicFile);
-            }
+            var tasks = musicFilesToSaveAfterPlaying.ToArray().Select(x => SaveChangesAsync(x));
+            await Task.WhenAll(tasks);
         }
 
         private async void PlaylistManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -124,7 +127,7 @@ namespace Waf.MusicManager.Applications.Controllers
             {
                 return;
             }
-            var tasks = filesToSave.Select(x => musicFileContext.SaveChangesAsync(x)).ToArray();
+            var tasks = filesToSave.Select(x => SaveChangesCoreAsync(x)).ToArray();
 
             try
             {
@@ -145,6 +148,20 @@ namespace Waf.MusicManager.Applications.Controllers
             finally
             {
                 RemoveMusicFilesToSaveAfterPlaying(filesToSave);
+            }
+        }
+
+        private async Task SaveChangesCoreAsync(MusicFile musicFile)
+        {
+            try
+            {
+                changeTrackerService.RemoveEntity(musicFile.Metadata);
+                await musicFileContext.SaveChangesAsync(musicFile);
+            }
+            catch (Exception)
+            {
+                changeTrackerService.EntityHasChanges(musicFile.Metadata);
+                throw;
             }
         }
 

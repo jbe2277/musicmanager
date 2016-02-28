@@ -76,6 +76,8 @@ namespace Waf.MusicManager.Domain.MusicFiles
             {
                 var musicMetadata = await loadMetadata(FileName);
                 if (musicMetadata == null) { throw new InvalidOperationException("The loadMetadata delegate must not return null."); }
+                musicMetadata.Parent = this;
+                musicMetadata.EntityLoadCompleted();
                 Metadata = musicMetadata;
                 IsMetadataLoaded = true;
                 loadMetadataCompletionSource.SetResult(Metadata);
