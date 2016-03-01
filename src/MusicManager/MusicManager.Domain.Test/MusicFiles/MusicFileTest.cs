@@ -17,6 +17,7 @@ namespace Test.MusicManager.Domain.MusicFiles
         {
  	        base.OnInitialize();
             assertUnobservedExceptions.Initialize();
+            ServiceLocator.RegisterInstance<IChangeTrackerService>(new MockChangeTrackerService());
         }
 
         [TestCleanup]
@@ -45,6 +46,11 @@ namespace Test.MusicManager.Domain.MusicFiles
             Assert.AreEqual(metadata, musicFile.Metadata);
             Assert.AreEqual(metadata, musicFile.GetMetadataAsync().Result);
             Assert.IsTrue(musicFile.IsMetadataLoaded);
+            Assert.AreEqual(musicFile, musicFile.Metadata.Parent);
+
+            Assert.IsFalse(musicFile.Metadata.HasChanges);
+            musicFile.Metadata.Rating = 33;
+            Assert.IsTrue(musicFile.Metadata.HasChanges);
         }
         
         [TestMethod]

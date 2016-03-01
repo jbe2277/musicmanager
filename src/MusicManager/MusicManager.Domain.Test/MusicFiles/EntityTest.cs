@@ -9,10 +9,14 @@ namespace Test.MusicManager.Domain.MusicFiles
     [TestClass]
     public class EntityTest : DomainTest
     {
+        private MockChangeTrackerService changeTrackerService;
+
+
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            ServiceLocator.RegisterInstance<IChangeTrackerService>(new MockChangeTrackerService());
+            changeTrackerService = new MockChangeTrackerService();
+            ServiceLocator.RegisterInstance<IChangeTrackerService>(changeTrackerService);
         }
 
 
@@ -40,6 +44,25 @@ namespace Test.MusicManager.Domain.MusicFiles
 
             entity.Name = "Bill";
             Assert.IsFalse(entity.HasChanges);
+        }
+
+        [TestMethod]
+        public void EntityHasChangesTest()
+        {
+            int entityHasChangesCallCount = 0;
+            changeTrackerService.EntityHasChangesAction = e => entityHasChangesCallCount++;
+
+            // No change tracking during loading state
+            var entity = new MockEntity();
+            entity.Name = "Bill";
+            Assert.AreEqual(0, entityHasChangesCallCount);
+            Assert.IsFalse(entity.HasChanges);
+
+            // Start change tracking when load completed
+            entity.EntityLoadCompleted();
+            entity.Name = "Steve";
+            Assert.AreEqual(1, entityHasChangesCallCount);
+            Assert.IsTrue(entity.HasChanges);
         }
 
 
