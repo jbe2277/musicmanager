@@ -2,8 +2,11 @@ Changelog
 ---------
 
 
-Version 1.4.0.1 (Milestone 1)
-- TODO
+Version 1.4.0.100 (Release)
+- Improve stability of saving music metadata.
+- Add delete file command in the context menu.
+- Add context menu to the current playing music file for showing the music details.
+- Add context menu to the current playing music file for showing it in the playlist.
 
 
 Version 1.3.0.100 (Release)
