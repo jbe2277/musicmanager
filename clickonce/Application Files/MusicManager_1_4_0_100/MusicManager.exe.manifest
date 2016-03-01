@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="MusicManager.exe" version="1.3.0.100" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="MusicManager.exe" version="1.4.0.100" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="Resources\Images\MusicManager.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="MusicManager" version="1.3.0.1" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="MusicManager" version="1.4.0.100" language="neutral" processorArchitecture="msil" />
     <commandLine file="MusicManager.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -43,62 +43,62 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MusicManager.exe" size="260608">
-      <assemblyIdentity name="MusicManager" version="1.3.0.1" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MusicManager.exe" size="261120">
+      <assemblyIdentity name="MusicManager" version="1.4.0.100" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>+i05j4+RDUz8s9tbu1Y+dRKlZDmfQCbbKeyBE9sN7XU=</dsig:DigestValue>
+        <dsig:DigestValue>woQNuFHFpFRXpX9FIbwjeDYExxWSnYkCuy/HS3WFkA0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="de\MusicManager.resources.dll" size="7680">
-      <assemblyIdentity name="MusicManager.resources" version="1.3.0.1" language="de" processorArchitecture="msil" />
+      <assemblyIdentity name="MusicManager.resources" version="1.4.0.100" language="de" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>QYJ9t2y9zZqQ7gG4rT7pH6+FxI3uFHrXydzbiX23e74=</dsig:DigestValue>
+        <dsig:DigestValue>jY4rtFyYQ+KxrXIB8V0hHAfDiJYqjjWZe10l11+NqiE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Waf.MusicManager.Applications.dll" size="123392">
-      <assemblyIdentity name="Waf.MusicManager.Applications" version="1.3.0.1" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Waf.MusicManager.Applications.dll" size="128512">
+      <assemblyIdentity name="Waf.MusicManager.Applications" version="1.4.0.100" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>4ibRD5RYJZKxzQjAFvpquGDXfIQ6SreCWxFdg3zIUwQ=</dsig:DigestValue>
+        <dsig:DigestValue>aMMDOWu3ZJkZNgHuwYdn+WVq5rF98np+yypZ0+r4u1M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="de\Waf.MusicManager.Applications.resources.dll" size="4608">
-      <assemblyIdentity name="Waf.MusicManager.Applications.resources" version="1.3.0.1" language="de" processorArchitecture="msil" />
+      <assemblyIdentity name="Waf.MusicManager.Applications.resources" version="1.4.0.100" language="de" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ssJoGC0PDvxfkm9wVXQxkUu0aR8HHTTD86gWDD0L81w=</dsig:DigestValue>
+        <dsig:DigestValue>1V+mw/1wlr3feYGenxUuCqEaRsMKInBcrEC9qBGuedY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Waf.MusicManager.Domain.dll" size="27136">
-      <assemblyIdentity name="Waf.MusicManager.Domain" version="1.3.0.1" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Waf.MusicManager.Domain.dll" size="28672">
+      <assemblyIdentity name="Waf.MusicManager.Domain" version="1.4.0.100" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>WsfeuX3MwlJ2Z0hrQn6m/EMy0yRXxpy+NMBotXEPlBQ=</dsig:DigestValue>
+        <dsig:DigestValue>ktOZ8WFClP1tJzVyDCb8R6KHvbHbK+9nMv1CKFLywiA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
