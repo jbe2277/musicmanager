@@ -82,7 +82,7 @@ namespace Waf.MusicManager.Presentation
             // Wait until all registered tasks are finished
             var shellService = container.GetExportedValue<IShellService>();
             var tasksToWait = shellService.TasksToCompleteBeforeShutdown.ToArray();
-            while (tasksToWait.Any(t => !t.IsCompleted && !t.IsCanceled && !t.IsFaulted))
+            while (tasksToWait.Any(t => !t.IsCompleted))
             {
                 DispatcherHelper.DoEvents();
             }
