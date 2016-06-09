@@ -288,11 +288,10 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             
             // It is necessary to run this in an own task => otherwise, reentrance would block the UI thread although this should not happen.
-            return Task<IReadOnlyList<string>>.Factory.StartNew(() =>
+            return Task.Run(() =>
             {    
                 return GetFilesCore(directory, folderDepth, userSearchFilter, applicationSearchFilter, cancellationToken);   
-            },
-            TaskCreationOptions.LongRunning);
+            });
         }
 
         private static IReadOnlyList<string> GetFilesCore(string directory, FolderDepth folderDepth, string userSearchFilter, string applicationSearchFilter, 
