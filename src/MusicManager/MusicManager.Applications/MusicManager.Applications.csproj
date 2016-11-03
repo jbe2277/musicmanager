@@ -68,6 +68,8 @@
     <Compile Include="Data\Metadata\AacSaveMetadata.cs" />
     <Compile Include="Data\Metadata\FlacReadMetadata.cs" />
     <Compile Include="Data\Metadata\FlacSaveMetadata.cs" />
+    <Compile Include="Data\Metadata\MkvReadMetadata.cs" />
+    <Compile Include="Data\Metadata\MkvSaveMetadata.cs" />
     <Compile Include="Data\Metadata\Mp3SaveMetadata.cs" />
     <Compile Include="Data\Metadata\Mp4ReadMetadata.cs" />
     <Compile Include="Data\Metadata\Mp4SaveMetadata.cs" />
