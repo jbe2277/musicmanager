@@ -52,12 +52,12 @@ namespace Test.MusicManager.Applications.Views
 
         public void RaiseClosing(CancelEventArgs e)
         {
-            if (Closing != null) { Closing(this, e); }
+            Closing?.Invoke(this, e);
         }
 
         protected void OnClosed(EventArgs e)
         {
-            if (Closed != null) { Closed(this, e); }
+            Closed?.Invoke(this, e);
         }
     }
 }

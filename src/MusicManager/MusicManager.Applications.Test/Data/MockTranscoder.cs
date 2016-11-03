@@ -14,11 +14,7 @@ namespace Test.MusicManager.Applications.Data
         
         public Task TranscodeAsync(string sourceFileName, string destinationFileName, uint bitrate, CancellationToken cancellationToken, IProgress<double> progress)
         {
-            if (TranscodeAsyncAction != null)
-            {
-                return TranscodeAsyncAction(sourceFileName, destinationFileName, bitrate, cancellationToken, progress);
-            }
-            return Task.FromResult((object)null);
+            return TranscodeAsyncAction?.Invoke(sourceFileName, destinationFileName, bitrate, cancellationToken, progress) ?? Task.FromResult((object)null);
         }
     }
 }

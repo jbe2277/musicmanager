@@ -12,7 +12,7 @@ namespace Test.MusicManager.Applications.Services
 
         public void SetText(string text)
         {
-            if (SetTextAction != null) { SetTextAction(text); }
+            SetTextAction?.Invoke(text);
         }
     }
 }

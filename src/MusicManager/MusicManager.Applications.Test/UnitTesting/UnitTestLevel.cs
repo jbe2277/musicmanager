@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Test.MusicManager.Applications.UnitTesting
+﻿namespace Test.MusicManager.Applications.UnitTesting
 {
     public enum UnitTestLevel
     {

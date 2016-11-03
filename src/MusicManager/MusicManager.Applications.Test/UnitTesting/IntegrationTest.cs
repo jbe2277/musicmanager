@@ -5,6 +5,6 @@ namespace Test.MusicManager.Applications.UnitTesting
     [TestClass]
     public class IntegrationTest : ApplicationsTest
     {
-        protected override UnitTestLevel UnitTestLevel { get { return UnitTestLevel.IntegrationTest; } }
+        protected override UnitTestLevel UnitTestLevel => UnitTestLevel.IntegrationTest;
     }
 }

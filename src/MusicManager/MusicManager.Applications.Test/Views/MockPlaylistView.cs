@@ -18,17 +18,17 @@ namespace Test.MusicManager.Applications.Views
         
         public void FocusSearchBox()
         {
-            if (FocusSearchBoxStub != null) { FocusSearchBoxStub(); }
+            FocusSearchBoxStub?.Invoke();
         }
         
         public void FocusSelectedItem()
         {
-            if (FocusSelectedItemStub != null) { FocusSelectedItemStub(); }
+            FocusSelectedItemStub?.Invoke();
         }
 
         public void ScrollIntoView(PlaylistItem item)
         {
-            if (ScrollIntoViewStub != null) { ScrollIntoViewStub(item); }
+            ScrollIntoViewStub?.Invoke(item);
         }
     }
 }

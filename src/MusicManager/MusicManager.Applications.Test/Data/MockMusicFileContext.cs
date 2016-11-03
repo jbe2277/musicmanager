@@ -41,19 +41,12 @@ namespace Test.MusicManager.Applications.Data
 
         public void ApplyChanges(MusicFile musicFile)
         {
-            if (ApplyChangesAction != null)
-            {
-                ApplyChangesAction(musicFile);
-            }
+            ApplyChangesAction?.Invoke(musicFile);
         }
 
         public Task SaveChangesAsync(MusicFile musicFile)
         {
-            if (SaveChangesAsyncAction != null)
-            {
-                return SaveChangesAsyncAction(musicFile);
-            }
-            return Task.FromResult((object)null);
+            return SaveChangesAsyncAction?.Invoke(musicFile) ?? Task.FromResult((object)null);
         }
     }
 }

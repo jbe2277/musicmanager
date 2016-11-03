@@ -17,31 +17,29 @@ namespace Test.MusicManager.Applications.UnitTesting
     [TestClass]
     public abstract class ApplicationsTest : DomainTest
     {
-        private UnitTestSynchronizationContext context;
         private AggregateCatalog catalog;
-        private CompositionContainer container;
         
 
-        protected UnitTestSynchronizationContext Context { get { return context; } } 
+        protected UnitTestSynchronizationContext Context { get; private set; } 
         
-        protected CompositionContainer Container { get { return container; } }
+        protected CompositionContainer Container { get; private set; }
 
-        protected virtual UnitTestLevel UnitTestLevel { get { return UnitTestLevel.UnitTest; } }
+        protected virtual UnitTestLevel UnitTestLevel => UnitTestLevel.UnitTest;
 
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
 
-            context = UnitTestSynchronizationContext.Create();
+            Context = UnitTestSynchronizationContext.Create();
 
             catalog = new AggregateCatalog();
             OnCatalogInitialize(catalog);
 
-            container = new CompositionContainer(catalog, CompositionOptions.DisableSilentRejection);
+            Container = new CompositionContainer(catalog, CompositionOptions.DisableSilentRejection);
             CompositionBatch batch = new CompositionBatch();
-            batch.AddExportedValue(container);
-            container.Compose(batch);
+            batch.AddExportedValue(Container);
+            Container.Compose(batch);
 
             ShellService shellService = Container.GetExportedValue<ShellService>();
             shellService.Settings = new AppSettings();
@@ -51,9 +49,9 @@ namespace Test.MusicManager.Applications.UnitTesting
 
         protected override void OnCleanup()
         {
-            container.Dispose();
+            Container.Dispose();
             catalog.Dispose();
-            context.Dispose();
+            Context.Dispose();
 
             base.OnCleanup();
         }
