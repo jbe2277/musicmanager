@@ -31,7 +31,7 @@
     <PublisherName>Waf</PublisherName>
     <SuiteName>Waf Music Manager</SuiteName>
     <ApplicationRevision>100</ApplicationRevision>
-    <ApplicationVersion>1.4.0.100</ApplicationVersion>
+    <ApplicationVersion>1.5.0.100</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>

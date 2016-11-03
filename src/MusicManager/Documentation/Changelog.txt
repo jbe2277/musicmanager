@@ -2,6 +2,10 @@ Changelog
 ---------
 
 
+Version 1.5.0.100 (Release)
+- Support the MVK file format for audio playback when running on Windows 10.
+
+
 Version 1.4.0.100 (Release)
 - Improve stability of saving music metadata.
 - Add delete file command in the context menu.
