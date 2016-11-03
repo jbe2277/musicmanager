@@ -37,7 +37,7 @@ namespace Waf.MusicManager.Applications.Services
 
         public AppSettings Settings { get; set; }
         
-        public object ShellView { get { return shellView.Value; } }
+        public object ShellView => shellView.Value;
 
         public object ContentView
         {
@@ -77,7 +77,7 @@ namespace Waf.MusicManager.Applications.Services
 
         public Action ShowTranscodingListViewAction { get; set; }
 
-        public IReadOnlyCollection<Task> TasksToCompleteBeforeShutdown { get { return tasksToCompleteBeforeShutdown; } }
+        public IReadOnlyCollection<Task> TasksToCompleteBeforeShutdown => tasksToCompleteBeforeShutdown;
 
         public bool IsApplicationBusy
         {

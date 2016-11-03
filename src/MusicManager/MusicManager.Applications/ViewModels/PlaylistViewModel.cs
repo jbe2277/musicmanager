@@ -15,10 +15,6 @@ namespace Waf.MusicManager.Applications.ViewModels
     [Export]
     public class PlaylistViewModel : ViewModel<IPlaylistView>
     {
-        private readonly ObservableCollection<PlaylistItem> selectedPlaylistItems;
-        private readonly ICommand searchNextCommand;
-        private readonly ICommand searchPreviousCommand;
-        private readonly ICommand clearSearchCommand;
         private PlaylistManager playlistManager;
         private PlaylistItem selectedPlaylistItem;
         private ICommand playSelectedCommand;
@@ -33,10 +29,10 @@ namespace Waf.MusicManager.Applications.ViewModels
         [ImportingConstructor]
         public PlaylistViewModel(IPlaylistView view) : base(view)
         {
-            this.selectedPlaylistItems = new ObservableCollection<PlaylistItem>();
-            this.searchNextCommand = new DelegateCommand(SearchNext);
-            this.searchPreviousCommand = new DelegateCommand(SearchPrevious);
-            this.clearSearchCommand = new DelegateCommand(ClearSearch);
+            SelectedPlaylistItems = new ObservableCollection<PlaylistItem>();
+            SearchNextCommand = new DelegateCommand(SearchNext);
+            SearchPreviousCommand = new DelegateCommand(SearchPrevious);
+            ClearSearchCommand = new DelegateCommand(ClearSearch);
         }
 
 
@@ -52,7 +48,7 @@ namespace Waf.MusicManager.Applications.ViewModels
             set { SetProperty(ref selectedPlaylistItem, value); }
         }
 
-        public IList<PlaylistItem> SelectedPlaylistItems { get { return selectedPlaylistItems; } }
+        public IList<PlaylistItem> SelectedPlaylistItems { get; }
 
         public ICommand PlaySelectedCommand
         {
@@ -94,11 +90,11 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public Action<int, IEnumerable<MusicFile>> InsertMusicFilesAction { get; set; }
 
-        public ICommand SearchNextCommand { get { return searchNextCommand; } }
+        public ICommand SearchNextCommand { get; }
 
-        public ICommand SearchPreviousCommand { get { return searchPreviousCommand; } }
+        public ICommand SearchPreviousCommand { get; }
 
-        public ICommand ClearSearchCommand { get { return clearSearchCommand; } }
+        public ICommand ClearSearchCommand { get; }
 
         public string SearchText
         {

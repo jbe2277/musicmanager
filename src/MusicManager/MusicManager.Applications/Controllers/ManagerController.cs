@@ -67,7 +67,7 @@ namespace Waf.MusicManager.Applications.Controllers
         }
 
 
-        private ManagerViewModel ManagerViewModel { get { return managerViewModel.Value; } }
+        private ManagerViewModel ManagerViewModel => managerViewModel.Value;
 
 
         public void Initialize()

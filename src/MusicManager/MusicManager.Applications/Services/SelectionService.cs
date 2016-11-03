@@ -11,20 +11,19 @@ namespace Waf.MusicManager.Applications.Services
     [Export, Export(typeof(ISelectionService))]
     internal class SelectionService : ISelectionService
     {
-        private readonly ObservableCollection<MusicFileDataModel> selectedMusicFileDataModels;
         private SynchronizingCollection<MusicFileDataModel, MusicFile> musicFileDataModels;
 
 
         [ImportingConstructor]
         public SelectionService()
         {
-            this.selectedMusicFileDataModels = new ObservableCollection<MusicFileDataModel>();
+            SelectedMusicFiles = new ObservableCollection<MusicFileDataModel>();
         }
 
         
-        public IReadOnlyObservableList<MusicFileDataModel> MusicFiles { get { return musicFileDataModels; } }
+        public IReadOnlyObservableList<MusicFileDataModel> MusicFiles => musicFileDataModels;
 
-        public IList<MusicFileDataModel> SelectedMusicFiles { get { return selectedMusicFileDataModels; } }
+        public IList<MusicFileDataModel> SelectedMusicFiles { get; }
 
 
         public void Initialize(IEnumerable<MusicFile> musicFiles)

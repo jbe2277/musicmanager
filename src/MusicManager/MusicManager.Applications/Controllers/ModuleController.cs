@@ -49,19 +49,19 @@ namespace Waf.MusicManager.Applications.Controllers
         }
 
 
-        private ShellService ShellService { get { return shellService.Value; } }
+        private ShellService ShellService => shellService.Value;
 
-        private ManagerController ManagerController { get { return managerController.Value; } }
+        private ManagerController ManagerController => managerController.Value;
 
-        private MusicPropertiesController MusicPropertiesController { get { return musicPropertiesController.Value; } }
+        private MusicPropertiesController MusicPropertiesController => musicPropertiesController.Value;
 
-        private PlayerController PlayerController { get { return playerController.Value; } }
+        private PlayerController PlayerController => playerController.Value;
 
-        private PlaylistController PlaylistController { get { return playlistController.Value; } }
+        private PlaylistController PlaylistController => playlistController.Value;
 
-        private TranscodingController TranscodingController { get { return transcodingController.Value; } }
+        private TranscodingController TranscodingController => transcodingController.Value;
 
-        private ShellViewModel ShellViewModel { get { return shellViewModel.Value; } }
+        private ShellViewModel ShellViewModel => shellViewModel.Value;
 
 
         public void Initialize()

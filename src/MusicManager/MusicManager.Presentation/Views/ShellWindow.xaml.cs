@@ -29,9 +29,9 @@ namespace Waf.MusicManager.Presentation.Views
         }
 
 
-        public double VirtualScreenWidth { get { return SystemParameters.VirtualScreenWidth; } }
+        public double VirtualScreenWidth => SystemParameters.VirtualScreenWidth;
 
-        public double VirtualScreenHeight { get { return SystemParameters.VirtualScreenHeight; } }
+        public double VirtualScreenHeight => SystemParameters.VirtualScreenHeight;
 
         public bool IsMaximized
         {
@@ -49,7 +49,7 @@ namespace Waf.MusicManager.Presentation.Views
             }
         }
 
-        private ShellViewModel ViewModel { get { return viewModel.Value; } }
+        private ShellViewModel ViewModel => viewModel.Value;
 
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)

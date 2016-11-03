@@ -34,7 +34,7 @@ namespace Waf.MusicManager.Presentation.Views
         }
 
 
-        private TranscodingListViewModel ViewModel { get { return viewModel.Value; } }
+        private TranscodingListViewModel ViewModel => viewModel.Value;
 
 
         private void FirstTimeLoadedHandler(object sender, RoutedEventArgs e)

@@ -60,7 +60,7 @@ namespace Waf.MusicManager.Applications.Controllers
         }
 
 
-        private TranscodingListViewModel TranscodingListViewModel { get { return transcodingListViewModel.Value; } }
+        private TranscodingListViewModel TranscodingListViewModel => transcodingListViewModel.Value;
 
 
         public void Initialize()

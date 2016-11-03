@@ -59,7 +59,7 @@ namespace Waf.MusicManager.Presentation.Views
         }
 
 
-        private PlayerViewModel ViewModel { get { return viewModel.Value; } }
+        private PlayerViewModel ViewModel => viewModel.Value;
         
 
         public TimeSpan GetPosition() { return mediaPlayer.Position; }

@@ -10,21 +10,19 @@ namespace Waf.MusicManager.Presentation.DesignData
     public class MockSelectionService : ISelectionService
     {
         private ObservableCollection<MusicFileDataModel> innerMusicFiles;
-        private ObservableCollection<MusicFileDataModel> selectedMusicFiles;
-        private ReadOnlyObservableList<MusicFileDataModel> musicFiles;
 
 
         public MockSelectionService()
         {
-            this.innerMusicFiles = new ObservableCollection<MusicFileDataModel>();
-            this.selectedMusicFiles = new ObservableCollection<MusicFileDataModel>();
-            this.musicFiles = new ReadOnlyObservableList<MusicFileDataModel>(innerMusicFiles);
+            innerMusicFiles = new ObservableCollection<MusicFileDataModel>();
+            SelectedMusicFiles = new ObservableCollection<MusicFileDataModel>();
+            MusicFiles = new ReadOnlyObservableList<MusicFileDataModel>(innerMusicFiles);
         }
 
 
-        public IReadOnlyObservableList<MusicFileDataModel> MusicFiles { get { return musicFiles; } }
+        public IReadOnlyObservableList<MusicFileDataModel> MusicFiles { get; }
 
-        public IList<MusicFileDataModel> SelectedMusicFiles { get { return selectedMusicFiles; } }
+        public IList<MusicFileDataModel> SelectedMusicFiles { get; }
         
 
         public void SetMusicFiles(IEnumerable<MusicFileDataModel> musicFiles)
@@ -35,8 +33,8 @@ namespace Waf.MusicManager.Presentation.DesignData
 
         public void SetSelectedMusicFiles(IEnumerable<MusicFileDataModel> selectedMusicFiles)
         {
-            this.selectedMusicFiles.Clear();
-            selectedMusicFiles.ToList().ForEach(x => this.selectedMusicFiles.Add(x));
+            SelectedMusicFiles.Clear();
+            selectedMusicFiles.ToList().ForEach(x => SelectedMusicFiles.Add(x));
         }
     }
 }

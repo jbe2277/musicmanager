@@ -23,14 +23,8 @@ namespace Waf.MusicManager.Applications.DataModels
 
         public MusicFile MusicFile { get; }
 
-        public string ArtistsString 
-        { 
-            get 
-            { 
-                return string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", 
-                    MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : new string[0]); 
-            }
-        }
+        public string ArtistsString => string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", 
+                MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : new string[0]); 
 
 
         private void MetadataLoaded()

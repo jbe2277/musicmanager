@@ -14,7 +14,6 @@ namespace Waf.MusicManager.Applications.ViewModels
     public class MusicPropertiesViewModel : ViewModel<IMusicPropertiesView>
     {
         private readonly IClipboardService clipboardService;
-        private readonly DelegateCommand copyFileNameCommand;
         private readonly DelegateCommand autoFillFromFileNameCommand;
         private MusicFile musicFile;
 
@@ -23,14 +22,14 @@ namespace Waf.MusicManager.Applications.ViewModels
         public MusicPropertiesViewModel(IMusicPropertiesView view, IClipboardService clipboardService) : base(view)
         {
             this.clipboardService = clipboardService;
-            this.copyFileNameCommand = new DelegateCommand(CopyFileNameToClipboard);
-            this.autoFillFromFileNameCommand = new DelegateCommand(AutoFillFromFileName, CanAutoFillFromFileName);
+            CopyFileNameCommand = new DelegateCommand(CopyFileNameToClipboard);
+            autoFillFromFileNameCommand = new DelegateCommand(AutoFillFromFileName, CanAutoFillFromFileName);
         }
 
 
-        public ICommand CopyFileNameCommand { get { return copyFileNameCommand; } }
+        public ICommand CopyFileNameCommand { get; }
 
-        public ICommand AutoFillFromFileNameCommand { get { return autoFillFromFileNameCommand; } }
+        public ICommand AutoFillFromFileNameCommand => autoFillFromFileNameCommand;
 
         public MusicFile MusicFile
         {

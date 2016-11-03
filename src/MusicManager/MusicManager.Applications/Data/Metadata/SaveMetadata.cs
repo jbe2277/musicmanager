@@ -11,7 +11,7 @@ namespace Waf.MusicManager.Applications.Data.Metadata
 {
     internal abstract class SaveMetadata
     {
-        protected virtual bool IsSupported { get { return true; } }
+        protected virtual bool IsSupported => true;
         
 
         public async Task SaveChangesAsync(MusicFile musicFile)

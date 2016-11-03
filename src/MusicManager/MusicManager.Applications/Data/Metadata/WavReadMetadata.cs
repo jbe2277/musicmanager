@@ -2,6 +2,6 @@
 {
     internal class WavReadMetadata : ReadMetadata
     {
-        protected override bool IsSupported { get { return false; } }
+        protected override bool IsSupported => false;
     }
 }

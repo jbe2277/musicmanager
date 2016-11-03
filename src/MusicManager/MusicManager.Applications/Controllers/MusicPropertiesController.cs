@@ -41,7 +41,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         public PlaylistManager PlaylistManager { get; set; }
 
-        private MusicPropertiesViewModel MusicPropertiesViewModel { get { return musicPropertiesViewModel.Value; } }
+        private MusicPropertiesViewModel MusicPropertiesViewModel => musicPropertiesViewModel.Value;
 
 
         public void Initialize()

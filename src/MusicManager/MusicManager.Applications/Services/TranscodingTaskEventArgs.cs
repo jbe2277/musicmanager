@@ -5,19 +5,15 @@ namespace Waf.MusicManager.Applications.Services
 {
     public class TranscodingTaskEventArgs : EventArgs
     {
-        private readonly string fileName;
-        private readonly Task transcodingTask;
-
-
         public TranscodingTaskEventArgs(string fileName, Task transcodingTask)
         {
-            this.fileName = fileName;
-            this.transcodingTask = transcodingTask;
+            FileName = fileName;
+            TranscodingTask = transcodingTask;
         }
 
 
-        public string FileName { get { return fileName; } }
+        public string FileName { get; }
 
-        public Task TranscodingTask { get { return transcodingTask; } }
+        public Task TranscodingTask { get; }
     }
 }

@@ -2,6 +2,6 @@
 {
     internal class WavSaveMetadata : SaveMetadata
     {
-        protected override bool IsSupported { get { return false; } }
+        protected override bool IsSupported => false;
     }
 }

@@ -5,9 +5,7 @@ namespace Waf.MusicManager.Applications.Data
 {
     internal class SequenceEqualityComparer<T> : IEqualityComparer<IEnumerable<T>>
     {
-        private static readonly SequenceEqualityComparer<T> defaultInstance = new SequenceEqualityComparer<T>();
-
-        public static SequenceEqualityComparer<T> Default { get { return defaultInstance; } }
+        public static SequenceEqualityComparer<T> Default { get; } = new SequenceEqualityComparer<T>();
 
 
         public bool Equals(IEnumerable<T> x, IEnumerable<T> y)

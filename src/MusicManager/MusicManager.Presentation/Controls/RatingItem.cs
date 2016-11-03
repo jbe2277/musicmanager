@@ -27,6 +27,10 @@ namespace Waf.MusicManager.Presentation.Controls
         private double mouseOverValue;
 
 
+        public bool IsMouseOverRating => (bool)GetValue(IsMouseOverRatingProperty);
+
+        public RatingItemState RatingItemState => (RatingItemState)GetValue(RatingItemStateProperty);
+
         internal int ItemValue { get; set; }
 
         internal double Value 
@@ -55,16 +59,7 @@ namespace Waf.MusicManager.Presentation.Controls
             }
         }
 
-        public bool IsMouseOverRating
-        {
-            get { return (bool)GetValue(IsMouseOverRatingProperty); }
-        }
-
-        public RatingItemState RatingItemState
-        {
-            get { return (RatingItemState)GetValue(RatingItemStateProperty); }
-        }
-
+        
         private void UpdateRatingItemState()
         {
             RatingItemState state;

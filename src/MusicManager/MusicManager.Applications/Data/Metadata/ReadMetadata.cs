@@ -10,7 +10,7 @@ namespace Waf.MusicManager.Applications.Data.Metadata
 {
     internal abstract class ReadMetadata
     {
-        protected virtual bool IsSupported { get { return true; } }
+        protected virtual bool IsSupported => true;
 
 
         public async Task<MusicMetadata> CreateMusicMetadata(MusicProperties properties, CancellationToken cancellationToken)

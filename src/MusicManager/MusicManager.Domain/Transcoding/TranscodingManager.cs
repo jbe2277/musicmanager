@@ -6,17 +6,16 @@ namespace Waf.MusicManager.Domain.Transcoding
     public class TranscodingManager
     {
         private readonly ObservableCollection<TranscodeItem> transcodeItems;
-        private readonly ReadOnlyObservableList<TranscodeItem> readOnlyTranscodeItems;
 
 
         public TranscodingManager()
         {
-            this.transcodeItems = new ObservableCollection<TranscodeItem>();
-            this.readOnlyTranscodeItems = new ReadOnlyObservableList<TranscodeItem>(transcodeItems);
+            transcodeItems = new ObservableCollection<TranscodeItem>();
+            TranscodeItems = new ReadOnlyObservableList<TranscodeItem>(transcodeItems);
         }
 
 
-        public IReadOnlyObservableList<TranscodeItem> TranscodeItems { get { return readOnlyTranscodeItems; } }
+        public IReadOnlyObservableList<TranscodeItem> TranscodeItems { get; }
 
 
         public void AddTranscodeItem(TranscodeItem item)

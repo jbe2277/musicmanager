@@ -12,12 +12,6 @@ namespace Waf.MusicManager.Applications.ViewModels
     public class ManagerViewModel : ViewModel<IManagerView>
     {
         private readonly Lazy<ISelectionService> selectionService;
-        private readonly IManagerStatusService managerStatusService;
-        private readonly IPlayerService playerService;
-        private readonly ITranscodingService transcodingService;
-        private readonly FolderBrowserDataModel folderBrowser;
-        private readonly SearchFilterDataModel searchFilter;
-        private readonly DelegateCommand clearSearchCommand;
         private MusicFileDataModel selectedMusicFile;
         private ICommand updateSubDirectoriesCommand;
         private ICommand navigateDirectoryUpCommand;
@@ -35,26 +29,26 @@ namespace Waf.MusicManager.Applications.ViewModels
             : base(view)
         {
             this.selectionService = selectionService;
-            this.managerStatusService = managerStatusService;
-            this.playerService = playerService;
-            this.transcodingService = transcodingService;
-            this.folderBrowser = new FolderBrowserDataModel();
-            this.searchFilter = new SearchFilterDataModel();
-            this.clearSearchCommand = new DelegateCommand(ClearSearch);
+            ManagerStatusService = managerStatusService;
+            PlayerService = playerService;
+            TranscodingService = transcodingService;
+            FolderBrowser = new FolderBrowserDataModel();
+            SearchFilter = new SearchFilterDataModel();
+            ClearSearchCommand = new DelegateCommand(ClearSearch);
         }
 
 
-        public ISelectionService SelectionService { get { return selectionService.Value; } }
+        public ISelectionService SelectionService => selectionService.Value;
         
-        public IManagerStatusService ManagerStatusService { get { return managerStatusService; } }
+        public IManagerStatusService ManagerStatusService { get; }
 
-        public IPlayerService PlayerService { get { return playerService; } }
+        public IPlayerService PlayerService { get; }
 
-        public ITranscodingService TranscodingService { get { return transcodingService; } }
+        public ITranscodingService TranscodingService { get; }
 
-        public FolderBrowserDataModel FolderBrowser { get { return folderBrowser; } }
+        public FolderBrowserDataModel FolderBrowser { get; }
 
-        public SearchFilterDataModel SearchFilter { get { return searchFilter; } }
+        public SearchFilterDataModel SearchFilter { get; }
 
         public MusicFileDataModel SelectedMusicFile
         {
@@ -98,7 +92,7 @@ namespace Waf.MusicManager.Applications.ViewModels
             set { SetProperty(ref navigateToSelectedSubDirectoryCommand, value); }
         }
 
-        public ICommand ClearSearchCommand { get { return clearSearchCommand; } }
+        public ICommand ClearSearchCommand { get; }
 
         public ICommand ShowMusicPropertiesCommand
         {

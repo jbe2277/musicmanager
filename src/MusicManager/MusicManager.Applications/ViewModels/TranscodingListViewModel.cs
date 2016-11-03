@@ -13,7 +13,6 @@ namespace Waf.MusicManager.Applications.ViewModels
     [Export]
     public class TranscodingListViewModel : ViewModel<ITranscodingListView>
     {
-        private readonly ObservableCollection<TranscodeItem> selectedTranscodeItems;
         private TranscodingManager transcodingManager;
 
         
@@ -21,13 +20,13 @@ namespace Waf.MusicManager.Applications.ViewModels
         public TranscodingListViewModel(ITranscodingListView view, ITranscodingService transcodingService) : base(view)
         {
             TranscodingService = transcodingService;
-            selectedTranscodeItems = new ObservableCollection<TranscodeItem>();
+            SelectedTranscodeItems = new ObservableCollection<TranscodeItem>();
         }
 
 
         public ITranscodingService TranscodingService { get; }
 
-        public IList<TranscodeItem> SelectedTranscodeItems { get { return selectedTranscodeItems; } }
+        public IList<TranscodeItem> SelectedTranscodeItems { get; }
 
         public TranscodingManager TranscodingManager
         {

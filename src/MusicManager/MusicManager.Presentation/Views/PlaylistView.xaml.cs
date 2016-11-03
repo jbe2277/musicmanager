@@ -31,7 +31,7 @@ namespace Waf.MusicManager.Presentation.Views
         }
 
         
-        private PlaylistViewModel ViewModel { get { return viewModel.Value; } }
+        private PlaylistViewModel ViewModel => viewModel.Value;
 
 
         public void FocusSearchBox()

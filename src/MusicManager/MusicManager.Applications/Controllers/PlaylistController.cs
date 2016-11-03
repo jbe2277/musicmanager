@@ -65,7 +65,7 @@ namespace Waf.MusicManager.Applications.Controllers
         
         public PlaylistManager PlaylistManager { get; set; }
 
-        private PlaylistViewModel PlaylistViewModel { get { return playlistViewModel.Value; } }
+        private PlaylistViewModel PlaylistViewModel => playlistViewModel.Value;
 
 
         public void Initialize()

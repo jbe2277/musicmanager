@@ -13,7 +13,6 @@ namespace Waf.MusicManager.Domain.Playlists
     {
         private readonly IRandomService randomService;
         private readonly ObservableCollection<PlaylistItem> items;
-        private readonly ReadOnlyObservableList<PlaylistItem> readonlyItems;
         private readonly PlayedItemsStack<PlaylistItem> playedItemsStack;
         private bool isTotalDurationEstimated;
         private TimeSpan totalDuration;
@@ -28,14 +27,14 @@ namespace Waf.MusicManager.Domain.Playlists
         {
             this.randomService = randomService ?? new RandomService();
             this.items = new ObservableCollection<PlaylistItem>();
-            this.readonlyItems = new ReadOnlyObservableList<PlaylistItem>(items);
+            this.Items = new ReadOnlyObservableList<PlaylistItem>(items);
             this.playedItemsStack = new PlayedItemsStack<PlaylistItem>(playedItemStackCapacity);
 
             this.items.CollectionChanged += ItemsCollectionChanged;
         }
 
 
-        public IReadOnlyObservableList<PlaylistItem> Items { get { return readonlyItems; } }
+        public IReadOnlyObservableList<PlaylistItem> Items { get; }
 
         public bool IsTotalDurationEstimated
         {

@@ -18,9 +18,6 @@ namespace Waf.MusicManager.Applications.ViewModels
     {
         private readonly AppSettings settings;
         private readonly ObservableCollection<Tuple<Exception, string>> errors;
-        private readonly DelegateCommand exitCommand;
-        private readonly DelegateCommand closeErrorCommand;
-        private readonly DelegateCommand garbageCollectorCommand;
         private object detailsView;
         
 
@@ -32,9 +29,9 @@ namespace Waf.MusicManager.Applications.ViewModels
             PlayerService = playerService;
             settings = shellService.Settings;
             errors = new ObservableCollection<Tuple<Exception, string>>();
-            exitCommand = new DelegateCommand(Close);
-            closeErrorCommand = new DelegateCommand(CloseError);
-            garbageCollectorCommand = new DelegateCommand(GC.Collect);
+            ExitCommand = new DelegateCommand(Close);
+            CloseErrorCommand = new DelegateCommand(CloseError);
+            GarbageCollectorCommand = new DelegateCommand(GC.Collect);
 
             errors.CollectionChanged += ErrorsCollectionChanged;
             view.Closed += ViewClosed;
@@ -53,21 +50,21 @@ namespace Waf.MusicManager.Applications.ViewModels
         }
 
 
-        public string Title { get { return ApplicationInfo.ProductName; } }
+        public string Title => ApplicationInfo.ProductName;
 
         public IShellService ShellService { get; }
 
         public IPlayerService PlayerService { get; }
 
-        public IReadOnlyList<Tuple<Exception, string>> Errors { get { return errors; } }
+        public IReadOnlyList<Tuple<Exception, string>> Errors => errors;
 
-        public Tuple<Exception, string> LastError { get { return errors.LastOrDefault(); } }
+        public Tuple<Exception, string> LastError => errors.LastOrDefault();
 
-        public ICommand ExitCommand { get { return exitCommand; } }
+        public ICommand ExitCommand { get; }
 
-        public ICommand CloseErrorCommand { get { return closeErrorCommand; } }
+        public ICommand CloseErrorCommand { get; }
 
-        public ICommand GarbageCollectorCommand { get { return garbageCollectorCommand; } }
+        public ICommand GarbageCollectorCommand { get; }
 
         public object DetailsView
         {

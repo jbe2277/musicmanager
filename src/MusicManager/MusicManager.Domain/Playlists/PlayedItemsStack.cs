@@ -15,7 +15,7 @@ namespace Waf.MusicManager.Domain.Playlists
         }
 
 
-        public int Count { get { return playlistItems.Count; } }
+        public int Count => playlistItems.Count;
         
         
         public T Pop()

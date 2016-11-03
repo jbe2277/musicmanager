@@ -28,11 +28,11 @@ namespace Waf.MusicManager.Presentation.Services
         }
 
 
-        public IReadOnlyList<string> MusicFilesToLoad { get { return musicFilesToLoad.Value; } }
+        public IReadOnlyList<string> MusicFilesToLoad => musicFilesToLoad.Value;
 
-        public string ProfilePath { get { return profilePath.Value; } }
+        public string ProfilePath => profilePath.Value;
 
-        public string AppSettingsPath { get { return appSettingsPath.Value; } }
+        public string AppSettingsPath => appSettingsPath.Value;
 
         public string MusicPath { get; }
 

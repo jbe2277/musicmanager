@@ -45,7 +45,7 @@ namespace Waf.MusicManager.Presentation.Views
         }
 
 
-        private ManagerViewModel ViewModel { get { return viewModel.Value; } }
+        private ManagerViewModel ViewModel => viewModel.Value;
 
 
         private void LoadedHandler(object sender, RoutedEventArgs e)
