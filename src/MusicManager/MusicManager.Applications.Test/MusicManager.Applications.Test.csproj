@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Test.MusicManager.Applications</RootNamespace>
     <AssemblyName>Test.MusicManager.Applications</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -37,19 +37,23 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Waf.Core, Version=4.1.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.Core.4.1.0-alpha7\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Waf.UnitTesting.Core, Version=4.1.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.UnitTesting.Core.4.1.0-alpha7\lib\portable45-net45+win8\System.Waf.UnitTesting.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Waf.UnitTesting.Wpf, Version=4.1.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.UnitTesting.Wpf.4.1.0-alpha7\lib\net461\System.Waf.UnitTesting.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Waf.Wpf, Version=4.1.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.Wpf.4.1.0-alpha7\lib\net461\System.Waf.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Windows" />
     <Reference Include="System.Runtime.WindowsRuntime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5.1\System.Runtime.WindowsRuntime.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="WpfApplicationFramework, Version=3.2.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
-      <HintPath>..\packages\waf.3.2.0\lib\net45\WpfApplicationFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="WpfApplicationFramework.UnitTesting, Version=3.2.0.450, Culture=neutral, PublicKeyToken=1d6a5af5fe952afb, processorArchitecture=MSIL">
-      <HintPath>..\packages\waf.testing.3.2.0\lib\net45\WpfApplicationFramework.UnitTesting.dll</HintPath>
-      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
