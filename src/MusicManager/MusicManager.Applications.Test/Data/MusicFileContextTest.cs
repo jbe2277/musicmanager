@@ -99,7 +99,7 @@ namespace Test.MusicManager.Applications.Data
             SaveAndLoadFileWithUnsupportedMetadataCore(fileName, true);
         }
 
-        [TestMethod, TestCategory("Win10Test"), Ignore]  // Unit test framework does not support the Win10 get version number
+        [TestMethod, TestCategory("Win10Test")]
         public void SaveAndLoadFlacFileWithMetadata()
         {
             var fileName = TestHelper.GetTempFileName(".flac");
