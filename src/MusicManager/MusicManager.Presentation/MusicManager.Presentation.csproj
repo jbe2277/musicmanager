@@ -151,7 +151,6 @@
     <Compile Include="DesignData\SamplePlaylistViewModel.cs" />
     <Compile Include="DesignData\SampleShellViewModel.cs" />
     <Compile Include="DesignData\SampleTranscodingListViewModel.cs" />
-    <Compile Include="DispatcherHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ListSortComparer.cs" />
     <Compile Include="Properties\Resources.de.Designer.cs">
