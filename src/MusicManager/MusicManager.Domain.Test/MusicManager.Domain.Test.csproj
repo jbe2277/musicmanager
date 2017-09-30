@@ -34,17 +34,17 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Waf.Core, Version=4.1.0.91, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Core.4.1.0-rc1\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
+    <Reference Include="System.Waf.Core, Version=4.1.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.Core.4.1.0\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Waf.UnitTesting.Core, Version=4.1.0.91, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.UnitTesting.Core.4.1.0-rc1\lib\portable45-net45+win8\System.Waf.UnitTesting.Core.dll</HintPath>
+    <Reference Include="System.Waf.UnitTesting.Core, Version=4.1.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.UnitTesting.Core.4.1.0\lib\portable45-net45+win8\System.Waf.UnitTesting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Waf.UnitTesting.Wpf, Version=4.1.0.91, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.UnitTesting.Wpf.4.1.0-rc1\lib\net461\System.Waf.UnitTesting.Wpf.dll</HintPath>
+    <Reference Include="System.Waf.UnitTesting.Wpf, Version=4.1.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.UnitTesting.Wpf.4.1.0\lib\net461\System.Waf.UnitTesting.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="System.Waf.Wpf, Version=4.1.0.91, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Wpf.4.1.0-rc1\lib\net461\System.Waf.Wpf.dll</HintPath>
+    <Reference Include="System.Waf.Wpf, Version=4.1.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.Wpf.4.1.0\lib\net461\System.Waf.Wpf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
