@@ -35,7 +35,7 @@ namespace Test.MusicManager.Domain.UnitTesting
 
             foreach (var property in properties.Where(predicate))
             {
-                if (typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
+                if (property.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
                 {
                     var expectedCollection = ((IEnumerable)property.GetValue(expected)).Cast<object>();
                     var actualCollection = ((IEnumerable)property.GetValue(actual)).Cast<object>();

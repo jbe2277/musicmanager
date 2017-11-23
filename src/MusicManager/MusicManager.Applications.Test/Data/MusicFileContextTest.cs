@@ -46,7 +46,7 @@ namespace Test.MusicManager.Applications.Data
             SaveAndLoadFileWithMetadataCore(fileName);
         }
 
-        private void SaveAndLoadFileWithMetadataCore(string fileName)
+        private void SaveAndLoadFileWithMetadataCore(string fileName, bool isFlac = false)
         {
             var ctx = Container.GetExportedValue<MusicFileContext>();
             var musicFile = ctx.Create(fileName);
@@ -72,7 +72,11 @@ namespace Test.MusicManager.Applications.Data
 
             Assert.AreNotEqual(musicFile, musicFile2);
             Assert.AreNotEqual(musicFile.Metadata, musicFile2.Metadata);
-            TestHelper.AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
+
+            var notSupportedByFlac = new[] { nameof(MusicMetadata.Rating), nameof(MusicMetadata.Bitrate),
+                    nameof(MusicMetadata.Publisher), nameof(MusicMetadata.Subtitle) };
+            TestHelper.AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent) 
+                && (!isFlac || !notSupportedByFlac.Contains(p.Name)));
         }
 
         private void SetMusicFileData(MusicFile musicFile)
@@ -99,12 +103,12 @@ namespace Test.MusicManager.Applications.Data
             SaveAndLoadFileWithUnsupportedMetadataCore(fileName, true);
         }
 
-        [TestMethod, TestCategory("Win10Test")]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void SaveAndLoadFlacFileWithMetadata()
         {
             var fileName = TestHelper.GetTempFileName(".flac");
             File.Copy(Environment.CurrentDirectory + @"\Files\TestFlac.flac", fileName, true);
-            SaveAndLoadFileWithUnsupportedMetadataCore(fileName, true);
+            SaveAndLoadFileWithMetadataCore(fileName, true);
         }
 
         [TestMethod, TestCategory("IntegrationTest")]
