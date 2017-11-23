@@ -2,6 +2,10 @@ Changelog
 ---------
 
 
+Version 1.6.0.100 (Release)
+- Support metadata for the Flac file format.
+
+
 Version 1.5.0.100 (Release)
 - Support the MVK file format for audio playback when running on Windows 10.
 
