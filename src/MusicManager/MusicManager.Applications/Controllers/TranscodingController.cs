@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
+using System.Waf.Foundation;
 using Waf.MusicManager.Applications.Data;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
@@ -36,6 +37,7 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly DelegateCommand cancelSelectedCommand;
         private readonly SemaphoreSlim throttler;
         private readonly TranscodingManager transcodingManager;
+        private readonly ThrottledAction throttledMusicFilesCollectionChangedAction;
         private TaskCompletionSource<object> allTranscodingsCanceledCompletion;
 
 
@@ -50,13 +52,14 @@ namespace Waf.MusicManager.Applications.Controllers
             this.transcodingService = transcodingService;
             this.transcoder = transcoder;
             this.transcodingListViewModel = transcodingListViewModel;
-            this.cancellationTokenSources = new Dictionary<TranscodeItem, CancellationTokenSource>();
-            this.convertToMp3AllCommand = new DelegateCommand(ConvertToMp3All, CanConvertToMp3All);
-            this.convertToMp3SelectedCommand = new DelegateCommand(ConvertToMp3Selected, CanConvertToMp3Selected);
-            this.cancelAllCommand = new DelegateCommand(CancelAll, CanCancelAll);
-            this.cancelSelectedCommand = new DelegateCommand(CancelSelected, CanCancelSelected);
-            this.throttler = new SemaphoreSlim(Environment.ProcessorCount);  // Do not dispose the throttler; it is used after Shutdown to cancel the open tasks
-            this.transcodingManager = new TranscodingManager();
+            cancellationTokenSources = new Dictionary<TranscodeItem, CancellationTokenSource>();
+            convertToMp3AllCommand = new DelegateCommand(ConvertToMp3All, CanConvertToMp3All);
+            convertToMp3SelectedCommand = new DelegateCommand(ConvertToMp3Selected, CanConvertToMp3Selected);
+            cancelAllCommand = new DelegateCommand(CancelAll, CanCancelAll);
+            cancelSelectedCommand = new DelegateCommand(CancelSelected, CanCancelSelected);
+            throttler = new SemaphoreSlim(Environment.ProcessorCount);  // Do not dispose the throttler; it is used after Shutdown to cancel the open tasks
+            transcodingManager = new TranscodingManager();
+            throttledMusicFilesCollectionChangedAction = new ThrottledAction(ThrottledMusicFilesCollectionChanged, ThrottledActionMode.InvokeOnlyIfIdleForDelayTime, TimeSpan.FromMilliseconds(10));
         }
 
 
@@ -73,7 +76,7 @@ namespace Waf.MusicManager.Applications.Controllers
             shellService.TranscodingListView = new Lazy<object>(InitializeTranscodingListView);
 
             shellService.Closing += ShellServiceClosing;
-            selectionService.MusicFiles.CollectionChanged += MusicFilesCollectionChanged;
+            selectionService.MusicFiles.CollectionChanged += (sender, e) => throttledMusicFilesCollectionChangedAction.InvokeAccumulated();
             ((INotifyCollectionChanged)selectionService.SelectedMusicFiles).CollectionChanged += SelectedMusicFilesCollectionChanged;
         }
 
@@ -277,7 +280,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
         }
 
-        private void MusicFilesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void ThrottledMusicFilesCollectionChanged()
         {
             convertToMp3AllCommand.RaiseCanExecuteChanged();
             convertToMp3SelectedCommand.RaiseCanExecuteChanged();
