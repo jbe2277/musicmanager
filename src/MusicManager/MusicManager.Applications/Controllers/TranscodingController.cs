@@ -114,7 +114,7 @@ namespace Waf.MusicManager.Applications.Controllers
         
         private void ConvertToMp3All()
         {
-            Transcode(GetMusicFilesSupportedToConvert(selectionService.MusicFiles.Select(x => x.MusicFile)));
+            Transcode(GetMusicFilesSupportedToConvert(selectionService.MusicFiles.Select(x => x.MusicFile)).ToArray());
         }
 
         private bool CanConvertToMp3Selected()
@@ -124,7 +124,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void ConvertToMp3Selected()
         {
-            Transcode(GetMusicFilesSupportedToConvert(selectionService.SelectedMusicFiles.Select(x => x.MusicFile)));
+            Transcode(GetMusicFilesSupportedToConvert(selectionService.SelectedMusicFiles.Select(x => x.MusicFile)).ToArray());
         }
 
         private void InsertFiles(int index, IEnumerable<string> fileNames)
@@ -141,12 +141,12 @@ namespace Waf.MusicManager.Applications.Controllers
                 return;
             }
             
-            Transcode(GetMusicFilesSupportedToConvert(musicFiles));
+            Transcode(GetMusicFilesSupportedToConvert(musicFiles).ToArray());
         }
 
         private void InsertMusicFiles(int index, IEnumerable<MusicFile> musicFiles)
         {
-            Transcode(GetMusicFilesSupportedToConvert(musicFiles));
+            Transcode(GetMusicFilesSupportedToConvert(musicFiles).ToArray());
         }
 
         private bool CanCancelAll()
@@ -178,16 +178,17 @@ namespace Waf.MusicManager.Applications.Controllers
             }
         }
 
-        private IReadOnlyCollection<MusicFile> GetMusicFilesSupportedToConvert(IEnumerable<MusicFile> musicFiles)
+        private IEnumerable<MusicFile> GetMusicFilesSupportedToConvert(IEnumerable<MusicFile> musicFiles)
         {
-            var files = musicFiles.Where(x => !string.IsNullOrEmpty(x.FileName) && !x.FileName.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase)).ToArray();
-            files = files.Where(x => selectionService.MusicFiles.All(y => y.MusicFile.FileName != GetDestinationFileName(x.FileName))).ToArray();
-            return files;
+            return musicFiles.Where(x => !string.IsNullOrEmpty(x.FileName) && !x.FileName.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase) 
+                && selectionService.MusicFiles.All(y => y.MusicFile.FileName != GetDestinationFileName(x.FileName)));
         }
 
         private static string GetDestinationFileName(string sourceFileName)
         {
-            return Path.Combine(Path.GetDirectoryName(sourceFileName), Path.GetFileNameWithoutExtension(sourceFileName) + ".mp3");
+            int indexOfLastPoint = sourceFileName.LastIndexOf('.');
+            var newFileName = indexOfLastPoint < 0 ? sourceFileName : sourceFileName.Substring(0, indexOfLastPoint);
+            return newFileName + ".mp3";
         }
         
         private void Transcode(IReadOnlyCollection<MusicFile> musicFiles)
