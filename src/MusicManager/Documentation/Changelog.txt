@@ -2,6 +2,10 @@ Changelog
 ---------
 
 
+Version 1.7.0.100 (Release)
+- Improve performance of loading a lot music files.
+
+
 Version 1.6.0.100 (Release)
 - Support metadata for the Flac file format.
 
