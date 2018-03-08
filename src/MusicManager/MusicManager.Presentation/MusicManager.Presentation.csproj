@@ -126,7 +126,6 @@
     <Compile Include="Converters\DurationConverter.cs" />
     <Compile Include="Converters\ErrorMessagesConverter.cs" />
     <Compile Include="Converters\FilterOperatorToStringConverter.cs" />
-    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\TranscodeStatusToStringConverter.cs" />
     <Compile Include="Converters\UIntToDisplayValueConverter.cs" />
     <Compile Include="Converters\IsPlaylistItemPlayingMultiConverter.cs" />

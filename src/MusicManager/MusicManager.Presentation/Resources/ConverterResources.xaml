@@ -11,7 +11,7 @@
 
     <waf:ValidationErrorsConverter x:Key="ValidationErrorsConverter"/>
 
-    <c:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    <waf:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     
     <c:ErrorMessagesConverter x:Key="ErrorMessagesConverter"/>
 

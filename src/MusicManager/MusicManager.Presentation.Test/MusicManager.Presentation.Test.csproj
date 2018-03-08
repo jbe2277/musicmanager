@@ -60,7 +60,6 @@
     <Compile Include="Converters\MusicPropertiesEnabledConverterTest.cs" />
     <Compile Include="Converters\MusicPropertiesProgressVisibilityConverterTest.cs" />
     <Compile Include="Converters\MusicTitleConverterTest.cs" />
-    <Compile Include="Converters\NullToVisibilityConverterTest.cs" />
     <Compile Include="Converters\PathToDirectoryNameConverterTest.cs" />
     <Compile Include="Converters\PathToFileNameConverterTest.cs" />
     <Compile Include="Converters\RatingToStarsConverterTest.cs" />
