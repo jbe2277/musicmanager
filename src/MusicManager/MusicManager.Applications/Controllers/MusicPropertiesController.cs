@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Waf.Foundation;
 using Waf.MusicManager.Applications.Data;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
@@ -67,8 +68,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         public void SelectMusicFiles(IReadOnlyList<MusicFile> musicFiles)
         {
-            // Do not wait for the operation to complete. Continue immediately.
-            SaveDirtyFilesAsync().IgnoreResult();
+            SaveDirtyFilesAsync().NoWait();
             
             if (musicFiles.Count() <= 1)
             {

@@ -90,7 +90,7 @@ namespace Waf.MusicManager.Domain.MusicFiles
                 Logger.Error("LoadMetadataCore: {0}", e);
                 LoadError = e;
                 // Observe the exception
-                loadMetadataCompletionSource.Task.ContinueWith(x => x.Exception, TaskContinuationOptions.ExecuteSynchronously).IgnoreResult();
+                loadMetadataCompletionSource.Task.NoWait(ignoreExceptions: true);
                 loadMetadataCompletionSource.SetException(e);
             }
         }

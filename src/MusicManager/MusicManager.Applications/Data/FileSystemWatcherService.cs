@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading.Tasks;
+using System.Waf.Foundation;
 using Waf.MusicManager.Domain;
 
 namespace Waf.MusicManager.Applications.Data

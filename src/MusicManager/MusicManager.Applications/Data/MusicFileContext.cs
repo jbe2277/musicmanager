@@ -95,7 +95,7 @@ namespace Waf.MusicManager.Applications.Data
         {
             // Ensure that the Metadata of all files are loaded
             var tasks = musicFiles.Select(x => x.GetMetadataAsync());
-            await TaskHelper.WhenAllFast(tasks);
+            await TaskUtility.WhenAllFast(tasks);
 
             var duration = GetSharedValueOrDefault(musicFiles, x => x.Metadata.Duration);
             var bitrate = GetSharedValueOrDefault(musicFiles, x => x.Metadata.Bitrate);        

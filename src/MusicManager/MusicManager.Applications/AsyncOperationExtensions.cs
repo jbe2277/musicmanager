@@ -19,7 +19,7 @@ namespace Waf.MusicManager.Applications
 
         public static TResult GetResult<TResult>(this IAsyncOperation<TResult> asyncOperation, CancellationToken cancellationToken)
         {
-            return TaskHelper.GetResult(asyncOperation.AsTask(cancellationToken));
+            return TaskUtility.GetResult(asyncOperation.AsTask(cancellationToken));
         }
     }
 }
