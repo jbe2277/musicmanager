@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Waf.Applications;
+using System.Waf.Presentation.Controls;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,7 +15,6 @@ using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Applications.Views;
-using Waf.MusicManager.Presentation.Converters;
 
 namespace Waf.MusicManager.Presentation.Views
 {
@@ -124,24 +124,25 @@ namespace Waf.MusicManager.Presentation.Views
 
         private void MusicFilesGridSorting(object sender, DataGridSortingEventArgs e)
         {
-            var collectionView = CollectionViewSource.GetDefaultView(musicFilesGrid.ItemsSource) as ListCollectionView;
-            if (collectionView == null)
-            {
-                return;
-            }
-            var newDirection = e.Column.SortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+            e.Handled = true;
+            Func<IEnumerable<MusicFileDataModel>, IOrderedEnumerable<MusicFileDataModel>> sort = null;
+            var newDirection = e.Column.SortDirection == null ? ListSortDirection.Ascending 
+                : (e.Column.SortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : (ListSortDirection?)null);
             if (e.Column == titleColumn)
             {
                 e.Column.SortDirection = newDirection;
-                collectionView.CustomSort = new ListSortComparer<MusicFileDataModel>(TitleColumnComparison, newDirection);
-                e.Handled = true;
+                if (newDirection != null) sort = x => x.OrderBy(y => y, new ListSortComparer<MusicFileDataModel>(TitleColumnComparison, newDirection.Value));
             }
             else if (e.Column == genreColumn)
             {
                 e.Column.SortDirection = newDirection;
-                collectionView.CustomSort = new ListSortComparer<MusicFileDataModel>(GenreColumnComparison, newDirection);
-                e.Handled = true;
+                if (newDirection != null) sort = x => x.OrderBy(y => y, new ListSortComparer<MusicFileDataModel>(GenreColumnComparison, newDirection.Value));
             }
+            else
+            {
+                sort = DataGridHelper.HandleDataGridSorting<MusicFileDataModel>(e);
+            }
+            ViewModel.SelectionService.MusicFiles.Sort = sort;
         }
 
         private void TitleColumnWidthChanged(object sender, EventArgs e)

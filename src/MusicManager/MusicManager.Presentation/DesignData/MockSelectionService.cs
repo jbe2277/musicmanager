@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Waf.Foundation;
+using System.Waf.Applications;
 using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Services;
 
@@ -16,11 +16,11 @@ namespace Waf.MusicManager.Presentation.DesignData
         {
             innerMusicFiles = new ObservableCollection<MusicFileDataModel>();
             SelectedMusicFiles = new ObservableCollection<MusicFileDataModel>();
-            MusicFiles = new ReadOnlyObservableList<MusicFileDataModel>(innerMusicFiles);
+            MusicFiles = new ObservableListView<MusicFileDataModel>(innerMusicFiles);
         }
 
 
-        public IReadOnlyObservableList<MusicFileDataModel> MusicFiles { get; }
+        public ObservableListView<MusicFileDataModel> MusicFiles { get; }
 
         public IList<MusicFileDataModel> SelectedMusicFiles { get; }
         

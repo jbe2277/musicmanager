@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Waf.MusicManager.Presentation
 {
-    public class ListSortComparer<T> : IComparer
+    public class ListSortComparer<T> : IComparer<T>
     {
         private readonly Comparison<T> comparison;
         private readonly ListSortDirection sortDirection;
@@ -17,11 +17,9 @@ namespace Waf.MusicManager.Presentation
         }
 
 
-        public int Compare(object x, object y)
+        public int Compare(T x, T y)
         {
-            var typedX = (T)x;
-            var typedY = (T)y;
-            return (sortDirection == ListSortDirection.Ascending) ? comparison(typedX, typedY) : comparison(typedY, typedX);
+            return (sortDirection == ListSortDirection.Ascending) ? comparison(x, y) : comparison(y, x);
         }
     }
 }
