@@ -124,23 +124,16 @@ namespace Waf.MusicManager.Presentation.Views
 
         private void MusicFilesGridSorting(object sender, DataGridSortingEventArgs e)
         {
-            e.Handled = true;
-            Func<IEnumerable<MusicFileDataModel>, IOrderedEnumerable<MusicFileDataModel>> sort = null;
-            var newDirection = e.Column.SortDirection == null ? ListSortDirection.Ascending 
-                : (e.Column.SortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : (ListSortDirection?)null);
+            var sort = DataGridHelper.HandleDataGridSorting<MusicFileDataModel>(e);
             if (e.Column == titleColumn)
             {
-                e.Column.SortDirection = newDirection;
-                if (newDirection != null) sort = x => x.OrderBy(y => y, new ListSortComparer<MusicFileDataModel>(TitleColumnComparison, newDirection.Value));
+                if (e.Column.SortDirection == null) sort = null;
+                else sort = x => x.OrderBy(y => y, new ListSortComparer<MusicFileDataModel>(TitleColumnComparison, e.Column.SortDirection.Value));
             }
             else if (e.Column == genreColumn)
             {
-                e.Column.SortDirection = newDirection;
-                if (newDirection != null) sort = x => x.OrderBy(y => y, new ListSortComparer<MusicFileDataModel>(GenreColumnComparison, newDirection.Value));
-            }
-            else
-            {
-                sort = DataGridHelper.HandleDataGridSorting<MusicFileDataModel>(e);
+                if (e.Column.SortDirection == null) sort = null;
+                else sort = x => x.OrderBy(y => y, new ListSortComparer<MusicFileDataModel>(GenreColumnComparison, e.Column.SortDirection.Value));
             }
             ViewModel.SelectionService.MusicFiles.Sort = sort;
         }
