@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Waf.UnitTesting;
 using Waf.MusicManager.Applications.Data;
 
 namespace Test.MusicManager.Applications.Data
@@ -30,19 +31,19 @@ namespace Test.MusicManager.Applications.Data
             var nl = Environment.NewLine;
             var ls = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
             
-            Assert.IsTrue((new string[0]).SequenceEqual(StringListConverter.FromString("")));
+            AssertHelper.SequenceEqual(Array.Empty<string>(), StringListConverter.FromString(""));
 
-            Assert.IsTrue((new[] { "Pop" }).SequenceEqual(StringListConverter.FromString("Pop")));
-            Assert.IsTrue((new[] { "Pop", "Rock" }).SequenceEqual(StringListConverter.FromString("Pop" + nl + "Rock", nl)));
-            Assert.IsTrue((new[] { "Pop", "Rock" }).SequenceEqual(StringListConverter.FromString(" Pop" + nl + " Rock", nl)));
-            Assert.IsTrue((new[] { "Pop", "Rock" }).SequenceEqual(StringListConverter.FromString("Pop " + nl + "Rock ", nl)));
+            AssertHelper.SequenceEqual(new[] { "Pop" }, StringListConverter.FromString("Pop"));
+            AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString("Pop" + nl + "Rock", nl));
+            AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString(" Pop" + nl + " Rock", nl));
+            AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString("Pop " + nl + "Rock ", nl));
 
-            Assert.IsTrue((new[] { "Pop", "Rock" }).SequenceEqual(StringListConverter.FromString("Pop" + ls + "Rock")));
-            Assert.IsTrue((new[] { "Pop", "Rock" }).SequenceEqual(StringListConverter.FromString(" Pop" + ls + " Rock")));
-            Assert.IsTrue((new[] { "Pop", "Rock" }).SequenceEqual(StringListConverter.FromString("Pop " + ls + "Rock ")));
+            AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString("Pop" + ls + "Rock"));
+            AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString(" Pop" + ls + " Rock"));
+            AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString("Pop " + ls + "Rock "));
 
-            Assert.IsTrue((new[] { "Pop" }).SequenceEqual(StringListConverter.FromString("Pop" + ls)));
-            Assert.IsTrue((new[] { "Pop" }).SequenceEqual(StringListConverter.FromString("Pop" + ls + " ")));
+            AssertHelper.SequenceEqual(new[] { "Pop" }, StringListConverter.FromString("Pop" + ls));
+            AssertHelper.SequenceEqual(new[] { "Pop" }, StringListConverter.FromString("Pop" + ls + " "));
         }
     }
 }

@@ -205,7 +205,7 @@ namespace Test.MusicManager.Domain.MusicFiles
             Assert.AreEqual(3, manager.Items.Count);
 
             manager.MoveItems(2, new[] { manager.Items[0] });
-            Assert.IsTrue(manager.Items.SequenceEqual(new[] { threeItems[1], threeItems[2], threeItems[0] }));
+            AssertHelper.SequenceEqual(new[] { threeItems[1], threeItems[2], threeItems[0] }, manager.Items);
         }
 
         [TestMethod]

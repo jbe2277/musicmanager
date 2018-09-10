@@ -95,7 +95,7 @@ namespace Test.MusicManager.Applications.Controllers
             musicFileContext.SaveChangesAsyncAction = null;
 
             // Both selected music files are shown as shared music file with combined properties
-            Assert.IsTrue(musicFiles.SequenceEqual(viewModel.MusicFile.SharedMusicFiles));
+            AssertHelper.SequenceEqual(musicFiles, viewModel.MusicFile.SharedMusicFiles);
         }
 
         [TestMethod]

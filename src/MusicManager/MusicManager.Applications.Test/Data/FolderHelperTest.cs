@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Waf.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Waf.MusicManager.Applications;
 using Waf.MusicManager.Applications.Data;
@@ -38,16 +39,16 @@ namespace Test.MusicManager.Applications.Data
         public void GetPathSegmentsTest()
         {
             var pathSegments = FolderHelper.GetPathSegments(@"C:\Users\Public\Music");
-            Assert.IsTrue(new[] { @"C:\", "Users", "Public", "Music" }.SequenceEqual(pathSegments));
+            AssertHelper.SequenceEqual(new[] { @"C:\", "Users", "Public", "Music" }, pathSegments);
 
             pathSegments = FolderHelper.GetPathSegments(@"C:\Users\Public\Music\");
-            Assert.IsTrue(new[] { @"C:\", "Users", "Public", "Music" }.SequenceEqual(pathSegments));
+            AssertHelper.SequenceEqual(new[] { @"C:\", "Users", "Public", "Music" }, pathSegments);
 
             pathSegments = FolderHelper.GetPathSegments(@"C:");
-            Assert.IsTrue(new[] { @"C:" }.SequenceEqual(pathSegments));
+            AssertHelper.SequenceEqual(new[] { @"C:" }, pathSegments);
 
             pathSegments = FolderHelper.GetPathSegments(@"\\localhost\Users\Public\Music");
-            Assert.IsTrue(new[] { @"\\localhost\Users", "Public", "Music" }.SequenceEqual(pathSegments));
+            AssertHelper.SequenceEqual(new[] { @"\\localhost\Users", "Public", "Music" }, pathSegments);
         }
     }
 }

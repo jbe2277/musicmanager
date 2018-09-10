@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Waf.UnitTesting;
 
 namespace Test.MusicManager.Domain.UnitTesting
 {
@@ -39,8 +40,7 @@ namespace Test.MusicManager.Domain.UnitTesting
                 {
                     var expectedCollection = ((IEnumerable)property.GetValue(expected)).Cast<object>();
                     var actualCollection = ((IEnumerable)property.GetValue(actual)).Cast<object>();
-
-                    Assert.IsTrue(expectedCollection.SequenceEqual(actualCollection), "Property name: " + property.Name);
+                    AssertHelper.SequenceEqual(expectedCollection, actualCollection);
                 }
                 else
                 {

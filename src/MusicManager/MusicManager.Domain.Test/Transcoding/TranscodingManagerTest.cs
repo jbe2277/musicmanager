@@ -5,6 +5,7 @@ using Test.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.Transcoding;
 using Test.MusicManager.Domain.UnitTesting;
+using System.Waf.UnitTesting;
 
 namespace Test.MusicManager.Domain.Transcoding
 {
@@ -25,7 +26,7 @@ namespace Test.MusicManager.Domain.Transcoding
             manager.AddTranscodeItem(item1);
             manager.AddTranscodeItem(item2);
 
-            Assert.IsTrue(new[] { item1, item2 }.SequenceEqual(manager.TranscodeItems));
+            AssertHelper.SequenceEqual(new[] { item1, item2 }, manager.TranscodeItems);
 
             manager.RemoveTranscodeItem(item1);
 

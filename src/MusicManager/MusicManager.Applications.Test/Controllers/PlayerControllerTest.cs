@@ -129,7 +129,7 @@ namespace Test.MusicManager.Applications.Controllers
             viewModel.PlayerService.PlayAllCommand.Execute(null);
             Assert.IsTrue(playPauseCommandCalled);
             Assert.IsTrue(showPlaylistViewCalled);
-            Assert.IsTrue(musicFiles.SequenceEqual(playlistManager.Items.Select(x => x.MusicFile)));
+            AssertHelper.SequenceEqual(musicFiles, playlistManager.Items.Select(x => x.MusicFile));
             Assert.AreEqual(musicFiles.First(), playlistManager.CurrentItem.MusicFile);
         }
 
@@ -158,7 +158,7 @@ namespace Test.MusicManager.Applications.Controllers
             showPlaylistViewCalled = false;
             viewModel.PlayerService.EnqueueAllCommand.Execute(null);
             Assert.IsTrue(showPlaylistViewCalled);
-            Assert.IsTrue(new[] { musicFiles[0] }.Concat(musicFiles).SequenceEqual(playlistManager.Items.Select(x => x.MusicFile)));
+            AssertHelper.SequenceEqual(new[] { musicFiles[0] }.Concat(musicFiles), playlistManager.Items.Select(x => x.MusicFile));
             Assert.IsNull(playlistManager.CurrentItem);
         }
 
