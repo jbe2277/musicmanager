@@ -36,11 +36,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Waf.Core, Version=4.3.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Core.4.3.0-alpha1\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
+    <Reference Include="System.Waf.Core, Version=4.3.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.Core.4.3.0-alpha2\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Waf.Wpf, Version=4.3.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Wpf.4.3.0-alpha1\lib\net461\System.Waf.Wpf.dll</HintPath>
+    <Reference Include="System.Waf.Wpf, Version=4.3.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.Wpf.4.3.0-alpha2\lib\net461\System.Waf.Wpf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

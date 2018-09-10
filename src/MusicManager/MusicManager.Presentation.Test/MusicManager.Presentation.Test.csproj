@@ -36,17 +36,17 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Waf.Core, Version=4.3.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Core.4.3.0-alpha1\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
+    <Reference Include="System.Waf.Core, Version=4.3.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.Core.4.3.0-alpha2\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Waf.UnitTesting.Core, Version=4.3.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.UnitTesting.Core.4.3.0-alpha1\lib\portable45-net45+win8\System.Waf.UnitTesting.Core.dll</HintPath>
+    <Reference Include="System.Waf.UnitTesting.Core, Version=4.3.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.UnitTesting.Core.4.3.0-alpha2\lib\portable45-net45+win8\System.Waf.UnitTesting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Waf.UnitTesting.Wpf, Version=4.3.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.UnitTesting.Wpf.4.3.0-alpha1\lib\net461\System.Waf.UnitTesting.Wpf.dll</HintPath>
+    <Reference Include="System.Waf.UnitTesting.Wpf, Version=4.3.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.UnitTesting.Wpf.4.3.0-alpha2\lib\net461\System.Waf.UnitTesting.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="System.Waf.Wpf, Version=4.3.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Wpf.4.3.0-alpha1\lib\net461\System.Waf.Wpf.dll</HintPath>
+    <Reference Include="System.Waf.Wpf, Version=4.3.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.Wpf.4.3.0-alpha2\lib\net461\System.Waf.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -94,9 +94,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
