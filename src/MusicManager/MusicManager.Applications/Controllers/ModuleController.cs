@@ -1,12 +1,12 @@
 ﻿using System;
 using System.ComponentModel.Composition;
-using System.Diagnostics;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
 using System.Windows.Threading;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
+using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.Playlists;
 
 namespace Waf.MusicManager.Applications.Controllers
@@ -40,7 +40,7 @@ namespace Waf.MusicManager.Applications.Controllers
             this.playlistController = playlistController;
             this.transcodingController = transcodingController;
             this.shellViewModel = shellViewModel;
-            settingsService.ErrorOccurred += (sender, e) => Trace.TraceError("Error in SettingsService: {0}", e.Error);
+            settingsService.ErrorOccurred += (sender, e) => Logger.Error("Error in SettingsService: {0}", e.Error);
             playlistManager = new PlaylistManager();
         }
 
