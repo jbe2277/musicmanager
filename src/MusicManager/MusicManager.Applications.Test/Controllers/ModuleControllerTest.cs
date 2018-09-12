@@ -2,11 +2,14 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Waf.UnitTesting.Mocks;
 using Test.MusicManager.Applications.Services;
 using Test.MusicManager.Applications.UnitTesting;
 using Test.MusicManager.Applications.Views;
 using Test.MusicManager.Domain.MusicFiles;
+using Waf.MusicManager.Applications;
 using Waf.MusicManager.Applications.Controllers;
+using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Domain.Playlists;
@@ -17,13 +20,13 @@ namespace Test.MusicManager.Applications.Controllers
     public class ModuleControllerTest : ApplicationsTest
     {
         private ModuleController controller;
-        private IShellService shellService;
+        private ShellService shellService;
         
         protected override void OnInitialize()
         {
             base.OnInitialize();
             controller = Container.GetExportedValue<ModuleController>();
-            shellService = Container.GetExportedValue<IShellService>();
+            shellService = Container.GetExportedValue<ShellService>();
             controller.Initialize();
             controller.Run();
         }
@@ -38,8 +41,15 @@ namespace Test.MusicManager.Applications.Controllers
         [TestMethod]
         public void LaodAndSaveSettings()
         {
-            var environmentService = Container.GetExportedValue<MockEnvironmentService>();
-            environmentService.AppSettingsPath = Environment.CurrentDirectory;
+            var appSettings = new AppSettings();
+            var playlistSettings = new PlaylistSettings();
+            var settingsService = Container.GetExportedValue<MockSettingsService>();
+            settingsService.GetStub = type =>
+            {
+                if (type == typeof(AppSettings)) return appSettings;
+                if (type == typeof(PlaylistSettings)) return playlistSettings;
+                return null;
+            };
 
             controller.Initialize();
             controller.Run();
@@ -50,17 +60,15 @@ namespace Test.MusicManager.Applications.Controllers
 
             controller.Shutdown();
 
-            shellService.Settings.Height = 0;
-            playerController.PlaylistSettings.LastPlayedFileName = null;
+
+            shellService.Settings = null;
+            playerController.PlaylistSettings = null;
 
             controller.Initialize();
             controller.Run();
 
             Assert.AreEqual(42, shellService.Settings.Height);
             Assert.AreEqual("Test", playerController.PlaylistSettings.LastPlayedFileName);
-
-            File.Delete(Path.Combine(environmentService.AppSettingsPath, "Settings.xml"));
-            File.Delete(Path.Combine(environmentService.AppSettingsPath, "Playlist.xml"));
         }
         
         [TestMethod]

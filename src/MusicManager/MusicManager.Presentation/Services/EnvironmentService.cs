@@ -13,16 +13,13 @@ namespace Waf.MusicManager.Presentation.Services
     {
         private readonly Lazy<IReadOnlyList<string>> musicFilesToLoad;
         private readonly Lazy<string> profilePath;
-        private readonly Lazy<string> appSettingsPath;
 
 
         public EnvironmentService()
         {
             musicFilesToLoad = new Lazy<IReadOnlyList<string>>(() => Environment.GetCommandLineArgs().Skip(1).ToArray());
             profilePath = new Lazy<string>(() =>
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationInfo.Company, ApplicationInfo.ProductName, "ProfileOptimization"));
-            appSettingsPath = new Lazy<string>(() => 
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationInfo.Company, ApplicationInfo.ProductName, "Settings"));
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationInfo.ProductName, "ProfileOptimization"));
             MusicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             PublicMusicPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
         }
@@ -31,8 +28,6 @@ namespace Waf.MusicManager.Presentation.Services
         public IReadOnlyList<string> MusicFilesToLoad => musicFilesToLoad.Value;
 
         public string ProfilePath => profilePath.Value;
-
-        public string AppSettingsPath => appSettingsPath.Value;
 
         public string MusicPath { get; }
 

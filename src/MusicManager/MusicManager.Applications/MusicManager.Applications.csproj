@@ -126,7 +126,6 @@
     <Compile Include="Services\IPlaylistService.cs" />
     <Compile Include="Services\IPresentationService.cs" />
     <Compile Include="Services\ISelectionService.cs" />
-    <Compile Include="Services\ISettingsProvider.cs" />
     <Compile Include="Services\IShellService.cs" />
     <Compile Include="Services\ITranscodingService.cs" />
     <Compile Include="Services\ManagerStatusService.cs" />
@@ -134,7 +133,6 @@
     <Compile Include="Services\PlayerService.cs" />
     <Compile Include="Services\PlayerServiceExtensions.cs" />
     <Compile Include="Services\SelectionService.cs" />
-    <Compile Include="Services\SettingsProvider.cs" />
     <Compile Include="Services\ShellService.cs" />
     <Compile Include="Services\ShellServiceExtensions.cs" />
     <Compile Include="Services\TranscodingTaskEventArgs.cs" />

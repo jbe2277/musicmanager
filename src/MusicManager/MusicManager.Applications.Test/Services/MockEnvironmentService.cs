@@ -15,8 +15,6 @@ namespace Test.MusicManager.Applications.Services
 
         public IReadOnlyList<string> MusicFilesToLoad { get; set; }
         
-        public string AppSettingsPath { get; set; }
-        
         public string MusicPath { get; set; }
         
         public string PublicMusicPath { get; set; }

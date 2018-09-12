@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Waf.MusicManager.Applications.Services
 {
@@ -7,8 +6,6 @@ namespace Waf.MusicManager.Applications.Services
     {
         IReadOnlyList<string> MusicFilesToLoad { get; }
         
-        string AppSettingsPath { get; }
-
         string MusicPath { get; }
 
         string PublicMusicPath { get; }

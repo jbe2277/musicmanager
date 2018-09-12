@@ -70,7 +70,6 @@
     <Compile Include="Data\SupportedFileTypesTest.cs" />
     <Compile Include="Services\ManagerStatusServiceTest.cs" />
     <Compile Include="Services\MusicTitleHelperTest.cs" />
-    <Compile Include="Services\SettingsProviderTest.cs" />
     <Compile Include="Services\ShellServiceTest.cs" />
     <Compile Include="UnitTesting\ApplicationsTest.cs" />
     <Compile Include="Controllers\ManagerControllerTest.cs" />

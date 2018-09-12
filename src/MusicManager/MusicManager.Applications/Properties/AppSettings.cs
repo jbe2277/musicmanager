@@ -1,16 +1,11 @@
-﻿using System.ComponentModel;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
+using System.Waf.Applications.Services;
 
 namespace Waf.MusicManager.Applications.Properties
 {
     [DataContract]
-    public sealed class AppSettings : IExtensibleDataObject 
+    public sealed class AppSettings : UserSettingsBase
     {
-        public AppSettings()
-        {
-            Initialize();
-        }
-        
         [DataMember]
         public double Left { get; set; }
 
@@ -38,17 +33,9 @@ namespace Waf.MusicManager.Applications.Properties
         [DataMember]
         public bool Repeat { get; set; }
 
-        ExtensionDataObject IExtensibleDataObject.ExtensionData { get; set; }
-
-        private void Initialize()
+        protected override void SetDefaultValues()
         {
             Volume = 0.5;
-        }
-        
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext context)
-        {
-            Initialize();
         }
     }
 }
