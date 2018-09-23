@@ -2,6 +2,10 @@ Changelog
 ---------
 
 
+Version 1.7.2.100 (Release)
+- Update the Win Application Framework (WAF) to 4.3.0.
+
+
 Version 1.7.1.100 (Release)
 - Update the Win Application Framework (WAF) to 4.2.0.
 
