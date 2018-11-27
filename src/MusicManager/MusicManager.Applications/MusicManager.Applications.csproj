@@ -10,7 +10,6 @@
     <RootNamespace>Waf.MusicManager.Applications</RootNamespace>
     <AssemblyName>Waf.MusicManager.Applications</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
