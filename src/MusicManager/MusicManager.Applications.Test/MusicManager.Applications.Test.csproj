@@ -37,11 +37,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="Windows" />
-    <Reference Include="System.Runtime.WindowsRuntime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5.1\System.Runtime.WindowsRuntime.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="System.Runtime.WindowsRuntime" />
+    <Reference Include="Windows">
+      <HintPath>$(MSBuildProgramFiles32)\Windows Kits\10\UnionMetadata\Windows.winmd</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
