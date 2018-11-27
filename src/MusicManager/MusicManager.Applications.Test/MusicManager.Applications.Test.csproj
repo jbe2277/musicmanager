@@ -37,24 +37,15 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Waf.Core, Version=4.3.0.100, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Core.4.3.0\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Waf.UnitTesting.Core, Version=4.3.0.100, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.UnitTesting.Core.4.3.0\lib\portable45-net45+win8\System.Waf.UnitTesting.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Waf.UnitTesting.Wpf, Version=4.3.0.100, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.UnitTesting.Wpf.4.3.0\lib\net461\System.Waf.UnitTesting.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Waf.Wpf, Version=4.3.0.100, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Wpf.4.3.0\lib\net461\System.Waf.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="Windows" />
     <Reference Include="System.Runtime.WindowsRuntime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5.1\System.Runtime.WindowsRuntime.dll</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Waf.UnitTesting.Wpf" Version="5.0.0-alpha1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
@@ -113,7 +104,6 @@
     <None Include="Files\TestFlac.flac">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MusicManager.Applications\MusicManager.Applications.csproj">

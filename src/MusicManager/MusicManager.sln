@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Presentation", "MusicManager.Presentation\MusicManager.Presentation.csproj", "{16D7F42D-4DA1-4AA9-9361-036BCB04EBC0}"
 EndProject
@@ -19,16 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7158263D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EDB29476-09E3-4A9D-BEA2-F79B063DCA21}"
 	ProjectSection(SolutionItems) = preProject
+		Changelog.txt = Changelog.txt
 		CodeAnalysisDictionary.xml = CodeAnalysisDictionary.xml
 		CodeCoverage.runsettings = CodeCoverage.runsettings
 		MusicManager.ruleset = MusicManager.ruleset
 		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{7B8C0659-1472-436B-A120-6ABA217A5782}"
-	ProjectSection(SolutionItems) = preProject
-		Documentation\Changelog.txt = Documentation\Changelog.txt
-		Documentation\Checklist.txt = Documentation\Checklist.txt
 	EndProjectSection
 EndProject
 Global
@@ -69,5 +64,8 @@ Global
 		{5F422BC1-0685-42B9-AD4A-EF8FD0B38511} = {7158263D-65E2-491A-92B9-91A6F290A6E1}
 		{4358683C-18EF-4286-AE1D-38A6320313F6} = {7158263D-65E2-491A-92B9-91A6F290A6E1}
 		{4091873C-9332-4A5B-A72A-96CF5D81EB9D} = {7158263D-65E2-491A-92B9-91A6F290A6E1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14737D1B-7634-4142-9071-134228BC8574}
 	EndGlobalSection
 EndGlobal

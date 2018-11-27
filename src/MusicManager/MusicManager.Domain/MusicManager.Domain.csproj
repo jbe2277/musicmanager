@@ -36,12 +36,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Waf.Core, Version=4.3.0.100, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Core.4.3.0\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Waf.Wpf, Version=4.3.0.100, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Wpf.4.3.0\lib\net461\System.Waf.Wpf.dll</HintPath>
-    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Waf.Core" Version="5.0.0-alpha1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
@@ -68,7 +65,6 @@
     <Compile Include="Transcoding\TranscodingManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="_Overview.cd" />
   </ItemGroup>
   <ItemGroup>
