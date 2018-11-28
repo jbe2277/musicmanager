@@ -12,7 +12,6 @@ namespace Test.MusicManager.Domain.MusicFiles
     {
         private readonly AssertUnobservedExceptions assertUnobservedExceptions = new AssertUnobservedExceptions(); 
 
-        [TestInitialize]
         protected override void OnInitialize()
         {
  	        base.OnInitialize();
@@ -20,7 +19,6 @@ namespace Test.MusicManager.Domain.MusicFiles
             ServiceLocator.RegisterInstance<IChangeTrackerService>(new MockChangeTrackerService());
         }
 
-        [TestCleanup]
         protected override void OnCleanup()
         {
             assertUnobservedExceptions.Cleanup();

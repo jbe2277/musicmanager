@@ -7,7 +7,6 @@ namespace Waf.MusicManager.Domain.MusicFiles
     {
         private static readonly ConcurrentDictionary<Type, object> services = new ConcurrentDictionary<Type, object>();
 
-
         public static TId Get<TId>()
         {
             return (TId)services[typeof(TId)];

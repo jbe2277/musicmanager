@@ -22,37 +22,35 @@ namespace Waf.MusicManager.Domain.Playlists
         private bool repeat;
         private bool shuffle;
 
-
         public PlaylistManager(int playedItemStackCapacity = 1000, IRandomService randomService = null)
         {
             this.randomService = randomService ?? new RandomService();
-            this.items = new ObservableCollection<PlaylistItem>();
-            this.Items = new ReadOnlyObservableList<PlaylistItem>(items);
-            this.playedItemsStack = new PlayedItemsStack<PlaylistItem>(playedItemStackCapacity);
+            items = new ObservableCollection<PlaylistItem>();
+            Items = new ReadOnlyObservableList<PlaylistItem>(items);
+            playedItemsStack = new PlayedItemsStack<PlaylistItem>(playedItemStackCapacity);
 
-            this.items.CollectionChanged += ItemsCollectionChanged;
+            items.CollectionChanged += ItemsCollectionChanged;
         }
-
 
         public IReadOnlyObservableList<PlaylistItem> Items { get; }
 
         public bool IsTotalDurationEstimated
         {
-            get { return isTotalDurationEstimated; }
-            private set { SetProperty(ref isTotalDurationEstimated, value); }
+            get => isTotalDurationEstimated;
+            private set => SetProperty(ref isTotalDurationEstimated, value);
         }
 
         public TimeSpan TotalDuration
         {
-            get { return totalDuration; }
-            private set { SetProperty(ref totalDuration, value); }
+            get => totalDuration;
+            private set => SetProperty(ref totalDuration, value);
         }
 
         public PlaylistItem CurrentItem
         {
-            get { return currentItem; }
-            set 
-            { 
+            get => currentItem;
+            set
+            {
                 if (currentItem != value)
                 {
                     if (currentItem != null && Shuffle && items.Contains(currentItem))
@@ -68,27 +66,27 @@ namespace Waf.MusicManager.Domain.Playlists
 
         public bool CanPreviousItem
         {
-            get { return canPreviousItem; }
-            private set { SetProperty(ref canPreviousItem, value); }
+            get => canPreviousItem;
+            private set => SetProperty(ref canPreviousItem, value);
         }
 
         public bool CanNextItem
         {
-            get { return canNextItem; }
-            private set { SetProperty(ref canNextItem, value); }
+            get => canNextItem;
+            private set => SetProperty(ref canNextItem, value);
         }
 
         public bool Repeat
         {
-            get { return repeat; }
-            set { SetProperty(ref repeat, value); }
+            get => repeat;
+            set => SetProperty(ref repeat, value);
         }
 
         public bool Shuffle
         {
-            get { return shuffle; }
-            set 
-            { 
+            get => shuffle;
+            set
+            {
                 if (SetProperty(ref shuffle, value))
                 {
                     playedItemsStack.Clear();
@@ -96,11 +94,9 @@ namespace Waf.MusicManager.Domain.Playlists
             }
         }
 
-
         public void PreviousItem()
         {
-            if (!CanPreviousItem) { throw new InvalidOperationException("Call this method only if CanPreviousItem is true."); }
-            
+            if (!CanPreviousItem) throw new InvalidOperationException("Call this method only if CanPreviousItem is true.");
             if (!Shuffle)
             {
                 int currentItemIndex = items.IndexOf(CurrentItem);
@@ -117,8 +113,7 @@ namespace Waf.MusicManager.Domain.Playlists
 
         public void NextItem()
         {
-            if (!CanNextItem) { throw new InvalidOperationException("Call this method only if CanNextItem is true."); }
-
+            if (!CanNextItem) throw new InvalidOperationException("Call this method only if CanNextItem is true.");
             int currentItemIndex = items.IndexOf(CurrentItem);
             int index;
             if (!Shuffle)

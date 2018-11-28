@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Waf.Foundation;
 
@@ -16,49 +15,46 @@ namespace Waf.MusicManager.Domain.MusicFiles
         private bool isMetadataLoaded;
         private Exception loadError;
 
-        
         public MusicFile(Func<string, Task<MusicMetadata>> loadMetadata, string fileName)
         {
-            this.loadMetadataCompletionSource = new TaskCompletionSource<MusicMetadata>();
+            loadMetadataCompletionSource = new TaskCompletionSource<MusicMetadata>();
             this.loadMetadata = loadMetadata;
-            this.FileName = fileName;
-            this.sharedMusicFiles = new MusicFile[0];
+            FileName = fileName;
+            sharedMusicFiles = Array.Empty<MusicFile>();
         }
-
 
         public string FileName { get; }
 
         public IReadOnlyCollection<MusicFile> SharedMusicFiles
         {
-            get { return sharedMusicFiles; }
-            set { SetProperty(ref sharedMusicFiles, value); }
+            get => sharedMusicFiles;
+            set => SetProperty(ref sharedMusicFiles, value);
         }
 
         public MusicMetadata Metadata
         {
-            get 
-            { 
+            get
+            {
                 if (metadata == null)
                 {
                     LoadMetadataCore();
                 }
-                return metadata; 
+                return metadata;
             }
-            private set { SetProperty(ref metadata, value); }
+            private set => SetProperty(ref metadata, value);
         }
 
         public bool IsMetadataLoaded
         {
-            get { return isMetadataLoaded; }
-            private set { SetProperty(ref isMetadataLoaded, value); }
+            get => isMetadataLoaded;
+            private set => SetProperty(ref isMetadataLoaded, value);
         }
 
         public Exception LoadError
         {
-            get { return loadError; }
-            private set { SetProperty(ref loadError, value); }
+            get => loadError;
+            private set => SetProperty(ref loadError, value);
         }
-
 
         public Task<MusicMetadata> GetMetadataAsync()
         {
@@ -70,7 +66,6 @@ namespace Waf.MusicManager.Domain.MusicFiles
         {
             if (loadCalled) { return; }
             loadCalled = true;
-
             try
             {
                 var musicMetadata = await loadMetadata(FileName);

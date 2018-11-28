@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Waf.MusicManager.Domain.Playlists
@@ -9,7 +7,7 @@ namespace Waf.MusicManager.Domain.Playlists
     {
         public static double TruncatedMean(IEnumerable<double> values, double truncateRate)
         {
-            if (!values.Any()) { return 0; }
+            if (!values.Any()) return 0;
 
             int truncateCount = (int)(values.Count() * truncateRate);
             var truncatedValues = values.OrderBy(x => x).Skip(truncateCount).Take(values.Count() - 2 * truncateCount);

@@ -10,7 +10,6 @@ namespace Waf.MusicManager.Domain.Playlists
             MusicFile = musicFile;
         }
 
-
         public MusicFile MusicFile { get; }
     }
 }

@@ -10,7 +10,6 @@ namespace Waf.MusicManager.Domain.Transcoding
         private double progress;
         private Exception error;
 
-
         public TranscodeItem(MusicFile source, string destinationFileName)
         {
             Source = source;
@@ -18,21 +17,20 @@ namespace Waf.MusicManager.Domain.Transcoding
             UpdateStatus();
         }
 
-
         public MusicFile Source { get; }
 
         public string DestinationFileName { get; }
 
         public TranscodeStatus TranscodeStatus
         {
-            get { return transcodeStatus; }
-            private set { SetProperty(ref transcodeStatus, value); }
+            get => transcodeStatus;
+            private set => SetProperty(ref transcodeStatus, value);
         }
 
         public double Progress
         {
-            get { return progress; }
-            set 
+            get => progress;
+            set
             {
                 if (SetProperty(ref progress, value))
                 {
@@ -43,16 +41,15 @@ namespace Waf.MusicManager.Domain.Transcoding
 
         public Exception Error
         {
-            get { return error; }
-            set 
-            { 
+            get => error;
+            set
+            {
                 if (SetProperty(ref error, value))
                 {
                     UpdateStatus();
                 }
             }
         }
-
 
         private void UpdateStatus()
         {

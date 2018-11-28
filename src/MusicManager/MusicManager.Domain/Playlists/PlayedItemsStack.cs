@@ -7,16 +7,13 @@ namespace Waf.MusicManager.Domain.Playlists
         private readonly int capacity;
         private readonly LinkedList<T> playlistItems;
         
-
         public PlayedItemsStack(int capacity)
         {
             this.capacity = capacity;
-            this.playlistItems = new LinkedList<T>();
+            playlistItems = new LinkedList<T>();
         }
 
-
         public int Count => playlistItems.Count;
-        
         
         public T Pop()
         { 

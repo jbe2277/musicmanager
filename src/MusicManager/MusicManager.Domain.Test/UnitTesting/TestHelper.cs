@@ -14,7 +14,6 @@ namespace Test.MusicManager.Domain.UnitTesting
     {
         private static HashSet<string> tempFiles = new HashSet<string>();
         
-
         [AssemblyInitialize]
         public static void Initialize(TestContext testContext)
         {

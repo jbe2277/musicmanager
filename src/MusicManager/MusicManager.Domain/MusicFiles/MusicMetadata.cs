@@ -5,20 +5,19 @@ namespace Waf.MusicManager.Domain.MusicFiles
 {
     public class MusicMetadata : Entity
     {
-        private IReadOnlyList<string> artists = new string[0];
+        private IReadOnlyList<string> artists = Array.Empty<string>();
         private string title = "";
         private uint rating;
         private string album = "";
         private uint trackNumber;
         private uint year;
-        private IReadOnlyList<string> genre = new string[0];
+        private IReadOnlyList<string> genre = Array.Empty<string>();
         private string albumArtist = "";
         private string publisher = "";
         private string subtitle = "";
-        private IReadOnlyList<string> composers = new string[0];
-        private IReadOnlyList<string> conductors = new string[0];
+        private IReadOnlyList<string> composers = Array.Empty<string>();
+        private IReadOnlyList<string> conductors = Array.Empty<string>();
 
-        
         private MusicMetadata(TimeSpan duration, long bitrate, bool isSupported)
         {
             IsSupported = isSupported;
@@ -35,87 +34,85 @@ namespace Waf.MusicManager.Domain.MusicFiles
             return new MusicMetadata(duration, bitrate, false);
         }
 
-
         public object Parent { get; set; }
 
         public bool IsSupported { get; }
 
         public IReadOnlyList<string> Artists
         {
-            get { return artists; }
-            set { SetPropertyAndTrackChanges(ref artists, value); }
+            get => artists;
+            set => SetPropertyAndTrackChanges(ref artists, value);
         }
 
         public string Title
         {
-            get { return title; }
-            set { SetPropertyAndTrackChanges(ref title, value); }
+            get => title;
+            set => SetPropertyAndTrackChanges(ref title, value);
         }
 
         public TimeSpan Duration { get; }
 
         public uint Rating
         {
-            get { return rating; }
-            set { SetPropertyAndTrackChanges(ref rating, value); }
+            get => rating;
+            set => SetPropertyAndTrackChanges(ref rating, value);
         }
 
         public string Album
         {
-            get { return album; }
-            set { SetPropertyAndTrackChanges(ref album, value); }
+            get => album;
+            set => SetPropertyAndTrackChanges(ref album, value);
         }
 
         public uint TrackNumber
         {
-            get { return trackNumber; }
-            set { SetPropertyAndTrackChanges(ref trackNumber, value); }
+            get => trackNumber;
+            set => SetPropertyAndTrackChanges(ref trackNumber, value);
         }
 
         public uint Year
         {
-            get { return year; }
-            set { SetPropertyAndTrackChanges(ref year, value); }
+            get => year;
+            set => SetPropertyAndTrackChanges(ref year, value);
         }
 
         public IReadOnlyList<string> Genre
         {
-            get { return genre; }
-            set { SetPropertyAndTrackChanges(ref genre, value); }
+            get => genre;
+            set => SetPropertyAndTrackChanges(ref genre, value);
         }
 
         public long Bitrate { get; }
 
         public string AlbumArtist
         {
-            get { return albumArtist; }
-            set { SetPropertyAndTrackChanges(ref albumArtist, value); }
+            get => albumArtist;
+            set => SetPropertyAndTrackChanges(ref albumArtist, value);
         }
 
         public string Publisher
         {
-            get { return publisher; }
-            set { SetPropertyAndTrackChanges(ref publisher, value); }
+            get => publisher;
+            set => SetPropertyAndTrackChanges(ref publisher, value);
         }
 
         public string Subtitle
         {
-            get { return subtitle; }
-            set { SetPropertyAndTrackChanges(ref subtitle, value); }
+            get => subtitle;
+            set => SetPropertyAndTrackChanges(ref subtitle, value);
         }
 
         public IReadOnlyList<string> Composers
         {
-            get { return composers; }
-            set { SetPropertyAndTrackChanges(ref composers, value); }
+            get => composers;
+            set => SetPropertyAndTrackChanges(ref composers, value);
         }
 
         public IReadOnlyList<string> Conductors
         {
-            get { return conductors; }
-            set { SetPropertyAndTrackChanges(ref conductors, value); }
+            get => conductors;
+            set => SetPropertyAndTrackChanges(ref conductors, value);
         }
-
 
         public void ApplyValuesFrom(MusicMetadata sourceMetadata)
         {

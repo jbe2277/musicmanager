@@ -6,15 +6,11 @@ namespace Test.MusicManager.Domain.UnitTesting
     [TestClass]
     public abstract class DomainTest
     {
-        public TestContext TestContext { get; set; }
-
-
         [TestInitialize]
         public void Initialize()
         {
             CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
             CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
-
             OnInitialize();
         }
 

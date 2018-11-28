@@ -38,16 +38,13 @@ namespace Test.MusicManager.Domain.Transcoding
 
             Assert.AreEqual(TranscodeStatus.Pending, item.TranscodeStatus);
 
-            AssertHelper.PropertyChangedEvent(item, x => x.TranscodeStatus, () =>
-                item.Progress = 0.01);
+            AssertHelper.PropertyChangedEvent(item, x => x.TranscodeStatus, () => item.Progress = 0.01);
             Assert.AreEqual(TranscodeStatus.InProgress, item.TranscodeStatus);
 
-            AssertHelper.PropertyChangedEvent(item, x => x.TranscodeStatus, () =>
-                item.Progress = 1);
+            AssertHelper.PropertyChangedEvent(item, x => x.TranscodeStatus, () => item.Progress = 1);
             Assert.AreEqual(TranscodeStatus.Completed, item.TranscodeStatus);
 
-            AssertHelper.PropertyChangedEvent(item, x => x.TranscodeStatus, () =>
-                item.Error = new InvalidOperationException());
+            AssertHelper.PropertyChangedEvent(item, x => x.TranscodeStatus, () => item.Error = new InvalidOperationException());
             Assert.AreEqual(TranscodeStatus.Error, item.TranscodeStatus);
         }
     }

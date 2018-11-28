@@ -14,20 +14,17 @@ namespace Waf.MusicManager.Domain.MusicFiles
         private bool hasChanges;
         private Lazy<IChangeTrackerService> changeTrackerService;
 
-
         protected Entity()
         {
             changes = new HashSet<string>();
             changeTrackerService = new Lazy<IChangeTrackerService>(() => ServiceLocator.Get<IChangeTrackerService>());
         }
 
-
-        public bool HasChanges 
+        public bool HasChanges
         {
-            get { return hasChanges; }
-            private set { SetProperty(ref hasChanges, value); }
+            get => hasChanges;
+            private set => SetProperty(ref hasChanges, value);
         }
-
 
         public IReadOnlyCollection<string> GetChanges()
         { 

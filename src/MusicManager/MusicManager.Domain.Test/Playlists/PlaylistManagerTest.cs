@@ -15,7 +15,6 @@ namespace Test.MusicManager.Domain.MusicFiles
     {
         private PlaylistItem[] threeItems;
 
-
         protected override void OnInitialize()
         {
             base.OnInitialize();

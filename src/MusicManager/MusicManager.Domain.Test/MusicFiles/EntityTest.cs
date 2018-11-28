@@ -11,14 +11,12 @@ namespace Test.MusicManager.Domain.MusicFiles
     {
         private MockChangeTrackerService changeTrackerService;
 
-
         protected override void OnInitialize()
         {
             base.OnInitialize();
             changeTrackerService = new MockChangeTrackerService();
             ServiceLocator.RegisterInstance<IChangeTrackerService>(changeTrackerService);
         }
-
 
         [TestMethod]
         public void ChangeTrackerTest()
@@ -72,8 +70,8 @@ namespace Test.MusicManager.Domain.MusicFiles
 
             public string Name
             {
-                get { return name; }
-                set { SetPropertyAndTrackChanges(ref name, value); }
+                get => name;
+                set => SetPropertyAndTrackChanges(ref name, value);
             }
         }
     }
