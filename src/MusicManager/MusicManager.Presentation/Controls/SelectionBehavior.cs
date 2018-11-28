@@ -15,10 +15,8 @@ namespace Waf.MusicManager.Presentation.Controls
         private static HashSet<object> syncListsThatAreUpdating = new HashSet<object>();
         private static HashSet<Selector> selectorsThatAreUpdating = new HashSet<Selector>();
 
-        
         public static readonly DependencyProperty SyncSelectedItemsProperty =
             DependencyProperty.RegisterAttached("SyncSelectedItems", typeof(IList), typeof(SelectionBehavior), new FrameworkPropertyMetadata(null, SyncSelectedItemsPropertyChanged));
-
 
         [AttachedPropertyBrowsableForType(typeof(Selector))]
         public static IList GetSyncSelectedItems(DependencyObject obj)
@@ -33,8 +31,7 @@ namespace Waf.MusicManager.Presentation.Controls
 
         private static void SyncSelectedItemsPropertyChanged(DependencyObject element, DependencyPropertyChangedEventArgs e)
         {
-            Selector selector = element as Selector;
-            if (selector == null)
+            if (!(element is Selector selector))
             {
                 throw new ArgumentException("The attached property SelectedItems can only be used with a Selector.", nameof(element));
             }
@@ -53,8 +50,7 @@ namespace Waf.MusicManager.Presentation.Controls
                     multiSelector.SelectedItems.Add(item);
                 }
 
-                var observableList = list as INotifyCollectionChanged;
-                if (observableList == null) { return; }
+                if (!(list is INotifyCollectionChanged observableList)) { return; }
 
                 multiSelectorWithObservableList.Add(new Tuple<IMultiSelector, INotifyCollectionChanged>(multiSelector, observableList));
                 CollectionChangedEventManager.AddHandler(observableList, ListCollectionChanged);

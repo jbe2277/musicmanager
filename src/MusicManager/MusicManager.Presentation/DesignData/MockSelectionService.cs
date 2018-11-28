@@ -11,7 +11,6 @@ namespace Waf.MusicManager.Presentation.DesignData
     {
         private ObservableCollection<MusicFileDataModel> innerMusicFiles;
 
-
         public MockSelectionService()
         {
             innerMusicFiles = new ObservableCollection<MusicFileDataModel>();
@@ -19,12 +18,10 @@ namespace Waf.MusicManager.Presentation.DesignData
             MusicFiles = new ObservableListView<MusicFileDataModel>(innerMusicFiles);
         }
 
-
         public ObservableListView<MusicFileDataModel> MusicFiles { get; }
 
         public IList<MusicFileDataModel> SelectedMusicFiles { get; }
         
-
         public void SetMusicFiles(IEnumerable<MusicFileDataModel> musicFiles)
         {
             innerMusicFiles.Clear();

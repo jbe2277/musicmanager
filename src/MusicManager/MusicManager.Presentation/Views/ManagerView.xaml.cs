@@ -19,17 +19,16 @@ using Waf.MusicManager.Applications.Views;
 namespace Waf.MusicManager.Presentation.Views
 {
     [Export(typeof(IManagerView))]
-    public partial class ManagerView : UserControl, IManagerView
+    public partial class ManagerView : IManagerView
     {
         private readonly Lazy<ManagerViewModel> viewModel;
         private readonly List<DataGridColumn> autoColumns;
         
-
         public ManagerView()
         {
             InitializeComponent();
-            this.viewModel = new Lazy<ManagerViewModel>(() => ViewHelper.GetViewModel<ManagerViewModel>(this));
-            this.autoColumns = new List<DataGridColumn>()
+            viewModel = new Lazy<ManagerViewModel>(this.GetViewModel<ManagerViewModel>);
+            autoColumns = new List<DataGridColumn>()
             {
                 ratingColumn,
                 genreColumn,
@@ -37,16 +36,14 @@ namespace Waf.MusicManager.Presentation.Views
                 albumColumn,
                 trackNoColumn
             };
-            this.autoColumns.ForEach(x => x.Visibility = Visibility.Collapsed);
+            autoColumns.ForEach(x => x.Visibility = Visibility.Collapsed);
 
             Loaded += LoadedHandler;
             musicFilesGrid.Sorting += MusicFilesGridSorting;
             DependencyPropertyDescriptor.FromProperty(DataGridColumn.WidthProperty, typeof(DataGridColumn)).AddValueChanged(this.titleColumn, TitleColumnWidthChanged);
         }
 
-
         private ManagerViewModel ViewModel => viewModel.Value;
-
 
         private void LoadedHandler(object sender, RoutedEventArgs e)
         {

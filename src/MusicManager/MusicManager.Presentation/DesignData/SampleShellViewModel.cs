@@ -32,12 +32,10 @@ namespace Waf.MusicManager.Presentation.DesignData
             
             public bool IsMaximized { get; set; }
 
-
             public event CancelEventHandler Closing;
 
             public event EventHandler Closed;
 
-            
             public void Show()
             {
             }

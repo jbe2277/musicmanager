@@ -10,7 +10,6 @@ namespace Waf.MusicManager.Presentation.Controls
         public static readonly DependencyProperty AutoToolTipProperty =
             DependencyProperty.RegisterAttached("AutoToolTip", typeof(bool), typeof(ToolTipBehavior), new FrameworkPropertyMetadata(false, AutoToolTipPropertyChanged));
 
-
         [AttachedPropertyBrowsableForType(typeof(TextBlock))]
         public static bool GetAutoToolTip(DependencyObject element)
         {
@@ -26,8 +25,7 @@ namespace Waf.MusicManager.Presentation.Controls
 
         private static void AutoToolTipPropertyChanged(DependencyObject element, DependencyPropertyChangedEventArgs e)
         {
-            TextBlock textBlock = element as TextBlock;
-            if (textBlock == null)
+            if (!(element is TextBlock textBlock))
             {
                 throw new ArgumentException("The attached property AutoToolTip can only be used with a TextBlock.", nameof(element));
             }
@@ -36,7 +34,7 @@ namespace Waf.MusicManager.Presentation.Controls
                 throw new InvalidOperationException("The attached property AutoToolTip can only be used with a TextBlock that uses one of the TextTrimming options.");
             }
 
-            DependencyPropertyDescriptor textDescriptor = DependencyPropertyDescriptor.FromProperty(TextBlock.TextProperty, typeof(TextBlock));
+            var textDescriptor = DependencyPropertyDescriptor.FromProperty(TextBlock.TextProperty, typeof(TextBlock));
             if (e.NewValue.Equals(true))
             {
                 ComputeAutoToolTip(textBlock);
@@ -52,20 +50,20 @@ namespace Waf.MusicManager.Presentation.Controls
 
         private static void TextBlockTextChanged(object sender, EventArgs e)
         {
-            TextBlock textBlock = sender as TextBlock;
+            var textBlock = sender as TextBlock;
             ComputeAutoToolTip(textBlock);
         }
 
         private static void TextBlockSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            TextBlock textBlock = sender as TextBlock;
+            var textBlock = sender as TextBlock;
             ComputeAutoToolTip(textBlock);
         }
 
         private static void ComputeAutoToolTip(TextBlock textBlock)
         {
             // It is necessary to call Measure so that the DesiredSize gets updated.
-            textBlock.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
+            textBlock.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             var desiredWidth = textBlock.DesiredSize.Width;
             
             if (textBlock.ActualWidth < desiredWidth)

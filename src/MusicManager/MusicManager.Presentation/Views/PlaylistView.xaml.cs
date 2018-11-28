@@ -16,23 +16,20 @@ using Waf.MusicManager.Presentation.Controls;
 namespace Waf.MusicManager.Presentation.Views
 {
     [Export(typeof(IPlaylistView))]
-    public partial class PlaylistView : UserControl, IPlaylistView
+    public partial class PlaylistView : IPlaylistView
     {
         private readonly Lazy<PlaylistViewModel> viewModel;
         private readonly ListBoxDragDropHelper<PlaylistItem> listBoxDragDropHelper;
 
-
         public PlaylistView()
         {
             InitializeComponent();
-            viewModel = new Lazy<PlaylistViewModel>(() => ViewHelper.GetViewModel<PlaylistViewModel>(this));
+            viewModel = new Lazy<PlaylistViewModel>(this.GetViewModel<PlaylistViewModel>);
             listBoxDragDropHelper = new ListBoxDragDropHelper<PlaylistItem>(playlistListBox, MoveItems, TryGetInsertItems, InsertItems);
             Loaded += FirstTimeLoadedHandler;
         }
 
-        
         private PlaylistViewModel ViewModel => viewModel.Value;
-
 
         public void FocusSearchBox()
         {

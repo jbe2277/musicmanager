@@ -11,13 +11,11 @@ namespace Waf.MusicManager.Presentation.Controls
         private bool showMarkerAfterItem;
         private Rect adornerViewRect;
 
-
         public InsertMarkerAdorner(FrameworkElement control)
             : base(control)
         {
             this.control = control;
         }
-
 
         public void ShowMarker(FrameworkElement item, bool showMarkerAfterItem)
         {
@@ -28,7 +26,7 @@ namespace Waf.MusicManager.Presentation.Controls
 
         public void ResetMarker()
         {
-            this.item = null;
+            item = null;
             InvalidateVisual();
         }
 

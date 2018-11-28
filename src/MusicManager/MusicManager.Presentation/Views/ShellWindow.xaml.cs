@@ -13,7 +13,7 @@ using Waf.MusicManager.Applications.Views;
 namespace Waf.MusicManager.Presentation.Views
 {
     [Export(typeof(IShellView))]
-    public partial class ShellWindow : Window, IShellView
+    public partial class ShellWindow : IShellView
     {
         private readonly Lazy<ShellViewModel> viewModel;
 
@@ -28,14 +28,13 @@ namespace Waf.MusicManager.Presentation.Views
             playPauseButton.ImageSource = (ImageSource)FindResource("PauseButtonImage");
         }
 
-
         public double VirtualScreenWidth => SystemParameters.VirtualScreenWidth;
 
         public double VirtualScreenHeight => SystemParameters.VirtualScreenHeight;
 
         public bool IsMaximized
         {
-            get { return WindowState == WindowState.Maximized; }
+            get => WindowState == WindowState.Maximized;
             set
             {
                 if (value)
@@ -51,23 +50,22 @@ namespace Waf.MusicManager.Presentation.Views
 
         private ShellViewModel ViewModel => viewModel.Value;
 
-
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             base.OnPreviewKeyDown(e);
             if (e.Key == Key.MediaPlayPause)
             {
-                TryExecute(ViewModel.PlayerService.PlayPauseCommand);
+                ViewModel.PlayerService.PlayPauseCommand.Execute(null);
                 e.Handled = true;
             }
             else if (e.Key == Key.MediaPreviousTrack)
             {
-                TryExecute(ViewModel.PlayerService.PreviousCommand);
+                ViewModel.PlayerService.PreviousCommand.Execute(null);
                 e.Handled = true;
             }
             else if (e.Key == Key.MediaNextTrack)
             {
-                TryExecute(ViewModel.PlayerService.NextCommand);
+                ViewModel.PlayerService.NextCommand.Execute(null);
                 e.Handled = true;
             }
         }
@@ -112,14 +110,6 @@ namespace Waf.MusicManager.Presentation.Views
                     // Delay removing the wait cursor so that the UI has finished its work as well.
                     Dispatcher.InvokeAsync(() => Mouse.OverrideCursor = null, DispatcherPriority.ApplicationIdle);
                 }
-            }
-        }
-
-        private static void TryExecute(ICommand command)
-        {
-            if (command.CanExecute(null))
-            {
-                command.Execute(null);
             }
         }
     }

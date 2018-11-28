@@ -17,7 +17,7 @@ using Waf.MusicManager.Domain.Playlists;
 namespace Waf.MusicManager.Presentation.Views
 {
     [Export(typeof(IPlayerView))]
-    public partial class PlayerView : UserControl, IPlayerView
+    public partial class PlayerView : IPlayerView
     {
         private readonly Lazy<PlayerViewModel> viewModel;
         private readonly PlayerService playerService;
@@ -35,11 +35,11 @@ namespace Waf.MusicManager.Presentation.Views
         [ImportingConstructor]
         public PlayerView(PlayerService playerService)
         {
-            this.InitializeComponent();
-            this.viewModel = new Lazy<PlayerViewModel>(() => ViewHelper.GetViewModel<PlayerViewModel>(this));
+            InitializeComponent();
+            viewModel = new Lazy<PlayerViewModel>(this.GetViewModel<PlayerViewModel>);
             this.playerService = playerService;
-            this.mediaPlayer = new MediaPlayer();
-            this.duratonConverter = new Converters.DurationConverter();
+            mediaPlayer = new MediaPlayer();
+            duratonConverter = new Converters.DurationConverter();
 
             updateTimer = new DispatcherTimer();
             updateTimer.Interval = TimeSpan.FromMilliseconds(100);
@@ -58,10 +58,8 @@ namespace Waf.MusicManager.Presentation.Views
             Loaded += FirstTimeLoadedHandler;
         }
 
-
         private PlayerViewModel ViewModel => viewModel.Value;
         
-
         public TimeSpan GetPosition() { return mediaPlayer.Position; }
 
         public void SetPosition(TimeSpan position) 

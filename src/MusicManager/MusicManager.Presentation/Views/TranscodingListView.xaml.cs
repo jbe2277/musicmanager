@@ -18,24 +18,21 @@ using Waf.MusicManager.Presentation.Controls;
 namespace Waf.MusicManager.Presentation.Views
 {
     [Export(typeof(ITranscodingListView))]
-    public partial class TranscodingListView : UserControl, ITranscodingListView
+    public partial class TranscodingListView : ITranscodingListView
     {
         private readonly Lazy<TranscodingListViewModel> viewModel;
         private readonly ListBoxDragDropHelper<TranscodeItem> listBoxDragDropHelper;
         private ListCollectionView transcodeItemsCollectionView;
 
-
         public TranscodingListView()
         {
             InitializeComponent();
-            viewModel = new Lazy<TranscodingListViewModel>(() => ViewHelper.GetViewModel<TranscodingListViewModel>(this));
+            viewModel = new Lazy<TranscodingListViewModel>(this.GetViewModel<TranscodingListViewModel>);
             listBoxDragDropHelper = new ListBoxDragDropHelper<TranscodeItem>(transcodingListBox, null, TryGetInsertItems, InsertItems);
             Loaded += FirstTimeLoadedHandler;
         }
 
-
         private TranscodingListViewModel ViewModel => viewModel.Value;
-
 
         private void FirstTimeLoadedHandler(object sender, RoutedEventArgs e)
         {

@@ -18,7 +18,6 @@ namespace Waf.MusicManager.Presentation.DesignData
         }
 
 
-
         private class MockMusicPropertiesView : MockView, IMusicPropertiesView
         {
         }

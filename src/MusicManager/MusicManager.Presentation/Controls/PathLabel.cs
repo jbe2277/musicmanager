@@ -13,9 +13,7 @@ namespace Waf.MusicManager.Presentation.Controls
         public static readonly DependencyProperty PathProperty =
             DependencyProperty.Register(nameof(Path), typeof(string), typeof(PathLabel), new FrameworkPropertyMetadata("", PathChangedHandler));
 
-
         private readonly TextBlock textBlock;
-
 
         public PathLabel()
         {
@@ -23,13 +21,11 @@ namespace Waf.MusicManager.Presentation.Controls
             SizeChanged += SizeChangedHandler;
         }
 
-
         public string Path
         {
-            get { return (string)GetValue(PathProperty); }
-            set { SetValue(PathProperty, value); }
+            get => (string)GetValue(PathProperty);
+            set => SetValue(PathProperty, value);
         }
-
 
         public override void OnApplyTemplate()
         {

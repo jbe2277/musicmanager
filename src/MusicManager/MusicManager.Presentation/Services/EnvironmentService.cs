@@ -14,7 +14,6 @@ namespace Waf.MusicManager.Presentation.Services
         private readonly Lazy<IReadOnlyList<string>> musicFilesToLoad;
         private readonly Lazy<string> profilePath;
 
-
         public EnvironmentService()
         {
             musicFilesToLoad = new Lazy<IReadOnlyList<string>>(() => Environment.GetCommandLineArgs().Skip(1).ToArray());
@@ -23,7 +22,6 @@ namespace Waf.MusicManager.Presentation.Services
             MusicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             PublicMusicPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
         }
-
 
         public IReadOnlyList<string> MusicFilesToLoad => musicFilesToLoad.Value;
 

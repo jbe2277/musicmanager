@@ -24,7 +24,6 @@ namespace Waf.MusicManager.Presentation.Controls
         private ListBoxItem dragSource;
         private Point? startPoint;
 
-
         public ListBoxDragDropHelper(ListBox listBox, Action<int, IEnumerable<TItem>> moveItemsAction, 
             Func<DragEventArgs, IEnumerable> tryGetInsertItemsAction, Action<int, IEnumerable> insertItemsAction)
         {
@@ -32,8 +31,8 @@ namespace Waf.MusicManager.Presentation.Controls
             this.moveItemsAction = moveItemsAction;
             this.tryGetInsertItemsAction = tryGetInsertItemsAction ?? (eventArgs => null);
             this.insertItemsAction = insertItemsAction;
-            this.insertMarkerAdorner = new InsertMarkerAdorner(listBox);
-            this.throttledAutoScrollAction = new ThrottledAction(ThrottledAutoScroll, ThrottledActionMode.InvokeMaxEveryDelayTime, TimeSpan.FromMilliseconds(250));
+            insertMarkerAdorner = new InsertMarkerAdorner(listBox);
+            throttledAutoScrollAction = new ThrottledAction(ThrottledAutoScroll, ThrottledActionMode.InvokeMaxEveryDelayTime, TimeSpan.FromMilliseconds(250));
 
             listBox.Loaded += ListBoxLoaded;
             if (listBox.IsLoaded)
@@ -53,7 +52,6 @@ namespace Waf.MusicManager.Presentation.Controls
             listBox.ItemContainerStyle = listboxItemStyle;
         }
 
-        
         private void InitializeAdornerLayer()
         {
             var adornerLayer = AdornerLayer.GetAdornerLayer(listBox);
@@ -101,7 +99,6 @@ namespace Waf.MusicManager.Presentation.Controls
                 e.Handled = true;
                 return;
             }
-
             lastPreviewDragOverEventArgs = e;
             throttledAutoScrollAction.InvokeAccumulated();
         }
@@ -131,14 +128,10 @@ namespace Waf.MusicManager.Presentation.Controls
 
         private void ListBoxItemDragEnter(object sender, DragEventArgs e)
         {
-            if (!CanMoveItems(e) && !CanInsertItems(e))
-            {
-                return;
-            }
+            if (!CanMoveItems(e) && !CanInsertItems(e)) return;
             
             var target = (ListBoxItem)sender;
-            if (dragSource != null
-                && dragSource.TranslatePoint(new Point(), listBox).Y > target.TranslatePoint(new Point(), listBox).Y)
+            if (dragSource != null && dragSource.TranslatePoint(new Point(), listBox).Y > target.TranslatePoint(new Point(), listBox).Y)
             {
                 insertMarkerAdorner.ShowMarker(target, false);
             }
@@ -173,7 +166,6 @@ namespace Waf.MusicManager.Presentation.Controls
                 insertItemsAction(newIndex + 1, droppedData);
                 SelectItems(newIndex + 1, droppedData.Cast<object>().Count());
             }
-
             FocusSelectedItem();
             e.Handled = true;
         }
@@ -197,19 +189,15 @@ namespace Waf.MusicManager.Presentation.Controls
                 insertItemsAction(newIndex + 1, droppedData);
                 SelectItems(newIndex + 1, droppedData.Cast<object>().Count());
             }
-
             FocusSelectedItem();
             e.Handled = true;
         }
 
         private bool CanMoveItems(DragEventArgs e)
         {
-            if (moveItemsAction == null)
-            {
-                return false;
-            }
-            var items = e.Data.GetData(typeof(TItem[])) as TItem[];
-            return items != null && items.Any();
+            if (moveItemsAction == null) return false;
+            
+            return e.Data.GetData(typeof(TItem[])) is TItem[] items && items.Any();
         }
 
         private bool CanInsertItems(DragEventArgs e)
@@ -235,7 +223,6 @@ namespace Waf.MusicManager.Presentation.Controls
                 // This happens when moving multiple items at once. If we set the focus now then it clears the selection.
                 return;
             }
-
             listBox.Dispatcher.InvokeAsync(() =>
             {
                 var listBoxItem = (ListBoxItem)listBox.ItemContainerGenerator.ContainerFromItem(listBox.SelectedItem);
@@ -248,13 +235,13 @@ namespace Waf.MusicManager.Presentation.Controls
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-                if (child is TChild)
+                if (child is TChild foundChild)
                 {
-                    return (TChild)child;
+                    return foundChild;
                 }
                 else
                 {
-                    TChild childOfChild = FindVisualChild<TChild>(child);
+                    var childOfChild = FindVisualChild<TChild>(child);
                     if (childOfChild != null)
                     {
                         return childOfChild;

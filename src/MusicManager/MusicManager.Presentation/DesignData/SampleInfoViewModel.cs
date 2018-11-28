@@ -9,7 +9,6 @@ namespace Waf.MusicManager.Presentation.DesignData
         {
         }
 
-
         private class MockInfoView : MockView, IInfoView
         {
             public void ShowDialog(object owner)

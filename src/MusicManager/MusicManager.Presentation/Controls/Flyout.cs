@@ -14,9 +14,7 @@ namespace Waf.MusicManager.Presentation.Controls
         public new static readonly DependencyProperty HorizontalOffsetProperty = 
             DependencyProperty.Register(nameof(HorizontalOffset), typeof(double), typeof(Flyout), new PropertyMetadata(0d));
 
-
         private readonly Stopwatch closedStopwatch;
-
         
         static Flyout()
         {
@@ -31,19 +29,17 @@ namespace Waf.MusicManager.Presentation.Controls
             closedStopwatch = new Stopwatch();
         }
 
-
         public HorizontalFlyoutAlignment HorizontalFlyoutAlignment
         {
-            get { return (HorizontalFlyoutAlignment)GetValue(HorizontalFlyoutAlignmentProperty); }
-            set { SetValue(HorizontalFlyoutAlignmentProperty, value); }
+            get => (HorizontalFlyoutAlignment)GetValue(HorizontalFlyoutAlignmentProperty);
+            set => SetValue(HorizontalFlyoutAlignmentProperty, value);
         }
 
         public new double HorizontalOffset
         {
-            get { return (double)GetValue(HorizontalOffsetProperty); }
-            set { SetValue(HorizontalOffsetProperty, value); }
+            get => (double)GetValue(HorizontalOffsetProperty);
+            set => SetValue(HorizontalOffsetProperty, value);
         }
-
 
         protected override void OnOpened(EventArgs e)
         {
@@ -63,7 +59,7 @@ namespace Waf.MusicManager.Presentation.Controls
                     SetBaseHorizontalOffset(-target.ActualWidth + child.ActualWidth + HorizontalOffset);
                 }
             }
-            else if (HorizontalFlyoutAlignment == Controls.HorizontalFlyoutAlignment.Right)
+            else if (HorizontalFlyoutAlignment == HorizontalFlyoutAlignment.Right)
             {
                 if (!SystemParameters.MenuDropAlignment)
                 {
@@ -87,7 +83,6 @@ namespace Waf.MusicManager.Presentation.Controls
                     SetBaseHorizontalOffset((-target.ActualWidth / 2) + (child.ActualWidth / 2) + HorizontalOffset);
                 }
             }
-            
             child.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
         }
 

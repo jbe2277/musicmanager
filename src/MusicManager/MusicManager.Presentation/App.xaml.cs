@@ -19,12 +19,11 @@ using Waf.MusicManager.Presentation.Services;
 
 namespace Waf.MusicManager.Presentation
 {
-    public partial class App : Application
+    public partial class App
     {
         private AggregateCatalog catalog;
         private CompositionContainer container;
         private IEnumerable<IModuleController> moduleControllers;
-        
         
         public App()
         {
@@ -33,7 +32,6 @@ namespace Waf.MusicManager.Presentation
             ProfileOptimization.SetProfileRoot(environmentService.ProfilePath);
             ProfileOptimization.StartProfile("Startup.profile");
         }
-
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -124,8 +122,7 @@ namespace Waf.MusicManager.Presentation
 
             if (!isTerminating)
             {
-                MessageBox.Show(string.Format(CultureInfo.CurrentCulture,
-                        Presentation.Properties.Resources.UnknownError, e.ToString()),
+                MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Presentation.Properties.Resources.UnknownError, e.ToString()),
                     ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

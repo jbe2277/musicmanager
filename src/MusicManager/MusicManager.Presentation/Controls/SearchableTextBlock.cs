@@ -22,34 +22,31 @@ namespace Waf.MusicManager.Presentation.Controls
         public static readonly DependencyProperty IsMatchCaseProperty =
             DependencyProperty.Register(nameof(IsMatchCase), typeof(bool), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(false, ControlPropertyChangedCallback));
 
-
         private IReadOnlyList<string> textParts = new string[0];
-
 
         public new string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
         }
 
         public string SearchText
         {
-            get { return (string)GetValue(SearchTextProperty); }
-            set { SetValue(SearchTextProperty, value); }
+            get => (string)GetValue(SearchTextProperty);
+            set => SetValue(SearchTextProperty, value);
         }
 
         public Brush HighlightBackground
         {
-            get { return (Brush)GetValue(HighlightBackgroundProperty); }
-            set { SetValue(HighlightBackgroundProperty, value); }
+            get => (Brush)GetValue(HighlightBackgroundProperty);
+            set => SetValue(HighlightBackgroundProperty, value);
         }
 
         public bool IsMatchCase
         {
-            get { return (bool)GetValue(IsMatchCaseProperty); }
-            set { SetValue(IsMatchCaseProperty, value); }
+            get => (bool)GetValue(IsMatchCaseProperty);
+            set => SetValue(IsMatchCaseProperty, value);
         }
-
 
         private void UpdateContet()
         {
@@ -78,7 +75,6 @@ namespace Waf.MusicManager.Presentation.Controls
 
                 isHighlight = !isHighlight;
             }
-
             textParts = newTextParts;
         }
 
@@ -92,8 +88,8 @@ namespace Waf.MusicManager.Presentation.Controls
                 return new[] { text };
             }
 
-            List<string> textParts = new List<string>();
-            int index = 0;
+            var textParts = new List<string>();
+            var index = 0;
             var comparisonType = IsMatchCase ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase;
             while (true)
             {
@@ -106,7 +102,6 @@ namespace Waf.MusicManager.Presentation.Controls
                 textParts.Add(text.Substring(position, searchText.Length));
                 index = position + searchText.Length;
             }
-
             textParts.Add(text.Substring(index, text.Length - index));
             return textParts;
         }

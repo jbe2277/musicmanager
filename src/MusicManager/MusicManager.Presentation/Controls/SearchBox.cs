@@ -24,23 +24,20 @@ namespace Waf.MusicManager.Presentation.Controls
         public static readonly DependencyProperty HintTextProperty =
             DependencyProperty.Register(nameof(HintText), typeof(string), typeof(SearchBox), new FrameworkPropertyMetadata(""));
 
-
         private TextBox searchTextBox;
-
 
         static SearchBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchBox), new FrameworkPropertyMetadata(typeof(SearchBox)));
         }
 
-
         /// <summary>
         /// Gets or sets the text.
         /// </summary>
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
         }
 
         /// <summary>
@@ -48,10 +45,9 @@ namespace Waf.MusicManager.Presentation.Controls
         /// </summary>
         public string HintText
         {
-            get { return (string)GetValue(HintTextProperty); }
-            set { SetValue(HintTextProperty, value); }
+            get => (string)GetValue(HintTextProperty);
+            set => SetValue(HintTextProperty, value);
         }
-
 
         public override void OnApplyTemplate()
         {

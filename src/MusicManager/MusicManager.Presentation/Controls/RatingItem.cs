@@ -15,17 +15,13 @@ namespace Waf.MusicManager.Presentation.Controls
 
         public static readonly DependencyProperty RatingItemStateProperty = RatingItemStatePropertyKey.DependencyProperty;
         
-
-
         static RatingItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RatingItem), new FrameworkPropertyMetadata(typeof(RatingItem)));
         }
 
-
         private double value;
         private double mouseOverValue;
-
 
         public bool IsMouseOverRating => (bool)GetValue(IsMouseOverRatingProperty);
 
@@ -33,9 +29,9 @@ namespace Waf.MusicManager.Presentation.Controls
 
         internal int ItemValue { get; set; }
 
-        internal double Value 
+        internal double Value
         {
-            get { return value; }
+            get => value;
             set
             {
                 if (this.value != value)
@@ -48,7 +44,7 @@ namespace Waf.MusicManager.Presentation.Controls
 
         internal double MouseOverValue
         {
-            get { return mouseOverValue; }
+            get => mouseOverValue;
             set
             {
                 if (mouseOverValue != value)
@@ -59,11 +55,9 @@ namespace Waf.MusicManager.Presentation.Controls
             }
         }
 
-        
         private void UpdateRatingItemState()
         {
             RatingItemState state;
-
             double stateValue;
             if (MouseOverValue >= 1)
             {
@@ -86,7 +80,6 @@ namespace Waf.MusicManager.Presentation.Controls
             {
                 state = RatingItemState.Empty;
             }
-
             SetValue(RatingItemStatePropertyKey, state);
         }
     }

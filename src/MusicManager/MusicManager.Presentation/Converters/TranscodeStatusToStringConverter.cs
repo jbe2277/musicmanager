@@ -10,7 +10,7 @@ namespace Waf.MusicManager.Presentation.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null) { return null; }
+            if (value == null) return null;
 
             var transcodeStatus = (TranscodeStatus)value;
             switch (transcodeStatus)

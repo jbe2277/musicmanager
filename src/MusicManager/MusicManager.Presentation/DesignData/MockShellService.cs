@@ -15,7 +15,6 @@ namespace Waf.MusicManager.Presentation.DesignData
             Settings = new AppSettings();
         }
         
-
         public AppSettings Settings { get; set; }
         
         public object ShellView { get; set; }
@@ -34,9 +33,7 @@ namespace Waf.MusicManager.Presentation.DesignData
         
         public bool IsApplicationBusy { get; set; }
 
-
         public event CancelEventHandler Closing;
-
 
         public void ShowError(Exception exception, string displayMessage)
         {

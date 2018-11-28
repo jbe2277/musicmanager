@@ -17,8 +17,8 @@ namespace Waf.MusicManager.Presentation.Controls
         
         static Rating()
         {
-            RangeBase.MinimumProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure));
-            RangeBase.MaximumProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(5.0, FrameworkPropertyMetadataOptions.AffectsMeasure));
+            MinimumProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure));
+            MaximumProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(5.0, FrameworkPropertyMetadataOptions.AffectsMeasure));
             IsSnapToTickEnabledProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(true));
             SmallChangeProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(1.0));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(typeof(Rating)));

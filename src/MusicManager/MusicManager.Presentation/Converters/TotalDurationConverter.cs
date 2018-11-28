@@ -9,8 +9,8 @@ namespace Waf.MusicManager.Presentation.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            bool isTotalDurationEstimated = (bool)values[0];
-            string totalDuration = (string)new DurationConverter().Convert(values[1], null, null, null);
+            var isTotalDurationEstimated = (bool)values[0];
+            var totalDuration = (string)new DurationConverter().Convert(values[1], null, null, null);
             if (isTotalDurationEstimated)
             {
                 totalDuration = string.Format(CultureInfo.CurrentCulture, Resources.AboutDuration, totalDuration);
