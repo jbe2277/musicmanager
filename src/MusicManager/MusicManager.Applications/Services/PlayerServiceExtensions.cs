@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Waf.MusicManager.Applications.Services
+﻿namespace Waf.MusicManager.Applications.Services
 {
     public static class PlayerServiceExtensions
     {

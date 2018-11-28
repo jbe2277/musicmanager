@@ -40,7 +40,6 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly ThrottledAction throttledMusicFilesCollectionChangedAction;
         private TaskCompletionSource<object> allTranscodingsCanceledCompletion;
 
-
         [ImportingConstructor]
         public TranscodingController(IMessageService messageService, IShellService shellService, IMusicFileContext musicFileContext, ISelectionService selectionService, 
             TranscodingService transcodingService, Lazy<ITranscoder> transcoder, Lazy<TranscodingListViewModel> transcodingListViewModel)
@@ -62,9 +61,7 @@ namespace Waf.MusicManager.Applications.Controllers
             throttledMusicFilesCollectionChangedAction = new ThrottledAction(ThrottledMusicFilesCollectionChanged, ThrottledActionMode.InvokeOnlyIfIdleForDelayTime, TimeSpan.FromMilliseconds(10));
         }
 
-
         private TranscodingListViewModel TranscodingListViewModel => transcodingListViewModel.Value;
-
 
         public void Initialize()
         {
@@ -140,7 +137,6 @@ namespace Waf.MusicManager.Applications.Controllers
                 shellService.ShowError(ex, Resources.CouldNotOpenFiles);
                 return;
             }
-            
             Transcode(GetMusicFilesSupportedToConvert(musicFiles).ToArray());
         }
 
@@ -241,7 +237,6 @@ namespace Waf.MusicManager.Applications.Controllers
         private async Task TranscodeAsyncCore(TranscodeItem transcodeItem, uint bitrate, CancellationToken token)
         {
             await throttler.WaitAsync(token);  // Throttle the transcoding
-
             try
             {
                 var task = transcoder.Value.TranscodeAsync(transcodeItem.Source.FileName, transcodeItem.DestinationFileName, bitrate,

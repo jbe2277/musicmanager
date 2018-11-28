@@ -11,7 +11,6 @@ namespace Waf.MusicManager.Applications.Services
             TranscodingTask = transcodingTask;
         }
 
-
         public string FileName { get; }
 
         public Task TranscodingTask { get; }

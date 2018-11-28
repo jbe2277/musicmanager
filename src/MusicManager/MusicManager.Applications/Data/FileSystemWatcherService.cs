@@ -12,7 +12,6 @@ namespace Waf.MusicManager.Applications.Data
         private readonly TaskScheduler taskScheduler;
         private readonly FileSystemWatcher watcher;
 
-
         [ImportingConstructor]
         public FileSystemWatcherService()
         {
@@ -23,32 +22,29 @@ namespace Waf.MusicManager.Applications.Data
             watcher.Deleted += WatcherDeleted;
         }
 
-        
         public NotifyFilters NotifyFilter
         {
-            get { return watcher.NotifyFilter; }
-            set { watcher.NotifyFilter = value; }
+            get => watcher.NotifyFilter;
+            set => watcher.NotifyFilter = value;
         }
 
         public string Path
         {
-            get { return watcher.Path; }
-            set { watcher.Path = value; }
+            get => watcher.Path;
+            set => watcher.Path = value;
         }
 
         public bool EnableRaisingEvents
         {
-            get { return watcher.EnableRaisingEvents; }
-            set { watcher.EnableRaisingEvents = value; }
+            get => watcher.EnableRaisingEvents;
+            set => watcher.EnableRaisingEvents = value;
         }
-
 
         public event FileSystemEventHandler Created;
 
         public event RenamedEventHandler Renamed;
 
         public event FileSystemEventHandler Deleted;
-
 
         protected virtual void OnCreated(FileSystemEventArgs e)
         {

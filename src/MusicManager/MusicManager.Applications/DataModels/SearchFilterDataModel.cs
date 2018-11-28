@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.ComponentModel;
 using System.Globalization;
 using System.Waf.Foundation;
@@ -13,7 +14,7 @@ namespace Waf.MusicManager.Applications.DataModels
         private string artistFilter = "";
         private string titleFilter = "";
         private string albumFilter = "";
-        private IReadOnlyList<string> genreFilter = new string[0];
+        private IReadOnlyList<string> genreFilter = Array.Empty<string>();
         private FilterOperator ratingFilterOperator;
         private uint ratingFilter = 0;
         private uint? fromYearFilter;
@@ -47,44 +48,44 @@ namespace Waf.MusicManager.Applications.DataModels
         
         public string UserSearchFilter
         {
-            get { return userSearchFilter; }
-            set { SetProperty(ref userSearchFilter, value); }
+            get => userSearchFilter;
+            set => SetProperty(ref userSearchFilter, value);
         }
 
         public string ArtistFilter
         {
-            get { return artistFilter; }
-            set { SetProperty(ref artistFilter, value); }
+            get => artistFilter;
+            set => SetProperty(ref artistFilter, value);
         }
 
         public string TitleFilter
         {
-            get { return titleFilter; }
-            set { SetProperty(ref titleFilter, value); }
+            get => titleFilter;
+            set => SetProperty(ref titleFilter, value);
         }
 
         public string AlbumFilter
         {
-            get { return albumFilter; }
-            set { SetProperty(ref albumFilter, value); }
+            get => albumFilter;
+            set => SetProperty(ref albumFilter, value);
         }
 
         public IReadOnlyList<string> GenreFilter
         {
-            get { return genreFilter; }
-            set { SetProperty(ref genreFilter, value); }
+            get => genreFilter;
+            set => SetProperty(ref genreFilter, value);
         }
 
         public FilterOperator RatingFilterOperator
         {
-            get { return ratingFilterOperator; }
-            set { SetProperty(ref ratingFilterOperator, value); }
+            get => ratingFilterOperator;
+            set => SetProperty(ref ratingFilterOperator, value);
         }
 
         public uint RatingFilter
         {
-            get { return ratingFilter; }
-            set 
+            get => ratingFilter;
+            set
             {
                 if (SetProperty(ref ratingFilter, value) && RatingFilterOperator == FilterOperator.Ignore)
                 {
@@ -95,7 +96,7 @@ namespace Waf.MusicManager.Applications.DataModels
 
         public string FromYearFilter
         {
-            get { return fromYearFilter == null ? null : fromYearFilter.ToString(); }
+            get => fromYearFilter?.ToString(CultureInfo.CurrentCulture);
             set
             {
                 uint? newValue = string.IsNullOrEmpty(value) ? (uint?)null : uint.Parse(value, CultureInfo.CurrentCulture);
@@ -109,7 +110,7 @@ namespace Waf.MusicManager.Applications.DataModels
 
         public string ToYearFilter
         {
-            get { return toYearFilter == null ? null : toYearFilter.ToString(); }
+            get => toYearFilter?.ToString(CultureInfo.CurrentCulture);
             set
             {
                 uint? newValue = string.IsNullOrEmpty(value) ? (uint?)null : uint.Parse(value, CultureInfo.CurrentCulture);
@@ -143,7 +144,6 @@ namespace Waf.MusicManager.Applications.DataModels
             }
         }
 
-
         public void Clear()
         {
             UserSearchFilter = "";
@@ -152,7 +152,7 @@ namespace Waf.MusicManager.Applications.DataModels
             AlbumFilter = "";
             if (GenreFilter.Any())
             {
-                GenreFilter = new string[0];
+                GenreFilter = Array.Empty<string>();
             }
             FromYearFilter = "";
             ToYearFilter = "";

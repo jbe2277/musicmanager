@@ -25,15 +25,13 @@ namespace Waf.MusicManager.Applications.Services
         private bool isClosingEventInitialized;
         private event CancelEventHandler closing;
 
-
         [ImportingConstructor]
         public ShellService(Lazy<IShellView> shellView)
 	    {
             this.shellView = shellView;
-            this.tasksToCompleteBeforeShutdown = new List<Task>();
-            this.applicationBusyContext = new List<ApplicationBusyContext>();
+            tasksToCompleteBeforeShutdown = new List<Task>();
+            applicationBusyContext = new List<ApplicationBusyContext>();
 	    }
-
 
         public AppSettings Settings { get; set; }
         
@@ -41,32 +39,32 @@ namespace Waf.MusicManager.Applications.Services
 
         public object ContentView
         {
-            get { return contentView; }
-            set { SetProperty(ref contentView, value); }
+            get => contentView;
+            set => SetProperty(ref contentView, value);
         }
 
         public object MusicPropertiesView
         {
-            get { return musicPropertiesView; }
-            set { SetProperty(ref musicPropertiesView, value); }
+            get => musicPropertiesView;
+            set => SetProperty(ref musicPropertiesView, value);
         }
 
         public object PlaylistView
         {
-            get { return playlistView; }
-            set { SetProperty(ref playlistView, value); }
+            get => playlistView;
+            set => SetProperty(ref playlistView, value);
         }
 
         public Lazy<object> TranscodingListView
         {
-            get { return transcodeListView; }
-            set { SetProperty(ref transcodeListView, value); }
+            get => transcodeListView;
+            set => SetProperty(ref transcodeListView, value);
         }
 
         public object PlayerView
         {
-            get { return playerView; }
-            set { SetProperty(ref playerView, value); }
+            get => playerView;
+            set => SetProperty(ref playerView, value);
         }
 
         public Action<Exception, string> ShowErrorAction { get; set; }
@@ -81,10 +79,9 @@ namespace Waf.MusicManager.Applications.Services
 
         public bool IsApplicationBusy
         {
-            get { return isApplicationBusy; }
-            private set { SetProperty(ref isApplicationBusy, value); }
+            get => isApplicationBusy;
+            private set => SetProperty(ref isApplicationBusy, value);
         }
-
 
         public event CancelEventHandler Closing
         {
@@ -95,7 +92,6 @@ namespace Waf.MusicManager.Applications.Services
             }
             remove { closing -= value; }
         }
-
 
         public void ShowError(Exception exception, string displayMessage)
         {

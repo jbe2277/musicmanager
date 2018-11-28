@@ -26,7 +26,6 @@ namespace Waf.MusicManager.Applications.Data
         private static readonly FlacSaveMetadata flacSaveMetadata = new FlacSaveMetadata();
         private static readonly MkvSaveMetadata mkvSaveMetadata = new MkvSaveMetadata();
 
-
         public static IReadOnlyList<string> MusicFileExtensions => AddMoreExtensionsWhenSupported(musicFileExtensions);
 
         public static IReadOnlyList<string> PlaylistFileExtensions => playlistFileExtensions;
@@ -34,7 +33,6 @@ namespace Waf.MusicManager.Applications.Data
         private static bool IsFlacSupported => Environment.OSVersion.Version.Major >= 10;
 
         private static bool IsMkvSupported => Environment.OSVersion.Version.Major >= 10;
-
 
         internal static ReadMetadata GetReadMetadata(string fileExtension)
         {
@@ -119,7 +117,6 @@ namespace Waf.MusicManager.Applications.Data
             {
                 result = result.Concat(new[] { ".mkv" });
             }
-
             return result.ToArray();
         }
     }

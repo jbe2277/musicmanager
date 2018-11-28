@@ -9,7 +9,6 @@ namespace Test.MusicManager.Applications.Services
     {
         public Action<string> SetTextAction { get; set; }
         
-
         public void SetText(string text)
         {
             SetTextAction?.Invoke(text);

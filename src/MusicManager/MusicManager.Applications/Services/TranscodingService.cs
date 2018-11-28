@@ -14,34 +14,31 @@ namespace Waf.MusicManager.Applications.Services
         private ICommand cancelAllCommand;
         private ICommand cancelSelectedCommand;
 
-
         public ICommand ConvertToMp3AllCommand
         {
-            get { return convertToMp3AllCommand; }
-            set { SetProperty(ref convertToMp3AllCommand, value); }
+            get => convertToMp3AllCommand;
+            set => SetProperty(ref convertToMp3AllCommand, value);
         }
 
         public ICommand ConvertToMp3SelectedCommand
         {
-            get { return convertToMp3SelectedCommand; }
-            set { SetProperty(ref convertToMp3SelectedCommand, value); }
+            get => convertToMp3SelectedCommand;
+            set => SetProperty(ref convertToMp3SelectedCommand, value);
         }
 
         public ICommand CancelAllCommand
         {
-            get { return cancelAllCommand; }
-            set { SetProperty(ref cancelAllCommand, value); }
+            get => cancelAllCommand;
+            set => SetProperty(ref cancelAllCommand, value);
         }
 
         public ICommand CancelSelectedCommand
         {
-            get { return cancelSelectedCommand; }
-            set { SetProperty(ref cancelSelectedCommand, value); }
+            get => cancelSelectedCommand;
+            set => SetProperty(ref cancelSelectedCommand, value);
         }
 
-
         public event EventHandler<TranscodingTaskEventArgs> TranscodingTaskCreated;
-
 
         public void RaiseTranscodingTaskCreated(string fileName, Task transcodingTask)
         {

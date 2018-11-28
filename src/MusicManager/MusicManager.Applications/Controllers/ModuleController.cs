@@ -26,7 +26,6 @@ namespace Waf.MusicManager.Applications.Controllers
         private AppSettings appSettings;
         private PlaylistSettings playlistSettings;
         
-        
         [ImportingConstructor]
         public ModuleController(Lazy<ShellService> shellService, ISettingsService settingsService, Lazy<ManagerController> managerController, 
             Lazy<MusicPropertiesController> musicPropertiesController, Lazy<PlayerController> playerController, Lazy<PlaylistController> playlistController, 
@@ -44,7 +43,6 @@ namespace Waf.MusicManager.Applications.Controllers
             playlistManager = new PlaylistManager();
         }
 
-
         private ShellService ShellService => shellService.Value;
 
         private ManagerController ManagerController => managerController.Value;
@@ -58,7 +56,6 @@ namespace Waf.MusicManager.Applications.Controllers
         private TranscodingController TranscodingController => transcodingController.Value;
 
         private ShellViewModel ShellViewModel => shellViewModel.Value;
-
 
         public void Initialize()
         {

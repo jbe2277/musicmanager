@@ -19,13 +19,11 @@ namespace Test.MusicManager.Applications.UnitTesting
     {
         private AggregateCatalog catalog;
         
-
         protected UnitTestSynchronizationContext Context { get; private set; } 
         
         protected CompositionContainer Container { get; private set; }
 
         protected virtual UnitTestLevel UnitTestLevel => UnitTestLevel.UnitTest;
-
 
         protected override void OnInitialize()
         {

@@ -8,12 +8,10 @@ namespace Waf.MusicManager.Applications.Services
     {
         private HashSet<Entity> entitiesWithChanges;
 
-
         public ChangeTrackerService()
         {
             entitiesWithChanges = new HashSet<Entity>();
         }
-
 
         public IEnumerable<Entity> GetEntitiesWithChanges()
         {

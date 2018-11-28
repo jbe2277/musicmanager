@@ -22,7 +22,6 @@ namespace Waf.MusicManager.Applications.ViewModels
         private ICommand showMusicPropertiesCommand;
         private ICommand deleteSelectedFilesCommand;
 
-
         [ImportingConstructor]
         public ManagerViewModel(IManagerView view, Lazy<ISelectionService> selectionService, IManagerStatusService managerStatusService, 
             IPlayerService playerService, ITranscodingService transcodingService)
@@ -36,7 +35,6 @@ namespace Waf.MusicManager.Applications.ViewModels
             SearchFilter = new SearchFilterDataModel();
             ClearSearchCommand = new DelegateCommand(ClearSearch);
         }
-
 
         public ISelectionService SelectionService => selectionService.Value;
         
@@ -52,60 +50,59 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public MusicFileDataModel SelectedMusicFile
         {
-            get { return selectedMusicFile; }
-            set { SetProperty(ref selectedMusicFile, value); }
+            get => selectedMusicFile;
+            set => SetProperty(ref selectedMusicFile, value);
         }
 
         public ICommand UpdateSubDirectoriesCommand
         {
-            get { return updateSubDirectoriesCommand; }
-            set { SetProperty(ref updateSubDirectoriesCommand, value); }
+            get => updateSubDirectoriesCommand;
+            set => SetProperty(ref updateSubDirectoriesCommand, value);
         }
 
         public ICommand NavigateDirectoryUpCommand
-        { 
-            get { return navigateDirectoryUpCommand; }
-            set { SetProperty(ref navigateDirectoryUpCommand, value); }
+        {
+            get => navigateDirectoryUpCommand;
+            set => SetProperty(ref navigateDirectoryUpCommand, value);
         }
 
         public ICommand NavigateHomeCommand
         {
-            get { return navigateHomeCommand; }
-            set { SetProperty(ref navigateHomeCommand, value); }
+            get => navigateHomeCommand;
+            set => SetProperty(ref navigateHomeCommand, value);
         }
 
         public ICommand NavigatePublicHomeCommand
         {
-            get { return navigatePublicHomeCommand; }
-            set { SetProperty(ref navigatePublicHomeCommand, value); }
+            get => navigatePublicHomeCommand;
+            set => SetProperty(ref navigatePublicHomeCommand, value);
         }
 
         public ICommand LoadRecursiveCommand
         {
-            get { return loadRecursiveCommand; }
-            set { SetProperty(ref loadRecursiveCommand, value); }
+            get => loadRecursiveCommand;
+            set => SetProperty(ref loadRecursiveCommand, value);
         }
 
         public ICommand NavigateToSelectedSubDirectoryCommand
         {
-            get { return navigateToSelectedSubDirectoryCommand; }
-            set { SetProperty(ref navigateToSelectedSubDirectoryCommand, value); }
+            get => navigateToSelectedSubDirectoryCommand;
+            set => SetProperty(ref navigateToSelectedSubDirectoryCommand, value);
         }
 
         public ICommand ClearSearchCommand { get; }
 
         public ICommand ShowMusicPropertiesCommand
         {
-            get { return showMusicPropertiesCommand; }
-            set { SetProperty(ref showMusicPropertiesCommand, value); }
+            get => showMusicPropertiesCommand;
+            set => SetProperty(ref showMusicPropertiesCommand, value);
         }
 
         public ICommand DeleteSelectedFilesCommand
         {
-            get { return deleteSelectedFilesCommand; }
-            set { SetProperty(ref deleteSelectedFilesCommand, value); }
+            get => deleteSelectedFilesCommand;
+            set => SetProperty(ref deleteSelectedFilesCommand, value);
         }
-
 
         private void ClearSearch()
         {

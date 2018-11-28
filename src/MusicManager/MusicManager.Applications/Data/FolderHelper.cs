@@ -35,7 +35,6 @@ namespace Waf.MusicManager.Applications.Data
             {
                 corePath = null;
             }
-            
             return await StorageFolder.GetFolderFromPathAsync(corePath ?? path).AsTask().ConfigureAwait(false);
         }
 
@@ -63,7 +62,7 @@ namespace Waf.MusicManager.Applications.Data
 
         public static IReadOnlyList<string> GetPathSegments(string path)
         {
-            if (string.IsNullOrEmpty(path)) { return new string[0]; }
+            if (string.IsNullOrEmpty(path)) { return Array.Empty<string>(); }
             string root = Path.GetPathRoot(path);
             string innerPath = path.Substring(root.Length);
             innerPath = innerPath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);

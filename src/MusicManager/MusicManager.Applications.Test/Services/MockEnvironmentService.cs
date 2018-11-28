@@ -12,7 +12,6 @@ namespace Test.MusicManager.Applications.Services
             MusicFilesToLoad = new string[0];
         }
         
-
         public IReadOnlyList<string> MusicFilesToLoad { get; set; }
         
         public string MusicPath { get; set; }

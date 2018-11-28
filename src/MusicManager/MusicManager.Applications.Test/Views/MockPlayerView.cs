@@ -13,10 +13,8 @@ namespace Test.MusicManager.Applications.Views
             Position = TimeSpan.FromSeconds(33);  
         }
         
-
         public TimeSpan Position { get; set; }
         
-
         public TimeSpan GetPosition()
         {
             return Position;

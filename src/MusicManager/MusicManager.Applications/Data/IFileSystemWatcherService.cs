@@ -10,7 +10,6 @@ namespace Waf.MusicManager.Applications.Data
         
         bool EnableRaisingEvents { get; set; }
 
-
         event FileSystemEventHandler Created;
 
         event RenamedEventHandler Renamed;

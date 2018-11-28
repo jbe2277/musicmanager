@@ -7,7 +7,6 @@ namespace Waf.MusicManager.Applications
     {
         private int isDisposed;
 
-        
         public void Dispose()
         {
             DisposeCore(true);

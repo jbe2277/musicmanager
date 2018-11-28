@@ -34,7 +34,6 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly DelegateCommand showMusicPropertiesCommand;
         private readonly DelegateCommand showPlaylistCommand;
         
-        
         [ImportingConstructor]
         public PlayerController(IShellService shellService, IEnvironmentService environmentService, ISelectionService selectionService, PlayerService playerService,
             IMusicPropertiesService musicPropertiesService, IPlaylistService playlistService, Lazy<PlayerViewModel> playerViewModel, ExportFactory<InfoViewModel> infoViewModelFactory)
@@ -47,24 +46,22 @@ namespace Waf.MusicManager.Applications.Controllers
             this.playlistService = playlistService;
             this.playerViewModel = playerViewModel;
             this.infoViewModelFactory = infoViewModelFactory;
-            this.playAllCommand = new DelegateCommand(PlayAll, CanPlayAll);
-            this.playSelectedCommand = new DelegateCommand(PlaySelected, CanPlaySelected);
-            this.enqueueAllCommand = new DelegateCommand(EnqueueAll, CanEnqueueAll);
-            this.enqueueSelectedCommand = new DelegateCommand(EnqueueSelected, CanEnqueueSelected);
-            this.previousTrackCommand = new DelegateCommand(PreviousTrack, CanPreviousTrack);
-            this.nextTrackCommand = new DelegateCommand(NextTrack, CanNextTrack);
-            this.infoCommand = new DelegateCommand(ShowInfo);
-            this.showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
-            this.showPlaylistCommand = new DelegateCommand(ShowPlaylist);
+            playAllCommand = new DelegateCommand(PlayAll, CanPlayAll);
+            playSelectedCommand = new DelegateCommand(PlaySelected, CanPlaySelected);
+            enqueueAllCommand = new DelegateCommand(EnqueueAll, CanEnqueueAll);
+            enqueueSelectedCommand = new DelegateCommand(EnqueueSelected, CanEnqueueSelected);
+            previousTrackCommand = new DelegateCommand(PreviousTrack, CanPreviousTrack);
+            nextTrackCommand = new DelegateCommand(NextTrack, CanNextTrack);
+            infoCommand = new DelegateCommand(ShowInfo);
+            showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
+            showPlaylistCommand = new DelegateCommand(ShowPlaylist);
         }
-
 
         public PlaylistManager PlaylistManager { get; set; }
 
         public PlaylistSettings PlaylistSettings { get; set; }
         
         private PlayerViewModel PlayerViewModel => playerViewModel.Value;
-
 
         public void Initialize()
         {
@@ -116,7 +113,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         public void Shutdown()
         {
-            PlaylistSettings.LastPlayedFileName = PlaylistManager.CurrentItem != null ? PlaylistManager.CurrentItem.MusicFile.FileName : null;
+            PlaylistSettings.LastPlayedFileName = PlaylistManager.CurrentItem?.MusicFile.FileName;
             PlaylistSettings.LastPlayedFilePosition = PlayerViewModel.GetPosition();
             
             // Stops playing the current music file.

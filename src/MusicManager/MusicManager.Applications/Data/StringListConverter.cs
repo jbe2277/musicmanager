@@ -9,7 +9,7 @@ namespace Waf.MusicManager.Applications.Data
     {
         public static string ToString(IEnumerable<string> list, string separator = null)
         {
-            return string.Join(GetSeparator(separator), list ?? new string[0]);
+            return string.Join(GetSeparator(separator), list ?? Array.Empty<string>());
         }
 
         public static IEnumerable<string> FromString(string text, string separator = null)

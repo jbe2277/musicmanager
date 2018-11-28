@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Waf.Foundation;
 using Waf.MusicManager.Domain.MusicFiles;
@@ -24,7 +25,7 @@ namespace Waf.MusicManager.Applications.DataModels
         public MusicFile MusicFile { get; }
 
         public string ArtistsString => string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", 
-                MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : new string[0]); 
+                MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : Array.Empty<string>()); 
 
 
         private void MetadataLoaded()

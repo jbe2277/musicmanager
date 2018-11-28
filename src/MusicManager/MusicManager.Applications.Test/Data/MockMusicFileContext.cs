@@ -22,8 +22,7 @@ namespace Test.MusicManager.Applications.Data
 
         public MusicFile Create(string fileName)
         {
-            MusicFile musicFile;
-            if (!musicFilesCache.TryGetValue(fileName, out musicFile))
+            if (!musicFilesCache.TryGetValue(fileName, out MusicFile musicFile))
             {
                 musicFile = MockMusicFile.CreateEmpty(fileName);
                 musicFilesCache.Add(fileName, musicFile);

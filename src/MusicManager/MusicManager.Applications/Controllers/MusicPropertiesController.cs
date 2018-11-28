@@ -27,7 +27,6 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly HashSet<MusicFile> musicFilesToSaveAfterPlaying;
         private TaskCompletionSource<object> allFilesSavedCompletion;
         
-        
         [ImportingConstructor]
         public MusicPropertiesController(IShellService shellService, IMusicFileContext musicFileContext, ISelectionService selectionService, Lazy<MusicPropertiesViewModel> musicPropertiesViewModel)
         {
@@ -35,15 +34,13 @@ namespace Waf.MusicManager.Applications.Controllers
             this.musicFileContext = musicFileContext;
             this.selectionService = selectionService;
             this.musicPropertiesViewModel = musicPropertiesViewModel;
-            this.changeTrackerService = new ChangeTrackerService();
-            this.musicFilesToSaveAfterPlaying = new HashSet<MusicFile>();
+            changeTrackerService = new ChangeTrackerService();
+            musicFilesToSaveAfterPlaying = new HashSet<MusicFile>();
         }
-
 
         public PlaylistManager PlaylistManager { get; set; }
 
         private MusicPropertiesViewModel MusicPropertiesViewModel => musicPropertiesViewModel.Value;
-
 
         public void Initialize()
         {
@@ -70,7 +67,7 @@ namespace Waf.MusicManager.Applications.Controllers
         {
             SaveDirtyFilesAsync().NoWait();
             
-            if (musicFiles.Count() <= 1)
+            if (musicFiles.Count <= 1)
             {
                 MusicPropertiesViewModel.MusicFile = musicFiles.FirstOrDefault();
             }
@@ -119,7 +116,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
 
             // Filter out the music file that is currently playing
-            var playingMusicFile = PlaylistManager.CurrentItem != null ? PlaylistManager.CurrentItem.MusicFile : null;
+            var playingMusicFile = PlaylistManager.CurrentItem?.MusicFile;
             var filesToSave = allFilesToSave.Except(new[] { playingMusicFile }).ToArray();
             foreach (var x in allFilesToSave.Intersect(new[] { playingMusicFile })) { musicFilesToSaveAfterPlaying.Add(x); }
             

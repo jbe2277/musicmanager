@@ -19,7 +19,6 @@ namespace Waf.MusicManager.Applications.ViewModels
         private ICommand showPlaylistCommand;
         private double volume;
 
-        
         [ImportingConstructor]
         public PlayerViewModel(IPlayerView view, IShellService shellService, IPlayerService playerService) : base(view)
         {
@@ -27,53 +26,51 @@ namespace Waf.MusicManager.Applications.ViewModels
             PlayerService = playerService;
         }
 
-
         public IShellService ShellService { get; }
 
         public IPlayerService PlayerService { get; }
 
         public PlaylistManager PlaylistManager
         {
-            get { return playlistManager; }
-            set { SetProperty(ref playlistManager, value); } 
+            get => playlistManager;
+            set => SetProperty(ref playlistManager, value);
         }
 
         public ICommand PreviousTrackCommand
         {
-            get { return previousTrackCommand; }
-            set { SetProperty(ref previousTrackCommand, value); }
+            get => previousTrackCommand;
+            set => SetProperty(ref previousTrackCommand, value);
         }
 
         public ICommand NextTrackCommand
         {
-            get { return nextTrackCommand; }
-            set { SetProperty(ref nextTrackCommand, value); }
+            get => nextTrackCommand;
+            set => SetProperty(ref nextTrackCommand, value);
         }
 
         public ICommand InfoCommand
         {
-            get { return infoCommand; }
-            set { SetProperty(ref infoCommand, value); }
+            get => infoCommand;
+            set => SetProperty(ref infoCommand, value);
         }
 
         public ICommand ShowMusicPropertiesCommand
         {
-            get { return showMusicPropertiesCommand; }
-            set { SetProperty(ref showMusicPropertiesCommand, value); }
-        }
-        
-        public ICommand ShowPlaylistCommand
-        {
-            get { return showPlaylistCommand; }
-            set { SetProperty(ref showPlaylistCommand, value); }
-        }
-        
-        public double Volume
-        {
-            get { return volume; }
-            set { SetProperty(ref volume, value); }
+            get => showMusicPropertiesCommand;
+            set => SetProperty(ref showMusicPropertiesCommand, value);
         }
 
+        public ICommand ShowPlaylistCommand
+        {
+            get => showPlaylistCommand;
+            set => SetProperty(ref showPlaylistCommand, value);
+        }
+
+        public double Volume
+        {
+            get => volume;
+            set => SetProperty(ref volume, value);
+        }
 
         public TimeSpan GetPosition() { return ViewCore.GetPosition(); }
 

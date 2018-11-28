@@ -9,17 +9,16 @@ namespace Waf.MusicManager.Applications.Services
         private bool updatingFilesList;
         private int totalFilesCount = -1;
         
-        
         public bool UpdatingFilesList
         {
-            get { return updatingFilesList; }
-            private set { SetProperty(ref updatingFilesList, value); }
+            get => updatingFilesList;
+            private set => SetProperty(ref updatingFilesList, value);
         }
 
         public int TotalFilesCount
         {
-            get { return totalFilesCount; }
-            private set { SetProperty(ref totalFilesCount, value); }
+            get => totalFilesCount;
+            private set => SetProperty(ref totalFilesCount, value);
         }
 
 

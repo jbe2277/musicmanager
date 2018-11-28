@@ -18,7 +18,6 @@ namespace Waf.MusicManager.Applications.ViewModels
             ShowWebsiteCommand = new DelegateCommand(ShowWebsite);
         }
 
-
         public ICommand ShowWebsiteCommand { get; }
 
         public string ProductName => ApplicationInfo.ProductName;
@@ -30,7 +29,6 @@ namespace Waf.MusicManager.Applications.ViewModels
         public string NetVersion => Environment.Version.ToString();
 
         public bool Is64BitProcess => Environment.Is64BitProcess;
-
 
         public void ShowDialog(object owner)
         {

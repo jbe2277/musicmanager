@@ -25,12 +25,10 @@ namespace Test.MusicManager.Applications.Views
 
         public bool IsVisible { get; private set; }
 
-
         public event CancelEventHandler Closing;
         
         public event EventHandler Closed;
 
-        
         public void Show()
         {
             IsVisible = true;

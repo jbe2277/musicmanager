@@ -38,7 +38,6 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly FileType openPlaylistFileType;
         private readonly FileType savePlaylistFileType;
 
-
         [ImportingConstructor]
         public PlaylistController(IFileDialogService fileDialogService, IShellService shellService, IEnvironmentService environmentService, 
             IMusicFileContext musicFileContext, IPlayerService playerService, IMusicPropertiesService musicPropertiesService, Lazy<PlaylistViewModel> playlistViewModel)
@@ -50,23 +49,21 @@ namespace Waf.MusicManager.Applications.Controllers
             this.musicFileContext = musicFileContext;
             this.playerService = playerService;
             this.musicPropertiesService = musicPropertiesService;
-            this.playSelectedCommand = new DelegateCommand(PlaySelected, CanPlaySelected);
-            this.removeSelectedCommand = new DelegateCommand(RemoveSelected, CanRemoveSelected);
-            this.showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
-            this.openListCommand = new DelegateCommand(OpenList);
-            this.saveListCommand = new DelegateCommand(SaveList);
-            this.clearListCommand = new DelegateCommand(ClearList);
-            this.openPlaylistFileType = new FileType(Resources.Playlist, SupportedFileTypes.PlaylistFileExtensions);
-            this.savePlaylistFileType = new FileType(Resources.Playlist, SupportedFileTypes.PlaylistFileExtensions.First());
+            playSelectedCommand = new DelegateCommand(PlaySelected, CanPlaySelected);
+            removeSelectedCommand = new DelegateCommand(RemoveSelected, CanRemoveSelected);
+            showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
+            openListCommand = new DelegateCommand(OpenList);
+            saveListCommand = new DelegateCommand(SaveList);
+            clearListCommand = new DelegateCommand(ClearList);
+            openPlaylistFileType = new FileType(Resources.Playlist, SupportedFileTypes.PlaylistFileExtensions);
+            savePlaylistFileType = new FileType(Resources.Playlist, SupportedFileTypes.PlaylistFileExtensions.First());
         }
-
 
         public PlaylistSettings PlaylistSettings { get; set; } 
         
         public PlaylistManager PlaylistManager { get; set; }
 
         private PlaylistViewModel PlaylistViewModel => playlistViewModel.Value;
-
 
         public void Initialize()
         {
@@ -139,8 +136,7 @@ namespace Waf.MusicManager.Applications.Controllers
         private void RemoveSelected()
         {
             var playListItemsToExclude = PlaylistViewModel.SelectedPlaylistItems.Except(new[] { PlaylistViewModel.SelectedPlaylistItem }).ToArray();
-            PlaylistItem nextPlaylistItem = CollectionHelper.GetNextElementOrDefault(PlaylistManager.Items.Except(playListItemsToExclude).ToArray(),
-                PlaylistViewModel.SelectedPlaylistItem);
+            var nextPlaylistItem = PlaylistManager.Items.Except(playListItemsToExclude).GetNextElementOrDefault(PlaylistViewModel.SelectedPlaylistItem);
 
             PlaylistManager.RemoveItems(PlaylistViewModel.SelectedPlaylistItems);
             PlaylistViewModel.SelectedPlaylistItem = nextPlaylistItem ?? PlaylistManager.Items.LastOrDefault();
@@ -199,7 +195,7 @@ namespace Waf.MusicManager.Applications.Controllers
                 shellService.ShowError(ex, Resources.CouldNotLoadPlaylist);
                 return;
             }
-            InsertFilesCore(PlaylistManager.Items.Count(), playlist.Files.Select(x => x.Path).ToArray());
+            InsertFilesCore(PlaylistManager.Items.Count, playlist.Files.Select(x => x.Path).ToArray());
         }
 
         private void InsertFilesCore(int index, IEnumerable<string> fileNames)

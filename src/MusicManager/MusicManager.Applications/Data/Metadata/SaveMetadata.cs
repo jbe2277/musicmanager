@@ -13,7 +13,6 @@ namespace Waf.MusicManager.Applications.Data.Metadata
     {
         protected virtual bool IsSupported => true;
         
-
         public async Task SaveChangesAsync(MusicFile musicFile)
         {
             if (!IsSupported || !musicFile.IsMetadataLoaded || !musicFile.Metadata.HasChanges)
@@ -26,7 +25,7 @@ namespace Waf.MusicManager.Applications.Data.Metadata
             metadata.ClearChanges();
 
             var file = await StorageFile.GetFileFromPathAsync(musicFile.FileName);
-            MusicProperties musicProperties = await file.Properties.GetMusicPropertiesAsync();
+            var musicProperties = await file.Properties.GetMusicPropertiesAsync();
 
             var customProperties = new Dictionary<string, object>();
             if (changedProperties.Contains(nameof(MusicMetadata.Title))) { ApplyTitle(musicProperties, customProperties, metadata.Title); }

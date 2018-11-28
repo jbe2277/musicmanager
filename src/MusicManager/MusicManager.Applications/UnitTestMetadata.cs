@@ -8,7 +8,6 @@ namespace Waf.MusicManager.Applications
 
         public const string Data = "Data";
 
-
         public static bool IsContained(ComposablePartDefinition definition, object value = null)
         {
             if (value == null)

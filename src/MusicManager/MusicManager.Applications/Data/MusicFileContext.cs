@@ -11,7 +11,6 @@ using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
 using Windows.Storage;
-using Windows.Storage.FileProperties;
 
 namespace Waf.MusicManager.Applications.Data
 {
@@ -22,13 +21,12 @@ namespace Waf.MusicManager.Applications.Data
         private readonly ConcurrentDictionary<string, Task> runningTranscodingTasks;
         private readonly Stopwatch stopwatch;
 
-
         [ImportingConstructor]
         public MusicFileContext(IFileSystemWatcherService fileSystemWatcherService, ITranscodingService transcodingService)
         {
-            this.musicFilesCache = new ConcurrentDictionary<string, WeakReference<MusicFile>>();
-            this.runningTranscodingTasks = new ConcurrentDictionary<string, Task>();
-            this.stopwatch = Stopwatch.StartNew();
+            musicFilesCache = new ConcurrentDictionary<string, WeakReference<MusicFile>>();
+            runningTranscodingTasks = new ConcurrentDictionary<string, Task>();
+            stopwatch = Stopwatch.StartNew();
 
             fileSystemWatcherService.Renamed += FileSystemWatcherServiceRenamed;
             fileSystemWatcherService.Deleted += FileSystemWatcherServiceDeleted;
@@ -36,14 +34,12 @@ namespace Waf.MusicManager.Applications.Data
             transcodingService.TranscodingTaskCreated += TranscodingServiceTranscodingTaskCreated;
         }
 
-
         public MusicFile Create(string fileName)
         {
             CompactCache();
 
-            WeakReference<MusicFile> weakMusicFile;
             MusicFile musicFile;
-            if (musicFilesCache.TryGetValue(fileName, out weakMusicFile))
+            if (musicFilesCache.TryGetValue(fileName, out var weakMusicFile))
             {
                 if (weakMusicFile.TryGetTarget(out musicFile))
                 {
@@ -55,8 +51,7 @@ namespace Waf.MusicManager.Applications.Data
                 }
             }
 
-            Task runningTranscodingTask; 
-            runningTranscodingTasks.TryGetValue(fileName, out runningTranscodingTask);
+            runningTranscodingTasks.TryGetValue(fileName, out var runningTranscodingTask);
             musicFile = new MusicFile(x => LoadMetadata(x, runningTranscodingTask), fileName);
 
             if (!musicFilesCache.TryAdd(fileName, new WeakReference<MusicFile>(musicFile)))
@@ -74,7 +69,7 @@ namespace Waf.MusicManager.Applications.Data
             }
             
             var file = await StorageFile.GetFileFromPathAsync(fileName).AsTask().ConfigureAwait(false);
-            MusicProperties musicProperties = await file.Properties.GetMusicPropertiesAsync().AsTask().ConfigureAwait(false);
+            var musicProperties = await file.Properties.GetMusicPropertiesAsync().AsTask().ConfigureAwait(false);
 
             var readMetadata = SupportedFileTypes.GetReadMetadata(file.FileType);
             return await readMetadata.CreateMusicMetadata(musicProperties, CancellationToken.None);
@@ -82,7 +77,7 @@ namespace Waf.MusicManager.Applications.Data
 
         public MusicFile CreateFromMultiple(IEnumerable<MusicFile> musicFiles)
         {
-            if (musicFiles.Count() < 1) { throw new ArgumentException("The collection must have at least one item.", "musicFiles"); }
+            if (musicFiles.Count() < 1) throw new ArgumentException("The collection must have at least one item.", nameof(musicFiles));
 
             var localMusicFiles = musicFiles.ToArray();
             return new MusicFile(x => LoadMetadataFromMultiple(localMusicFiles), null)
@@ -102,17 +97,17 @@ namespace Waf.MusicManager.Applications.Data
             return new MusicMetadata(duration, bitrate)
             {
                 Title = GetSharedValueOrDefault(musicFiles, x => x.Metadata.Title) ?? "",
-                Artists = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Metadata.Artists, SequenceEqualityComparer<string>.Default) ?? new string[0],
+                Artists = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Metadata.Artists, SequenceEqualityComparer<string>.Default) ?? Array.Empty<string>(),
                 Rating = GetSharedValueOrDefault(musicFiles, x => x.Metadata.Rating),
                 Album = GetSharedValueOrDefault(musicFiles, x => x.Metadata.Album) ?? "",
                 TrackNumber = GetSharedValueOrDefault(musicFiles, x => x.Metadata.TrackNumber),
                 Year = GetSharedValueOrDefault(musicFiles, x => x.Metadata.Year),
-                Genre = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Metadata.Genre, SequenceEqualityComparer<string>.Default) ?? new string[0],
+                Genre = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Metadata.Genre, SequenceEqualityComparer<string>.Default) ?? Array.Empty<string>(),
                 AlbumArtist = GetSharedValueOrDefault(musicFiles, x => x.Metadata.AlbumArtist) ?? "",
                 Publisher = GetSharedValueOrDefault(musicFiles, x => x.Metadata.Publisher) ?? "",
                 Subtitle = GetSharedValueOrDefault(musicFiles, x => x.Metadata.Subtitle) ?? "",
-                Composers = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Metadata.Composers, SequenceEqualityComparer<string>.Default) ?? new string[0],
-                Conductors = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Metadata.Conductors, SequenceEqualityComparer<string>.Default) ?? new string[0]
+                Composers = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Metadata.Composers, SequenceEqualityComparer<string>.Default) ?? Array.Empty<string>(),
+                Conductors = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Metadata.Conductors, SequenceEqualityComparer<string>.Default) ?? Array.Empty<string>()
             };
         }
 
@@ -160,8 +155,7 @@ namespace Waf.MusicManager.Applications.Data
 
             foreach (var entry in musicFilesCache.ToArray())
             {
-                MusicFile musicFile;
-                if (!entry.Value.TryGetTarget(out musicFile))
+                if (!entry.Value.TryGetTarget(out var musicFile))
                 {
                     TryRemoveFromCache(entry.Key);
                 }
@@ -191,22 +185,20 @@ namespace Waf.MusicManager.Applications.Data
             }
             finally
             {
-                Task task;
-                runningTranscodingTasks.TryRemove(e.FileName, out task);
+                runningTranscodingTasks.TryRemove(e.FileName, out var task);
             }
         }
 
         private bool TryRemoveFromCache(string fileName)
         {
-            WeakReference<MusicFile> weakMusicFile;
-            return musicFilesCache.TryRemove(fileName, out weakMusicFile);
+            return musicFilesCache.TryRemove(fileName, out var weakMusicFile);
         }
 
         private static T GetSharedValueOrDefault<T>(IEnumerable<MusicFile> musicFiles, Func<MusicFile, T> getValue, IEqualityComparer<T> comparer = null)
         {
             comparer = comparer ?? EqualityComparer<T>.Default;
 
-            MusicFile firstMusicFile = musicFiles.FirstOrDefault();
+            var firstMusicFile = musicFiles.FirstOrDefault();
             if (firstMusicFile == null)
             {
                 return default(T);

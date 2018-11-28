@@ -15,7 +15,6 @@ namespace Test.MusicManager.Applications.Views
 
         public Action<PlaylistItem> ScrollIntoViewStub { get; set; }
         
-        
         public void FocusSearchBox()
         {
             FocusSearchBoxStub?.Invoke();

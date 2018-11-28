@@ -42,7 +42,6 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly DelegateCommand deleteSelectedFilesCommand;
         private CancellationTokenSource updateMusicFilesCancellation;
         
-
         [ImportingConstructor]
         public ManagerController(IShellService shellService, IEnvironmentService environmentService, IMusicFileContext musicFileContext, 
             SelectionService selectionService, ManagerStatusService managerStatusService, IFileSystemWatcherService fileSystemWatcherService, 
@@ -55,20 +54,18 @@ namespace Waf.MusicManager.Applications.Controllers
             this.managerStatusService = managerStatusService;
             this.fileSystemWatcherService = fileSystemWatcherService;
             this.managerViewModel = managerViewModel;
-            this.musicFiles = new ObservableCollection<MusicFile>();
-            this.updateSubDirectoriesCommand = new DelegateCommand(UpdateSubDirectories);
-            this.navigateDirectoryUpCommand = new DelegateCommand(NavigateDirectoryUp, CanNavigateDirectoryUp);
-            this.navigateHomeCommand = new DelegateCommand(NavigateHome);
-            this.navigatePublicHomeCommand = new DelegateCommand(NavigatePublicHome);
-            this.loadRecursiveCommand = new DelegateCommand(LoadRecursive);
-            this.navigateToSelectedSubDirectoryCommand = new DelegateCommand(NavigateToSelectedSubDirectory);
-            this.showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
-            this.deleteSelectedFilesCommand = new DelegateCommand(DeleteSelectedFiles);
+            musicFiles = new ObservableCollection<MusicFile>();
+            updateSubDirectoriesCommand = new DelegateCommand(UpdateSubDirectories);
+            navigateDirectoryUpCommand = new DelegateCommand(NavigateDirectoryUp, CanNavigateDirectoryUp);
+            navigateHomeCommand = new DelegateCommand(NavigateHome);
+            navigatePublicHomeCommand = new DelegateCommand(NavigatePublicHome);
+            loadRecursiveCommand = new DelegateCommand(LoadRecursive);
+            navigateToSelectedSubDirectoryCommand = new DelegateCommand(NavigateToSelectedSubDirectory);
+            showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
+            deleteSelectedFilesCommand = new DelegateCommand(DeleteSelectedFiles);
         }
 
-
         private ManagerViewModel ManagerViewModel => managerViewModel.Value;
-
 
         public void Initialize()
         {
@@ -211,7 +208,7 @@ namespace Waf.MusicManager.Applications.Controllers
                     var applicationSearchFilter = ManagerViewModel.SearchFilter.ApplicationSearchFilter;
                     var files = await GetFilesAsync(path, folderDepth, userSearchFilter, applicationSearchFilter, cancellation.Token);
 
-                    filesCount = files.Count();
+                    filesCount = files.Count;
 
                     var newFiles = files.Select(x => musicFileContext.Create(x)).ToArray();
                     foreach (var newFile in newFiles)

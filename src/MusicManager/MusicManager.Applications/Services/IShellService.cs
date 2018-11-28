@@ -26,9 +26,7 @@ namespace Waf.MusicManager.Applications.Services
 
         bool IsApplicationBusy { get; }
 
-
         event CancelEventHandler Closing;
-
 
         void ShowError(Exception exception, string displayMessage);
         

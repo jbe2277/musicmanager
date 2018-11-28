@@ -14,7 +14,6 @@ namespace Waf.MusicManager.Applications.Services
         
         ICommand CancelSelectedCommand { get; }
 
-
         event EventHandler<TranscodingTaskEventArgs> TranscodingTaskCreated;
     }
 }

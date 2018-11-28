@@ -25,7 +25,6 @@ namespace Waf.MusicManager.Applications.ViewModels
         private ICommand clearListCommand;
         private string searchText;
         
-
         [ImportingConstructor]
         public PlaylistViewModel(IPlaylistView view) : base(view)
         {
@@ -35,55 +34,54 @@ namespace Waf.MusicManager.Applications.ViewModels
             ClearSearchCommand = new DelegateCommand(ClearSearch);
         }
 
-
         public PlaylistManager PlaylistManager
         {
-            get { return playlistManager; }
-            set { SetProperty(ref playlistManager, value); }
+            get => playlistManager;
+            set => SetProperty(ref playlistManager, value);
         }
 
         public PlaylistItem SelectedPlaylistItem
         {
-            get { return selectedPlaylistItem; }
-            set { SetProperty(ref selectedPlaylistItem, value); }
+            get => selectedPlaylistItem;
+            set => SetProperty(ref selectedPlaylistItem, value);
         }
 
         public IList<PlaylistItem> SelectedPlaylistItems { get; }
 
         public ICommand PlaySelectedCommand
         {
-            get { return playSelectedCommand; }
-            set { SetProperty(ref playSelectedCommand, value); }
+            get => playSelectedCommand;
+            set => SetProperty(ref playSelectedCommand, value);
         }
 
         public ICommand RemoveSelectedCommand
         {
-            get { return removeSelectedCommand; }
-            set { SetProperty(ref removeSelectedCommand, value); }
+            get => removeSelectedCommand;
+            set => SetProperty(ref removeSelectedCommand, value);
         }
 
         public ICommand ShowMusicPropertiesCommand
         {
-            get { return showMusicPropertiesCommand; }
-            set { SetProperty(ref showMusicPropertiesCommand, value); }
+            get => showMusicPropertiesCommand;
+            set => SetProperty(ref showMusicPropertiesCommand, value);
         }
 
         public ICommand OpenListCommand
         {
-            get { return openListCommand; }
-            set { SetProperty(ref openListCommand, value); }
+            get => openListCommand;
+            set => SetProperty(ref openListCommand, value);
         }
 
         public ICommand SaveListCommand
         {
-            get { return saveListCommand; }
-            set { SetProperty(ref saveListCommand, value); }
+            get => saveListCommand;
+            set => SetProperty(ref saveListCommand, value);
         }
 
         public ICommand ClearListCommand
         {
-            get { return clearListCommand; }
-            set { SetProperty(ref clearListCommand, value); }
+            get => clearListCommand;
+            set => SetProperty(ref clearListCommand, value);
         }
 
         public Action<int, IEnumerable<string>> InsertFilesAction { get; set; }
@@ -98,7 +96,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public string SearchText
         {
-            get { return searchText; }
+            get => searchText;
             set
             {
                 if (SetProperty(ref searchText, value))
@@ -107,7 +105,6 @@ namespace Waf.MusicManager.Applications.ViewModels
                 }
             }
         }
-
 
         private void SearchTextCore(SearchMode searchMode)
         {

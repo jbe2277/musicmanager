@@ -12,7 +12,6 @@ namespace Waf.MusicManager.Applications.Data.Metadata
     {
         protected virtual bool IsSupported => true;
 
-
         public async Task<MusicMetadata> CreateMusicMetadata(MusicProperties properties, CancellationToken cancellationToken)
         {
             var propertiesToRetrieve = new List<string>();
@@ -120,7 +119,7 @@ namespace Waf.MusicManager.Applications.Data.Metadata
 
         private static IReadOnlyList<T> ToSaveArray<T>(IEnumerable<T> collection)
         {
-            return collection != null ? collection.ToArray() : new T[0];
+            return collection != null ? collection.ToArray() : Array.Empty<T>();
         }
     }
 }

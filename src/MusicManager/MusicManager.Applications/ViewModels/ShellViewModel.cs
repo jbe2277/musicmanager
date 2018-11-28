@@ -20,7 +20,6 @@ namespace Waf.MusicManager.Applications.ViewModels
         private readonly ObservableCollection<Tuple<Exception, string>> errors;
         private object detailsView;
         
-
         [ImportingConstructor]
         public ShellViewModel(IShellView view, IShellService shellService, IPlayerService playerService)
             : base(view)
@@ -49,7 +48,6 @@ namespace Waf.MusicManager.Applications.ViewModels
             view.IsMaximized = settings.IsMaximized;
         }
 
-
         public string Title => ApplicationInfo.ProductName;
 
         public IShellService ShellService { get; }
@@ -68,28 +66,27 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public object DetailsView
         {
-            get { return detailsView; }
-            private set { SetProperty(ref detailsView, value); }
+            get => detailsView;
+            private set => SetProperty(ref detailsView, value);
         }
 
         public bool IsMusicPropertiesViewVisible
         {
-            get { return DetailsView == ShellService.MusicPropertiesView; }
+            get => DetailsView == ShellService.MusicPropertiesView;
             set { if (value) { DetailsView = ShellService.MusicPropertiesView; } }
         }
 
         public bool IsPlaylistViewVisible
         {
-            get { return DetailsView == ShellService.PlaylistView; }
+            get => DetailsView == ShellService.PlaylistView;
             set { if (value) { DetailsView = ShellService.PlaylistView; } }
         }
 
         public bool IsTranscodingListViewVisible
         {
-            get { return ShellService.TranscodingListView.IsValueCreated && DetailsView == ShellService.TranscodingListView.Value; }
+            get => ShellService.TranscodingListView.IsValueCreated && DetailsView == ShellService.TranscodingListView.Value;
             set { if (value) { DetailsView = ShellService.TranscodingListView.Value; } }
         }
-
 
         public void Show()
         {
