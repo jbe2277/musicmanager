@@ -100,7 +100,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public void ShowError(Exception exception, string message)
         {
-            errors.Add(new Tuple<Exception, string>(exception, message));
+            errors.Add(Tuple.Create(exception, message));
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)

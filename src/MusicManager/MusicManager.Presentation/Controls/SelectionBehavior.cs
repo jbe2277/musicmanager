@@ -52,7 +52,7 @@ namespace Waf.MusicManager.Presentation.Controls
 
                 if (!(list is INotifyCollectionChanged observableList)) { return; }
 
-                multiSelectorWithObservableList.Add(new Tuple<IMultiSelector, INotifyCollectionChanged>(multiSelector, observableList));
+                multiSelectorWithObservableList.Add(Tuple.Create(multiSelector, observableList));
                 CollectionChangedEventManager.AddHandler(observableList, ListCollectionChanged);
             }
             finally
