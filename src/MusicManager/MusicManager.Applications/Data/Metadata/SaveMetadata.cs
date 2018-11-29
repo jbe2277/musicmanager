@@ -41,7 +41,7 @@ namespace Waf.MusicManager.Applications.Data.Metadata
             if (changedProperties.Contains(nameof(MusicMetadata.Composers))) { ApplyComposers(musicProperties, customProperties, metadata.Composers); }
             if (changedProperties.Contains(nameof(MusicMetadata.Conductors))) { ApplyConductors(musicProperties, customProperties, metadata.Conductors); }
 
-            Logger.Verbose("SaveMetadata.SaveChangesAsync:Save: {0}", musicFile.FileName);
+            Log.Default.Trace("SaveMetadata.SaveChangesAsync:Save: {0}", musicFile.FileName);
             await musicProperties.SavePropertiesAsync(customProperties);
         }
 

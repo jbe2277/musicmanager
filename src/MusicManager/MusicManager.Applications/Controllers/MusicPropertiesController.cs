@@ -132,7 +132,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Error("SaveChangesAsync: {0}", ex);
+                Log.Default.Error(ex, "SaveChangesAsync");
                 if (filesToSave.Count() == 1)
                 {
                     shellService.ShowError(ex, Resources.CouldNotSaveFile, filesToSave.First().FileName);

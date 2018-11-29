@@ -77,12 +77,12 @@ namespace Waf.MusicManager.Domain.MusicFiles
                 loadMetadataCompletionSource.SetResult(Metadata);
                 if (!string.IsNullOrEmpty(FileName))
                 {
-                    Logger.Verbose("MusicFile.MetadataLoaded: {0}", FileName);
+                    Log.Default.Trace("MusicFile.MetadataLoaded: {0}", FileName);
                 }
             }
             catch (Exception e)
             {
-                Logger.Error("LoadMetadataCore: {0}", e);
+                Log.Default.Error(e, "LoadMetadataCore");
                 LoadError = e;
                 // Observe the exception
                 loadMetadataCompletionSource.Task.NoWait(ignoreExceptions: true);

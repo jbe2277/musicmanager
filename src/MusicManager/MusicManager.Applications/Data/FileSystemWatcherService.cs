@@ -63,19 +63,19 @@ namespace Waf.MusicManager.Applications.Data
 
         private void WatcherCreated(object sender, FileSystemEventArgs e)
         {
-            Logger.Verbose(Logger.GetMemberName());
+            Log.Default.Trace(nameof(WatcherCreated));
             TaskHelper.Run(() => OnCreated(e), taskScheduler); 
         }
 
         private void WatcherRenamed(object sender, RenamedEventArgs e)
         {
-            Logger.Verbose(Logger.GetMemberName());
+            Log.Default.Trace(nameof(WatcherRenamed));
             TaskHelper.Run(() => OnRenamed(e), taskScheduler); 
         }
 
         private void WatcherDeleted(object sender, FileSystemEventArgs e)
         {
-            Logger.Verbose(Logger.GetMemberName());
+            Log.Default.Trace(nameof(WatcherDeleted));
             TaskHelper.Run(() => OnDeleted(e), taskScheduler); 
         }
 

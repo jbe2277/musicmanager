@@ -151,18 +151,18 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void InsertFiles(int index, IEnumerable<string> fileNames)
         {
-            Logger.Verbose("PlaylistController.InsertFiles:Start");
+            Log.Default.Trace("PlaylistController.InsertFiles:Start");
             var musicFileNames = fileNames.Where(x => SupportedFileTypes.MusicFileExtensions.Contains(Path.GetExtension(x))).ToArray();
             InsertFilesCore(index, musicFileNames);
 
-            Logger.Verbose("PlaylistController.InsertFiles:OpenPlaylists");
+            Log.Default.Trace("PlaylistController.InsertFiles:OpenPlaylists");
             var playlistFileNames = fileNames.Where(x => SupportedFileTypes.PlaylistFileExtensions.Contains(Path.GetExtension(x))).ToArray();
             foreach (var playlistFileName in playlistFileNames)
             {
                 OpenListCore(playlistFileName);
             }
 
-            Logger.Verbose("PlaylistController.InsertFiles:End");
+            Log.Default.Trace("PlaylistController.InsertFiles:End");
         }
         
         private void InsertMusicFiles(int index, IEnumerable<MusicFile> musicFiles)
@@ -191,7 +191,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Error("OpenListCore: {0}", ex);
+                Log.Default.Error(ex, "OpenListCore");
                 shellService.ShowError(ex, Resources.CouldNotLoadPlaylist);
                 return;
             }
@@ -207,7 +207,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Error("PlaylistController.InsertFileCore: {0}", ex);
+                Log.Default.Error(ex, "PlaylistController.InsertFileCore");
                 shellService.ShowError(ex, Resources.CouldNotOpenFiles);
                 return;
             }
@@ -232,7 +232,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Error("SaveList GetStorageFiles: {0}", ex);
+                Log.Default.Error(ex, "SaveList GetStorageFiles");
                 shellService.ShowError(ex, Resources.CouldNotSavePlaylistBecauseMissingFiles);
                 return;
             }
@@ -245,7 +245,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Error("SaveList SaveAs: {0}", ex);
+                Log.Default.Error(ex, "SaveList SaveAs");
                 shellService.ShowError(ex, Resources.CouldNotSavePlaylist);
             }
         }

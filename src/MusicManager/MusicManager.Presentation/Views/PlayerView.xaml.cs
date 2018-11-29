@@ -103,7 +103,7 @@ namespace Waf.MusicManager.Presentation.Views
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error("PlayerView: Cannot read the metadata: {0}", ex);
+                        Log.Default.Error(ex, "PlayerView: Cannot read the metadata");
                     }
                 }
             }
@@ -230,7 +230,7 @@ namespace Waf.MusicManager.Presentation.Views
 
         private void MediaPlayerMediaFailed(object sender, ExceptionEventArgs e)
         {
-            Logger.Warning("MediaPlayer.MediaFailed: {0}", e.ErrorException);
+            Log.Default.Warn(e.ErrorException, "MediaPlayer.MediaFailed");
             if (e.ErrorException is InvalidWmpVersionException)
             {
                 ViewModel.ShellService.ShowError(e.ErrorException, Properties.Resources.NewerMediaPlayerRequired);

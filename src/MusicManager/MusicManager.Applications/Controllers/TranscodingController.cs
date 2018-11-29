@@ -133,7 +133,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Error("TranscodingController.InsertFile: {0}", ex);
+                Log.Default.Error(ex, "TranscodingController.InsertFile");
                 shellService.ShowError(ex, Resources.CouldNotOpenFiles);
                 return;
             }
@@ -201,7 +201,7 @@ namespace Waf.MusicManager.Applications.Controllers
             var destinationFileName = GetDestinationFileName(musicFile.FileName);
             var transcodeItem = new TranscodeItem(musicFile, destinationFileName);
             transcodingManager.AddTranscodeItem(transcodeItem);
-            Logger.Verbose("Start Transcode: {0} > {1}", musicFile.FileName, destinationFileName);
+            Log.Default.Trace("Start Transcode: {0} > {1}", musicFile.FileName, destinationFileName);
 
             var cts = new CancellationTokenSource();
             cancellationTokenSources.Add(transcodeItem, cts);
@@ -219,7 +219,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Error("TranscodeAsync exception: {0}", ex);
+                Log.Default.Error(ex, "TranscodeAsync exception");
                 transcodeItem.Error = ex;
             }
             finally
@@ -230,7 +230,7 @@ namespace Waf.MusicManager.Applications.Controllers
                     allTranscodingsCanceledCompletion.SetResult(null);
                 }
                 UpdateCancelCommands();
-                Logger.Verbose("End Transcode: {0} > {1}", musicFile.FileName, destinationFileName);
+                Log.Default.Trace("End Transcode: {0} > {1}", musicFile.FileName, destinationFileName);
             }
         }
 

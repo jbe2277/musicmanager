@@ -182,7 +182,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Warning("UpdateSubDirectories: {0}", ex);
+                Log.Default.Warn(ex, "UpdateSubDirectories");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Waf.MusicManager.Applications.Controllers
             updateMusicFilesCancellation?.Cancel();
             var cancellation = new CancellationTokenSource();
             updateMusicFilesCancellation = cancellation;
-            Logger.Verbose("ManagerController.UpdateMusicFiles:Start");
+            Log.Default.Trace("ManagerController.UpdateMusicFiles:Start");
             managerStatusService.StartUpdatingFilesList();
             
             musicFiles.Clear();
@@ -223,7 +223,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             catch (OperationCanceledException)
             {
-                Logger.Verbose("ManagerController.UpdateMusicFiles:Canceled");
+                Log.Default.Trace("ManagerController.UpdateMusicFiles:Canceled");
             }
             
             if (cancellation == updateMusicFilesCancellation)
@@ -231,7 +231,7 @@ namespace Waf.MusicManager.Applications.Controllers
                 updateMusicFilesCancellation = null;
             }
 
-            Logger.Verbose("ManagerController.UpdateMusicFiles:End");
+            Log.Default.Trace("ManagerController.UpdateMusicFiles:End");
         }
 
         private void FolderBrowserPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -299,7 +299,7 @@ namespace Waf.MusicManager.Applications.Controllers
             var result = folder.CreateFileQueryWithOptions(queryOptions);
             
             // It seems that GetFilesAsync does not check the cancellationToken; so get only parts of the file results in a loop.
-            Logger.Verbose("ManagerController.UpdateMusicFiles:GetFilesAsync Start");
+            Log.Default.Trace("ManagerController.UpdateMusicFiles:GetFilesAsync Start");
             var files = new List<string>();
             uint index = 0;
             int resultCount;
@@ -312,7 +312,7 @@ namespace Waf.MusicManager.Applications.Controllers
                 index += maxFiles;
             }
             while (resultCount == maxFiles);
-            Logger.Verbose("ManagerController.UpdateMusicFiles:GetFilesAsync End");
+            Log.Default.Trace("ManagerController.UpdateMusicFiles:GetFilesAsync End");
             return files;
         }
 

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using NLog;
+using NLog.Config;
+using NLog.Targets;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -13,7 +16,6 @@ using System.Windows;
 using System.Windows.Threading;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
-using Waf.MusicManager.Domain;
 using Waf.MusicManager.Presentation.Properties;
 using Waf.MusicManager.Presentation.Services;
 
@@ -21,21 +23,44 @@ namespace Waf.MusicManager.Presentation
 {
     public partial class App
     {
+        private static readonly Tuple<string, LogLevel>[] logSettings =
+        {
+            Tuple.Create("App", LogLevel.Info),
+            Tuple.Create("MusicManager.*", LogLevel.Warn),
+        };
+
         private AggregateCatalog catalog;
         private CompositionContainer container;
         private IEnumerable<IModuleController> moduleControllers;
         
         public App()
         {
-            var environmentService = new EnvironmentService();
-            Directory.CreateDirectory(environmentService.ProfilePath);
-            ProfileOptimization.SetProfileRoot(environmentService.ProfilePath);
+            Directory.CreateDirectory(EnvironmentService.ProfilePath);
+            ProfileOptimization.SetProfileRoot(EnvironmentService.ProfilePath);
             ProfileOptimization.StartProfile("Startup.profile");
+
+            var fileTarget = new FileTarget("fileTarget")
+            {
+                FileName = Path.Combine(EnvironmentService.LogPath, "App.log"),
+                Layout = "${date:format=yyyy-MM-dd HH\\:mm\\:ss.ff} ${level} ${processid} ${logger} ${message}  ${exception}",
+                ArchiveAboveSize = 1024 * 1024 * 5,  // 5 MB
+                MaxArchiveFiles = 2,
+            };
+            var logConfig = new LoggingConfiguration();
+            logConfig.DefaultCultureInfo = CultureInfo.InvariantCulture;
+            logConfig.AddTarget(fileTarget);
+            var maxLevel = LogLevel.AllLoggingLevels.Last();
+            foreach (var logSetting in logSettings)
+            {
+                logConfig.AddRule(logSetting.Item2, maxLevel, fileTarget, logSetting.Item1);
+            }
+            LogManager.Configuration = logConfig;
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            Log.App.Info("{0} {1} is starting; OS: {2}", ApplicationInfo.ProductName, ApplicationInfo.Version, Environment.OSVersion);
 
 #if !(DEBUG)
             DispatcherUnhandledException += AppDispatcherUnhandledException;
@@ -118,7 +143,7 @@ namespace Waf.MusicManager.Presentation
         {
             if (e == null) { return; }
 
-            Logger.Error(e.ToString());
+            Log.App.Error(e, "Unknown application error.");
 
             if (!isTerminating)
             {

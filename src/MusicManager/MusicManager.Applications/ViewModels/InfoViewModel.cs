@@ -44,7 +44,7 @@ namespace Waf.MusicManager.Applications.ViewModels
             }
             catch (Exception e)
             {
-                Logger.Error("An exception occured when trying to show the url '{0}'. Exception: {1}", url, e);
+                Log.Default.Error(e, "An exception occured when trying to show the url '{0}'.", url);
             }
         }
     }

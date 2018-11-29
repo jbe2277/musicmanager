@@ -39,7 +39,7 @@ namespace Waf.MusicManager.Applications.Controllers
             this.playlistController = playlistController;
             this.transcodingController = transcodingController;
             this.shellViewModel = shellViewModel;
-            settingsService.ErrorOccurred += (sender, e) => Logger.Error("Error in SettingsService: {0}", e.Error);
+            settingsService.ErrorOccurred += (sender, e) => Log.Default.Error(e.Error, "Error in SettingsService");
             playlistManager = new PlaylistManager();
         }
 
