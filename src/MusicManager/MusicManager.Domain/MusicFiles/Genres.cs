@@ -26,6 +26,6 @@ namespace Waf.MusicManager.Domain.MusicFiles
         };
 
 
-        public static IReadOnlyList<string> DefaultValues { get { return defaultValues; } }
+        public static IReadOnlyList<string> DefaultValues => defaultValues;
     }
 }

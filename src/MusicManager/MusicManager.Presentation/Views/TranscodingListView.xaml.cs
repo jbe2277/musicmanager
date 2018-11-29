@@ -56,20 +56,20 @@ namespace Waf.MusicManager.Presentation.Views
             CollectionChangedEventManager.AddHandler(ViewModel.TranscodingManager.TranscodeItems, TranscodeItemsCollectionChanged);
         }
 
-        private IEnumerable TryGetInsertItems(DragEventArgs e)
+        private static IEnumerable TryGetInsertItems(DragEventArgs e)
         {
             return e.Data.GetData(DataFormats.FileDrop) as IEnumerable ?? e.Data.GetData(typeof(MusicFile[])) as IEnumerable;
         }
 
         private void InsertItems(int index, IEnumerable itemsToInsert)
         {
-            if (itemsToInsert is IEnumerable<string>)
+            if (itemsToInsert is IEnumerable<string> fileNames)
             {
-                ViewModel.InsertFilesAction(index, (IEnumerable<string>)itemsToInsert);
+                ViewModel.InsertFilesAction(index, fileNames);
             }
-            else if (itemsToInsert is IEnumerable<MusicFile>)
+            else if (itemsToInsert is IEnumerable<MusicFile> musicFiles)
             {
-                ViewModel.InsertMusicFilesAction(index, (IEnumerable<MusicFile>)itemsToInsert);
+                ViewModel.InsertMusicFilesAction(index, musicFiles);
             }
         }
 

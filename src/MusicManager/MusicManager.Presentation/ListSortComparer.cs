@@ -17,7 +17,7 @@ namespace Waf.MusicManager.Presentation
 
         public int Compare(T x, T y)
         {
-            return (sortDirection == ListSortDirection.Ascending) ? comparison(x, y) : comparison(y, x);
+            return sortDirection == ListSortDirection.Ascending ? comparison(x, y) : comparison(y, x);
         }
     }
 }

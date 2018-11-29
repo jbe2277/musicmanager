@@ -1,5 +1,4 @@
-﻿
-namespace Waf.MusicManager.Applications.Services
+﻿namespace Waf.MusicManager.Applications.Services
 {
     /// <summary>
     /// Service for initializing the presentation layer. These services are called before any ModuleController is initialized.

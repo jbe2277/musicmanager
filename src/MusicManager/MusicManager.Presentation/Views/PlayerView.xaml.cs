@@ -165,7 +165,7 @@ namespace Waf.MusicManager.Presentation.Views
 
         private bool CanPlayPause()
         {
-            return ViewModel.PlaylistManager != null && ViewModel.PlaylistManager.CurrentItem != null && ViewModel.PlaylistManager.CurrentItem.MusicFile != null;
+            return ViewModel.PlaylistManager?.CurrentItem?.MusicFile != null;
         }
         
         private void PlayPause()

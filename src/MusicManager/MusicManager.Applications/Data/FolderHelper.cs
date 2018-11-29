@@ -9,7 +9,7 @@ namespace Waf.MusicManager.Applications.Data
 {
     public static class FolderHelper
     {
-        public async static Task<StorageFolder> GetFolderFromLocalizedPathAsync(string path)
+        public static async Task<StorageFolder> GetFolderFromLocalizedPathAsync(string path)
         {
             string corePath = null;
             try
@@ -38,9 +38,9 @@ namespace Waf.MusicManager.Applications.Data
             return await StorageFolder.GetFolderFromPathAsync(corePath ?? path).AsTask().ConfigureAwait(false);
         }
 
-        public async static Task<string> GetDisplayPath(string path)
+        public static async Task<string> GetDisplayPath(string path)
         {
-            string displayPath = null;
+            string displayPath;
             try
             {
                 var pathSegments = GetPathSegments(path);

@@ -11,9 +11,9 @@ namespace Waf.MusicManager.Presentation.Controls
 {
     public static class SelectionBehavior
     {
-        private static List<Tuple<IMultiSelector, INotifyCollectionChanged>> multiSelectorWithObservableList = new List<Tuple<IMultiSelector, INotifyCollectionChanged>>();
-        private static HashSet<object> syncListsThatAreUpdating = new HashSet<object>();
-        private static HashSet<Selector> selectorsThatAreUpdating = new HashSet<Selector>();
+        private static readonly List<Tuple<IMultiSelector, INotifyCollectionChanged>> multiSelectorWithObservableList = new List<Tuple<IMultiSelector, INotifyCollectionChanged>>();
+        private static readonly HashSet<object> syncListsThatAreUpdating = new HashSet<object>();
+        private static readonly HashSet<Selector> selectorsThatAreUpdating = new HashSet<Selector>();
 
         public static readonly DependencyProperty SyncSelectedItemsProperty =
             DependencyProperty.RegisterAttached("SyncSelectedItems", typeof(IList), typeof(SelectionBehavior), new FrameworkPropertyMetadata(null, SyncSelectedItemsPropertyChanged));
@@ -142,8 +142,8 @@ namespace Waf.MusicManager.Presentation.Controls
 
         private static IMultiSelector TryGetMultiSelector(Selector selector)
         {
-            if (selector is ListBox) { return new ListBoxAdapter((ListBox)selector); }
-            if (selector is MultiSelector) { return new MultiSelectorAdapter((MultiSelector)selector); }
+            if (selector is ListBox listBoxSelector) { return new ListBoxAdapter(listBoxSelector); }
+            if (selector is MultiSelector multiSelector) { return new MultiSelectorAdapter(multiSelector); }
             return null;
         }
 

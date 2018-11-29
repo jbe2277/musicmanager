@@ -7,8 +7,8 @@ namespace Waf.MusicManager.Applications.Data
 {
     internal static class SupportedFileTypes
     {
-        private static readonly string[] musicFileExtensions = new string[] { ".mp3", ".wma", ".wav", ".m4a", ".mp4" };
-        private static readonly string[] playlistFileExtensions = new string[] { ".m3u", ".wpl" };
+        private static readonly string[] musicFileExtensions = { ".mp3", ".wma", ".wav", ".m4a", ".mp4" };
+        private static readonly string[] playlistFileExtensions = { ".m3u", ".wpl" };
 
         private static readonly Mp3ReadMetadata mp3ReadMetadata = new Mp3ReadMetadata();
         private static readonly WmaReadMetadata wmaReadMetadata = new WmaReadMetadata();

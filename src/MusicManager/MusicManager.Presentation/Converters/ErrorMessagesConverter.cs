@@ -14,7 +14,7 @@ namespace Waf.MusicManager.Presentation.Converters
         {
             if (values?.FirstOrDefault() is IEnumerable<Tuple<Exception, string>> errorMessages)
             {
-                string message = errorMessages.Any() ? errorMessages.Last().Item2 : "";
+                string message = errorMessages.LastOrDefault()?.Item2 ?? "";
                 return string.Format(CultureInfo.CurrentCulture, Resources.ErrorMessage, errorMessages.Count(), message);
             }
             return DependencyProperty.UnsetValue;

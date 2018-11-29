@@ -226,7 +226,7 @@ namespace Waf.MusicManager.Presentation.Controls
             listBox.Dispatcher.InvokeAsync(() =>
             {
                 var listBoxItem = (ListBoxItem)listBox.ItemContainerGenerator.ContainerFromItem(listBox.SelectedItem);
-                if (listBoxItem != null) { listBoxItem.Focus(); }
+                listBoxItem?.Focus();
             }, DispatcherPriority.Background);
         }
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Waf.MusicManager.Presentation.Controls
+﻿namespace Waf.MusicManager.Presentation.Controls
 {
     public enum HorizontalFlyoutAlignment
     {

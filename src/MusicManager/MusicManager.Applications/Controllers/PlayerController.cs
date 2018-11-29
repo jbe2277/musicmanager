@@ -69,7 +69,7 @@ namespace Waf.MusicManager.Applications.Controllers
             playerService.PlaySelectedCommand = playSelectedCommand;
             playerService.EnqueueAllCommand = enqueueAllCommand;
             playerService.EnqueueSelectedCommand = enqueueSelectedCommand;
-            playerService.PlayingMusicFile = PlaylistManager.CurrentItem != null ? PlaylistManager.CurrentItem.MusicFile : null;
+            playerService.PlayingMusicFile = PlaylistManager.CurrentItem?.MusicFile;
             
             PlaylistManager.Shuffle = shellService.Settings.Shuffle;
             PlaylistManager.Repeat = shellService.Settings.Repeat;
@@ -225,7 +225,7 @@ namespace Waf.MusicManager.Applications.Controllers
         {
             if (e.PropertyName == nameof(PlaylistManager.CurrentItem))
             {
-                playerService.PlayingMusicFile = PlaylistManager.CurrentItem != null ? PlaylistManager.CurrentItem.MusicFile : null;
+                playerService.PlayingMusicFile = PlaylistManager.CurrentItem?.MusicFile;
             }
             else if (new[] { nameof(PlaylistManager.CanPreviousItem), nameof(PlaylistManager.CanNextItem) }.Contains(e.PropertyName))
             {

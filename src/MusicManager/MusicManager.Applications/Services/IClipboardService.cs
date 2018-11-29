@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Waf.MusicManager.Applications.Services
+﻿namespace Waf.MusicManager.Applications.Services
 {
     public interface IClipboardService
     {

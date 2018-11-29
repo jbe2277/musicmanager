@@ -92,13 +92,13 @@ namespace Waf.MusicManager.Presentation.Views
 
         private void InsertItems(int index, IEnumerable itemsToInsert)
         {
-            if (itemsToInsert is IEnumerable<string>)
+            if (itemsToInsert is IEnumerable<string> fileNames)
             {
-                ViewModel.InsertFilesAction(index, (IEnumerable<string>)itemsToInsert);
+                ViewModel.InsertFilesAction(index, fileNames);
             }
-            else if (itemsToInsert is IEnumerable<MusicFile>)
+            else if (itemsToInsert is IEnumerable<MusicFile> musicFiles)
             {
-                ViewModel.InsertMusicFilesAction(index, (IEnumerable<MusicFile>)itemsToInsert);
+                ViewModel.InsertMusicFilesAction(index, musicFiles);
             }
         }
     }

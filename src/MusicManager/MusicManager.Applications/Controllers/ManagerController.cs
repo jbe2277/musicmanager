@@ -114,7 +114,7 @@ namespace Waf.MusicManager.Applications.Controllers
                 {
                     var folder = StorageFolder.GetFolderFromPathAsync(ManagerViewModel.FolderBrowser.CurrentPath).GetResult();
                     var parent = folder.GetParentAsync().GetResult();
-                    ManagerViewModel.FolderBrowser.CurrentPath = parent != null ? parent.Path : "";
+                    ManagerViewModel.FolderBrowser.CurrentPath = parent?.Path ?? "";
                 }
             }
             catch (Exception)
@@ -188,10 +188,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private async void UpdateMusicFiles(FolderDepth folderDepth)
         {
-            if (updateMusicFilesCancellation != null)
-            {
-                updateMusicFilesCancellation.Cancel();
-            }
+            updateMusicFilesCancellation?.Cancel();
             var cancellation = new CancellationTokenSource();
             updateMusicFilesCancellation = cancellation;
             Logger.Verbose("ManagerController.UpdateMusicFiles:Start");
@@ -285,10 +282,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             
             // It is necessary to run this in an own task => otherwise, reentrance would block the UI thread although this should not happen.
-            return Task.Run(() =>
-            {    
-                return GetFilesCore(directory, folderDepth, userSearchFilter, applicationSearchFilter, cancellationToken);   
-            });
+            return Task.Run(() => GetFilesCore(directory, folderDepth, userSearchFilter, applicationSearchFilter, cancellationToken));
         }
 
         private static IReadOnlyList<string> GetFilesCore(string directory, FolderDepth folderDepth, string userSearchFilter, string applicationSearchFilter, 
@@ -306,9 +300,9 @@ namespace Waf.MusicManager.Applications.Controllers
             
             // It seems that GetFilesAsync does not check the cancellationToken; so get only parts of the file results in a loop.
             Logger.Verbose("ManagerController.UpdateMusicFiles:GetFilesAsync Start");
-            List<string> files = new List<string>();
+            var files = new List<string>();
             uint index = 0;
-            int resultCount = 0;
+            int resultCount;
             const uint maxFiles = 100;
             do
             {

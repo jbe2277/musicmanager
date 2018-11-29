@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Waf.MusicManager.Applications.Data
+﻿namespace Waf.MusicManager.Applications.Data
 {
     internal static class PropertyNames
     {
-        public static string Artist { get { return "System.Music.Artist"; } }
+        public static string Artist => "System.Music.Artist";
     }
 }

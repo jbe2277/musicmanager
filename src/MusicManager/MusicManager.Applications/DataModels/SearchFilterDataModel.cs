@@ -16,11 +16,10 @@ namespace Waf.MusicManager.Applications.DataModels
         private string albumFilter = "";
         private IReadOnlyList<string> genreFilter = Array.Empty<string>();
         private FilterOperator ratingFilterOperator;
-        private uint ratingFilter = 0;
+        private uint ratingFilter;
         private uint? fromYearFilter;
         private uint? toYearFilter;
         
-
         public string DisplaySearchFilter
         {
             get 

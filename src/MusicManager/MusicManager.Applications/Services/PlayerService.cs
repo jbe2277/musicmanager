@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.Waf.Foundation;
 using System.Windows.Input;
 using Waf.MusicManager.Domain.MusicFiles;

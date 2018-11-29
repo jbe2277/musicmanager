@@ -9,15 +9,15 @@ namespace Waf.MusicManager.Domain.MusicFiles
 {
     public abstract class Entity : Model
     {
+        private readonly Lazy<IChangeTrackerService> changeTrackerService;
         private readonly HashSet<string> changes;
         private bool entityLoaded;
         private bool hasChanges;
-        private Lazy<IChangeTrackerService> changeTrackerService;
-
+        
         protected Entity()
         {
+            changeTrackerService = new Lazy<IChangeTrackerService>(ServiceLocator.Get<IChangeTrackerService>);
             changes = new HashSet<string>();
-            changeTrackerService = new Lazy<IChangeTrackerService>(() => ServiceLocator.Get<IChangeTrackerService>());
         }
 
         public bool HasChanges

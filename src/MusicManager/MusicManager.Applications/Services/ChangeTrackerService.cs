@@ -6,7 +6,7 @@ namespace Waf.MusicManager.Applications.Services
 {
     internal class ChangeTrackerService : IChangeTrackerService
     {
-        private HashSet<Entity> entitiesWithChanges;
+        private readonly HashSet<Entity> entitiesWithChanges;
 
         public ChangeTrackerService()
         {

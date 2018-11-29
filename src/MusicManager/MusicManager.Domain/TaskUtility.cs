@@ -23,13 +23,17 @@ namespace Waf.MusicManager.Domain
             var taskCompletionSource = new TaskCompletionSource<object>();
             int count = tasksArray.Length;
 
+            void ObserveException(Exception ex)
+            {
+                // Nothing to do.
+            }
+
             foreach (var task in tasksArray)
             {
                 task.ContinueWith(t =>
                 {
                     if (taskCompletionSource.Task.IsCompleted)
                     {
-                        // Observe exception.
                         ObserveException(t.Exception);
                         return;
                     }
@@ -55,11 +59,6 @@ namespace Waf.MusicManager.Domain
             }
 
             return taskCompletionSource.Task;
-        }
-
-        private static void ObserveException(Exception ex)
-        {
-            // Nothing to do.
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Waf.MusicManager.Presentation.Controls
 {
     public class SearchableTextBlock : TextBlock
     {
-        public static new readonly DependencyProperty TextProperty =
+        public new static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(nameof(Text), typeof(string), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(string.Empty, ControlPropertyChangedCallback));
 
         public static readonly DependencyProperty SearchTextProperty =
@@ -48,7 +48,7 @@ namespace Waf.MusicManager.Presentation.Controls
             set => SetValue(IsMatchCaseProperty, value);
         }
 
-        private void UpdateContet()
+        private void UpdateContent()
         {
             var newTextParts = SplitText();
             if (textParts.SequenceEqual(newTextParts))
@@ -88,7 +88,7 @@ namespace Waf.MusicManager.Presentation.Controls
                 return new[] { text };
             }
 
-            var textParts = new List<string>();
+            var parts = new List<string>();
             var index = 0;
             var comparisonType = IsMatchCase ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase;
             while (true)
@@ -98,17 +98,17 @@ namespace Waf.MusicManager.Presentation.Controls
                 {
                     break;
                 }
-                textParts.Add(text.Substring(index, (position - index)));
-                textParts.Add(text.Substring(position, searchText.Length));
+                parts.Add(text.Substring(index, (position - index)));
+                parts.Add(text.Substring(position, searchText.Length));
                 index = position + searchText.Length;
             }
-            textParts.Add(text.Substring(index, text.Length - index));
-            return textParts;
+            parts.Add(text.Substring(index, text.Length - index));
+            return parts;
         }
 
         private static void ControlPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((SearchableTextBlock)d).UpdateContet();
+            ((SearchableTextBlock)d).UpdateContent();
         }
     } 
 }

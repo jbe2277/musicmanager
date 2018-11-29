@@ -155,7 +155,7 @@ namespace Waf.MusicManager.Applications.Data
 
             foreach (var entry in musicFilesCache.ToArray())
             {
-                if (!entry.Value.TryGetTarget(out var musicFile))
+                if (!entry.Value.TryGetTarget(out _))
                 {
                     TryRemoveFromCache(entry.Key);
                 }
@@ -185,13 +185,13 @@ namespace Waf.MusicManager.Applications.Data
             }
             finally
             {
-                runningTranscodingTasks.TryRemove(e.FileName, out var task);
+                runningTranscodingTasks.TryRemove(e.FileName, out _);
             }
         }
 
         private bool TryRemoveFromCache(string fileName)
         {
-            return musicFilesCache.TryRemove(fileName, out var weakMusicFile);
+            return musicFilesCache.TryRemove(fileName, out _);
         }
 
         private static T GetSharedValueOrDefault<T>(IEnumerable<MusicFile> musicFiles, Func<MusicFile, T> getValue, IEqualityComparer<T> comparer = null)

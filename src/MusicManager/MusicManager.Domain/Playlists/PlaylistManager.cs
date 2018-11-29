@@ -143,7 +143,7 @@ namespace Waf.MusicManager.Domain.Playlists
                     }
                 }
             }
-            index = index < items.Count() ? index : 0;
+            index = index < items.Count ? index : 0;
             CurrentItem = Items[index];
         }
 
@@ -200,7 +200,6 @@ namespace Waf.MusicManager.Domain.Playlists
                     if (currentIndex != newIndex)
                     {
                         items.Move(currentIndex, newIndex);
-                        
                     }
                 }
 
@@ -236,7 +235,7 @@ namespace Waf.MusicManager.Domain.Playlists
             {
                 int currentItemIndex = Math.Max(0, items.IndexOf(CurrentItem));
                 CanPreviousItem = currentItemIndex > 0;
-                CanNextItem = Repeat || currentItemIndex < items.Count() - 1;
+                CanNextItem = Repeat || currentItemIndex < items.Count - 1;
             }
             else
             {
@@ -250,7 +249,7 @@ namespace Waf.MusicManager.Domain.Playlists
             var loadedItems = items.Where(x => x.MusicFile.IsMetadataLoaded).OrderBy(x => x.MusicFile.Metadata.Duration).ToArray();
 
             double mean = StatisticsHelper.TruncatedMean(loadedItems.Take(200).Select(x => x.MusicFile.Metadata.Duration.TotalSeconds), 0.05);
-            int notLoadedCount = items.Count() - loadedItems.Count();
+            int notLoadedCount = items.Count - loadedItems.Count();
 
             IsTotalDurationEstimated = notLoadedCount > 0;
             TotalDuration = loadedItems.Select(x => x.MusicFile.Metadata.Duration).Aggregate(TimeSpan.Zero, (current, next) => current + next) 

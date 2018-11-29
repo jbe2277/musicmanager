@@ -119,7 +119,7 @@ namespace Waf.MusicManager.Applications.Data.Metadata
 
         private static IReadOnlyList<T> ToSaveArray<T>(IEnumerable<T> collection)
         {
-            return collection != null ? collection.ToArray() : Array.Empty<T>();
+            return collection?.ToArray() ?? Array.Empty<T>();
         }
     }
 }

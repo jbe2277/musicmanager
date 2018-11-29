@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Waf.MusicManager.Applications.DataModels
+﻿namespace Waf.MusicManager.Applications.DataModels
 {
     public enum FilterOperator
     {

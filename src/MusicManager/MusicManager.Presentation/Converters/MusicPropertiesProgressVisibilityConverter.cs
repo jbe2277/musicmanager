@@ -9,10 +9,10 @@ namespace Waf.MusicManager.Presentation.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var isMetadataLoaded = values[0] is bool && (bool)values[0];
+            var isMetadataLoaded = values[0] is bool b && b;
             var loadError = values[1];
             
-            return (!isMetadataLoaded && loadError == null) ? Visibility.Visible : Visibility.Collapsed;
+            return !isMetadataLoaded && loadError == null ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

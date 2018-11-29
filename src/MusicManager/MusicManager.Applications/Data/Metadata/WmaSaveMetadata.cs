@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Waf.MusicManager.Applications.Data.Metadata
+﻿namespace Waf.MusicManager.Applications.Data.Metadata
 {
     internal class WmaSaveMetadata : SaveMetadata
     {

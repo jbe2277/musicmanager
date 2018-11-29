@@ -59,7 +59,7 @@ namespace Waf.MusicManager.Presentation
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(App).Assembly));
 
             container = new CompositionContainer(catalog, CompositionOptions.DisableSilentRejection);
-            CompositionBatch batch = new CompositionBatch();
+            var batch = new CompositionBatch();
             batch.AddExportedValue(container);
             container.Compose(batch);
 
