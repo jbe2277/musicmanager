@@ -14,10 +14,13 @@ namespace Waf.MusicManager.Presentation.Controls
             DependencyProperty.Register(nameof(Path), typeof(string), typeof(PathLabel), new FrameworkPropertyMetadata("", PathChangedHandler));
 
         private readonly TextBlock textBlock;
+        private double pixelsPerDip = 1;
 
         public PathLabel()
         {
             textBlock = new TextBlock();
+            
+            Loaded += LoadedHandler;
             SizeChanged += SizeChangedHandler;
         }
 
@@ -31,6 +34,16 @@ namespace Waf.MusicManager.Presentation.Controls
         {
             base.OnApplyTemplate();
             Content = textBlock;
+        }
+
+        private void LoadedHandler(object sender, RoutedEventArgs e)
+        {
+            pixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
+        }
+
+        protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi)
+        {
+            pixelsPerDip = newDpi.PixelsPerDip;
         }
 
         private void UpdatePathText()
@@ -59,7 +72,7 @@ namespace Waf.MusicManager.Presentation.Controls
         private Size MeasureString(string str)
         {
             var typeFace = new Typeface(FontFamily, FontStyle, FontWeight, FontStretch);
-            var formattedText = new FormattedText(str, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, typeFace, FontSize, Foreground);
+            var formattedText = new FormattedText(str, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, typeFace, FontSize, Foreground, pixelsPerDip);
             return new Size(formattedText.Width, formattedText.Height);
         }
 

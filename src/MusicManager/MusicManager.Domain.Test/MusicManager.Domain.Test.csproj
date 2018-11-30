@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>Test.MusicManager.Domain</AssemblyName>
     <RootNamespace>Test.MusicManager.Domain</RootNamespace>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <IsPackable>false</IsPackable>
   </PropertyGroup>

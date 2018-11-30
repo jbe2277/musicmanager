@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>Waf.MusicManager.Domain</AssemblyName>
     <RootNamespace>Waf.MusicManager.Domain</RootNamespace>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <CodeAnalysisRuleSet>..\MusicManager.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>

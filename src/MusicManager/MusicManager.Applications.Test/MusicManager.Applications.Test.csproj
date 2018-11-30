@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>Test.MusicManager.Applications</RootNamespace>
     <AssemblyName>Test.MusicManager.Applications</AssemblyName>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
