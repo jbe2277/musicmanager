@@ -2,6 +2,14 @@ Changelog
 ---------
 
 
+Version 2.0.0.100 (Release)
+- Change required .NET Framework to 4.7.2.
+- Update the Win Application Framework (WAF) to 5.0.0-alpha1.
+- Use NLog for logging.
+- Simplify code by using C# 7 features.
+- Simplify Windows Runtime (WinRT) integration.
+
+
 Version 1.7.2.100 (Release)
 - Update the Win Application Framework (WAF) to 4.3.0.
 
