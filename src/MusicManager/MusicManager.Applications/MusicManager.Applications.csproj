@@ -19,12 +19,12 @@
       <HintPath>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Runtime.WindowsRuntime.dll</HintPath>
     </Reference>
     <Reference Include="Windows">
-      <HintPath>$(MSBuildProgramFiles32)\Windows Kits\10\UnionMetadata\Windows.winmd</HintPath>
+      <HintPath>$(MSBuildProgramFiles32)\Windows Kits\10\UnionMetadata\10.0.17763.0\Windows.winmd</HintPath>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Waf.Wpf" Version="5.0.0-alpha1" />
+    <PackageReference Include="System.Waf.Wpf" Version="5.0.0" />
     <PackageReference Include="NLog" Version="4.5.11" />
   </ItemGroup>
 
