@@ -88,7 +88,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Waf.Wpf" Version="5.0.0" />
+    <PackageReference Include="System.Waf.Wpf" Version="6.0.0-alpha1" />
     <PackageReference Include="NLog" Version="4.5.11" />
   </ItemGroup>
   <ItemGroup>
