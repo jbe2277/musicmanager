@@ -1,25 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
+    <TargetFramework>net5.0-windows10.0.18362</TargetFramework>
+    <UseWPF>true</UseWPF>
     <AssemblyName>Waf.MusicManager.Applications</AssemblyName>
     <RootNamespace>Waf.MusicManager.Applications</RootNamespace>
-    <TargetFramework>net472</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <CodeAnalysisRuleSet>..\MusicManager.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.XML" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Waf.Wpf" Version="6.0.0-alpha1" />
-    <PackageReference Include="NLog" Version="4.5.11" />
-    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.18362.2005" />
+    <PackageReference Include="System.Waf.Wpf" Version="6.3.0-alpha1" />
+    <PackageReference Include="NLog" Version="4.7.1" />
   </ItemGroup>
 
   <ItemGroup>

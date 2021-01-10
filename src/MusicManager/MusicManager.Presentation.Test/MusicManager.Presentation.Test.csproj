@@ -1,97 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4091873C-9332-4A5B-A72A-96CF5D81EB9D}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net5.0-windows10.0.18362</TargetFramework>
     <RootNamespace>Test.MusicManager.Presentation</RootNamespace>
     <AssemblyName>Test.MusicManager.Presentation</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\..\out\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\..\out\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="WindowsBase" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
+    <PackageReference Include="System.Waf.UnitTesting.Wpf" Version="6.3.0-alpha1" />
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
-    <PackageReference Include="System.Waf.UnitTesting.Wpf" Version="6.0.0-alpha1" />
+    <ProjectReference Include="..\MusicManager.Domain\MusicManager.Domain.csproj" />
+    <ProjectReference Include="..\MusicManager.Applications\MusicManager.Applications.csproj" />
+    <ProjectReference Include="..\MusicManager.Domain.Test\MusicManager.Domain.Test.csproj" />
+    <ProjectReference Include="..\MusicManager.Presentation\MusicManager.Presentation.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="Converters\ConverterHelperTest.cs" />
-    <Compile Include="Converters\FilterOperatorToStringConverterTest.cs" />
-    <Compile Include="Converters\IsPlaylistItemPlayingMultiConverterTest.cs" />
-    <Compile Include="Converters\MusicPropertiesEnabledConverterTest.cs" />
-    <Compile Include="Converters\MusicPropertiesProgressVisibilityConverterTest.cs" />
-    <Compile Include="Converters\MusicTitleConverterTest.cs" />
-    <Compile Include="Converters\PathToDirectoryNameConverterTest.cs" />
-    <Compile Include="Converters\PathToFileNameConverterTest.cs" />
-    <Compile Include="Converters\RatingToStarsConverterTest.cs" />
-    <Compile Include="Converters\StringListToStringConverterTest.cs" />
-    <Compile Include="Converters\TotalDurationConverterTest.cs" />
-    <Compile Include="Converters\UIntToDisplayValueConverterTest.cs" />
-    <Compile Include="Converters\WindowTitleConverterTest.cs" />
-    <Compile Include="ListSortComparerTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+
+    <None Update="Files\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
-  <ItemGroup>
-    <CodeAnalysisDictionary Include="..\CodeAnalysisDictionary.xml">
-      <Link>Properties\CodeAnalysisDictionary.xml</Link>
-    </CodeAnalysisDictionary>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MusicManager.Applications\MusicManager.Applications.csproj">
-      <Project>{e6722153-c183-4010-82ab-315db6182d89}</Project>
-      <Name>MusicManager.Applications</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MusicManager.Domain.Test\MusicManager.Domain.Test.csproj">
-      <Project>{5f422bc1-0685-42b9-ad4a-ef8fd0b38511}</Project>
-      <Name>MusicManager.Domain.Test</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MusicManager.Domain\MusicManager.Domain.csproj">
-      <Project>{e4f89499-833a-45bc-b469-71bb067525d1}</Project>
-      <Name>MusicManager.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MusicManager.Presentation\MusicManager.Presentation.csproj">
-      <Project>{16d7f42d-4da1-4aa9-9361-036bcb04ebc0}</Project>
-      <Name>MusicManager.Presentation</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

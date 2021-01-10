@@ -1,16 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Waf.MusicManager.Domain</AssemblyName>
     <RootNamespace>Waf.MusicManager.Domain</RootNamespace>
-    <TargetFramework>net472</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <CodeAnalysisRuleSet>..\MusicManager.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Waf.Core" Version="6.0.0-alpha1" />
-    <PackageReference Include="NLog" Version="4.5.11" />
+    <PackageReference Include="System.Waf.Core" Version="6.3.0-alpha1" />
+    <PackageReference Include="NLog" Version="4.7.1" />
   </ItemGroup>
 
   <ItemGroup>
