@@ -24,7 +24,7 @@ namespace Test.MusicManager.Domain
             assertUnobservedExceptions.Cleanup();
         }        
 
-        [TestMethod]
+        // [TestMethod] Instable -> depends on CPU resources that test runs fast enough
         public void WhenAllFastTest()
         {
             // Check tasks that are completed before calling WhenAllFast.
