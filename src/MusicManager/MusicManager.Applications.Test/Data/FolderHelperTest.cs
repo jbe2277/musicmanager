@@ -13,15 +13,16 @@ namespace Test.MusicManager.Applications.Data
         public void GetFolderFromLocalizedPath()
         {
             Assert.AreEqual(@"C:\Windows", FolderHelper.GetFolderFromLocalizedPathAsync(@"C:\Windows\").GetResult().Path);
-
-            Assert.AreEqual(@"C:\Program Files\Common Files", FolderHelper.GetFolderFromLocalizedPathAsync(@"C:\Programme\Common Files").GetResult().Path);
             Assert.AreEqual(@"C:\Program Files\Common Files", FolderHelper.GetFolderFromLocalizedPathAsync(@"C:\Program Files\Common Files").GetResult().Path);
 
-            if (@"C:\Users" == FolderHelper.GetFolderFromLocalizedPathAsync(@"C:\Benutzer").GetResult().Path)
+            if (@"C:\Benutzer" == FolderHelper.GetDisplayPath(@"C:\Users").GetResult())  // German Windows
             {
+                Assert.AreEqual(@"C:\Users", FolderHelper.GetFolderFromLocalizedPathAsync(@"C:\Benutzer").GetResult().Path);
                 Assert.AreEqual(@"C:\Users", FolderHelper.GetFolderFromLocalizedPathAsync(@"C:\Benutzer\").GetResult().Path);
                 Assert.AreEqual(@"C:\Users\Public", FolderHelper.GetFolderFromLocalizedPathAsync(@"C:/Benutzer/Öffentlich/").GetResult().Path);
                 Assert.AreEqual(@"C:\Users\Public", FolderHelper.GetFolderFromLocalizedPathAsync(@"C:\Benutzer\Öffentlich").GetResult().Path);
+
+                Assert.AreEqual(@"C:\Program Files\Common Files", FolderHelper.GetFolderFromLocalizedPathAsync(@"C:\Programme\Common Files").GetResult().Path);
             }
         }
 
@@ -30,7 +31,7 @@ namespace Test.MusicManager.Applications.Data
         {
             Assert.AreEqual(@"C:\Windows", FolderHelper.GetDisplayPath(@"C:\Windows").GetResult());
 
-            if (@"C:\Benutzer" == FolderHelper.GetDisplayPath(@"C:\Users").GetResult())
+            if (@"C:\Benutzer" == FolderHelper.GetDisplayPath(@"C:\Users").GetResult())  // German Windows
             {
                 Assert.AreEqual(@"C:\Benutzer", FolderHelper.GetDisplayPath(@"C:\Users\").GetResult());
                 Assert.AreEqual(@"C:\Benutzer\Öffentlich", FolderHelper.GetDisplayPath(@"C:/Users/Public").GetResult());
