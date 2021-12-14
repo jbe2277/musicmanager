@@ -5,7 +5,7 @@
     <Copyright>Copyright © 2016-2021 jbe2277</Copyright>
     <Version>3.0.0.100</Version>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <!--<Nullable>enable</Nullable>-->
+    <Nullable>enable</Nullable>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <NoWarn>$(NoWarn);CA1014</NoWarn>
   </PropertyGroup>

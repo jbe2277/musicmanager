@@ -9,7 +9,7 @@ namespace Test.MusicManager.Domain.MusicFiles
     [TestClass]
     public class EntityTest : DomainTest
     {
-        private MockChangeTrackerService changeTrackerService;
+        private MockChangeTrackerService changeTrackerService = null!;
 
         protected override void OnInitialize()
         {
@@ -66,9 +66,9 @@ namespace Test.MusicManager.Domain.MusicFiles
 
         private class MockEntity : Entity
         {
-            private string name;
+            private string? name;
 
-            public string Name
+            public string? Name
             {
                 get => name;
                 set => SetPropertyAndTrackChanges(ref name, value);

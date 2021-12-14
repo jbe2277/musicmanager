@@ -44,7 +44,7 @@ namespace Test.MusicManager.Domain.MusicFiles
             Assert.AreEqual(metadata, musicFile.Metadata);
             Assert.AreEqual(metadata, musicFile.GetMetadataAsync().Result);
             Assert.IsTrue(musicFile.IsMetadataLoaded);
-            Assert.AreEqual(musicFile, musicFile.Metadata.Parent);
+            Assert.AreEqual(musicFile, musicFile.Metadata!.Parent);
 
             Assert.IsFalse(musicFile.Metadata.HasChanges);
             musicFile.Metadata.Rating = 33;
@@ -67,7 +67,7 @@ namespace Test.MusicManager.Domain.MusicFiles
         [TestMethod]
         public void ImplicitLoadMetadataWithNull()
         {
-            var musicFile = new MusicFile(fileName => Task.FromResult((MusicMetadata)null), "");
+            var musicFile = new MusicFile(fileName => Task.FromResult((MusicMetadata?)null), "");
 
             Assert.IsNull(musicFile.Metadata);
             Assert.IsFalse(musicFile.IsMetadataLoaded);

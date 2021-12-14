@@ -13,7 +13,7 @@ namespace Test.MusicManager.Domain.MusicFiles
     [TestClass]
     public class PlaylistManagerTest : DomainTest
     {
-        private PlaylistItem[] threeItems;
+        private PlaylistItem[] threeItems = null!;
 
         protected override void OnInitialize()
         {

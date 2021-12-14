@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Waf.MusicManager.Domain.Playlists
 {
@@ -17,7 +18,7 @@ namespace Waf.MusicManager.Domain.Playlists
         
         public T Pop()
         { 
-            var result = playlistItems.Last.Value;
+            var result = (playlistItems.Last ?? throw new InvalidOperationException("PlayedItemsStack is empty.")).Value;
             playlistItems.RemoveLast();
             return result;
         }

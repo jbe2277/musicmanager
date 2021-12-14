@@ -16,19 +16,18 @@ namespace Waf.MusicManager.Domain.Playlists
         private readonly PlayedItemsStack<PlaylistItem> playedItemsStack;
         private bool isTotalDurationEstimated;
         private TimeSpan totalDuration;
-        private PlaylistItem currentItem;
+        private PlaylistItem? currentItem;
         private bool canPreviousItem;
         private bool canNextItem;
         private bool repeat;
         private bool shuffle;
 
-        public PlaylistManager(int playedItemStackCapacity = 1000, IRandomService randomService = null)
+        public PlaylistManager(int playedItemStackCapacity = 1000, IRandomService? randomService = null)
         {
             this.randomService = randomService ?? new RandomService();
             items = new ObservableCollection<PlaylistItem>();
             Items = new ReadOnlyObservableList<PlaylistItem>(items);
             playedItemsStack = new PlayedItemsStack<PlaylistItem>(playedItemStackCapacity);
-
             items.CollectionChanged += ItemsCollectionChanged;
         }
 
@@ -46,21 +45,19 @@ namespace Waf.MusicManager.Domain.Playlists
             private set => SetProperty(ref totalDuration, value);
         }
 
-        public PlaylistItem CurrentItem
+        public PlaylistItem? CurrentItem
         {
             get => currentItem;
             set
             {
-                if (currentItem != value)
+                if (currentItem == value) return;
+                if (currentItem != null && Shuffle && items.Contains(currentItem))
                 {
-                    if (currentItem != null && Shuffle && items.Contains(currentItem))
-                    {
-                        playedItemsStack.RemoveAll(currentItem);
-                        playedItemsStack.Add(currentItem);
-                    }
-                    currentItem = value;
-                    RaisePropertyChanged();
+                    playedItemsStack.RemoveAll(currentItem);
+                    playedItemsStack.Add(currentItem);
                 }
+                currentItem = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -85,13 +82,7 @@ namespace Waf.MusicManager.Domain.Playlists
         public bool Shuffle
         {
             get => shuffle;
-            set
-            {
-                if (SetProperty(ref shuffle, value))
-                {
-                    playedItemsStack.Clear();
-                }
-            }
+            set { if (SetProperty(ref shuffle, value)) playedItemsStack.Clear(); }
         }
 
         public void PreviousItem()
@@ -99,12 +90,12 @@ namespace Waf.MusicManager.Domain.Playlists
             if (!CanPreviousItem) throw new InvalidOperationException("Call this method only if CanPreviousItem is true.");
             if (!Shuffle)
             {
-                int currentItemIndex = items.IndexOf(CurrentItem);
+                int currentItemIndex = items.IndexOf(CurrentItem!);
                 CurrentItem = Items[currentItemIndex - 1];
             }
             else
             {
-                var oldItem = CurrentItem;
+                var oldItem = CurrentItem!;
                 CurrentItem = playedItemsStack.Pop();
                 playedItemsStack.RemoveAll(oldItem);
                 UpdateCanPreviousAndCanNextItem();
@@ -114,7 +105,7 @@ namespace Waf.MusicManager.Domain.Playlists
         public void NextItem()
         {
             if (!CanNextItem) throw new InvalidOperationException("Call this method only if CanNextItem is true.");
-            int currentItemIndex = items.IndexOf(CurrentItem);
+            int currentItemIndex = items.IndexOf(CurrentItem!);
             int index;
             if (!Shuffle)
             {
@@ -122,10 +113,8 @@ namespace Waf.MusicManager.Domain.Playlists
             }
             else
             {
-                if (items.Count <= playedItemsStack.Count + 1)
-                {
-                    playedItemsStack.Clear();
-                }
+                if (items.Count <= playedItemsStack.Count + 1) playedItemsStack.Clear();
+                
                 index = randomService.NextRandomNumber(items.Count - playedItemsStack.Count - 2);
                 for (int i = 0; i < items.Count; i++)
                 {
@@ -137,21 +126,15 @@ namespace Waf.MusicManager.Domain.Playlists
                     {
                         index++;
                     }
-                    if (index <= i)
-                    {
-                        break;
-                    }
+                    if (index <= i) break;
                 }
             }
             index = index < items.Count ? index : 0;
             CurrentItem = Items[index];
         }
 
-        public void AddItems(IEnumerable<PlaylistItem> itemsToAdd)
-        {
-            InsertItems(items.Count, itemsToAdd);
-        }
-
+        public void AddItems(IEnumerable<PlaylistItem> itemsToAdd) => InsertItems(items.Count, itemsToAdd);
+        
         public void AddAndReplaceItems(IEnumerable<PlaylistItem> itemsToAdd)
         {
             items.Clear();
@@ -161,10 +144,7 @@ namespace Waf.MusicManager.Domain.Playlists
 
         public void InsertItems(int index, IEnumerable<PlaylistItem> itemsToInsert)
         {
-            foreach (var item in itemsToInsert)
-            {
-                items.Insert(index++, item);
-            }
+            foreach (var item in itemsToInsert) items.Insert(index++, item);
             UpdateCanPreviousAndCanNextItem();
         }
 
@@ -189,18 +169,12 @@ namespace Waf.MusicManager.Domain.Playlists
             int oldIndex = items.IndexOf(itemsToMove.First());
             if (oldIndex != newIndex)
             {
-                if (newIndex < oldIndex)
-                {
-                    itemsToMove = itemsToMove.Reverse();
-                }
+                if (newIndex < oldIndex) itemsToMove = itemsToMove.Reverse();
 
                 foreach (var item in itemsToMove)
                 {
                     int currentIndex = items.IndexOf(item);
-                    if (currentIndex != newIndex)
-                    {
-                        items.Move(currentIndex, newIndex);
-                    }
+                    if (currentIndex != newIndex) items.Move(currentIndex, newIndex);
                 }
 
                 UpdateCanPreviousAndCanNextItem();
@@ -246,50 +220,39 @@ namespace Waf.MusicManager.Domain.Playlists
 
         private void UpdateTotalDuration()
         {
-            var loadedItems = items.Where(x => x.MusicFile.IsMetadataLoaded).OrderBy(x => x.MusicFile.Metadata.Duration).ToArray();
+            var loadedItems = items.Where(x => x.MusicFile.IsMetadataLoaded).OrderBy(x => x.MusicFile.Metadata!.Duration).ToArray();
 
-            double mean = StatisticsHelper.TruncatedMean(loadedItems.Take(200).Select(x => x.MusicFile.Metadata.Duration.TotalSeconds), 0.05);
-            int notLoadedCount = items.Count - loadedItems.Count();
+            double mean = StatisticsHelper.TruncatedMean(loadedItems.Take(200).Select(x => x.MusicFile.Metadata!.Duration.TotalSeconds), 0.05);
+            int notLoadedCount = items.Count - loadedItems.Length;
 
             IsTotalDurationEstimated = notLoadedCount > 0;
-            TotalDuration = loadedItems.Select(x => x.MusicFile.Metadata.Duration).Aggregate(TimeSpan.Zero, (current, next) => current + next) 
-                + TimeSpan.FromSeconds(notLoadedCount * mean);
+            TotalDuration = loadedItems.Select(x => x.MusicFile.Metadata!.Duration).Aggregate(TimeSpan.Zero, (current, next) => current + next) + TimeSpan.FromSeconds(notLoadedCount * mean);
         }
 
-        private void ItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void ItemsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (PlaylistItem newItem in e.NewItems)
+                foreach (PlaylistItem newItem in e.NewItems!)
                 {
-                    if (!newItem.MusicFile.IsMetadataLoaded)
-                    {
-                        newItem.MusicFile.PropertyChanged += MusicFilePropertyChanged;
-                    }
+                    if (!newItem.MusicFile.IsMetadataLoaded) { newItem.MusicFile.PropertyChanged += MusicFilePropertyChanged; }
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (PlaylistItem oldItem in e.OldItems)
+                foreach (PlaylistItem oldItem in e.OldItems!)
                 {
-                    if (!oldItem.MusicFile.IsMetadataLoaded)
-                    {
-                        oldItem.MusicFile.PropertyChanged -= MusicFilePropertyChanged;
-                    }
+                    if (!oldItem.MusicFile.IsMetadataLoaded) { oldItem.MusicFile.PropertyChanged -= MusicFilePropertyChanged; }
                 }
             }
-            
-            if (e.Action != NotifyCollectionChangedAction.Move)
-            {
-                UpdateTotalDuration();
-            }
+            if (e.Action != NotifyCollectionChangedAction.Move) UpdateTotalDuration();
         }
 
-        private void MusicFilePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void MusicFilePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MusicFile.IsMetadataLoaded))
             {
-                ((MusicFile)sender).PropertyChanged -= MusicFilePropertyChanged;
+                ((MusicFile)sender!).PropertyChanged -= MusicFilePropertyChanged;
                 UpdateTotalDuration();
             }
         }

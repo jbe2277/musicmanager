@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Waf.Foundation;
@@ -42,7 +43,7 @@ namespace Waf.MusicManager.Domain.MusicFiles
             changes.Clear();
         }
 
-        protected bool SetPropertyAndTrackChanges<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        protected bool SetPropertyAndTrackChanges<T>([NotNullIfNotNull(parameterName: "value"), MaybeNull] ref T field, [AllowNull] T value, [CallerMemberName] string propertyName = null!)
         {
             if (SetProperty(ref field, value, propertyName))
             {

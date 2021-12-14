@@ -61,8 +61,7 @@ namespace Test.MusicManager.Domain
 
             Assert.IsFalse(task1.IsCompleted);
             Assert.IsFalse(task2.IsCompleted);
-            AssertHelper.ExpectedException<TaskCanceledException>(
-                () => TaskUtility.WhenAllFast(new[] { task1, task2 }).GetAwaiter().GetResult());
+            AssertHelper.ExpectedException<TaskCanceledException>(() => TaskUtility.WhenAllFast(new[] { task1, task2 }).GetAwaiter().GetResult());
             Assert.IsTrue(task1.IsCompleted);
             Assert.IsFalse(task2.IsCompleted);
 
@@ -80,13 +79,12 @@ namespace Test.MusicManager.Domain
 
             Assert.IsFalse(task1.IsCompleted);
             Assert.IsFalse(task2.IsCompleted);
-            AssertHelper.ExpectedException<ArgumentException>(
-                () => TaskUtility.WhenAllFast(new[] { task1, task2 }).GetAwaiter().GetResult());
+            AssertHelper.ExpectedException<ArgumentException>(() => TaskUtility.WhenAllFast(new[] { task1, task2 }).GetAwaiter().GetResult());
             Assert.IsFalse(task1.IsCompleted);
             Assert.IsTrue(task2.IsCompleted);
 
             // Argument check test
-            AssertHelper.ExpectedException<ArgumentNullException>(() => TaskUtility.WhenAllFast(null));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => TaskUtility.WhenAllFast(null!));
 
             // Wait until task1 has finished so that we can check for unobserved task exceptions.
             Task.Delay(50).Wait();

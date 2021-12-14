@@ -8,7 +8,7 @@ namespace Waf.MusicManager.Domain.Transcoding
     {
         private TranscodeStatus transcodeStatus;
         private double progress;
-        private Exception error;
+        private Exception? error;
 
         public TranscodeItem(MusicFile source, string destinationFileName)
         {
@@ -39,7 +39,7 @@ namespace Waf.MusicManager.Domain.Transcoding
             }
         }
 
-        public Exception Error
+        public Exception? Error
         {
             get => error;
             set

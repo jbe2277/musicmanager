@@ -5,16 +5,10 @@ namespace Waf.MusicManager.Domain.MusicFiles
 {
     public static class ServiceLocator
     {
-        private static readonly ConcurrentDictionary<Type, object> services = new ConcurrentDictionary<Type, object>();
+        private static readonly ConcurrentDictionary<Type, object> services = new();
 
-        public static TId Get<TId>()
-        {
-            return (TId)services[typeof(TId)];
-        }
+        public static TId Get<TId>() where TId : class => (TId)services[typeof(TId)];
 
-        public static void RegisterInstance<TId>(TId instance)
-        {
-            services[typeof(TId)] = instance;
-        }
+        public static void RegisterInstance<TId>(TId instance) where TId : class => services[typeof(TId)] = instance;
     }
 }

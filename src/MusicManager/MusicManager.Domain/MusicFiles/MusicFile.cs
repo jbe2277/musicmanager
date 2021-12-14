@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Waf.Foundation;
 
@@ -8,14 +9,14 @@ namespace Waf.MusicManager.Domain.MusicFiles
     public class MusicFile : Model
     {
         private readonly TaskCompletionSource<MusicMetadata> loadMetadataCompletionSource;
-        private readonly Func<string, Task<MusicMetadata>> loadMetadata;
+        private readonly Func<string, Task<MusicMetadata?>> loadMetadata;
         private IReadOnlyCollection<MusicFile> sharedMusicFiles;
-        private MusicMetadata metadata;
+        private MusicMetadata? metadata;
         private bool loadCalled;
         private bool isMetadataLoaded;
-        private Exception loadError;
+        private Exception? loadError;
 
-        public MusicFile(Func<string, Task<MusicMetadata>> loadMetadata, string fileName)
+        public MusicFile(Func<string, Task<MusicMetadata?>> loadMetadata, string fileName)
         {
             loadMetadataCompletionSource = new TaskCompletionSource<MusicMetadata>();
             this.loadMetadata = loadMetadata;
@@ -31,7 +32,7 @@ namespace Waf.MusicManager.Domain.MusicFiles
             set => SetProperty(ref sharedMusicFiles, value);
         }
 
-        public MusicMetadata Metadata
+        public MusicMetadata? Metadata
         {
             get
             {
@@ -44,13 +45,13 @@ namespace Waf.MusicManager.Domain.MusicFiles
             private set => SetProperty(ref metadata, value);
         }
 
-        public bool IsMetadataLoaded
+        [MemberNotNullWhen(true, nameof(Metadata))] public bool IsMetadataLoaded
         {
             get => isMetadataLoaded;
             private set => SetProperty(ref isMetadataLoaded, value);
         }
 
-        public Exception LoadError
+        public Exception? LoadError
         {
             get => loadError;
             private set => SetProperty(ref loadError, value);
@@ -64,7 +65,7 @@ namespace Waf.MusicManager.Domain.MusicFiles
 
         private async void LoadMetadataCore()
         {
-            if (loadCalled) { return; }
+            if (loadCalled) return;
             loadCalled = true;
             try
             {

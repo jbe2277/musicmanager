@@ -20,10 +20,10 @@ namespace Waf.MusicManager.Domain
             if (tasks == null) { throw new ArgumentNullException(nameof(tasks)); }
 
             var tasksArray = tasks.ToArray();
-            var taskCompletionSource = new TaskCompletionSource<object>();
+            var taskCompletionSource = new TaskCompletionSource<object?>();
             int count = tasksArray.Length;
 
-            void ObserveException(Exception ex)
+            static void ObserveException(Exception? ex)
             {
                 // Nothing to do.
             }
@@ -44,7 +44,7 @@ namespace Waf.MusicManager.Domain
                     }
                     else if (t.IsFaulted)
                     {
-                        taskCompletionSource.TrySetException(t.Exception.Flatten().InnerExceptions);
+                        taskCompletionSource.TrySetException(t.Exception!.Flatten().InnerExceptions);
                     }
                     else
                     {
