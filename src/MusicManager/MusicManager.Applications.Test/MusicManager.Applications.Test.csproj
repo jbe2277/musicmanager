@@ -3,15 +3,10 @@
     <TargetFramework>net5.0-windows10.0.18362</TargetFramework>
     <RootNamespace>Test.MusicManager.Applications</RootNamespace>
     <AssemblyName>Test.MusicManager.Applications</AssemblyName>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
-    <PackageReference Include="System.Waf.UnitTesting.Wpf" Version="6.3.0-alpha1" />
+    <PackageReference Include="System.Waf.UnitTesting.Wpf" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
-
-    <None Update="Files\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Update="Files\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

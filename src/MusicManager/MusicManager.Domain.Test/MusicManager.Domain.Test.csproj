@@ -3,22 +3,13 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Test.MusicManager.Domain</AssemblyName>
     <RootNamespace>Test.MusicManager.Domain</RootNamespace>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
-    <PackageReference Include="System.Waf.UnitTesting.Core" Version="6.3.0-alpha1" />
+    <PackageReference Include="System.Waf.UnitTesting.Core" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MusicManager.Domain\MusicManager.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
   </ItemGroup>
 </Project>

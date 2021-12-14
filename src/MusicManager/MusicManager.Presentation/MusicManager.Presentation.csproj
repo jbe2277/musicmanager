@@ -5,15 +5,12 @@
     <UseWPF>true</UseWPF>
     <RootNamespace>Waf.MusicManager.Presentation</RootNamespace>
     <AssemblyName>MusicManager</AssemblyName>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <CodeAnalysisRuleSet>..\MusicManager.ruleset</CodeAnalysisRuleSet>
-  
+    <AssemblyTitle>Waf Music Manager</AssemblyTitle>
     <ApplicationIcon>Resources\Images\MusicManager.ico</ApplicationIcon>
-    <ApplicationManifest>Properties\App.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Waf.Wpf" Version="6.3.0-alpha1" />
+    <PackageReference Include="System.Waf.Wpf" Version="6.4.0" />
     <PackageReference Include="NLog" Version="4.7.1" />
   </ItemGroup>
 
@@ -23,23 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
-
-    <!-- Resources -->
     <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
     <Compile Update="Properties\Resources.Designer.cs" AutoGen="True" DependentUpon="Resources.resx" DesignTime="True" />
 
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-
     <Resource Include="Resources\Images\**" />
   </ItemGroup>
-  
 </Project>

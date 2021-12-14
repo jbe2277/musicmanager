@@ -9,14 +9,13 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime;
-using System.Waf;
 using System.Waf.Applications;
+using System.Waf.Applications.Services;
 using System.Waf.Presentation;
 using System.Windows;
 using System.Windows.Threading;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
-using Waf.MusicManager.Presentation.Properties;
 using Waf.MusicManager.Presentation.Services;
 
 namespace Waf.MusicManager.Presentation
@@ -66,23 +65,10 @@ namespace Waf.MusicManager.Presentation
             DispatcherUnhandledException += AppDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
-
-            InitializeCultures();
-
-            if (Environment.OSVersion.Version < new Version(6, 3))
-            {
-                MessageBox.Show(Presentation.Properties.Resources.NewerWindowsRequired, ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(1);
-            }
-
             catalog = new AggregateCatalog();
-            // Add the WpfApplicationFramework assembly to the catalog
-            catalog.Catalogs.Add(new AssemblyCatalog(typeof(WafConfiguration).Assembly));
-            // Add the Waf.MusicManager.Applications assembly
+            catalog.Catalogs.Add(new AssemblyCatalog(typeof(IMessageService).Assembly));
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(ShellViewModel).Assembly));
-            // Add this assembly
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(App).Assembly));
-
             container = new CompositionContainer(catalog, CompositionOptions.DisableSilentRejection);
             var batch = new CompositionBatch();
             batch.AddExportedValue(container);
@@ -92,15 +78,13 @@ namespace Waf.MusicManager.Presentation
             var presentationServices = container.GetExportedValues<IPresentationService>();
             foreach (var presentationService in presentationServices) { presentationService.Initialize(); }
 
-            // Initialize and run all module controllers
             moduleControllers = container.GetExportedValues<IModuleController>();
-            foreach (var moduleController in moduleControllers) { moduleController.Initialize(); }
-            foreach (var moduleController in moduleControllers) { moduleController.Run(); }
+            foreach (var x in moduleControllers) x.Initialize();
+            foreach (var x in moduleControllers) x.Run();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            // Shutdown the module controllers in reverse order
             foreach (var moduleController in moduleControllers.Reverse()) { moduleController.Shutdown(); }
 
             // Wait until all registered tasks are finished
@@ -117,22 +101,7 @@ namespace Waf.MusicManager.Presentation
             base.OnExit(e);
         }
 
-        private static void InitializeCultures()
-        {
-            if (!string.IsNullOrEmpty(Settings.Default.Culture))
-            {
-                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(Settings.Default.Culture);
-            }
-            if (!string.IsNullOrEmpty(Settings.Default.UICulture))
-            {
-                CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(Settings.Default.UICulture);
-            }
-        }
-
-        private static void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            HandleException(e.Exception, false);
-        }
+        private static void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => HandleException(e.Exception, false);
 
         private static void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {

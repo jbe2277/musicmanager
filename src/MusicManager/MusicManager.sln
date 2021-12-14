@@ -1,29 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.106
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Presentation", "MusicManager.Presentation\MusicManager.Presentation.csproj", "{16D7F42D-4DA1-4AA9-9361-036BCB04EBC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicManager.Presentation", "MusicManager.Presentation\MusicManager.Presentation.csproj", "{16D7F42D-4DA1-4AA9-9361-036BCB04EBC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Applications", "MusicManager.Applications\MusicManager.Applications.csproj", "{E6722153-C183-4010-82AB-315DB6182D89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicManager.Applications", "MusicManager.Applications\MusicManager.Applications.csproj", "{E6722153-C183-4010-82AB-315DB6182D89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Domain", "MusicManager.Domain\MusicManager.Domain.csproj", "{E4F89499-833A-45BC-B469-71BB067525D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicManager.Domain", "MusicManager.Domain\MusicManager.Domain.csproj", "{E4F89499-833A-45BC-B469-71BB067525D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Domain.Test", "MusicManager.Domain.Test\MusicManager.Domain.Test.csproj", "{5F422BC1-0685-42B9-AD4A-EF8FD0B38511}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicManager.Domain.Test", "MusicManager.Domain.Test\MusicManager.Domain.Test.csproj", "{5F422BC1-0685-42B9-AD4A-EF8FD0B38511}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Applications.Test", "MusicManager.Applications.Test\MusicManager.Applications.Test.csproj", "{4358683C-18EF-4286-AE1D-38A6320313F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicManager.Applications.Test", "MusicManager.Applications.Test\MusicManager.Applications.Test.csproj", "{4358683C-18EF-4286-AE1D-38A6320313F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicManager.Presentation.Test", "MusicManager.Presentation.Test\MusicManager.Presentation.Test.csproj", "{4091873C-9332-4A5B-A72A-96CF5D81EB9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicManager.Presentation.Test", "MusicManager.Presentation.Test\MusicManager.Presentation.Test.csproj", "{4091873C-9332-4A5B-A72A-96CF5D81EB9D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7158263D-65E2-491A-92B9-91A6F290A6E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EDB29476-09E3-4A9D-BEA2-F79B063DCA21}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		Changelog.txt = Changelog.txt
-		CodeAnalysisDictionary.xml = CodeAnalysisDictionary.xml
 		CodeCoverage.runsettings = CodeCoverage.runsettings
-		MusicManager.ruleset = MusicManager.ruleset
-		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
+		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
 Global
