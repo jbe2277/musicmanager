@@ -22,8 +22,7 @@ namespace Waf.MusicManager.Applications.Services
 
         public void Initialize(IEnumerable<MusicFile> musicFiles)
         {
-            MusicFiles = new ObservableListView<MusicFileDataModel>(
-                new SynchronizingCollection<MusicFileDataModel, MusicFile>(musicFiles, x => new MusicFileDataModel(x)));
+            MusicFiles = new ObservableListView<MusicFileDataModel>(new SynchronizingCollection<MusicFileDataModel, MusicFile>(musicFiles, x => new MusicFileDataModel(x)));
         }
     }
 }

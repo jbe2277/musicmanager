@@ -93,7 +93,7 @@ namespace Waf.MusicManager.Applications.Controllers
         {
             if (environmentService.MusicFilesToLoad.Any())
             {
-                var item = PlaylistManager.Items.FirstOrDefault(x => x.MusicFile.FileName == environmentService.MusicFilesToLoad.First());
+                var item = PlaylistManager.Items.FirstOrDefault(x => x.MusicFile.FileName == environmentService.MusicFilesToLoad[0]);
                 if (item != null)
                 {
                     PlaylistManager.CurrentItem = item;
@@ -221,7 +221,7 @@ namespace Waf.MusicManager.Applications.Controllers
             shellService.ShowPlaylistView();
         }
 
-        private void PlaylistManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void PlaylistManagerPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PlaylistManager.CurrentItem))
             {
@@ -239,13 +239,13 @@ namespace Waf.MusicManager.Applications.Controllers
             nextTrackCommand.RaiseCanExecuteChanged();
         }
 
-        private void MusicFilesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void MusicFilesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             playAllCommand.RaiseCanExecuteChanged();
             enqueueAllCommand.RaiseCanExecuteChanged();
         }
 
-        private void SelectedMusicFilesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void SelectedMusicFilesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             playSelectedCommand.RaiseCanExecuteChanged();
             enqueueSelectedCommand.RaiseCanExecuteChanged();

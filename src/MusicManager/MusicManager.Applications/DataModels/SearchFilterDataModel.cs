@@ -173,17 +173,11 @@ namespace Waf.MusicManager.Applications.DataModels
             }
         }
 
-        private string GetRatingFilterOperatorCore()
+        private string? GetRatingFilterOperatorCore() => RatingFilterOperator switch
         {
-            switch (RatingFilterOperator)
-            {
-                case FilterOperator.GreaterThanOrEqual:
-                    return ">=";
-                case FilterOperator.LessThanOrEqual:
-                    return "<=";
-                default:
-                    return null;
-            }
-        }
+            FilterOperator.GreaterThanOrEqual => ">=",
+            FilterOperator.LessThanOrEqual => "<=",
+            _ => null,
+        };
     }
 }

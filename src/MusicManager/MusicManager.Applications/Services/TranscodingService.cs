@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
+using System.Waf.Applications;
 using System.Waf.Foundation;
 using System.Windows.Input;
 
@@ -9,10 +10,10 @@ namespace Waf.MusicManager.Applications.Services
     [Export(typeof(ITranscodingService)), Export]
     internal class TranscodingService : Model, ITranscodingService
     {
-        private ICommand convertToMp3AllCommand;
-        private ICommand convertToMp3SelectedCommand;
-        private ICommand cancelAllCommand;
-        private ICommand cancelSelectedCommand;
+        private ICommand convertToMp3AllCommand = DelegateCommand.DisabledCommand;
+        private ICommand convertToMp3SelectedCommand = DelegateCommand.DisabledCommand;
+        private ICommand cancelAllCommand = DelegateCommand.DisabledCommand;
+        private ICommand cancelSelectedCommand = DelegateCommand.DisabledCommand;
 
         public ICommand ConvertToMp3AllCommand
         {
@@ -38,7 +39,7 @@ namespace Waf.MusicManager.Applications.Services
             set => SetProperty(ref cancelSelectedCommand, value);
         }
 
-        public event EventHandler<TranscodingTaskEventArgs> TranscodingTaskCreated;
+        public event EventHandler<TranscodingTaskEventArgs>? TranscodingTaskCreated;
 
         public void RaiseTranscodingTaskCreated(string fileName, Task transcodingTask)
         {

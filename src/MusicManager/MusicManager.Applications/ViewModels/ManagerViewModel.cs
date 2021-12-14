@@ -13,18 +13,17 @@ namespace Waf.MusicManager.Applications.ViewModels
     {
         private readonly Lazy<ISelectionService> selectionService;
         private MusicFileDataModel selectedMusicFile;
-        private ICommand updateSubDirectoriesCommand;
-        private ICommand navigateDirectoryUpCommand;
-        private ICommand navigateHomeCommand;
-        private ICommand navigatePublicHomeCommand;
-        private ICommand loadRecursiveCommand;
-        private ICommand navigateToSelectedSubDirectoryCommand;
-        private ICommand showMusicPropertiesCommand;
-        private ICommand deleteSelectedFilesCommand;
+        private ICommand updateSubDirectoriesCommand = DelegateCommand.DisabledCommand;
+        private ICommand navigateDirectoryUpCommand = DelegateCommand.DisabledCommand;
+        private ICommand navigateHomeCommand = DelegateCommand.DisabledCommand;
+        private ICommand navigatePublicHomeCommand = DelegateCommand.DisabledCommand;
+        private ICommand loadRecursiveCommand = DelegateCommand.DisabledCommand;
+        private ICommand navigateToSelectedSubDirectoryCommand = DelegateCommand.DisabledCommand;
+        private ICommand showMusicPropertiesCommand = DelegateCommand.DisabledCommand;
+        private ICommand deleteSelectedFilesCommand = DelegateCommand.DisabledCommand;
 
         [ImportingConstructor]
-        public ManagerViewModel(IManagerView view, Lazy<ISelectionService> selectionService, IManagerStatusService managerStatusService, 
-            IPlayerService playerService, ITranscodingService transcodingService)
+        public ManagerViewModel(IManagerView view, Lazy<ISelectionService> selectionService, IManagerStatusService managerStatusService, IPlayerService playerService, ITranscodingService transcodingService)
             : base(view)
         {
             this.selectionService = selectionService;

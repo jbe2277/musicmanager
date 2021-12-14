@@ -15,7 +15,7 @@ namespace Waf.MusicManager.Applications.ViewModels
     {
         private readonly IClipboardService clipboardService;
         private readonly DelegateCommand autoFillFromFileNameCommand;
-        private MusicFile musicFile;
+        private MusicFile? musicFile;
 
         [ImportingConstructor]
         public MusicPropertiesViewModel(IMusicPropertiesView view, IClipboardService clipboardService) : base(view)
@@ -29,7 +29,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public ICommand AutoFillFromFileNameCommand => autoFillFromFileNameCommand;
 
-        public MusicFile MusicFile
+        public MusicFile? MusicFile
         {
             get => musicFile;
             set
@@ -93,17 +93,14 @@ namespace Waf.MusicManager.Applications.ViewModels
             autoFillFromFileNameCommand.RaiseCanExecuteChanged();
         }
 
-        private void MusicFilePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void MusicFilePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(MusicFile.IsMetadataLoaded))
-            {
-                MetadataLoaded();
-            }
+            if (e.PropertyName == nameof(MusicFile.IsMetadataLoaded)) MetadataLoaded();
         }
 
-        private void MetadataPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void MetadataPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(MusicMetadata.Title) || e.PropertyName == nameof(MusicMetadata.Artists))
+            if (e.PropertyName is nameof(MusicMetadata.Title) or nameof(MusicMetadata.Artists))
             {
                 autoFillFromFileNameCommand.RaiseCanExecuteChanged();
             }

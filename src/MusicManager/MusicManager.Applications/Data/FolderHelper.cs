@@ -11,7 +11,7 @@ namespace Waf.MusicManager.Applications.Data
     {
         public static async Task<StorageFolder> GetFolderFromLocalizedPathAsync(string path)
         {
-            string corePath = null;
+            string? corePath = null;
             try
             {
                 // Try to parse a user-friendly (localized) path.
@@ -40,7 +40,7 @@ namespace Waf.MusicManager.Applications.Data
 
         public static async Task<string> GetDisplayPath(string path)
         {
-            string displayPath;
+            string? displayPath;
             try
             {
                 var pathSegments = GetPathSegments(path);

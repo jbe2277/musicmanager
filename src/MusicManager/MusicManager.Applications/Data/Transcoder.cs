@@ -24,7 +24,7 @@ namespace Waf.MusicManager.Applications.Data
 
             var preparedTranscodeResult = await transcoder.PrepareFileTranscodeAsync(sourceFile, destinationFile, profile);
 
-            Exception error = null;
+            Exception? error = null;
             try
             {
                 cancellationToken.ThrowIfCancellationRequested();

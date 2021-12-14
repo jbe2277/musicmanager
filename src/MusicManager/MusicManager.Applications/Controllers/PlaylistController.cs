@@ -56,7 +56,7 @@ namespace Waf.MusicManager.Applications.Controllers
             saveListCommand = new DelegateCommand(SaveList);
             clearListCommand = new DelegateCommand(ClearList);
             openPlaylistFileType = new FileType(Resources.Playlist, SupportedFileTypes.PlaylistFileExtensions);
-            savePlaylistFileType = new FileType(Resources.Playlist, SupportedFileTypes.PlaylistFileExtensions.First());
+            savePlaylistFileType = new FileType(Resources.Playlist, SupportedFileTypes.PlaylistFileExtensions[0]);
         }
 
         public PlaylistSettings PlaylistSettings { get; set; } 
@@ -173,10 +173,7 @@ namespace Waf.MusicManager.Applications.Controllers
         private void OpenList()
         {
             var result = fileDialogService.ShowOpenFileDialog(shellService.ShellView, openPlaylistFileType);
-            if (!result.IsValid)
-            {
-                return;
-            }
+            if (!result.IsValid) return;
             OpenListCore(result.FileName);
         }
 
@@ -255,12 +252,9 @@ namespace Waf.MusicManager.Applications.Controllers
             PlaylistManager.ClearItems();
         }
 
-        private void PlaylistViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void PlaylistViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(PlaylistViewModel.SelectedPlaylistItem))
-            {
-                UpdateCommands();
-            }
+            if (e.PropertyName == nameof(PlaylistViewModel.SelectedPlaylistItem)) UpdateCommands();
         }
 
         private void UpdateCommands()

@@ -35,9 +35,9 @@ namespace Waf.MusicManager.Applications.ViewModels
             ViewCore.ShowDialog(owner);
         }
 
-        private void ShowWebsite(object parameter)
+        private void ShowWebsite(object? parameter)
         {
-            string url = (string)parameter;
+            string url = (string)parameter!;
             try
             {
                 Process.Start(url);

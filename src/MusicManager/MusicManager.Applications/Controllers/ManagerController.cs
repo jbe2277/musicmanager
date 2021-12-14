@@ -40,7 +40,7 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly DelegateCommand navigateToSelectedSubDirectoryCommand;
         private readonly DelegateCommand showMusicPropertiesCommand;
         private readonly DelegateCommand deleteSelectedFilesCommand;
-        private CancellationTokenSource updateMusicFilesCancellation;
+        private CancellationTokenSource? updateMusicFilesCancellation;
         
         [ImportingConstructor]
         public ManagerController(IShellService shellService, IEnvironmentService environmentService, IMusicFileContext musicFileContext, 
@@ -141,10 +141,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void NavigateToSelectedSubDirectory()
         {
-            if (ManagerViewModel.FolderBrowser.SelectedSubDirectory == null) 
-            { 
-                throw new InvalidOperationException("SelectedSubDirectory must not be null."); 
-            }
+            if (ManagerViewModel.FolderBrowser.SelectedSubDirectory == null) throw new InvalidOperationException("SelectedSubDirectory must not be null."); 
             ManagerViewModel.FolderBrowser.CurrentPath = ManagerViewModel.FolderBrowser.SelectedSubDirectory.Path;
         }
 
@@ -234,7 +231,7 @@ namespace Waf.MusicManager.Applications.Controllers
             Log.Default.Trace("ManagerController.UpdateMusicFiles:End");
         }
 
-        private void FolderBrowserPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void FolderBrowserPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(FolderBrowserDataModel.UserPath))
             {
@@ -251,16 +248,15 @@ namespace Waf.MusicManager.Applications.Controllers
             }
         }
 
-        private void SearchFilterPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void SearchFilterPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SearchFilterDataModel.UserSearchFilter) || e.PropertyName == nameof(SearchFilterDataModel.ApplicationSearchFilter))
+            if (e.PropertyName is nameof(SearchFilterDataModel.UserSearchFilter) or nameof(SearchFilterDataModel.ApplicationSearchFilter))
             {
                 var userSearchFilter = ManagerViewModel.SearchFilter.UserSearchFilter;
                 var applicationSearchFilter = ManagerViewModel.SearchFilter.ApplicationSearchFilter;
                 if (string.IsNullOrEmpty(userSearchFilter) && string.IsNullOrEmpty(applicationSearchFilter))
                 {
-                    // Reset the search; behave like the user navigated into another folder.
-                    UpdateMusicFiles(FolderDepth.Shallow);
+                    UpdateMusicFiles(FolderDepth.Shallow);  // Reset the search; behave like the user navigated into another folder.
                 }
                 else
                 {

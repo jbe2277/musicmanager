@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using System.Waf.Applications;
 using System.Waf.Foundation;
 using System.Windows.Input;
 using Waf.MusicManager.Domain.MusicFiles;
@@ -8,13 +9,13 @@ namespace Waf.MusicManager.Applications.Services
     [Export(typeof(IPlayerService)), Export]
     public class PlayerService : Model, IPlayerService
     {
-        private ICommand playAllCommand;
-        private ICommand playSelectedCommand;
-        private ICommand enqueueAllCommand;
-        private ICommand enqueueSelectedCommand;
-        private ICommand previousCommand;
-        private ICommand playPauseCommand;
-        private ICommand nextCommand;
+        private ICommand playAllCommand = DelegateCommand.DisabledCommand;
+        private ICommand playSelectedCommand = DelegateCommand.DisabledCommand;
+        private ICommand enqueueAllCommand = DelegateCommand.DisabledCommand;
+        private ICommand enqueueSelectedCommand = DelegateCommand.DisabledCommand;
+        private ICommand previousCommand = DelegateCommand.DisabledCommand;
+        private ICommand playPauseCommand = DelegateCommand.DisabledCommand;
+        private ICommand nextCommand = DelegateCommand.DisabledCommand;
         private bool isPlayCommand;
         private MusicFile playingMusicFile;
 

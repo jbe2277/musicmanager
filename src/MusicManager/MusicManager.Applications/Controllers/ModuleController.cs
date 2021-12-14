@@ -6,7 +6,6 @@ using System.Windows.Threading;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
-using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.Playlists;
 
 namespace Waf.MusicManager.Applications.Controllers
@@ -15,7 +14,6 @@ namespace Waf.MusicManager.Applications.Controllers
     internal class ModuleController : IModuleController
     {
         private readonly Lazy<ShellService> shellService;
-        private readonly ISettingsService settingsService;
         private readonly Lazy<ManagerController> managerController;
         private readonly Lazy<MusicPropertiesController> musicPropertiesController;
         private readonly Lazy<PlayerController> playerController;
@@ -23,8 +21,8 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly Lazy<TranscodingController> transcodingController;
         private readonly Lazy<ShellViewModel> shellViewModel;
         private readonly PlaylistManager playlistManager;
-        private AppSettings appSettings;
-        private PlaylistSettings playlistSettings;
+        private readonly AppSettings appSettings;
+        private readonly PlaylistSettings playlistSettings;
         
         [ImportingConstructor]
         public ModuleController(Lazy<ShellService> shellService, ISettingsService settingsService, Lazy<ManagerController> managerController, 
@@ -32,15 +30,16 @@ namespace Waf.MusicManager.Applications.Controllers
             Lazy<TranscodingController> transcodingController, Lazy<ShellViewModel> shellViewModel)
         {
             this.shellService = shellService;
-            this.settingsService = settingsService;
             this.managerController = managerController;
             this.musicPropertiesController = musicPropertiesController;
             this.playerController = playerController;
             this.playlistController = playlistController;
             this.transcodingController = transcodingController;
             this.shellViewModel = shellViewModel;
-            settingsService.ErrorOccurred += (sender, e) => Log.Default.Error(e.Error, "Error in SettingsService");
             playlistManager = new PlaylistManager();
+            settingsService.ErrorOccurred += (sender, e) => Log.Default.Error(e.Error, "Error in SettingsService");
+            appSettings = settingsService.Get<AppSettings>();
+            playlistSettings = settingsService.Get<PlaylistSettings>();
         }
 
         private ShellService ShellService => shellService.Value;
@@ -59,9 +58,6 @@ namespace Waf.MusicManager.Applications.Controllers
 
         public void Initialize()
         {
-            appSettings = settingsService.Get<AppSettings>();
-            playlistSettings = settingsService.Get<PlaylistSettings>();
-
             ShellService.Settings = appSettings;
             ShellService.ShowErrorAction = ShellViewModel.ShowError;
             ShellService.ShowMusicPropertiesViewAction = ShowMusicPropertiesView;

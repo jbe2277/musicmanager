@@ -33,7 +33,7 @@ namespace Waf.MusicManager.Applications.DataModels
             PropertyChangedEventManager.AddHandler(MusicFile.Metadata, MetadataPropertyChanged, "");
         }
 
-        private void MusicFilePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void MusicFilePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MusicFile.IsMetadataLoaded))
             {
@@ -43,7 +43,7 @@ namespace Waf.MusicManager.Applications.DataModels
             }
         }
 
-        private void MetadataPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void MetadataPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MusicMetadata.Artists))
             {

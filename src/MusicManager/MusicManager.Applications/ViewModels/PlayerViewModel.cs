@@ -12,11 +12,11 @@ namespace Waf.MusicManager.Applications.ViewModels
     public class PlayerViewModel : ViewModel<IPlayerView>
     {
         private PlaylistManager playlistManager;
-        private ICommand previousTrackCommand;
-        private ICommand nextTrackCommand;
-        private ICommand infoCommand;
-        private ICommand showMusicPropertiesCommand;
-        private ICommand showPlaylistCommand;
+        private ICommand previousTrackCommand = DelegateCommand.DisabledCommand;
+        private ICommand nextTrackCommand = DelegateCommand.DisabledCommand;
+        private ICommand infoCommand = DelegateCommand.DisabledCommand;
+        private ICommand showMusicPropertiesCommand = DelegateCommand.DisabledCommand;
+        private ICommand showPlaylistCommand = DelegateCommand.DisabledCommand;
         private double volume;
 
         [ImportingConstructor]

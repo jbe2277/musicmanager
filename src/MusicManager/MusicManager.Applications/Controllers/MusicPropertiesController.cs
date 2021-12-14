@@ -25,7 +25,7 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly Lazy<MusicPropertiesViewModel> musicPropertiesViewModel;
         private readonly ChangeTrackerService changeTrackerService;
         private readonly HashSet<MusicFile> musicFilesToSaveAfterPlaying;
-        private TaskCompletionSource<object> allFilesSavedCompletion;
+        private TaskCompletionSource<object?>? allFilesSavedCompletion;
         
         [ImportingConstructor]
         public MusicPropertiesController(IShellService shellService, IMusicFileContext musicFileContext, ISelectionService selectionService, Lazy<MusicPropertiesViewModel> musicPropertiesViewModel)
@@ -58,7 +58,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
             if (musicFilesToSaveAfterPlaying.Any())
             {
-                allFilesSavedCompletion = new TaskCompletionSource<object>();
+                allFilesSavedCompletion = new TaskCompletionSource<object?>();
                 shellService.AddTaskToCompleteBeforeShutdown(allFilesSavedCompletion.Task);
             }
         }
@@ -91,7 +91,7 @@ namespace Waf.MusicManager.Applications.Controllers
             await Task.WhenAll(tasks);
         }
 
-        private async void PlaylistManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private async void PlaylistManagerPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PlaylistManager.CurrentItem))
             {
@@ -133,9 +133,9 @@ namespace Waf.MusicManager.Applications.Controllers
             catch (Exception ex)
             {
                 Log.Default.Error(ex, "SaveChangesAsync");
-                if (filesToSave.Count() == 1)
+                if (filesToSave.Length == 1)
                 {
-                    shellService.ShowError(ex, Resources.CouldNotSaveFile, filesToSave.First().FileName);
+                    shellService.ShowError(ex, Resources.CouldNotSaveFile, filesToSave[0].FileName);
                 }
                 else
                 {
@@ -172,7 +172,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
         }
 
-        private void SelectedMusicFilesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void SelectedMusicFilesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             SelectMusicFiles(selectionService.SelectedMusicFiles.Select(x => x.MusicFile).ToArray());
         }

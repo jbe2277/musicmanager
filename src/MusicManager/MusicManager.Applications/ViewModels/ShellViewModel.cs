@@ -116,18 +116,12 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         private void CloseError()
         {
-            if (errors.Any())
-            {
-                errors.RemoveAt(errors.Count - 1);
-            }
+            if (errors.Any()) errors.RemoveAt(errors.Count - 1);
         }
 
-        private void ErrorsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            RaisePropertyChanged(nameof(LastError));
-        }
+        private void ErrorsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => RaisePropertyChanged(nameof(LastError));
 
-        private void ViewClosed(object sender, EventArgs e)
+        private void ViewClosed(object? sender, EventArgs e)
         {
             settings.Left = ViewCore.Left;
             settings.Top = ViewCore.Top;

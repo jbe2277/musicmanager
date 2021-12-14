@@ -17,12 +17,12 @@ namespace Waf.MusicManager.Applications.ViewModels
     {
         private PlaylistManager playlistManager;
         private PlaylistItem selectedPlaylistItem;
-        private ICommand playSelectedCommand;
-        private ICommand removeSelectedCommand;
-        private ICommand showMusicPropertiesCommand;
-        private ICommand openListCommand;
-        private ICommand saveListCommand;
-        private ICommand clearListCommand;
+        private ICommand playSelectedCommand = DelegateCommand.DisabledCommand;
+        private ICommand removeSelectedCommand = DelegateCommand.DisabledCommand;
+        private ICommand showMusicPropertiesCommand = DelegateCommand.DisabledCommand;
+        private ICommand openListCommand = DelegateCommand.DisabledCommand;
+        private ICommand saveListCommand = DelegateCommand.DisabledCommand;
+        private ICommand clearListCommand = DelegateCommand.DisabledCommand;
         private string searchText;
         
         [ImportingConstructor]
@@ -167,9 +167,8 @@ namespace Waf.MusicManager.Applications.ViewModels
         private static bool IsContained(MusicFile musicFile, string searchText)
         {
             return MusicTitleHelper.GetTitleText(musicFile.FileName, musicFile.IsMetadataLoaded ? musicFile.Metadata.Artists : null, musicFile.IsMetadataLoaded ? musicFile.Metadata.Title : null)
-                    .IndexOf(searchText, StringComparison.CurrentCultureIgnoreCase) >= 0
-                || musicFile.IsMetadataLoaded
-                    && (musicFile.Metadata.Artists.Any(y => y.IndexOf(searchText, StringComparison.CurrentCultureIgnoreCase) >= 0));
+                    .Contains(searchText, StringComparison.CurrentCultureIgnoreCase)
+                || musicFile.IsMetadataLoaded && musicFile.Metadata.Artists.Any(y => y.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
         }
 
         private static int IndexOf<T>(IReadOnlyList<T> list, T item)

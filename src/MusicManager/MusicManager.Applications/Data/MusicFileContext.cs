@@ -77,7 +77,7 @@ namespace Waf.MusicManager.Applications.Data
 
         public MusicFile CreateFromMultiple(IEnumerable<MusicFile> musicFiles)
         {
-            if (musicFiles.Count() < 1) throw new ArgumentException("The collection must have at least one item.", nameof(musicFiles));
+            if (!musicFiles.Any()) throw new ArgumentException("The collection must have at least one item.", nameof(musicFiles));
 
             var localMusicFiles = musicFiles.ToArray();
             return new MusicFile(x => LoadMetadataFromMultiple(localMusicFiles), null)
@@ -172,7 +172,7 @@ namespace Waf.MusicManager.Applications.Data
             TryRemoveFromCache(e.FullPath);
         }
 
-        private async void TranscodingServiceTranscodingTaskCreated(object sender, TranscodingTaskEventArgs e)
+        private async void TranscodingServiceTranscodingTaskCreated(object? sender, TranscodingTaskEventArgs e)
         {
             runningTranscodingTasks.TryAdd(e.FileName, e.TranscodingTask);
             try

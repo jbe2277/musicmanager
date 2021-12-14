@@ -38,7 +38,7 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly SemaphoreSlim throttler;
         private readonly TranscodingManager transcodingManager;
         private readonly ThrottledAction throttledMusicFilesCollectionChangedAction;
-        private TaskCompletionSource<object> allTranscodingsCanceledCompletion;
+        private TaskCompletionSource<object?> allTranscodingsCanceledCompletion;
 
         [ImportingConstructor]
         public TranscodingController(IMessageService messageService, IShellService shellService, IMusicFileContext musicFileContext, ISelectionService selectionService, 
@@ -81,7 +81,7 @@ namespace Waf.MusicManager.Applications.Controllers
         {
             if (cancellationTokenSources.Any())
             {
-                allTranscodingsCanceledCompletion = new TaskCompletionSource<object>();
+                allTranscodingsCanceledCompletion = new TaskCompletionSource<object?>();
                 CancelAll();
                 shellService.AddTaskToCompleteBeforeShutdown(allTranscodingsCanceledCompletion.Task);
             }
@@ -282,15 +282,9 @@ namespace Waf.MusicManager.Applications.Controllers
             convertToMp3SelectedCommand.RaiseCanExecuteChanged();
         }
 
-        private void SelectedMusicFilesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            convertToMp3SelectedCommand.RaiseCanExecuteChanged();
-        }
+        private void SelectedMusicFilesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => convertToMp3SelectedCommand.RaiseCanExecuteChanged();
 
-        private void SelectedTranscodeItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            UpdateCancelCommands();
-        }
+        private void SelectedTranscodeItemsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => UpdateCancelCommands();
 
         private void UpdateCancelCommands()
         {
