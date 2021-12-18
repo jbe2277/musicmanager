@@ -12,7 +12,7 @@ namespace Waf.MusicManager.Applications.ViewModels
     public class ManagerViewModel : ViewModel<IManagerView>
     {
         private readonly Lazy<ISelectionService> selectionService;
-        private MusicFileDataModel selectedMusicFile;
+        private MusicFileDataModel? selectedMusicFile;
         private ICommand updateSubDirectoriesCommand = DelegateCommand.DisabledCommand;
         private ICommand navigateDirectoryUpCommand = DelegateCommand.DisabledCommand;
         private ICommand navigateHomeCommand = DelegateCommand.DisabledCommand;
@@ -47,7 +47,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public SearchFilterDataModel SearchFilter { get; }
 
-        public MusicFileDataModel SelectedMusicFile
+        public MusicFileDataModel? SelectedMusicFile
         {
             get => selectedMusicFile;
             set => SetProperty(ref selectedMusicFile, value);

@@ -13,7 +13,7 @@ namespace Waf.MusicManager.Applications.ViewModels
     [Export]
     public class TranscodingListViewModel : ViewModel<ITranscodingListView>
     {
-        private TranscodingManager transcodingManager;
+        private TranscodingManager transcodingManager = null!;
 
         [ImportingConstructor]
         public TranscodingListViewModel(ITranscodingListView view, ITranscodingService transcodingService) : base(view)
@@ -32,8 +32,8 @@ namespace Waf.MusicManager.Applications.ViewModels
             set => SetProperty(ref transcodingManager, value);
         }
 
-        public Action<int, IEnumerable<string>> InsertFilesAction { get; set; }
+        public Action<int, IEnumerable<string>> InsertFilesAction { get; set; } = null!;
 
-        public Action<int, IEnumerable<MusicFile>> InsertMusicFilesAction { get; set; }
+        public Action<int, IEnumerable<MusicFile>> InsertMusicFilesAction { get; set; } = null!;
     }
 }

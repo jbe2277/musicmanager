@@ -11,7 +11,7 @@ namespace Waf.MusicManager.Applications.ViewModels
     [Export]
     public class PlayerViewModel : ViewModel<IPlayerView>
     {
-        private PlaylistManager playlistManager;
+        private PlaylistManager playlistManager = null!;
         private ICommand previousTrackCommand = DelegateCommand.DisabledCommand;
         private ICommand nextTrackCommand = DelegateCommand.DisabledCommand;
         private ICommand infoCommand = DelegateCommand.DisabledCommand;

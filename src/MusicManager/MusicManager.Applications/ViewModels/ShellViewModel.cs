@@ -18,11 +18,10 @@ namespace Waf.MusicManager.Applications.ViewModels
     {
         private readonly AppSettings settings;
         private readonly ObservableCollection<Tuple<Exception, string>> errors;
-        private object detailsView;
+        private object? detailsView;
         
         [ImportingConstructor]
-        public ShellViewModel(IShellView view, IShellService shellService, IPlayerService playerService)
-            : base(view)
+        public ShellViewModel(IShellView view, IShellService shellService, IPlayerService playerService) : base(view)
         {
             ShellService = shellService;
             PlayerService = playerService;
@@ -56,7 +55,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public IReadOnlyList<Tuple<Exception, string>> Errors => errors;
 
-        public Tuple<Exception, string> LastError => errors.LastOrDefault();
+        public Tuple<Exception, string>? LastError => errors.LastOrDefault();
 
         public ICommand ExitCommand { get; }
 
@@ -64,7 +63,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public ICommand GarbageCollectorCommand { get; }
 
-        public object DetailsView
+        public object? DetailsView
         {
             get => detailsView;
             private set => SetProperty(ref detailsView, value);
@@ -84,24 +83,15 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public bool IsTranscodingListViewVisible
         {
-            get => ShellService.TranscodingListView.IsValueCreated && DetailsView == ShellService.TranscodingListView.Value;
-            set { if (value) { DetailsView = ShellService.TranscodingListView.Value; } }
+            get => ShellService.TranscodingListView?.IsValueCreated == true && DetailsView == ShellService.TranscodingListView.Value;
+            set { if (value) { DetailsView = ShellService.TranscodingListView?.Value; } }
         }
 
-        public void Show()
-        {
-            ViewCore.Show();
-        }
+        public void Show() => ViewCore.Show();
 
-        public void Close()
-        {
-            ViewCore.Close();
-        }
+        public void Close() => ViewCore.Close();
 
-        public void ShowError(Exception exception, string message)
-        {
-            errors.Add(Tuple.Create(exception, message));
-        }
+        public void ShowError(Exception exception, string message) => errors.Add(Tuple.Create(exception, message));
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {

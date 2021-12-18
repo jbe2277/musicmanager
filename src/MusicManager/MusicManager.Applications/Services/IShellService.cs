@@ -10,7 +10,7 @@ namespace Waf.MusicManager.Applications.Services
     {
         AppSettings Settings { get; }
         
-        object? ShellView { get; }
+        object ShellView { get; }
 
         object? ContentView { get; set; }
 

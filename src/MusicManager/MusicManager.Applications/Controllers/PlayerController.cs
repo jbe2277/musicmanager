@@ -57,9 +57,9 @@ namespace Waf.MusicManager.Applications.Controllers
             showPlaylistCommand = new DelegateCommand(ShowPlaylist);
         }
 
-        public PlaylistManager PlaylistManager { get; set; }
+        public PlaylistManager PlaylistManager { get; set; } = null!;
 
-        public PlaylistSettings PlaylistSettings { get; set; }
+        public PlaylistSettings PlaylistSettings { get; set; } = null!;
         
         private PlayerViewModel PlayerViewModel => playerViewModel.Value;
 
@@ -211,7 +211,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void ShowMusicProperties()
         {
-            musicPropertiesService.SelectMusicFiles(new[] { PlaylistManager.CurrentItem?.MusicFile }.Where(x => x != null).ToArray());
+            musicPropertiesService.SelectMusicFiles(new[] { PlaylistManager.CurrentItem?.MusicFile }.Where(x => x != null).ToArray()!);
             shellService.ShowMusicPropertiesView();
         }
 

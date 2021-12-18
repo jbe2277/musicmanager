@@ -4,6 +4,6 @@ namespace Waf.MusicManager.Applications.Services
 {
     internal interface IPlaylistService
     {
-        void TrySelectMusicFile(MusicFile musicFile);
+        void TrySelectMusicFile(MusicFile? musicFile);
     }
 }

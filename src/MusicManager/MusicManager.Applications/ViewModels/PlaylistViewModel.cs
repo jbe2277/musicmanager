@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Waf.Applications;
+using System.Waf.Foundation;
 using System.Windows.Input;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.Views;
@@ -15,15 +16,15 @@ namespace Waf.MusicManager.Applications.ViewModels
     [Export]
     public class PlaylistViewModel : ViewModel<IPlaylistView>
     {
-        private PlaylistManager playlistManager;
-        private PlaylistItem selectedPlaylistItem;
+        private PlaylistManager playlistManager = null!;
+        private PlaylistItem? selectedPlaylistItem;
         private ICommand playSelectedCommand = DelegateCommand.DisabledCommand;
         private ICommand removeSelectedCommand = DelegateCommand.DisabledCommand;
         private ICommand showMusicPropertiesCommand = DelegateCommand.DisabledCommand;
         private ICommand openListCommand = DelegateCommand.DisabledCommand;
         private ICommand saveListCommand = DelegateCommand.DisabledCommand;
         private ICommand clearListCommand = DelegateCommand.DisabledCommand;
-        private string searchText;
+        private string? searchText;
         
         [ImportingConstructor]
         public PlaylistViewModel(IPlaylistView view) : base(view)
@@ -40,7 +41,7 @@ namespace Waf.MusicManager.Applications.ViewModels
             set => SetProperty(ref playlistManager, value);
         }
 
-        public PlaylistItem SelectedPlaylistItem
+        public PlaylistItem? SelectedPlaylistItem
         {
             get => selectedPlaylistItem;
             set => SetProperty(ref selectedPlaylistItem, value);
@@ -84,9 +85,9 @@ namespace Waf.MusicManager.Applications.ViewModels
             set => SetProperty(ref clearListCommand, value);
         }
 
-        public Action<int, IEnumerable<string>> InsertFilesAction { get; set; }
+        public Action<int, IEnumerable<string>> InsertFilesAction { get; set; } = null!;
 
-        public Action<int, IEnumerable<MusicFile>> InsertMusicFilesAction { get; set; }
+        public Action<int, IEnumerable<MusicFile>> InsertMusicFilesAction { get; set; } = null!;
 
         public ICommand SearchNextCommand { get; }
 
@@ -94,16 +95,10 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public ICommand ClearSearchCommand { get; }
 
-        public string SearchText
+        public string? SearchText
         {
             get => searchText;
-            set
-            {
-                if (SetProperty(ref searchText, value))
-                {
-                    SearchTextCore(SearchMode.Default);
-                }
-            }
+            set { if (SetProperty(ref searchText, value)) SearchTextCore(SearchMode.Default); }
         }
 
         private void SearchTextCore(SearchMode searchMode)
@@ -113,11 +108,8 @@ namespace Waf.MusicManager.Applications.ViewModels
                 IEnumerable<PlaylistItem> itemsToSearch;
                 if (SelectedPlaylistItem != null)
                 {
-                    var index = IndexOf(PlaylistManager.Items, SelectedPlaylistItem);
-                    if (searchMode == SearchMode.Next)
-                    {
-                        index++;  // Skip the current item so that the next one will be found.
-                    }
+                    var index = PlaylistManager.Items.IndexOf(SelectedPlaylistItem);
+                    if (searchMode == SearchMode.Next) index++;  // Skip the current item so that the next one will be found.
                     itemsToSearch = PlaylistManager.Items.Skip(index).Concat(PlaylistManager.Items.Take(index));
                 }
                 else
@@ -125,10 +117,8 @@ namespace Waf.MusicManager.Applications.ViewModels
                     itemsToSearch = PlaylistManager.Items;
                 }
 
-                if (searchMode == SearchMode.Previous)
-                {
-                    itemsToSearch = itemsToSearch.Reverse();
-                }
+                if (searchMode == SearchMode.Previous) itemsToSearch = itemsToSearch.Reverse();
+                
                 var foundItem = itemsToSearch.FirstOrDefault(x => IsContained(x.MusicFile, SearchText));
                 if (foundItem != null)
                 {
@@ -139,30 +129,18 @@ namespace Waf.MusicManager.Applications.ViewModels
             ViewCore.FocusSearchBox();
         }
 
-        public void FocusSelectedItem()
-        {
-            ViewCore.FocusSelectedItem();
-        }
+        public void FocusSelectedItem() => ViewCore.FocusSelectedItem();
 
         public void ScrollIntoView()
         {
-            ViewCore.ScrollIntoView(PlaylistManager.CurrentItem);
+            if (PlaylistManager.CurrentItem != null) ViewCore.ScrollIntoView(PlaylistManager.CurrentItem);
         }
 
-        private void SearchNext()
-        {
-            SearchTextCore(SearchMode.Next);
-        }
+        private void SearchNext() => SearchTextCore(SearchMode.Next);
 
-        private void SearchPrevious()
-        {
-            SearchTextCore(SearchMode.Previous);
-        }
+        private void SearchPrevious() => SearchTextCore(SearchMode.Previous);
 
-        private void ClearSearch()
-        {
-            SearchText = "";
-        }
+        private void ClearSearch() => SearchText = "";
 
         private static bool IsContained(MusicFile musicFile, string searchText)
         {
@@ -170,19 +148,6 @@ namespace Waf.MusicManager.Applications.ViewModels
                     .Contains(searchText, StringComparison.CurrentCultureIgnoreCase)
                 || musicFile.IsMetadataLoaded && musicFile.Metadata.Artists.Any(y => y.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
         }
-
-        private static int IndexOf<T>(IReadOnlyList<T> list, T item)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (Equals(list[i], item))
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
 
         private enum SearchMode
         {

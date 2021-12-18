@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
@@ -34,24 +35,17 @@ namespace Waf.MusicManager.Applications.ViewModels
             get => musicFile;
             set
             {
-                if (musicFile == value) { return; }
-
+                if (musicFile == value) return;
                 if (musicFile != null)
                 {
                     PropertyChangedEventManager.RemoveHandler(musicFile, MusicFilePropertyChanged, "");
-                    if (musicFile.IsMetadataLoaded)
-                    {
-                        PropertyChangedEventManager.RemoveHandler(musicFile.Metadata, MetadataPropertyChanged, "");
-                    }
+                    if (musicFile.IsMetadataLoaded) PropertyChangedEventManager.RemoveHandler(musicFile.Metadata, MetadataPropertyChanged, "");
                 }
                 musicFile = value;
                 if (musicFile != null)
                 {
                     PropertyChangedEventManager.AddHandler(musicFile, MusicFilePropertyChanged, "");
-                    if (musicFile.IsMetadataLoaded)
-                    {
-                        MetadataLoaded();
-                    }
+                    MetadataLoaded();
                 }
                 RaisePropertyChanged();
                 autoFillFromFileNameCommand.RaiseCanExecuteChanged();
@@ -60,35 +54,32 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         private void CopyFileNameToClipboard()
         {
-            if (MusicFile != null)
-            {
-                clipboardService.SetText(Path.GetFileNameWithoutExtension(MusicFile.FileName));
-            }
+            if (MusicFile?.FileName != null) clipboardService.SetText(Path.GetFileNameWithoutExtension(MusicFile.FileName));
         }
 
         private bool CanAutoFillFromFileName()
         {
-            return MusicFile != null && MusicFile.IsMetadataLoaded && musicFile.Metadata.IsSupported
-                && string.IsNullOrEmpty(MusicFile.Metadata.Title) && !MusicFile.Metadata.Artists.Any();
+            return MusicFile != null && MusicFile.IsMetadataLoaded && MusicFile.Metadata.IsSupported && string.IsNullOrEmpty(MusicFile.Metadata.Title) && !MusicFile.Metadata.Artists.Any();
         }
 
         private void AutoFillFromFileName()
         {
-            var fileName = Path.GetFileNameWithoutExtension(MusicFile.FileName);
+            var fileName = Path.GetFileNameWithoutExtension(MusicFile?.FileName) ?? throw new InvalidOperationException("MusicFile?.FileName must not be null");
             var metadata = fileName.Split(new[] { '-' }, 2).Select(x => x.Trim()).ToArray();
             if (metadata.Length == 2)
             {
-                MusicFile.Metadata.Artists = new[] { metadata[0] };
+                MusicFile!.Metadata!.Artists = new[] { metadata[0] };
                 MusicFile.Metadata.Title = metadata[1];
             }
             else
             {
-                MusicFile.Metadata.Title = fileName;
+                MusicFile!.Metadata!.Title = fileName;
             }
         }
 
         private void MetadataLoaded()
         {
+            if (MusicFile?.IsMetadataLoaded != true) return;
             PropertyChangedEventManager.AddHandler(MusicFile.Metadata, MetadataPropertyChanged, "");
             autoFillFromFileNameCommand.RaiseCanExecuteChanged();
         }
@@ -100,10 +91,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         private void MetadataPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName is nameof(MusicMetadata.Title) or nameof(MusicMetadata.Artists))
-            {
-                autoFillFromFileNameCommand.RaiseCanExecuteChanged();
-            }
+            if (e.PropertyName is nameof(MusicMetadata.Title) or nameof(MusicMetadata.Artists)) autoFillFromFileNameCommand.RaiseCanExecuteChanged();
         }
     }
 }

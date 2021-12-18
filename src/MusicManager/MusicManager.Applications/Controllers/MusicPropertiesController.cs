@@ -10,7 +10,6 @@ using Waf.MusicManager.Applications.Data;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
-using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.Playlists;
 
@@ -38,7 +37,7 @@ namespace Waf.MusicManager.Applications.Controllers
             musicFilesToSaveAfterPlaying = new HashSet<MusicFile>();
         }
 
-        public PlaylistManager PlaylistManager { get; set; }
+        public PlaylistManager PlaylistManager { get; set; } = null!;
 
         private MusicPropertiesViewModel MusicPropertiesViewModel => musicPropertiesViewModel.Value;
 
@@ -79,7 +78,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private async Task SaveDirtyFilesAsync()
         {
-            musicFileContext.ApplyChanges(MusicPropertiesViewModel.MusicFile);
+            if (MusicPropertiesViewModel.MusicFile != null) musicFileContext.ApplyChanges(MusicPropertiesViewModel.MusicFile);
 
             var tasks = changeTrackerService.GetEntitiesWithChanges().Cast<MusicMetadata>().Select(x => SaveChangesAsync((MusicFile)x.Parent));
             await Task.WhenAll(tasks);
@@ -93,19 +92,14 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private async void PlaylistManagerPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(PlaylistManager.CurrentItem))
-            {
-                await SaveMusicFilesToSaveAfterPlayingAsync();
-            }
+            if (e.PropertyName == nameof(PlaylistManager.CurrentItem)) await SaveMusicFilesToSaveAfterPlayingAsync();
         }
 
         private async Task SaveChangesAsync(MusicFile musicFile)
         {
-            if (musicFile == null)
-            {
-                return;
-            }
-            IReadOnlyCollection<MusicFile> allFilesToSave;
+            if (musicFile == null) return;
+            
+            IReadOnlyList<MusicFile> allFilesToSave;
             if (musicFile.SharedMusicFiles.Any())
             {
                 allFilesToSave = musicFile.SharedMusicFiles;
@@ -117,15 +111,11 @@ namespace Waf.MusicManager.Applications.Controllers
 
             // Filter out the music file that is currently playing
             var playingMusicFile = PlaylistManager.CurrentItem?.MusicFile;
-            var filesToSave = allFilesToSave.Except(new[] { playingMusicFile }).ToArray();
-            foreach (var x in allFilesToSave.Intersect(new[] { playingMusicFile })) { musicFilesToSaveAfterPlaying.Add(x); }
-            
-            if (!filesToSave.Any())
-            {
-                return;
-            }
-            var tasks = filesToSave.Select(x => SaveChangesCoreAsync(x)).ToArray();
+            var filesToSave = playingMusicFile is null ? allFilesToSave : allFilesToSave.Except(new[] { playingMusicFile }).ToArray();
+            if (playingMusicFile != null && allFilesToSave.Contains(playingMusicFile)) musicFilesToSaveAfterPlaying.Add(playingMusicFile);
 
+            if (!filesToSave.Any()) return;
+            var tasks = filesToSave.Select(x => SaveChangesCoreAsync(x)).ToArray();
             try
             {
                 await Task.WhenAll(tasks);
@@ -133,7 +123,7 @@ namespace Waf.MusicManager.Applications.Controllers
             catch (Exception ex)
             {
                 Log.Default.Error(ex, "SaveChangesAsync");
-                if (filesToSave.Length == 1)
+                if (filesToSave.Count == 1)
                 {
                     shellService.ShowError(ex, Resources.CouldNotSaveFile, filesToSave[0].FileName);
                 }
@@ -150,6 +140,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private async Task SaveChangesCoreAsync(MusicFile musicFile)
         {
+            if (!musicFile.IsMetadataLoaded) return;
             try
             {
                 changeTrackerService.RemoveEntity(musicFile.Metadata);
@@ -164,7 +155,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void RemoveMusicFilesToSaveAfterPlaying(IEnumerable<MusicFile> musicFiles)
         {
-            foreach (var x in musicFiles) { musicFilesToSaveAfterPlaying.Remove(x); }
+            foreach (var x in musicFiles) musicFilesToSaveAfterPlaying.Remove(x);
             
             if (allFilesSavedCompletion != null && !musicFilesToSaveAfterPlaying.Any())
             {

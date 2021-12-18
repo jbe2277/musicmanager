@@ -10,7 +10,7 @@ namespace Waf.MusicManager.Domain.MusicFiles
     {
         private readonly TaskCompletionSource<MusicMetadata> loadMetadataCompletionSource;
         private readonly Func<string?, Task<MusicMetadata?>> loadMetadata;
-        private IReadOnlyCollection<MusicFile> sharedMusicFiles;
+        private IReadOnlyList<MusicFile> sharedMusicFiles;
         private MusicMetadata? metadata;
         private bool loadCalled;
         private bool isMetadataLoaded;
@@ -26,7 +26,7 @@ namespace Waf.MusicManager.Domain.MusicFiles
 
         public string? FileName { get; }
 
-        public IReadOnlyCollection<MusicFile> SharedMusicFiles
+        public IReadOnlyList<MusicFile> SharedMusicFiles
         {
             get => sharedMusicFiles;
             set => SetProperty(ref sharedMusicFiles, value);

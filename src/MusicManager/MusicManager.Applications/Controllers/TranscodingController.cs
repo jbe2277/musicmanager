@@ -14,7 +14,6 @@ using Waf.MusicManager.Applications.Data;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
-using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.Transcoding;
 
@@ -38,7 +37,7 @@ namespace Waf.MusicManager.Applications.Controllers
         private readonly SemaphoreSlim throttler;
         private readonly TranscodingManager transcodingManager;
         private readonly ThrottledAction throttledMusicFilesCollectionChangedAction;
-        private TaskCompletionSource<object?> allTranscodingsCanceledCompletion;
+        private TaskCompletionSource<object?>? allTranscodingsCanceledCompletion;
 
         [ImportingConstructor]
         public TranscodingController(IMessageService messageService, IShellService shellService, IMusicFileContext musicFileContext, ISelectionService selectionService, 
@@ -98,31 +97,16 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void ShellServiceClosing(object sender, CancelEventArgs e)
         {
-            if (cancellationTokenSources.Any())
-            {
-                e.Cancel = !messageService.ShowYesNoQuestion(shellService.ShellView, Resources.AbortRunningConverts);
-            }
+            if (cancellationTokenSources.Any()) e.Cancel = !messageService.ShowYesNoQuestion(shellService.ShellView, Resources.AbortRunningConverts);
         }
 
-        private bool CanConvertToMp3All()
-        {
-            return GetMusicFilesSupportedToConvert(selectionService.MusicFiles.Select(x => x.MusicFile)).Any();
-        }
+        private bool CanConvertToMp3All() => GetMusicFilesSupportedToConvert(selectionService.MusicFiles.Select(x => x.MusicFile)).Any();
         
-        private void ConvertToMp3All()
-        {
-            Transcode(GetMusicFilesSupportedToConvert(selectionService.MusicFiles.Select(x => x.MusicFile)).ToArray());
-        }
+        private void ConvertToMp3All() => Transcode(GetMusicFilesSupportedToConvert(selectionService.MusicFiles.Select(x => x.MusicFile)).ToArray());
 
-        private bool CanConvertToMp3Selected()
-        {
-            return GetMusicFilesSupportedToConvert(selectionService.SelectedMusicFiles.Select(x => x.MusicFile)).Any();
-        }
+        private bool CanConvertToMp3Selected() => GetMusicFilesSupportedToConvert(selectionService.SelectedMusicFiles.Select(x => x.MusicFile)).Any();
 
-        private void ConvertToMp3Selected()
-        {
-            Transcode(GetMusicFilesSupportedToConvert(selectionService.SelectedMusicFiles.Select(x => x.MusicFile)).ToArray());
-        }
+        private void ConvertToMp3Selected() => Transcode(GetMusicFilesSupportedToConvert(selectionService.SelectedMusicFiles.Select(x => x.MusicFile)).ToArray());
 
         private void InsertFiles(int index, IEnumerable<string> fileNames)
         {
@@ -140,38 +124,20 @@ namespace Waf.MusicManager.Applications.Controllers
             Transcode(GetMusicFilesSupportedToConvert(musicFiles).ToArray());
         }
 
-        private void InsertMusicFiles(int index, IEnumerable<MusicFile> musicFiles)
-        {
-            Transcode(GetMusicFilesSupportedToConvert(musicFiles).ToArray());
-        }
+        private void InsertMusicFiles(int index, IEnumerable<MusicFile> musicFiles) => Transcode(GetMusicFilesSupportedToConvert(musicFiles).ToArray());
 
-        private bool CanCancelAll()
-        {
-            return cancellationTokenSources.Any(x => !x.Value.IsCancellationRequested);
-        }
+        private bool CanCancelAll() => cancellationTokenSources.Any(x => !x.Value.IsCancellationRequested);
 
-        private void CancelAll()
-        {
-            Cancel(cancellationTokenSources.Where(x => !x.Value.IsCancellationRequested));
-        }
+        private void CancelAll() => Cancel(cancellationTokenSources.Where(x => !x.Value.IsCancellationRequested));
 
-        private bool CanCancelSelected()
-        {
-            return cancellationTokenSources.Any(x => !x.Value.IsCancellationRequested && TranscodingListViewModel.SelectedTranscodeItems.Any(y => y == x.Key));
-        }
+        private bool CanCancelSelected() => cancellationTokenSources.Any(x => !x.Value.IsCancellationRequested && TranscodingListViewModel.SelectedTranscodeItems.Any(y => y == x.Key));
 
-        private void CancelSelected()
-        {
-            Cancel(cancellationTokenSources.Where(x => !x.Value.IsCancellationRequested && TranscodingListViewModel.SelectedTranscodeItems.Any(y => y == x.Key)));
-        }
+        private void CancelSelected() => Cancel(cancellationTokenSources.Where(x => !x.Value.IsCancellationRequested && TranscodingListViewModel.SelectedTranscodeItems.Any(y => y == x.Key)));
 
         private void Cancel(IEnumerable<KeyValuePair<TranscodeItem, CancellationTokenSource>> sources)
         {
             UpdateCancelCommands();
-            foreach (var source in sources)
-            {
-                source.Value.Cancel();
-            }
+            foreach (var x in sources) x.Value.Cancel();
         }
 
         private IEnumerable<MusicFile> GetMusicFilesSupportedToConvert(IEnumerable<MusicFile> musicFiles)
@@ -190,15 +156,12 @@ namespace Waf.MusicManager.Applications.Controllers
         private void Transcode(IReadOnlyCollection<MusicFile> musicFiles)
         {
             shellService.ShowTranscodingListView();
-            foreach (var musicFile in musicFiles)
-            {
-                TranscodeAsync(musicFile);
-            }
+            foreach (var x in musicFiles) TranscodeAsync(x);
         }
 
         private async void TranscodeAsync(MusicFile musicFile)
         {
-            var destinationFileName = GetDestinationFileName(musicFile.FileName);
+            var destinationFileName = GetDestinationFileName(musicFile.FileName!);
             var transcodeItem = new TranscodeItem(musicFile, destinationFileName);
             transcodingManager.AddTranscodeItem(transcodeItem);
             Log.Default.Trace("Start Transcode: {0} > {1}", musicFile.FileName, destinationFileName);
@@ -239,7 +202,7 @@ namespace Waf.MusicManager.Applications.Controllers
             await throttler.WaitAsync(token);  // Throttle the transcoding
             try
             {
-                var task = transcoder.Value.TranscodeAsync(transcodeItem.Source.FileName, transcodeItem.DestinationFileName, bitrate,
+                var task = transcoder.Value.TranscodeAsync(transcodeItem.Source.FileName!, transcodeItem.DestinationFileName, bitrate,
                         token, new Progress<double>(x => transcodeItem.Progress = x / 100d));
                 transcodingService.RaiseTranscodingTaskCreated(transcodeItem.DestinationFileName, task);
                 await task;
@@ -256,26 +219,14 @@ namespace Waf.MusicManager.Applications.Controllers
             }
         }
 
-        internal static uint GetConvertBitrate(long sourceBitrate)
+        internal static uint GetConvertBitrate(long sourceBitrate) => sourceBitrate switch
         {
-            if (sourceBitrate <= 128000)
-            {
-                return 128000;
-            }
-            else if (sourceBitrate <= 192000)
-            {
-                return 192000;
-            }
-            else if (sourceBitrate <= 256000)
-            {
-                return 256000;
-            }
-            else
-            {
-                return 320000;
-            }
-        }
-
+            <= 128000 => 128000,
+            <= 192000 => 192000,
+            <= 256000 => 256000,
+            _ => 320000
+        };
+        
         private void ThrottledMusicFilesCollectionChanged()
         {
             convertToMp3AllCommand.RaiseCanExecuteChanged();

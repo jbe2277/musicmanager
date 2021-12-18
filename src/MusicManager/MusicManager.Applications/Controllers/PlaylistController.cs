@@ -11,7 +11,6 @@ using Waf.MusicManager.Applications.Data;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
-using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.Playlists;
 using Windows.Media.Playlists;
@@ -59,9 +58,9 @@ namespace Waf.MusicManager.Applications.Controllers
             savePlaylistFileType = new FileType(Resources.Playlist, SupportedFileTypes.PlaylistFileExtensions[0]);
         }
 
-        public PlaylistSettings PlaylistSettings { get; set; } 
-        
-        public PlaylistManager PlaylistManager { get; set; }
+        public PlaylistSettings PlaylistSettings { get; set; } = null!;
+
+        public PlaylistManager PlaylistManager { get; set; } = null!;
 
         private PlaylistViewModel PlaylistViewModel => playlistViewModel.Value;
 
@@ -97,11 +96,12 @@ namespace Waf.MusicManager.Applications.Controllers
 
         public void Shutdown()
         {
-            PlaylistSettings.ReplaceAll(PlaylistManager.Items.Select(x => x.MusicFile.FileName));
+            PlaylistSettings.ReplaceAll(PlaylistManager.Items.Select(x => x.MusicFile.FileName).Where(x => x != null)!);
         }
 
-        public void TrySelectMusicFile(MusicFile musicFile)
+        public void TrySelectMusicFile(MusicFile? musicFile)
         {
+            if (musicFile == null) return;
             var playlistItem = PlaylistManager.Items.FirstOrDefault(x => x.MusicFile == musicFile);
             if (playlistItem != null)
             {
@@ -111,10 +111,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
         }
 
-        private bool CanPlaySelected()
-        {
-            return PlaylistViewModel.SelectedPlaylistItem != null;
-        }
+        private bool CanPlaySelected() => PlaylistViewModel.SelectedPlaylistItem != null;
 
         private void PlaySelected()
         {
@@ -128,10 +125,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
         }
         
-        private bool CanRemoveSelected()
-        {
-            return PlaylistViewModel.SelectedPlaylistItem != null;
-        }
+        private bool CanRemoveSelected() => PlaylistViewModel.SelectedPlaylistItem != null;
 
         private void RemoveSelected()
         {
@@ -165,16 +159,13 @@ namespace Waf.MusicManager.Applications.Controllers
             Log.Default.Trace("PlaylistController.InsertFiles:End");
         }
         
-        private void InsertMusicFiles(int index, IEnumerable<MusicFile> musicFiles)
-        {
-            PlaylistManager.InsertItems(index, musicFiles.Select(x => new PlaylistItem(x)));
-        }
+        private void InsertMusicFiles(int index, IEnumerable<MusicFile> musicFiles) => PlaylistManager.InsertItems(index, musicFiles.Select(x => new PlaylistItem(x)));
 
         private void OpenList()
         {
             var result = fileDialogService.ShowOpenFileDialog(shellService.ShellView, openPlaylistFileType);
             if (!result.IsValid) return;
-            OpenListCore(result.FileName);
+            OpenListCore(result.FileName!);
         }
 
         private void OpenListCore(string playlistFileName)
@@ -213,11 +204,8 @@ namespace Waf.MusicManager.Applications.Controllers
         private void SaveList()
         {
             var result = fileDialogService.ShowSaveFileDialog(shellService.ShellView, savePlaylistFileType);
-            if (!result.IsValid)
-            {
-                return;
-            }
-
+            if (!result.IsValid) return;
+            
             var playlist = new Playlist();
             try
             {
@@ -247,10 +235,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
         }
 
-        private void ClearList()
-        {
-            PlaylistManager.ClearItems();
-        }
+        private void ClearList() => PlaylistManager.ClearItems();
 
         private void PlaylistViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {

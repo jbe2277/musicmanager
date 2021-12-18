@@ -43,9 +43,8 @@ namespace Waf.MusicManager.Applications.Controllers
         private CancellationTokenSource? updateMusicFilesCancellation;
         
         [ImportingConstructor]
-        public ManagerController(IShellService shellService, IEnvironmentService environmentService, IMusicFileContext musicFileContext, 
-            SelectionService selectionService, ManagerStatusService managerStatusService, IFileSystemWatcherService fileSystemWatcherService, 
-            Lazy<ManagerViewModel> managerViewModel)
+        public ManagerController(IShellService shellService, IEnvironmentService environmentService, IMusicFileContext musicFileContext, SelectionService selectionService, 
+            ManagerStatusService managerStatusService, IFileSystemWatcherService fileSystemWatcherService, Lazy<ManagerViewModel> managerViewModel)
         {
             this.shellService = shellService;
             this.environmentService = environmentService;
@@ -104,7 +103,7 @@ namespace Waf.MusicManager.Applications.Controllers
             shellService.Settings.CurrentPath = ManagerViewModel.FolderBrowser.CurrentPath;
         }
 
-        private bool CanNavigateDirectoryUp() { return !string.IsNullOrEmpty(ManagerViewModel.FolderBrowser.CurrentPath); }
+        private bool CanNavigateDirectoryUp() => !string.IsNullOrEmpty(ManagerViewModel.FolderBrowser.CurrentPath);
         
         private void NavigateDirectoryUp()
         {
@@ -124,38 +123,23 @@ namespace Waf.MusicManager.Applications.Controllers
             }
         }
 
-        private void NavigateHome()
-        {
-            ManagerViewModel.FolderBrowser.CurrentPath = environmentService.MusicPath;
-        }
+        private void NavigateHome() => ManagerViewModel.FolderBrowser.CurrentPath = environmentService.MusicPath;
+        
+        private void NavigatePublicHome() => ManagerViewModel.FolderBrowser.CurrentPath = environmentService.PublicMusicPath;
 
-        private void NavigatePublicHome()
-        {
-            ManagerViewModel.FolderBrowser.CurrentPath = environmentService.PublicMusicPath;
-        }
-
-        private void LoadRecursive()
-        {
-            UpdateMusicFiles(FolderDepth.Deep);
-        }
+        private void LoadRecursive() => UpdateMusicFiles(FolderDepth.Deep);
 
         private void NavigateToSelectedSubDirectory()
         {
-            if (ManagerViewModel.FolderBrowser.SelectedSubDirectory == null) throw new InvalidOperationException("SelectedSubDirectory must not be null."); 
+            if (ManagerViewModel.FolderBrowser.SelectedSubDirectory?.Path == null) throw new InvalidOperationException("SelectedSubDirectory must not be null."); 
             ManagerViewModel.FolderBrowser.CurrentPath = ManagerViewModel.FolderBrowser.SelectedSubDirectory.Path;
         }
 
-        private void ShowMusicProperties()
-        {
-            shellService.ShowMusicPropertiesView();
-        }
+        private void ShowMusicProperties() => shellService.ShowMusicPropertiesView();
 
         private void DeleteSelectedFiles()
         {
-            foreach (var musicFile in selectionService.SelectedMusicFiles)
-            {
-                DeleteFileAsync(musicFile.MusicFile.FileName);
-            }
+            foreach (var x in selectionService.SelectedMusicFiles) DeleteFileAsync(x.MusicFile.FileName!);
         }
 
         private async void DeleteFileAsync(string fileName)
@@ -223,11 +207,8 @@ namespace Waf.MusicManager.Applications.Controllers
                 Log.Default.Trace("ManagerController.UpdateMusicFiles:Canceled");
             }
             
-            if (cancellation == updateMusicFilesCancellation)
-            {
-                updateMusicFilesCancellation = null;
-            }
-
+            if (cancellation == updateMusicFilesCancellation) updateMusicFilesCancellation = null;
+            
             Log.Default.Trace("ManagerController.UpdateMusicFiles:End");
         }
 
@@ -236,12 +217,12 @@ namespace Waf.MusicManager.Applications.Controllers
             if (e.PropertyName == nameof(FolderBrowserDataModel.UserPath))
             {
                 // This might throw an exception => shown in the Path TextBox as validation error.
-                ManagerViewModel.FolderBrowser.CurrentPath = GetFolderFromPath(ManagerViewModel.FolderBrowser.UserPath).Path;
+                ManagerViewModel.FolderBrowser.CurrentPath = GetFolderFromPath(ManagerViewModel.FolderBrowser.UserPath).Path!;
             }
             if (e.PropertyName == nameof(FolderBrowserDataModel.CurrentPath))
             {
                 navigateDirectoryUpCommand.RaiseCanExecuteChanged();
-                ManagerViewModel.FolderBrowser.UserPath = FolderHelper.GetDisplayPath(ManagerViewModel.FolderBrowser.CurrentPath).GetResult();
+                ManagerViewModel.FolderBrowser.UserPath = FolderHelper.GetDisplayPath(ManagerViewModel.FolderBrowser.CurrentPath!).GetResult();
                 UpdateSubDirectories();
                 ManagerViewModel.SearchFilter.Clear();
                 UpdateMusicFiles(FolderDepth.Shallow);
@@ -265,7 +246,7 @@ namespace Waf.MusicManager.Applications.Controllers
             }
         }
 
-        private Task<IReadOnlyList<string>> GetFilesAsync(string directory, FolderDepth folderDepth, string userSearchFilter, string applicationSearchFilter, CancellationToken cancellationToken)
+        private Task<IReadOnlyList<string>> GetFilesAsync(string directory, FolderDepth folderDepth, string userSearchFilter, string applicationSearchFilter, CancellationToken cancellation)
         {
             if (folderDepth == FolderDepth.Shallow)
             {
@@ -278,14 +259,13 @@ namespace Waf.MusicManager.Applications.Controllers
             }
             
             // It is necessary to run this in an own task => otherwise, reentrance would block the UI thread although this should not happen.
-            return Task.Run(() => GetFilesCore(directory, folderDepth, userSearchFilter, applicationSearchFilter, cancellationToken));
+            return Task.Run(() => GetFilesCore(directory, folderDepth, userSearchFilter, applicationSearchFilter, cancellation));
         }
 
-        private static IReadOnlyList<string> GetFilesCore(string directory, FolderDepth folderDepth, string userSearchFilter, string applicationSearchFilter, 
-            CancellationToken cancellationToken)
+        private static IReadOnlyList<string> GetFilesCore(string directory, FolderDepth folderDepth, string userSearchFilter, string applicationSearchFilter, CancellationToken cancellation)
         {
             // This method is run in an task (not in the UI thread) => static ensures some thread-safety.
-            var folder = StorageFolder.GetFolderFromPathAsync(directory).GetResult(cancellationToken);
+            var folder = StorageFolder.GetFolderFromPathAsync(directory).GetResult(cancellation);
             var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, SupportedFileTypes.MusicFileExtensions) 
             { 
                 UserSearchFilter = userSearchFilter ?? "", 
@@ -302,7 +282,7 @@ namespace Waf.MusicManager.Applications.Controllers
             const uint maxFiles = 100;
             do
             {
-                var filesResult = result.GetFilesAsync(index, maxFiles).GetResult(cancellationToken);
+                var filesResult = result.GetFilesAsync(index, maxFiles).GetResult(cancellation);
                 resultCount = filesResult.Count;
                 files.AddRange(filesResult.Select(x => x.Path));
                 index += maxFiles;
@@ -347,11 +327,8 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void InsertMusicFile(string fileName)
         {
-            if (!SupportedFileTypes.MusicFileExtensions.Contains(Path.GetExtension(fileName)))
-            {
-                return;
-            }
-
+            if (!SupportedFileTypes.MusicFileExtensions.Contains(Path.GetExtension(fileName))) return;
+            
             var insertFileName = Path.GetFileName(fileName);
             int i;
             for (i = 0; i < musicFiles.Count; i++)
@@ -366,17 +343,11 @@ namespace Waf.MusicManager.Applications.Controllers
 
         private void RemoveMusicFile(string fileName)
         {
-            var musicFileToRemove = musicFiles.FirstOrDefault(x => x.FileName.Equals(fileName, StringComparison.OrdinalIgnoreCase));
-            if (musicFileToRemove != null)
-            {
-                musicFiles.Remove(musicFileToRemove);
-            }
+            var musicFileToRemove = musicFiles.FirstOrDefault(x => fileName.Equals(x.FileName, StringComparison.OrdinalIgnoreCase));
+            if (musicFileToRemove != null) musicFiles.Remove(musicFileToRemove);
         }
 
-        private void FileSystemWatcherServiceCreated(object sender, FileSystemEventArgs e)
-        {
-            InsertMusicFile(e.FullPath);
-        }
+        private void FileSystemWatcherServiceCreated(object sender, FileSystemEventArgs e) => InsertMusicFile(e.FullPath);
 
         private void FileSystemWatcherServiceRenamed(object sender, RenamedEventArgs e)
         {
@@ -384,9 +355,6 @@ namespace Waf.MusicManager.Applications.Controllers
             InsertMusicFile(e.FullPath);   
         }
 
-        private void FileSystemWatcherServiceDeleted(object sender, FileSystemEventArgs e)
-        {
-            RemoveMusicFile(e.FullPath);
-        }
+        private void FileSystemWatcherServiceDeleted(object sender, FileSystemEventArgs e) => RemoveMusicFile(e.FullPath);
     }
 }
