@@ -7,7 +7,7 @@ namespace Waf.MusicManager.Applications.Data
 {
     public static class StringListConverter
     {
-        public static string ToString(IEnumerable<string> list, string? separator = null)
+        public static string ToString(IEnumerable<string>? list, string? separator = null)
         {
             return string.Join(GetSeparator(separator), list ?? Array.Empty<string>());
         }

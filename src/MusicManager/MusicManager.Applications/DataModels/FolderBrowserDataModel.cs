@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Waf.Foundation;
 
 namespace Waf.MusicManager.Applications.DataModels
 {
     public class FolderBrowserDataModel : Model
     {
-        private string userPath;
-        private string currentPath;
-        private IReadOnlyList<FolderItem> subDirectories;
-        private FolderItem selectedSubDirectory;
+        private string userPath = "";
+        private string currentPath = null!;
+        private IReadOnlyList<FolderItem> subDirectories = Array.Empty<FolderItem>();
+        private FolderItem? selectedSubDirectory;
 
         public string UserPath
         {
@@ -28,7 +29,7 @@ namespace Waf.MusicManager.Applications.DataModels
             set => SetProperty(ref subDirectories, value);
         }
 
-        public FolderItem SelectedSubDirectory
+        public FolderItem? SelectedSubDirectory
         {
             get => selectedSubDirectory;
             set => SetProperty(ref selectedSubDirectory, value);

@@ -16,7 +16,7 @@ namespace Waf.MusicManager.Applications.Data
             {
                 // Try to parse a user-friendly (localized) path.
                 var pathSegments = GetPathSegments(path);
-                corePath = pathSegments.First();
+                corePath = pathSegments[0];
                 foreach (string pathSegment in pathSegments.Skip(1))
                 {
                     var folder = await StorageFolder.GetFolderFromPathAsync(corePath).AsTask().ConfigureAwait(false);
@@ -44,8 +44,8 @@ namespace Waf.MusicManager.Applications.Data
             try
             {
                 var pathSegments = GetPathSegments(path);
-                displayPath = pathSegments.First();
-                string currentPath = pathSegments.First();
+                displayPath = pathSegments[0];
+                string currentPath = pathSegments[0];
                 foreach (string pathSegment in pathSegments.Skip(1))
                 {
                     currentPath = Path.Combine(currentPath, pathSegment);
@@ -62,8 +62,8 @@ namespace Waf.MusicManager.Applications.Data
 
         public static IReadOnlyList<string> GetPathSegments(string path)
         {
-            if (string.IsNullOrEmpty(path)) { return Array.Empty<string>(); }
-            string root = Path.GetPathRoot(path);
+            var root = Path.GetPathRoot(path);
+            if (string.IsNullOrEmpty(root)) return Array.Empty<string>();
             string innerPath = path.Substring(root.Length);
             innerPath = innerPath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
             var pathSegments = new[] { root }.Concat(innerPath.Split(Path.DirectorySeparatorChar).Where(x => !string.IsNullOrEmpty(x))).ToArray();

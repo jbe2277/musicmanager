@@ -22,6 +22,6 @@ namespace Waf.MusicManager.Applications.Services
 
         bool IsPlayCommand { get; }
 
-        MusicFile PlayingMusicFile { get; }
+        MusicFile? PlayingMusicFile { get; }
     }
 }

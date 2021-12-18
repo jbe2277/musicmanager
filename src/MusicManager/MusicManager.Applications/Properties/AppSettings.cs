@@ -22,7 +22,7 @@ namespace Waf.MusicManager.Applications.Properties
         public bool IsMaximized { get; set; }
 
         [DataMember]
-        public string CurrentPath { get; set; }
+        public string? CurrentPath { get; set; }
 
         [DataMember]
         public double Volume { get; set; }

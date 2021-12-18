@@ -4,10 +4,7 @@
     {
         public static void Play(this IPlayerService playerService)
         {
-            if (playerService.IsPlayCommand)
-            {
-                playerService.PlayPauseCommand.Execute(null);
-            }
+            if (playerService.IsPlayCommand) playerService.PlayPauseCommand.Execute(null);
         }
     }
 }

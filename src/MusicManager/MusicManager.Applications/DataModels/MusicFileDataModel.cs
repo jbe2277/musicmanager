@@ -21,17 +21,11 @@ namespace Waf.MusicManager.Applications.DataModels
             }
         }
 
-
         public MusicFile MusicFile { get; }
 
-        public string ArtistsString => string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", 
-                MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : Array.Empty<string>()); 
+        public string ArtistsString => string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : Array.Empty<string>()); 
 
-
-        private void MetadataLoaded()
-        {
-            PropertyChangedEventManager.AddHandler(MusicFile.Metadata, MetadataPropertyChanged, "");
-        }
+        private void MetadataLoaded() => PropertyChangedEventManager.AddHandler(MusicFile.Metadata, MetadataPropertyChanged, "");
 
         private void MusicFilePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
@@ -45,10 +39,7 @@ namespace Waf.MusicManager.Applications.DataModels
 
         private void MetadataPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(MusicMetadata.Artists))
-            {
-                RaisePropertyChanged(nameof(ArtistsString));
-            }
+            if (e.PropertyName == nameof(MusicMetadata.Artists)) RaisePropertyChanged(nameof(ArtistsString));
         }
     }
 }

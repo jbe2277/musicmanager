@@ -9,14 +9,14 @@ namespace Waf.MusicManager.Domain.MusicFiles
     public class MusicFile : Model
     {
         private readonly TaskCompletionSource<MusicMetadata> loadMetadataCompletionSource;
-        private readonly Func<string, Task<MusicMetadata?>> loadMetadata;
+        private readonly Func<string?, Task<MusicMetadata?>> loadMetadata;
         private IReadOnlyCollection<MusicFile> sharedMusicFiles;
         private MusicMetadata? metadata;
         private bool loadCalled;
         private bool isMetadataLoaded;
         private Exception? loadError;
 
-        public MusicFile(Func<string, Task<MusicMetadata?>> loadMetadata, string fileName)
+        public MusicFile(Func<string?, Task<MusicMetadata?>> loadMetadata, string? fileName)
         {
             loadMetadataCompletionSource = new TaskCompletionSource<MusicMetadata>();
             this.loadMetadata = loadMetadata;
@@ -24,7 +24,7 @@ namespace Waf.MusicManager.Domain.MusicFiles
             sharedMusicFiles = Array.Empty<MusicFile>();
         }
 
-        public string FileName { get; }
+        public string? FileName { get; }
 
         public IReadOnlyCollection<MusicFile> SharedMusicFiles
         {
@@ -36,10 +36,7 @@ namespace Waf.MusicManager.Domain.MusicFiles
         {
             get
             {
-                if (metadata == null)
-                {
-                    LoadMetadataCore();
-                }
+                if (metadata == null) LoadMetadataCore();
                 return metadata;
             }
             private set => SetProperty(ref metadata, value);
@@ -70,16 +67,13 @@ namespace Waf.MusicManager.Domain.MusicFiles
             try
             {
                 var musicMetadata = await loadMetadata(FileName);
-                if (musicMetadata == null) { throw new InvalidOperationException("The loadMetadata delegate must not return null."); }
+                if (musicMetadata == null) throw new InvalidOperationException("The loadMetadata delegate must not return null.");
                 musicMetadata.Parent = this;
                 musicMetadata.EntityLoadCompleted();
                 Metadata = musicMetadata;
                 IsMetadataLoaded = true;
                 loadMetadataCompletionSource.SetResult(Metadata);
-                if (!string.IsNullOrEmpty(FileName))
-                {
-                    Log.Default.Trace("MusicFile.MetadataLoaded: {0}", FileName);
-                }
+                if (!string.IsNullOrEmpty(FileName)) Log.Default.Trace("MusicFile.MetadataLoaded: {0}", FileName);
             }
             catch (Exception e)
             {

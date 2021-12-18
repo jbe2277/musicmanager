@@ -9,10 +9,10 @@ namespace Waf.MusicManager.Applications.Properties
     public sealed class PlaylistSettings : UserSettingsBase
     {
         [DataMember(Name = "FileNames")] 
-        private readonly List<string> fileNames = new List<string>();
+        private readonly List<string> fileNames = new();
 
         [DataMember]
-        public string LastPlayedFileName { get; set; }
+        public string? LastPlayedFileName { get; set; }
 
         [DataMember]
         public TimeSpan LastPlayedFilePosition { get; set; }

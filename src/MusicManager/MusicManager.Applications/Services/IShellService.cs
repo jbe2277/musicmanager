@@ -10,23 +10,23 @@ namespace Waf.MusicManager.Applications.Services
     {
         AppSettings Settings { get; }
         
-        object ShellView { get; }
+        object? ShellView { get; }
 
-        object ContentView { get; set; }
+        object? ContentView { get; set; }
 
-        object MusicPropertiesView { get; set; }
+        object? MusicPropertiesView { get; set; }
 
-        object PlaylistView { get; set; }
+        object? PlaylistView { get; set; }
 
-        Lazy<object> TranscodingListView { get; set; }
+        Lazy<object>? TranscodingListView { get; set; }
 
-        object PlayerView { get; set; }
+        object? PlayerView { get; set; }
 
         IReadOnlyCollection<Task> TasksToCompleteBeforeShutdown { get; }
 
         bool IsApplicationBusy { get; }
 
-        event CancelEventHandler Closing;
+        event CancelEventHandler? Closing;
 
         void ShowError(Exception exception, string displayMessage);
         

@@ -17,7 +17,7 @@ namespace Waf.MusicManager.Applications.Services
         private ICommand playPauseCommand = DelegateCommand.DisabledCommand;
         private ICommand nextCommand = DelegateCommand.DisabledCommand;
         private bool isPlayCommand;
-        private MusicFile playingMusicFile;
+        private MusicFile? playingMusicFile;
 
         public ICommand PlayAllCommand
         {
@@ -67,7 +67,7 @@ namespace Waf.MusicManager.Applications.Services
             set => SetProperty(ref isPlayCommand, value);
         }
 
-        public MusicFile PlayingMusicFile
+        public MusicFile? PlayingMusicFile
         {
             get => playingMusicFile;
             set => SetProperty(ref playingMusicFile, value);

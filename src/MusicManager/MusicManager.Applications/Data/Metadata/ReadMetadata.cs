@@ -18,12 +18,9 @@ namespace Waf.MusicManager.Applications.Data.Metadata
             AddPropertiesToRetrieve(propertiesToRetrieve);
             var customProperties = await properties.RetrievePropertiesAsync(propertiesToRetrieve).AsTask(cancellationToken).ConfigureAwait(false);
             
-            TimeSpan duration = ReadDuration(properties, customProperties);
-            uint bitrate = ReadBitrate(properties, customProperties);
-            if (!IsSupported || (duration == TimeSpan.Zero && bitrate == 0))
-            {
-                return MusicMetadata.CreateUnsupported(duration, bitrate);
-            }
+            var duration = ReadDuration(properties, customProperties);
+            var bitrate = ReadBitrate(properties, customProperties);
+            if (!IsSupported || (duration == TimeSpan.Zero && bitrate == 0)) return MusicMetadata.CreateUnsupported(duration, bitrate);
             
             return new MusicMetadata(duration, bitrate)
             {
@@ -42,84 +39,36 @@ namespace Waf.MusicManager.Applications.Data.Metadata
             };
         }
 
-        protected virtual void AddPropertiesToRetrieve(IList<string> propertiesToRetrieve)
-        {
-            propertiesToRetrieve.Add(PropertyNames.Artist);
-        }
+        protected virtual void AddPropertiesToRetrieve(IList<string> propertiesToRetrieve) => propertiesToRetrieve.Add(PropertyNames.Artist);
         
-        protected virtual TimeSpan ReadDuration(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.Duration;
-        }
+        protected virtual TimeSpan ReadDuration(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Duration;
+        
+        protected virtual uint ReadBitrate(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Bitrate;
 
-        protected virtual uint ReadBitrate(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.Bitrate;
-        }
+        protected virtual string ReadTitle(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Title;
 
-        protected virtual string ReadTitle(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.Title;
-        }
+        protected virtual IEnumerable<string> ReadArtists(MusicProperties properties, IDictionary<string, object> customProperties) => (IEnumerable<string>)customProperties[PropertyNames.Artist];
 
-        protected virtual IEnumerable<string> ReadArtists(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return (IEnumerable<string>)customProperties[PropertyNames.Artist];
-        }
+        protected virtual uint ReadRating(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Rating;
 
-        protected virtual uint ReadRating(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.Rating;
-        }
+        protected virtual string ReadAlbum(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Album;
 
-        protected virtual string ReadAlbum(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.Album;
-        }
+        protected virtual uint ReadTrackNumber(MusicProperties properties, IDictionary<string, object> customProperties) => properties.TrackNumber;
 
-        protected virtual uint ReadTrackNumber(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.TrackNumber;
-        }
+        protected virtual uint ReadYear(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Year;
 
-        protected virtual uint ReadYear(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.Year;
-        }
+        protected virtual IEnumerable<string> ReadGenre(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Genre;
 
-        protected virtual IEnumerable<string> ReadGenre(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.Genre;
-        }
+        protected virtual string ReadAlbumArtist(MusicProperties properties, IDictionary<string, object> customProperties) => properties.AlbumArtist;
 
-        protected virtual string ReadAlbumArtist(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.AlbumArtist;
-        }
+        protected virtual string ReadPublisher(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Publisher;
 
-        protected virtual string ReadPublisher(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.Publisher;
-        }
+        protected virtual string ReadSubtitle(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Subtitle;
 
-        protected virtual string ReadSubtitle(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.Subtitle;
-        }
+        protected virtual IEnumerable<string> ReadComposers(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Composers;
 
-        protected virtual IEnumerable<string> ReadComposers(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.Composers;
-        }
+        protected virtual IEnumerable<string> ReadConductors(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Conductors;
 
-        protected virtual IEnumerable<string> ReadConductors(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return properties.Conductors;
-        }
-
-        private static IReadOnlyList<T> ToSaveArray<T>(IEnumerable<T> collection)
-        {
-            return collection?.ToArray() ?? Array.Empty<T>();
-        }
+        private static IReadOnlyList<T> ToSaveArray<T>(IEnumerable<T> collection) => collection?.ToArray() ?? Array.Empty<T>();
     }
 }

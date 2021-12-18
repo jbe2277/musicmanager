@@ -4,11 +4,13 @@ namespace Waf.MusicManager.Applications.Services
 {
     internal class ApplicationBusyContext : IDisposable
     {
-        public Action<ApplicationBusyContext> DisposeCallback { get; set; }
-        
-        public void Dispose()
+        private readonly Action<ApplicationBusyContext> disposeCallback;
+
+        public ApplicationBusyContext(Action<ApplicationBusyContext> disposeCallback)
         {
-            DisposeCallback(this);
+            this.disposeCallback = disposeCallback;
         }
+
+        public void Dispose() => disposeCallback(this);
     }
 }

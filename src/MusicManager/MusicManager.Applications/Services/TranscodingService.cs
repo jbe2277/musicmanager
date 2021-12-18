@@ -41,14 +41,8 @@ namespace Waf.MusicManager.Applications.Services
 
         public event EventHandler<TranscodingTaskEventArgs>? TranscodingTaskCreated;
 
-        public void RaiseTranscodingTaskCreated(string fileName, Task transcodingTask)
-        {
-            OnTranscodingTaskCreated(new TranscodingTaskEventArgs(fileName, transcodingTask));
-        }
+        public void RaiseTranscodingTaskCreated(string fileName, Task transcodingTask) => OnTranscodingTaskCreated(new TranscodingTaskEventArgs(fileName, transcodingTask));
 
-        protected virtual void OnTranscodingTaskCreated(TranscodingTaskEventArgs e)
-        {
-            TranscodingTaskCreated?.Invoke(this, e);
-        }
+        protected virtual void OnTranscodingTaskCreated(TranscodingTaskEventArgs e) => TranscodingTaskCreated?.Invoke(this, e);
     }
 }

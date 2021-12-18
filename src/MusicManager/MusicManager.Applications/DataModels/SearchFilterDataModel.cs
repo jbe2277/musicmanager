@@ -93,7 +93,7 @@ namespace Waf.MusicManager.Applications.DataModels
             }
         }
 
-        public string FromYearFilter
+        public string? FromYearFilter
         {
             get => fromYearFilter?.ToString(CultureInfo.CurrentCulture);
             set
@@ -107,7 +107,7 @@ namespace Waf.MusicManager.Applications.DataModels
             }
         }
 
-        public string ToYearFilter
+        public string? ToYearFilter
         {
             get => toYearFilter?.ToString(CultureInfo.CurrentCulture);
             set
@@ -149,10 +149,7 @@ namespace Waf.MusicManager.Applications.DataModels
             ArtistFilter = "";
             TitleFilter = "";
             AlbumFilter = "";
-            if (GenreFilter.Any())
-            {
-                GenreFilter = Array.Empty<string>();
-            }
+            if (GenreFilter.Any()) GenreFilter = Array.Empty<string>();
             FromYearFilter = "";
             ToYearFilter = "";
             RatingFilter = 0;
@@ -162,12 +159,11 @@ namespace Waf.MusicManager.Applications.DataModels
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
-            if (e.PropertyName != nameof(DisplaySearchFilter) && e.PropertyName != nameof(ApplicationSearchFilter))
+            if (e.PropertyName is not nameof(DisplaySearchFilter) and not nameof(ApplicationSearchFilter))
             {
                 RaisePropertyChanged(nameof(DisplaySearchFilter));
             }
-            if (new[] { nameof(ArtistFilter), nameof(TitleFilter), nameof(AlbumFilter), nameof(GenreFilter), nameof(RatingFilterOperator), nameof(RatingFilter),
-                    nameof(FromYearFilter), nameof(ToYearFilter) }.Contains(e.PropertyName))
+            if (e.PropertyName is nameof(ArtistFilter) or nameof(TitleFilter) or nameof(AlbumFilter) or nameof(GenreFilter) or nameof(RatingFilterOperator) or nameof(RatingFilter) or nameof(FromYearFilter) or nameof(ToYearFilter))
             {
                 RaisePropertyChanged(nameof(ApplicationSearchFilter));
             }

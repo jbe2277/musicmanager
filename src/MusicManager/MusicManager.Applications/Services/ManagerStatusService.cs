@@ -21,7 +21,6 @@ namespace Waf.MusicManager.Applications.Services
             private set => SetProperty(ref totalFilesCount, value);
         }
 
-
         public void StartUpdatingFilesList()
         {
             UpdatingFilesList = true;

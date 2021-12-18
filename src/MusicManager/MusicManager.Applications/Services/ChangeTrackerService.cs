@@ -13,19 +13,10 @@ namespace Waf.MusicManager.Applications.Services
             entitiesWithChanges = new HashSet<Entity>();
         }
 
-        public IEnumerable<Entity> GetEntitiesWithChanges()
-        {
-            return entitiesWithChanges.ToArray();
-        }
+        public IEnumerable<Entity> GetEntitiesWithChanges() => entitiesWithChanges.ToArray();
 
-        public void EntityHasChanges(Entity entity)
-        {
-            entitiesWithChanges.Add(entity);
-        }
+        public void EntityHasChanges(Entity entity) => entitiesWithChanges.Add(entity);
 
-        public void RemoveEntity(Entity entity)
-        {
-            entitiesWithChanges.Remove(entity);
-        }
+        public void RemoveEntity(Entity entity) => entitiesWithChanges.Remove(entity);
     }
 }

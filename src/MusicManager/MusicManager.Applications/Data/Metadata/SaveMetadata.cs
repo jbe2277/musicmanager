@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
@@ -15,10 +14,8 @@ namespace Waf.MusicManager.Applications.Data.Metadata
         
         public async Task SaveChangesAsync(MusicFile musicFile)
         {
-            if (!IsSupported || !musicFile.IsMetadataLoaded || !musicFile.Metadata.HasChanges)
-            {
-                return;
-            }
+            if (!IsSupported || !musicFile.IsMetadataLoaded || !musicFile.Metadata.HasChanges) return;
+            
             // Manipulating changes must be done synchronously; no await call is allowed before ClearChanges().
             var metadata = musicFile.Metadata;
             var changedProperties = metadata.GetChanges();
@@ -45,73 +42,34 @@ namespace Waf.MusicManager.Applications.Data.Metadata
             await musicProperties.SavePropertiesAsync(customProperties);
         }
 
-        protected virtual void ApplyTitle(MusicProperties properties, IDictionary<string, object> customProperties, string title)
-        {
-            properties.Title = title;
-        }
+        protected virtual void ApplyTitle(MusicProperties properties, IDictionary<string, object> customProperties, string title) => properties.Title = title;
 
-        protected virtual void ApplyArtists(MusicProperties properties, IDictionary<string, object> customProperties, IEnumerable<string> artists)
-        {
-            customProperties.Add(PropertyNames.Artist, artists);
-        }
+        protected virtual void ApplyArtists(MusicProperties properties, IDictionary<string, object> customProperties, IEnumerable<string> artists) => customProperties.Add(PropertyNames.Artist, artists);
 
-        protected virtual void ApplyRating(MusicProperties properties, IDictionary<string, object> customProperties, uint rating)
-        {
-            properties.Rating = rating;
-        }
+        protected virtual void ApplyRating(MusicProperties properties, IDictionary<string, object> customProperties, uint rating) => properties.Rating = rating;
 
-        protected virtual void ApplyAlbum(MusicProperties properties, IDictionary<string, object> customProperties, string album)
-        {
-            properties.Album = album;
-        }
+        protected virtual void ApplyAlbum(MusicProperties properties, IDictionary<string, object> customProperties, string album) => properties.Album = album;
 
-        protected virtual void ApplyTrackNumber(MusicProperties properties, IDictionary<string, object> customProperties, uint trackNumber)
-        {
-            properties.TrackNumber = trackNumber;
-        }
+        protected virtual void ApplyTrackNumber(MusicProperties properties, IDictionary<string, object> customProperties, uint trackNumber) => properties.TrackNumber = trackNumber;
 
-        protected virtual void ApplyYear(MusicProperties properties, IDictionary<string, object> customProperties, uint year)
-        {
-            properties.Year = year;
-        }
+        protected virtual void ApplyYear(MusicProperties properties, IDictionary<string, object> customProperties, uint year) => properties.Year = year;
 
-        protected virtual void ApplyGenre(MusicProperties properties, IDictionary<string, object> customProperties, IEnumerable<string> genre)
-        {
-            ApplyList(properties.Genre, genre);
-        }
+        protected virtual void ApplyGenre(MusicProperties properties, IDictionary<string, object> customProperties, IEnumerable<string> genre) => ApplyList(properties.Genre, genre);
 
-        protected virtual void ApplyAlbumArtist(MusicProperties properties, IDictionary<string, object> customProperties, string albumArtist)
-        {
-            properties.AlbumArtist = albumArtist;
-        }
+        protected virtual void ApplyAlbumArtist(MusicProperties properties, IDictionary<string, object> customProperties, string albumArtist) => properties.AlbumArtist = albumArtist;
 
-        protected virtual void ApplyPublisher(MusicProperties properties, IDictionary<string, object> customProperties, string publisher)
-        {
-            properties.Publisher = publisher;
-        }
+        protected virtual void ApplyPublisher(MusicProperties properties, IDictionary<string, object> customProperties, string publisher) => properties.Publisher = publisher;
 
-        protected virtual void ApplySubtitle(MusicProperties properties, IDictionary<string, object> customProperties, string subtitle)
-        {
-            properties.Subtitle = subtitle;
-        }
+        protected virtual void ApplySubtitle(MusicProperties properties, IDictionary<string, object> customProperties, string subtitle) => properties.Subtitle = subtitle;
 
-        protected virtual void ApplyComposers(MusicProperties properties, IDictionary<string, object> customProperties, IEnumerable<string> composers)
-        {
-            ApplyList(properties.Composers, composers);
-        }
+        protected virtual void ApplyComposers(MusicProperties properties, IDictionary<string, object> customProperties, IEnumerable<string> composers) => ApplyList(properties.Composers, composers);
 
-        protected virtual void ApplyConductors(MusicProperties properties, IDictionary<string, object> customProperties, IEnumerable<string> conductors)
-        {
-            ApplyList(properties.Conductors, conductors);
-        }
+        protected virtual void ApplyConductors(MusicProperties properties, IDictionary<string, object> customProperties, IEnumerable<string> conductors) => ApplyList(properties.Conductors, conductors);
 
         protected void ApplyList<T>(IList<T> target, IEnumerable<T> source)
         {
             target.Clear();
-            foreach (T item in source)
-            {
-                target.Add(item);
-            }
+            foreach (T x in source) target.Add(x);
         }
     }
 }

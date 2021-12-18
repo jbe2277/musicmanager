@@ -16,7 +16,7 @@ namespace Waf.MusicManager.Applications.Services
             SelectedMusicFiles = new ObservableCollection<MusicFileDataModel>();
         }
 
-        public ObservableListView<MusicFileDataModel> MusicFiles { get; private set; }
+        public ObservableListView<MusicFileDataModel> MusicFiles { get; private set; } = null!;
 
         public IList<MusicFileDataModel> SelectedMusicFiles { get; }
 
