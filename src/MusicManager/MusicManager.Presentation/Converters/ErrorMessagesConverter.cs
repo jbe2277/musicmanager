@@ -10,7 +10,7 @@ namespace Waf.MusicManager.Presentation.Converters
 {
     public sealed class ErrorMessagesConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[]? values, Type? targetType, object? parameter, CultureInfo? culture)
         {
             if (values?.FirstOrDefault() is IEnumerable<Tuple<Exception, string>> errorMessages)
             {
@@ -20,9 +20,6 @@ namespace Waf.MusicManager.Presentation.Converters
             return DependencyProperty.UnsetValue;
         }
         
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+        public object[] ConvertBack(object? value, Type[]? targetTypes, object? parameter, CultureInfo? culture) => throw new NotSupportedException();
     }
 }

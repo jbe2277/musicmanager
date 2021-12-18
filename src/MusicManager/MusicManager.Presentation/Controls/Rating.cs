@@ -25,7 +25,7 @@ namespace Waf.MusicManager.Presentation.Controls
 
         public Rating()
         {
-            ratingItems = new ReadOnlyCollection<RatingItem>(new RatingItem[0]);
+            ratingItems = new ReadOnlyCollection<RatingItem>(Array.Empty<RatingItem>());
         }
 
         public override void OnApplyTemplate()

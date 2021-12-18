@@ -16,53 +16,37 @@ namespace Waf.MusicManager.Presentation.DesignData
         }
         
         public AppSettings Settings { get; set; }
-        
-        public object ShellView { get; set; }
-        
-        public object ContentView { get; set; }
-        
-        public object MusicPropertiesView { get; set; }
-        
-        public object PlaylistView { get; set; }
 
-        public Lazy<object> TranscodingListView { get; set; }
+        public object ShellView { get; set; } = null!;
+        
+        public object? ContentView { get; set; }
+        
+        public object? MusicPropertiesView { get; set; }
+        
+        public object? PlaylistView { get; set; }
 
-        public object PlayerView { get; set; }
+        public Lazy<object>? TranscodingListView { get; set; }
 
-        public IReadOnlyCollection<Task> TasksToCompleteBeforeShutdown { get; set; }
+        public object? PlayerView { get; set; }
+
+        public IReadOnlyCollection<Task> TasksToCompleteBeforeShutdown { get; set; } = null!;
         
         public bool IsApplicationBusy { get; set; }
 
-        public event CancelEventHandler Closing;
+        public event CancelEventHandler? Closing;
 
-        public void ShowError(Exception exception, string displayMessage)
-        {
-        }
+        public void ShowError(Exception exception, string displayMessage) { }
 
-        public void ShowMusicPropertiesView()
-        {
-        }
+        public void ShowMusicPropertiesView() { }
 
-        public void ShowPlaylistView()
-        {
-        }
+        public void ShowPlaylistView() { }
 
-        public void ShowTranscodingListView()
-        {
-        }
+        public void ShowTranscodingListView() { }
 
-        public void AddTaskToCompleteBeforeShutdown(Task task)
-        {
-        }
+        public void AddTaskToCompleteBeforeShutdown(Task task) { }
 
-        public IDisposable SetApplicationBusy()
-        {
-            return null;
-        }
+        public IDisposable SetApplicationBusy() => null!;
 
-        protected virtual void OnClosing(CancelEventArgs e)
-        {
-            Closing?.Invoke(this, e);
-        }
+        protected virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
     }
 }

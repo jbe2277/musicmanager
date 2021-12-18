@@ -8,7 +8,7 @@ namespace Waf.MusicManager.Presentation.DesignData
 {
     public class SamplePlayerViewModel : PlayerViewModel
     {
-        public SamplePlayerViewModel() : base(new MockPlayerView(), null, null)
+        public SamplePlayerViewModel() : base(new MockPlayerView(), null!, null!)
         {
             var playlistManager = new PlaylistManager();
             playlistManager.CurrentItem = new PlaylistItem(new SampleMusicFile(new MusicMetadata(new TimeSpan(0, 3, 45), 320)

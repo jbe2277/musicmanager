@@ -8,11 +8,11 @@ namespace Waf.MusicManager.Presentation.DesignData
 {
     public class SampleShellViewModel : ShellViewModel
     {
-        public SampleShellViewModel() : base(new MockShellView(), new MockShellService(), null)
+        public SampleShellViewModel() : base(new MockShellView(), new MockShellService(), null!)
         {
             ShellService.PlaylistView = new Control();
             IsPlaylistViewVisible = true;
-            ShowError(null, "A very long error message that does not fit in a default size window. Thus, the text block should trim the text and show ellipsis."
+            ShowError(new InvalidOperationException(), "A very long error message that does not fit in a default size window. Thus, the text block should trim the text and show ellipsis."
                 + " And more text so that it is really too long.");
         }
 
@@ -32,27 +32,17 @@ namespace Waf.MusicManager.Presentation.DesignData
             
             public bool IsMaximized { get; set; }
 
-            public event CancelEventHandler Closing;
+            public event CancelEventHandler? Closing;
 
-            public event EventHandler Closed;
+            public event EventHandler? Closed;
 
-            public void Show()
-            {
-            }
+            public void Show() { }
 
-            public void Close()
-            {
-            }
+            public void Close() { }
 
-            protected virtual void OnClosing(CancelEventArgs e)
-            {
-                Closing?.Invoke(this, e);
-            }
+            protected virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
 
-            protected virtual void OnClosed(EventArgs e)
-            {
-                Closed?.Invoke(this, e);
-            }
+            protected virtual void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
         }
     }
 }

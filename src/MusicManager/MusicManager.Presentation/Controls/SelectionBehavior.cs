@@ -31,26 +31,20 @@ namespace Waf.MusicManager.Presentation.Controls
 
         private static void SyncSelectedItemsPropertyChanged(DependencyObject element, DependencyPropertyChangedEventArgs e)
         {
-            if (!(element is Selector selector))
-            {
-                throw new ArgumentException("The attached property SelectedItems can only be used with a Selector.", nameof(element));
-            }
+            if (element is not Selector selector) throw new ArgumentException("The attached property SelectedItems can only be used with a Selector.", nameof(element));
             TryCleanUpOldItem(selector);
             try
             {
-                IMultiSelector multiSelector = TryGetMultiSelector(selector);
-                if (multiSelector == null) { return; }
+                var multiSelector = TryGetMultiSelector(selector);
+                if (multiSelector == null) return;
 
                 var list = GetSyncSelectedItems(selector);
-                if (list == null) { return; }
+                if (list == null) return;
 
-                if (multiSelector.SelectedItems.Count > 0) { multiSelector.SelectedItems.Clear(); }
-                foreach (var item in list)
-                {
-                    multiSelector.SelectedItems.Add(item);
-                }
-
-                if (!(list is INotifyCollectionChanged observableList)) { return; }
+                if (multiSelector.SelectedItems.Count > 0) multiSelector.SelectedItems.Clear();
+                foreach (var x in list) multiSelector.SelectedItems.Add(x);
+                
+                if (list is not INotifyCollectionChanged observableList) return;
 
                 multiSelectorWithObservableList.Add(Tuple.Create(multiSelector, observableList));
                 CollectionChangedEventManager.AddHandler(observableList, ListCollectionChanged);
@@ -73,9 +67,9 @@ namespace Waf.MusicManager.Presentation.Controls
         }
 
         
-        private static void ListCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private static void ListCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            if (syncListsThatAreUpdating.Contains(sender)) { return; }
+            if (syncListsThatAreUpdating.Contains(sender!)) return;
 
             var multiSelector = multiSelectorWithObservableList.First(x => x.Item2 == sender).Item1;
             selectorsThatAreUpdating.Add(multiSelector.Selector);
@@ -83,14 +77,14 @@ namespace Waf.MusicManager.Presentation.Controls
             {
                 if (e.Action == NotifyCollectionChangedAction.Add)
                 {
-                    foreach (var items in e.NewItems)
+                    foreach (var items in e.NewItems!)
                     {
                         multiSelector.SelectedItems.Add(items);
                     }
                 }
                 else if (e.Action == NotifyCollectionChangedAction.Remove)
                 {
-                    foreach (var items in e.OldItems)
+                    foreach (var items in e.OldItems!)
                     {
                         multiSelector.SelectedItems.Remove(items);
                     }
@@ -98,7 +92,7 @@ namespace Waf.MusicManager.Presentation.Controls
                 else if (e.Action == NotifyCollectionChangedAction.Reset)
                 {
                     multiSelector.SelectedItems.Clear();
-                    foreach (var item in (IEnumerable)sender)
+                    foreach (var item in (IEnumerable)sender!)
                     {
                         multiSelector.SelectedItems.Add(item);
                     }
@@ -140,7 +134,7 @@ namespace Waf.MusicManager.Presentation.Controls
             }
         }
 
-        private static IMultiSelector TryGetMultiSelector(Selector selector)
+        private static IMultiSelector? TryGetMultiSelector(Selector selector)
         {
             if (selector is ListBox listBoxSelector) { return new ListBoxAdapter(listBoxSelector); }
             if (selector is MultiSelector multiSelector) { return new MultiSelectorAdapter(multiSelector); }

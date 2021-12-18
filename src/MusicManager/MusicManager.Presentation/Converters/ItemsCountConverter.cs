@@ -7,9 +7,9 @@ namespace Waf.MusicManager.Presentation.Converters
 {
     public class ItemsCountConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
         {
-            int itemsCount = (int)value;
+            int itemsCount = (int)value!;
             if (itemsCount == 1)
             {
                 return Resources.OneItem;
@@ -20,9 +20,6 @@ namespace Waf.MusicManager.Presentation.Converters
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+        public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture) => throw new NotSupportedException();
     }
 }

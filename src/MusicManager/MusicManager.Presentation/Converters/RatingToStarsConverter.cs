@@ -6,57 +6,32 @@ namespace Waf.MusicManager.Presentation.Converters
 {
     public class RatingToStarsConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
         {
             int rating = System.Convert.ToInt32(value, CultureInfo.InvariantCulture);
-            if (rating >= 99)
+            return rating switch
             {
-                return 5;
-            }
-            else if (rating >= 75)
-            {
-                return 4;
-            }
-            else if (rating >= 50)
-            {
-                return 3;
-            }
-            else if (rating >= 25)
-            {
-                return 2;
-            }
-            else if (rating >= 1)
-            {
-                return 1;
-            }
-            return 0;
-            
+                >= 99 => 5,
+                >= 75 => 4,
+                >= 50 => 3,
+                >= 25 => 2,
+                >= 1 => 1,
+                _ => 0,
+            };
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture)
         {
             int stars = System.Convert.ToInt32(value, CultureInfo.InvariantCulture);
-            if (stars == 5)
+            return stars switch
             {
-                return 99;
-            }
-            else if (stars == 4)
-            {
-                return 75;
-            }
-            else if (stars == 3)
-            {
-                return 50;
-            }
-            else if (stars == 2)
-            {
-                return 25;
-            }
-            else if (stars == 1)
-            {
-                return 1;
-            }
-            return 0;
+                5 => 99,
+                4 => 75,
+                3 => 50,
+                2 => 25,
+                1 => 1,
+                _ => 0,
+            };
         }
     }
 }

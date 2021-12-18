@@ -237,7 +237,7 @@ namespace Waf.MusicManager.Presentation.Views
             }
             else
             {
-                ViewModel.ShellService.ShowError(e.ErrorException, Properties.Resources.CouldNotPlayFile, ViewModel.PlaylistManager.CurrentItem.MusicFile.FileName);
+                ViewModel.ShellService.ShowError(e.ErrorException, Properties.Resources.CouldNotPlayFile, ViewModel.PlaylistManager.CurrentItem?.MusicFile.FileName);
             }
             PlayNextOrPause();
         }

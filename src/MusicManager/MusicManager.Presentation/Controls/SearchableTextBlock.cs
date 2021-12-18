@@ -22,7 +22,7 @@ namespace Waf.MusicManager.Presentation.Controls
         public static readonly DependencyProperty IsMatchCaseProperty =
             DependencyProperty.Register(nameof(IsMatchCase), typeof(bool), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(false, ControlPropertyChangedCallback));
 
-        private IReadOnlyList<string> textParts = new string[0];
+        private IReadOnlyList<string> textParts = Array.Empty<string>();
 
         public new string Text
         {

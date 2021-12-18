@@ -10,7 +10,7 @@ namespace Waf.MusicManager.Presentation.DesignData
 {
     public class SampleManagerViewModel : ManagerViewModel
     {
-        public SampleManagerViewModel() : base(new MockManagerView(), new Lazy<ISelectionService>(() => new MockSelectionService()), null, null, null)
+        public SampleManagerViewModel() : base(new MockManagerView(), new Lazy<ISelectionService>(() => new MockSelectionService()), null!, null!, null!)
         {
             var musicFiles = new[] 
             {
@@ -27,7 +27,7 @@ namespace Waf.MusicManager.Presentation.DesignData
                 }, ""),
                 new SampleMusicFile(new MusicMetadata(new TimeSpan(1, 33, 0), 320)
                 {
-                    Artists = new string[0],
+                    Artists = Array.Empty<string>(),
                     Title = "",
                 }, @"C:\Users\Public\Music\Dancefloor\Culture Beat - Mr. Vain.mp3")
             };

@@ -8,28 +8,20 @@ namespace Waf.MusicManager.Presentation.Converters
 {
     public class FilterOperatorToStringConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
         {
-            if (value == null) { return null; }
-
+            if (value == null) return null;
             var isDescription = ConverterHelper.IsParameterSet("description", parameter);
             var filterOperator = (FilterOperator)value;
-            switch (filterOperator)
+            return filterOperator switch
             {
-                case FilterOperator.Ignore:
-                    return isDescription ? Resources.IgnoreValue : "";
-                case FilterOperator.LessThanOrEqual:
-                    return isDescription ? Resources.LessThanOrEqual : "<=";
-                case FilterOperator.GreaterThanOrEqual:
-                    return isDescription ? Resources.GreaterThanOrEqual : ">=";
-                default:
-                    throw new InvalidOperationException("Enum value is unknown.");
-            }
+                FilterOperator.Ignore => isDescription ? Resources.IgnoreValue : "",
+                FilterOperator.LessThanOrEqual => isDescription ? Resources.LessThanOrEqual : "<=",
+                FilterOperator.GreaterThanOrEqual => isDescription ? Resources.GreaterThanOrEqual : ">=",
+                _ => throw new InvalidOperationException("Enum value is unknown."),
+            };
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+        public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture) => throw new NotSupportedException();
     }
 }

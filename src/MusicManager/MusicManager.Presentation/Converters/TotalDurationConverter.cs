@@ -7,9 +7,9 @@ namespace Waf.MusicManager.Presentation.Converters
 {
     public class TotalDurationConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object?[] values, Type? targetType, object? parameter, CultureInfo? culture)
         {
-            var isTotalDurationEstimated = (bool)values[0];
+            var isTotalDurationEstimated = (bool)values[0]!;
             var totalDuration = (string)new DurationConverter().Convert(values[1], null, null, null);
             if (isTotalDurationEstimated)
             {
@@ -18,9 +18,6 @@ namespace Waf.MusicManager.Presentation.Converters
             return totalDuration;
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+        public object[] ConvertBack(object? value, Type[]? targetTypes, object? parameter, CultureInfo? culture) => throw new NotSupportedException();
     }
 }

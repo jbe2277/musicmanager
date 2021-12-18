@@ -64,7 +64,7 @@ namespace Waf.MusicManager.Applications.Data
         {
             var root = Path.GetPathRoot(path);
             if (string.IsNullOrEmpty(root)) return Array.Empty<string>();
-            string innerPath = path.Substring(root.Length);
+            string innerPath = path[root.Length..];
             innerPath = innerPath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
             var pathSegments = new[] { root }.Concat(innerPath.Split(Path.DirectorySeparatorChar).Where(x => !string.IsNullOrEmpty(x))).ToArray();
             return pathSegments;

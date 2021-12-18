@@ -25,7 +25,7 @@ namespace Waf.MusicManager.Presentation.DesignData
                 }, @"C:\Users\Public\Music\test.m4a"),
                 new SampleMusicFile(new MusicMetadata(new TimeSpan(1, 33, 0), 320000)
                 {
-                    Artists = new string[0],
+                    Artists = Array.Empty<string>(),
                     Title = "",
                 }, @"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.mp4"),
             };
@@ -36,7 +36,7 @@ namespace Waf.MusicManager.Presentation.DesignData
             transcodingManager.TranscodeItems[2].Error = new InvalidOperationException("Test");
             TranscodingManager = transcodingManager;
 
-            SelectedTranscodeItems.Add(transcodingManager.TranscodeItems.Last());
+            SelectedTranscodeItems.Add(transcodingManager.TranscodeItems[^1]);
         }
 
 

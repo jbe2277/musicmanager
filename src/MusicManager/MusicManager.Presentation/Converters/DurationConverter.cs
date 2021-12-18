@@ -6,9 +6,9 @@ namespace Waf.MusicManager.Presentation.Converters
 {
     public class DurationConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
         {
-            var duration = (TimeSpan)value;
+            var duration = (TimeSpan)value!;
             if (duration < TimeSpan.FromHours(1))
             {
                 return string.Format(CultureInfo.CurrentCulture, "{0}:{1:00}", (int)duration.TotalMinutes, duration.Seconds);
@@ -19,9 +19,6 @@ namespace Waf.MusicManager.Presentation.Converters
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+        public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture) => throw new NotSupportedException();
     }
 }

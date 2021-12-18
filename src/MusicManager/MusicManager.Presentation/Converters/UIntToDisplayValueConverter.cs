@@ -6,15 +6,15 @@ namespace Waf.MusicManager.Presentation.Converters
 {
     public class UIntToDisplayValueConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
         {
-            uint number = (uint)value;
-            return number != 0 ? (object)number : "";
+            var number = (uint)value!;
+            return number != 0 ? number : "";
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture)
         {
-            string displayValue = value as string;
+            var displayValue = value as string;
             return string.IsNullOrEmpty(displayValue) ? 0 : uint.Parse(displayValue, CultureInfo.CurrentCulture);
         }
     }

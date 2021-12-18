@@ -77,18 +77,18 @@ namespace Waf.MusicManager.Presentation.Views
         {
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (var item in e.OldItems.Cast<TranscodeItem>())
+                foreach (var item in e.OldItems!.Cast<TranscodeItem>())
                 {
                     PropertyChangedEventManager.RemoveHandler(item, TranscodeItemPropertyChanged, "");
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (var item in e.NewItems.Cast<TranscodeItem>())
+                foreach (var item in e.NewItems!.Cast<TranscodeItem>())
                 {
                     PropertyChangedEventManager.AddHandler(item, TranscodeItemPropertyChanged, "");
                 }
-                transcodingListBox.ScrollIntoView(ViewModel.TranscodingManager.TranscodeItems.Last());
+                transcodingListBox.ScrollIntoView(ViewModel.TranscodingManager.TranscodeItems[^1]);
             }
             else
             {
@@ -97,7 +97,7 @@ namespace Waf.MusicManager.Presentation.Views
             transcodeItemsCollectionView.Refresh();  // Workaround because live shaping does not support to sort groupings.
         }
         
-        private void TranscodeItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void TranscodeItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(TranscodeItem.TranscodeStatus))
             {

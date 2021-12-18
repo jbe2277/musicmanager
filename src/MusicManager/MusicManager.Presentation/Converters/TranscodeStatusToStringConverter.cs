@@ -8,29 +8,20 @@ namespace Waf.MusicManager.Presentation.Converters
 {
     public class TranscodeStatusToStringConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
         {
             if (value == null) return null;
-
             var transcodeStatus = (TranscodeStatus)value;
-            switch (transcodeStatus)
+            return transcodeStatus switch
             {
-                case TranscodeStatus.InProgress:
-                    return Resources.InProgress;
-                case TranscodeStatus.Pending:
-                    return Resources.Pending;
-                case TranscodeStatus.Error:
-                    return Resources.Error;
-                case TranscodeStatus.Completed:
-                    return Resources.Completed;
-                default:
-                    throw new InvalidOperationException("Enum value is unknown.");
-            }
+                TranscodeStatus.InProgress => Resources.InProgress,
+                TranscodeStatus.Pending => Resources.Pending,
+                TranscodeStatus.Error => Resources.Error,
+                TranscodeStatus.Completed => Resources.Completed,
+                _ => throw new InvalidOperationException("Enum value is unknown."),
+            };
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+        public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture) => throw new NotSupportedException();
     }
 }

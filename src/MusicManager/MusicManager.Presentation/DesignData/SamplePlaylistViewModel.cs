@@ -25,7 +25,7 @@ namespace Waf.MusicManager.Presentation.DesignData
                 }, ""),
                 new SampleMusicFile(new MusicMetadata(new TimeSpan(1, 33, 0), 320000)
                 {
-                    Artists = new string[0],
+                    Artists = Array.Empty<string>(),
                     Title = "",
                 }, @"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity"),
                 new MusicFile(x => { throw new InvalidOperationException("Sample exception."); }, @"C:\corruptfile.mp3")
@@ -33,7 +33,7 @@ namespace Waf.MusicManager.Presentation.DesignData
             var playlistManager = new PlaylistManager();
             playlistManager.AddItems(musicFiles.Select(x => new PlaylistItem(x)));
             PlaylistManager = playlistManager;
-            playlistManager.CurrentItem = playlistManager.Items.First();
+            playlistManager.CurrentItem = playlistManager.Items[0];
         }
         
         
