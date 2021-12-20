@@ -17,11 +17,11 @@ namespace Test.MusicManager.Applications.UnitTesting
     [TestClass]
     public abstract class ApplicationsTest : DomainTest
     {
-        private AggregateCatalog catalog;
+        private AggregateCatalog? catalog;
+
+        protected UnitTestSynchronizationContext Context { get; private set; } = null!;
         
-        protected UnitTestSynchronizationContext Context { get; private set; } 
-        
-        protected CompositionContainer Container { get; private set; }
+        protected CompositionContainer Container { get; private set; } = null!;
 
         protected virtual UnitTestLevel UnitTestLevel => UnitTestLevel.UnitTest;
 
@@ -35,11 +35,11 @@ namespace Test.MusicManager.Applications.UnitTesting
             OnCatalogInitialize(catalog);
 
             Container = new CompositionContainer(catalog, CompositionOptions.DisableSilentRejection);
-            CompositionBatch batch = new CompositionBatch();
+            var batch = new CompositionBatch();
             batch.AddExportedValue(Container);
             Container.Compose(batch);
 
-            ShellService shellService = Container.GetExportedValue<ShellService>();
+            var shellService = Container.GetExportedValue<ShellService>();
             shellService.Settings = new AppSettings();
 
             ServiceLocator.RegisterInstance<IChangeTrackerService>(new ChangeTrackerService());
@@ -48,16 +48,14 @@ namespace Test.MusicManager.Applications.UnitTesting
         protected override void OnCleanup()
         {
             Container.Dispose();
-            catalog.Dispose();
+            catalog?.Dispose();
             Context.Dispose();
-
             base.OnCleanup();
         }
 
         protected virtual void OnCatalogInitialize(AggregateCatalog catalog) 
         {
             AddApplicationCatalog(typeof(ShellViewModel));
-
             AddMockCatalog(typeof(MockMessageService));
             AddMockCatalog(typeof(ApplicationsTest));
         }
@@ -86,15 +84,15 @@ namespace Test.MusicManager.Applications.UnitTesting
             }
         }
         
-        private void AddCatalogCore(Type typeInAssembly, Func<ComposablePartDefinition, bool> filter = null)
+        private void AddCatalogCore(Type typeInAssembly, Func<ComposablePartDefinition, bool>? filter = null)
         {
             if (filter == null)
             {
-                catalog.Catalogs.Add(new AssemblyCatalog(typeInAssembly.Assembly));
+                catalog?.Catalogs.Add(new AssemblyCatalog(typeInAssembly.Assembly));
             }
             else
             {
-                catalog.Catalogs.Add(new FilteredCatalog(new AssemblyCatalog(typeInAssembly.Assembly), filter));
+                catalog?.Catalogs.Add(new FilteredCatalog(new AssemblyCatalog(typeInAssembly.Assembly), filter));
             }
         }
     }

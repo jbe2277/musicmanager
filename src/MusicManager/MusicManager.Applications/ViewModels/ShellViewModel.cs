@@ -17,7 +17,7 @@ namespace Waf.MusicManager.Applications.ViewModels
     public class ShellViewModel : ViewModel<IShellView>
     {
         private readonly AppSettings settings;
-        private readonly ObservableCollection<Tuple<Exception, string>> errors;
+        private readonly ObservableCollection<Tuple<Exception?, string>> errors;
         private object? detailsView;
         
         [ImportingConstructor]
@@ -26,7 +26,7 @@ namespace Waf.MusicManager.Applications.ViewModels
             ShellService = shellService;
             PlayerService = playerService;
             settings = shellService.Settings;
-            errors = new ObservableCollection<Tuple<Exception, string>>();
+            errors = new ObservableCollection<Tuple<Exception?, string>>();
             ExitCommand = new DelegateCommand(Close);
             CloseErrorCommand = new DelegateCommand(CloseError);
             GarbageCollectorCommand = new DelegateCommand(GC.Collect);
@@ -53,9 +53,9 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public IPlayerService PlayerService { get; }
 
-        public IReadOnlyList<Tuple<Exception, string>> Errors => errors;
+        public IReadOnlyList<Tuple<Exception?, string>> Errors => errors;
 
-        public Tuple<Exception, string>? LastError => errors.LastOrDefault();
+        public Tuple<Exception?, string>? LastError => errors.LastOrDefault();
 
         public ICommand ExitCommand { get; }
 
@@ -91,7 +91,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public void Close() => ViewCore.Close();
 
-        public void ShowError(Exception exception, string message) => errors.Add(Tuple.Create(exception, message));
+        public void ShowError(Exception? exception, string message) => errors.Add(Tuple.Create(exception, message));
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {

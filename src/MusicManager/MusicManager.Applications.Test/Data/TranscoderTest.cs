@@ -26,7 +26,7 @@ namespace Test.MusicManager.Applications.Data
             var destinationFileName = TestHelper.GetTempFileName(".mp3");
             int progressCount = 0;
             double progress = 0;
-            transcoder.TranscodeAsync(musicFile.FileName, destinationFileName, 320000, CancellationToken.None, new Progress<double>(p =>
+            transcoder.TranscodeAsync(musicFile.FileName!, destinationFileName, 320000, CancellationToken.None, new Progress<double>(p =>
             {
                 progressCount++;
                 progress = p;
@@ -41,7 +41,7 @@ namespace Test.MusicManager.Applications.Data
 
             Assert.AreNotEqual(musicFile, destinationMusicFile);
             Assert.AreNotEqual(musicFile.Metadata, destinationMusicFile.Metadata);
-            Assert.AreEqual(musicFile.Metadata.Duration.TotalMilliseconds, destinationMusicFile.Metadata.Duration.TotalMilliseconds, 50);
+            Assert.AreEqual(musicFile.Metadata!.Duration.TotalMilliseconds, destinationMusicFile.Metadata!.Duration.TotalMilliseconds, 50);
             Assert.AreEqual(320000, destinationMusicFile.Metadata.Bitrate);
         }
 
@@ -61,7 +61,7 @@ namespace Test.MusicManager.Applications.Data
             double progress = 0;
             AssertHelper.ExpectedException<InvalidOperationException>(() =>
             {
-                transcoder.TranscodeAsync(musicFile.FileName, destinationFileName, 320000, CancellationToken.None, new Progress<double>(p =>
+                transcoder.TranscodeAsync(musicFile.FileName!, destinationFileName, 320000, CancellationToken.None, new Progress<double>(p =>
                 {
                     progressCount++;
                     progress = p;

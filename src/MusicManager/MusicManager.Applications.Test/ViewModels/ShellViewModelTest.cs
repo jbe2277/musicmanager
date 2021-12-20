@@ -59,7 +59,7 @@ namespace Test.MusicManager.Applications.ViewModels
             Assert.AreEqual("test 1", viewModel.Errors.Single().Item2);
 
             viewModel.ShowError(null, "test 2");
-            Assert.AreEqual("test 2", viewModel.Errors.Last().Item2);
+            Assert.AreEqual("test 2", viewModel.Errors[^1].Item2);
             
             viewModel.CloseErrorCommand.Execute(null);
             Assert.AreEqual("test 1", viewModel.Errors.Single().Item2);
@@ -77,7 +77,7 @@ namespace Test.MusicManager.Applications.ViewModels
             shellView.VirtualScreenWidth = 1000;
             shellView.VirtualScreenHeight = 700;
 
-            var viewModel = Container.GetExportedValue<ShellViewModel>();
+            Container.GetExportedValue<ShellViewModel>();
 
             Assert.AreEqual(20, shellView.Left);
             Assert.AreEqual(10, shellView.Top);
@@ -106,27 +106,27 @@ namespace Test.MusicManager.Applications.ViewModels
 
             SetSettingsValues();
             var shellService = Container.GetExportedValue<IShellService>();
-            new ShellViewModel(shellView, shellService, null).Close();
+            new ShellViewModel(shellView, shellService, null!).Close();
             AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN, false);
 
             // Height is 0 => don't apply the Settings values
             SetSettingsValues(0, 0, 1, 0);
-            new ShellViewModel(shellView, shellService, null).Close();
+            new ShellViewModel(shellView, shellService, null!).Close();
             AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN, false);
 
             // Left = 100 + Width = 901 > VirtualScreenWidth = 1000 => don't apply the Settings values
             SetSettingsValues(100, 100, 901, 100);
-            new ShellViewModel(shellView, shellService, null).Close();
+            new ShellViewModel(shellView, shellService, null!).Close();
             AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN, false);
 
             // Top = 100 + Height = 601 > VirtualScreenWidth = 600 => don't apply the Settings values
             SetSettingsValues(100, 100, 100, 601);
-            new ShellViewModel(shellView, shellService, null).Close();
+            new ShellViewModel(shellView, shellService, null!).Close();
             AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN, false);
 
             // Use the limit values => apply the Settings values
             SetSettingsValues(0, 0, 1000, 700);
-            new ShellViewModel(shellView, shellService, null).Close();
+            new ShellViewModel(shellView, shellService, null!).Close();
             AssertSettingsValues(0, 0, 1000, 700, false);
         }
 

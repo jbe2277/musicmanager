@@ -20,11 +20,11 @@ namespace Test.MusicManager.Applications.Controllers
         private const string subDirectory = "Files";
         private static readonly string subDirectoryPath = Path.Combine(Environment.CurrentDirectory, subDirectory);
         
-        private ManagerController controller;
-        private ShellService shellService;
-        private IManagerStatusService managerStatusService;
-        private SelectionService selectionService;
-        private ManagerViewModel viewModel;
+        private ManagerController controller = null!;
+        private ShellService shellService = null!;
+        private IManagerStatusService managerStatusService = null!;
+        private SelectionService selectionService = null!;
+        private ManagerViewModel viewModel = null!;
 
         protected override void OnInitialize()
         {
@@ -35,8 +35,8 @@ namespace Test.MusicManager.Applications.Controllers
             shellService = Container.GetExportedValue<ShellService>();
             selectionService = Container.GetExportedValue<SelectionService>();
             managerStatusService = Container.GetExportedValue<IManagerStatusService>();
-            var view = (MockManagerView)shellService.ContentView;
-            viewModel = ViewHelper.GetViewModel<ManagerViewModel>(view);
+            var view = (MockManagerView)shellService.ContentView!;
+            viewModel = ViewHelper.GetViewModel<ManagerViewModel>(view)!;
         }
 
         protected override void OnCleanup()
@@ -53,16 +53,13 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsFalse(viewModel.NavigateDirectoryUpCommand.CanExecute(null));
             Assert.IsTrue(viewModel.FolderBrowser.SubDirectories.Any(x => @"C:\".Equals(x.Path, StringComparison.OrdinalIgnoreCase)));
 
-            AssertHelper.CanExecuteChangedEvent(viewModel.NavigateDirectoryUpCommand, () => 
-                viewModel.FolderBrowser.CurrentPath = subDirectoryPath);
-            AssertHelper.PropertyChangedEvent(viewModel.FolderBrowser, x => x.SubDirectories, 
-                () => viewModel.NavigateDirectoryUpCommand.Execute(null));
+            AssertHelper.CanExecuteChangedEvent(viewModel.NavigateDirectoryUpCommand, () => viewModel.FolderBrowser.CurrentPath = subDirectoryPath);
+            AssertHelper.PropertyChangedEvent(viewModel.FolderBrowser, x => x.SubDirectories, () => viewModel.NavigateDirectoryUpCommand.Execute(null));
             Assert.AreEqual(Environment.CurrentDirectory, viewModel.FolderBrowser.CurrentPath);
 
-            AssertHelper.ExpectedException<InvalidOperationException>(() =>
-                viewModel.NavigateToSelectedSubDirectoryCommand.Execute(null));
+            AssertHelper.ExpectedException<InvalidOperationException>(() => viewModel.NavigateToSelectedSubDirectoryCommand.Execute(null));
             
-            viewModel.FolderBrowser.SelectedSubDirectory = viewModel.FolderBrowser.SubDirectories.First(x => x.Path.Equals(subDirectoryPath, StringComparison.OrdinalIgnoreCase));
+            viewModel.FolderBrowser.SelectedSubDirectory = viewModel.FolderBrowser.SubDirectories.First(x => subDirectoryPath.Equals(x.Path, StringComparison.OrdinalIgnoreCase));
             viewModel.NavigateToSelectedSubDirectoryCommand.Execute(null);
             Assert.AreEqual(subDirectoryPath, viewModel.FolderBrowser.CurrentPath);
 
@@ -82,34 +79,33 @@ namespace Test.MusicManager.Applications.Controllers
         {
             Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
             
-            AssertHelper.PropertyChangedEvent(managerStatusService, x => x.UpdatingFilesList, 
-                () => viewModel.FolderBrowser.CurrentPath = subDirectoryPath);
+            AssertHelper.PropertyChangedEvent(managerStatusService, x => x.UpdatingFilesList, () => viewModel.FolderBrowser.CurrentPath = subDirectoryPath);
             Assert.IsTrue(managerStatusService.UpdatingFilesList);
             Assert.AreEqual(-1, managerStatusService.TotalFilesCount);
 
             // Music files are updated asynchronously
             Assert.IsFalse(selectionService.MusicFiles.Any());
             Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
-            Assert.IsTrue(selectionService.MusicFiles.Any(x => x.MusicFile.FileName.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsTrue(selectionService.MusicFiles.Any(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
             Assert.IsTrue(managerStatusService.TotalFilesCount > 0);
 
             // Move a directory up.
             Assert.IsFalse(managerStatusService.UpdatingFilesList);
             viewModel.NavigateDirectoryUpCommand.Execute(null);
             Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
-            Assert.IsFalse(selectionService.MusicFiles.Any(x => x.MusicFile.FileName.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsFalse(selectionService.MusicFiles.Any(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
 
             // Load recursive all subdirectories
             Assert.IsFalse(managerStatusService.UpdatingFilesList);
             viewModel.LoadRecursiveCommand.Execute(null);
             Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
-            Assert.IsTrue(selectionService.MusicFiles.Any(x => x.MusicFile.FileName.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsTrue(selectionService.MusicFiles.Any(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
 
             // Search for TestMp3
             Assert.IsFalse(managerStatusService.UpdatingFilesList);
             viewModel.SearchFilter.UserSearchFilter = "TestMp3";
             Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
-            Assert.IsNotNull(selectionService.MusicFiles.Single(x => x.MusicFile.FileName.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsNotNull(selectionService.MusicFiles.Single(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
 
             // Search for NoFilesToFind
             Assert.IsFalse(managerStatusService.UpdatingFilesList);
@@ -132,10 +128,10 @@ namespace Test.MusicManager.Applications.Controllers
             viewModel.FolderBrowser.CurrentPath = "";
             viewModel.FolderBrowser.CurrentPath = subDirectoryPath;
             Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
-            Assert.IsTrue(selectionService.MusicFiles.Any(x => x.MusicFile.FileName.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsTrue(selectionService.MusicFiles.Any(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
 
             fileSystemWatcherService.RaiseDeleted(new FileSystemEventArgs(WatcherChangeTypes.Deleted, subDirectoryPath, "testmp3.mp3"));
-            Assert.IsFalse(selectionService.MusicFiles.Any(x => x.MusicFile.FileName.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsFalse(selectionService.MusicFiles.Any(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
             Assert.IsTrue(selectionService.MusicFiles.Any());
 
             fileSystemWatcherService.RaiseCreated(new FileSystemEventArgs(WatcherChangeTypes.Created, subDirectoryPath, "aaa.mp3"));

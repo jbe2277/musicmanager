@@ -9,25 +9,16 @@ namespace Test.MusicManager.Applications.Views
     [Export, Export(typeof(IPlaylistView))]
     public class MockPlaylistView : MockView, IPlaylistView
     {
-        public Action FocusSearchBoxStub { get; set; }
+        public Action? FocusSearchBoxStub { get; set; }
         
-        public Action FocusSelectedItemStub { get; set; }
+        public Action? FocusSelectedItemStub { get; set; }
 
-        public Action<PlaylistItem> ScrollIntoViewStub { get; set; }
-        
-        public void FocusSearchBox()
-        {
-            FocusSearchBoxStub?.Invoke();
-        }
-        
-        public void FocusSelectedItem()
-        {
-            FocusSelectedItemStub?.Invoke();
-        }
+        public Action<PlaylistItem>? ScrollIntoViewStub { get; set; }
 
-        public void ScrollIntoView(PlaylistItem item)
-        {
-            ScrollIntoViewStub?.Invoke(item);
-        }
+        public void FocusSearchBox() => FocusSearchBoxStub?.Invoke();
+
+        public void FocusSelectedItem() => FocusSelectedItemStub?.Invoke();
+
+        public void ScrollIntoView(PlaylistItem item) => ScrollIntoViewStub?.Invoke(item);
     }
 }

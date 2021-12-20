@@ -19,13 +19,13 @@ namespace Test.MusicManager.Applications.Controllers
     [TestClass]
     public class MusicPropertiesControllerTest : ApplicationsTest
     {
-        private ObservableCollection<MusicFile> musicFiles;
-        private MockMusicFileContext musicFileContext;
-        private SelectionService selectionService;
-        private MusicPropertiesController controller;
-        private PlaylistManager playlistManager;
-        private MockMusicPropertiesView view;
-        private MusicPropertiesViewModel viewModel;
+        private ObservableCollection<MusicFile> musicFiles = null!;
+        private MockMusicFileContext musicFileContext = null!;
+        private SelectionService selectionService = null!;
+        private MusicPropertiesController controller = null!;
+        private PlaylistManager playlistManager = null!;
+        private MockMusicPropertiesView view = null!;
+        private MusicPropertiesViewModel viewModel = null!;
 
         protected override void OnInitialize()
         {
@@ -46,8 +46,8 @@ namespace Test.MusicManager.Applications.Controllers
             controller.Initialize();
 
             var shellService = Container.GetExportedValue<ShellService>();
-            view = (MockMusicPropertiesView)shellService.MusicPropertiesView;
-            viewModel = ViewHelper.GetViewModel<MusicPropertiesViewModel>(view);
+            view = (MockMusicPropertiesView)shellService.MusicPropertiesView!;
+            viewModel = ViewHelper.GetViewModel<MusicPropertiesViewModel>(view)!;
         }
 
         protected override void OnCleanup()
@@ -62,11 +62,10 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsNull(viewModel.MusicFile);
             
             // Select the first music file
-            AssertHelper.PropertyChangedEvent(viewModel, x => x.MusicFile, 
-                () => selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]));
+            AssertHelper.PropertyChangedEvent(viewModel, x => x.MusicFile, () => selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]));
             Assert.AreEqual(musicFiles[0], viewModel.MusicFile);
 
-            viewModel.MusicFile.Metadata.Rating = 33;
+            viewModel.MusicFile!.Metadata!.Rating = 33;
 
             // Extend the selection by adding the second music file
             
@@ -83,11 +82,10 @@ namespace Test.MusicManager.Applications.Controllers
             {
                 Assert.AreEqual(musicFiles[0], mf);
                 saveChangesCalled = true;
-                return Task.FromResult((object)null);
+                return Task.CompletedTask;
             };
 
-            AssertHelper.PropertyChangedEvent(viewModel, x => x.MusicFile,
-                () => selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[1]));
+            AssertHelper.PropertyChangedEvent(viewModel, x => x.MusicFile, () => selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[1]));
             
             Assert.IsTrue(applyChangesCalled);
             Assert.IsTrue(saveChangesCalled);
@@ -101,7 +99,7 @@ namespace Test.MusicManager.Applications.Controllers
         [TestMethod]
         public void SaveChangesErrorTest()
         {
-            selectionService.MusicFiles[0].MusicFile.Metadata.Rating = 33;
+            selectionService.MusicFiles[0].MusicFile.Metadata!.Rating = 33;
 
             var exception = new InvalidOperationException("Test");
             musicFileContext.SaveChangesAsyncAction = mf =>
@@ -131,8 +129,8 @@ namespace Test.MusicManager.Applications.Controllers
         {
             selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]);
             selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[1]);
-            selectionService.MusicFiles[0].MusicFile.Metadata.Rating = 33;
-            selectionService.MusicFiles[1].MusicFile.Metadata.Rating = 33;
+            selectionService.MusicFiles[0].MusicFile.Metadata!.Rating = 33;
+            selectionService.MusicFiles[1].MusicFile.Metadata!.Rating = 33;
 
             var saveChangesCalled = 0;
             var musicFileToSave = musicFiles[1];
@@ -140,8 +138,8 @@ namespace Test.MusicManager.Applications.Controllers
             {
                 saveChangesCalled++;
                 Assert.AreEqual(musicFileToSave, mf);
-                musicFileToSave.Metadata.ClearChanges();
-                return Task.FromResult((object)null);
+                musicFileToSave.Metadata!.ClearChanges();
+                return Task.CompletedTask;
             };
 
             playlistManager.CurrentItem = new PlaylistItem(musicFiles[0]);
@@ -155,8 +153,8 @@ namespace Test.MusicManager.Applications.Controllers
             playlistManager.CurrentItem = new PlaylistItem(musicFiles[1]);
             Context.WaitFor(() => saveChangesCalled == 2, TimeSpan.FromSeconds(1));
 
-            selectionService.MusicFiles[0].MusicFile.Metadata.Rating = 50;
-            selectionService.MusicFiles[1].MusicFile.Metadata.Rating = 50;
+            selectionService.MusicFiles[0].MusicFile.Metadata!.Rating = 50;
+            selectionService.MusicFiles[1].MusicFile.Metadata!.Rating = 50;
             selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]);
             selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[1]);
             Assert.AreEqual(3, saveChangesCalled);
@@ -164,8 +162,8 @@ namespace Test.MusicManager.Applications.Controllers
             // Shutdown adds two tasks: 
             //   1. save selected file
             //   2. save unsaved files because they were played until now
-            selectionService.MusicFiles[0].MusicFile.Metadata.Rating = 75;
-            selectionService.MusicFiles[1].MusicFile.Metadata.Rating = 75;
+            selectionService.MusicFiles[0].MusicFile.Metadata!.Rating = 75;
+            selectionService.MusicFiles[1].MusicFile.Metadata!.Rating = 75;
             var shellService = Container.GetExportedValue<ShellService>();
             musicFileToSave = musicFiles[0];
             controller.Shutdown();

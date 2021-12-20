@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using Waf.MusicManager.Applications.Services;
 
 namespace Test.MusicManager.Applications.Services
@@ -11,8 +12,8 @@ namespace Test.MusicManager.Applications.Services
         {
             var fileName = @"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.mp3";
 
-            Assert.AreEqual("Culture Beat - Serenity", MusicTitleHelper.GetTitleText(fileName, new string[0], null));
-            Assert.AreEqual("Culture Beat - Serenity", MusicTitleHelper.GetTitleText(fileName, new string[0], ""));
+            Assert.AreEqual("Culture Beat - Serenity", MusicTitleHelper.GetTitleText(fileName, Array.Empty<string>(), null));
+            Assert.AreEqual("Culture Beat - Serenity", MusicTitleHelper.GetTitleText(fileName, Array.Empty<string>(), ""));
 
             Assert.AreEqual("", MusicTitleHelper.GetTitleText(fileName, new[] { "Culture Beat" }, null));
             Assert.AreEqual("", MusicTitleHelper.GetTitleText(fileName, new[] { "Culture Beat" }, ""));

@@ -18,10 +18,10 @@ namespace Test.MusicManager.Applications.Controllers
     [TestClass]
     public class TranscodingControllerTest : ApplicationsTest
     {
-        private ObservableCollection<MusicFile> musicFiles;
-        private MockMusicFileContext musicFileContext;
-        private SelectionService selectionService;
-        
+        private ObservableCollection<MusicFile> musicFiles = null!;
+        private MockMusicFileContext musicFileContext = null!;
+        private SelectionService selectionService = null!;
+
         protected override void OnInitialize()
         {
             base.OnInitialize();
@@ -35,7 +35,7 @@ namespace Test.MusicManager.Applications.Controllers
             selectionService = Container.GetExportedValue<SelectionService>();
             selectionService.Initialize(musicFiles);
 
-            musicFiles.First().Metadata.Album = "Serenity";
+            musicFiles[0].Metadata!.Album = "Serenity";
         }
         
         [TestMethod]
@@ -45,8 +45,8 @@ namespace Test.MusicManager.Applications.Controllers
             controller.Initialize();
 
             var shellService = Container.GetExportedValue<ShellService>();
-            var view = shellService.TranscodingListView.Value;
-            var viewModel = ViewHelper.GetViewModel<TranscodingListViewModel>((IView)view);
+            var view = shellService.TranscodingListView!.Value;
+            var viewModel = ViewHelper.GetViewModel<TranscodingListViewModel>((IView)view)!;
             var transcodingService = viewModel.TranscodingService;
             var transcodingManager = viewModel.TranscodingManager;
             
@@ -67,8 +67,8 @@ namespace Test.MusicManager.Applications.Controllers
 
             // -- mock TranscodeAsync call
             bool transcodeCalled = false;
-            Task transcodeDelayTask = Task.FromResult((object)null);
-            Exception transcodeError = null;
+            Task transcodeDelayTask = Task.CompletedTask;
+            Exception? transcodeError = null;
             var transcode = Container.GetExportedValue<MockTranscoder>();
             transcode.TranscodeAsyncAction = async (sourceFileName, destinationFileName, bitrate, cancellationToken, progress) => 
             {
@@ -77,16 +77,16 @@ namespace Test.MusicManager.Applications.Controllers
                 progress.Report(50);
                 await transcodeDelayTask;
                 cancellationToken.ThrowIfCancellationRequested();
-                if (transcodeError != null) { throw transcodeError; }
+                if (transcodeError != null) throw transcodeError;
                 progress.Report(100);
             };
 
             // -- mock SaveChangesAsync call of destination file
-            List<MusicFile> saveChangesCalls = new List<MusicFile>();
+            var saveChangesCalls = new List<MusicFile>();
             musicFileContext.SaveChangesAsyncAction = (musicFile) =>
             {
                 saveChangesCalls.Add(musicFile);
-                return Task.FromResult((object)null);
+                return Task.CompletedTask;
             };
 
             transcodingService.ConvertToMp3SelectedCommand.Execute(null);
@@ -96,19 +96,18 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsTrue(transcodeCalled);
             Assert.AreEqual(1d, transcodingManager.TranscodeItems.Single().Progress);
             Assert.IsNull(transcodingManager.TranscodeItems.Single().Error);
-            Assert.AreEqual("Serenity", saveChangesCalls.Single().Metadata.Album);
+            Assert.AreEqual("Serenity", saveChangesCalls.Single().Metadata!.Album);
 
             // Simulate the FileWatcher and add the new file to the list
             musicFiles.Add(musicFileContext.Create(transcodingManager.TranscodeItems.Single().DestinationFileName));
             Assert.IsFalse(transcodingService.ConvertToMp3SelectedCommand.CanExecute(null));
             
-
             // Select second music file and convert to MP3 but cancel during conversion
             selectionService.SelectedMusicFiles.Clear();
-            selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles.ElementAt(1));
+            selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[1]);
             Assert.IsTrue(transcodingService.ConvertToMp3SelectedCommand.CanExecute(null));
 
-            var transcodeDelayTaskSource = new TaskCompletionSource<object>();
+            var transcodeDelayTaskSource = new TaskCompletionSource<object?>();
             transcodeDelayTask = transcodeDelayTaskSource.Task;
             transcodeCalled = false;
             saveChangesCalls.Clear();
@@ -117,7 +116,7 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsTrue(transcodingService.CancelAllCommand.CanExecute(null));
             Assert.IsFalse(transcodingService.CancelSelectedCommand.CanExecute(null));
 
-            AssertHelper.CanExecuteChangedEvent(transcodingService.CancelSelectedCommand, () => viewModel.SelectedTranscodeItems.Add(transcodingManager.TranscodeItems.Last()));
+            AssertHelper.CanExecuteChangedEvent(transcodingService.CancelSelectedCommand, () => viewModel.SelectedTranscodeItems.Add(transcodingManager.TranscodeItems[^1]));
             Assert.IsTrue(transcodingService.CancelSelectedCommand.CanExecute(null));
 
             transcodingService.CancelSelectedCommand.Execute(null);
@@ -129,11 +128,10 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.AreEqual(1, transcodingManager.TranscodeItems.Count);
             Assert.IsFalse(saveChangesCalls.Any());
 
-
             // Convert again the second music file; simulate a conversion error
             transcodeError = new InvalidOperationException("Test");
             transcodingService.ConvertToMp3AllCommand.Execute(null);
-            Assert.AreEqual(transcodeError, transcodingManager.TranscodeItems.Last().Error);
+            Assert.AreEqual(transcodeError, transcodingManager.TranscodeItems[^1].Error);
 
             controller.Shutdown();
         }

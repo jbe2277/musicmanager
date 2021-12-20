@@ -24,10 +24,7 @@ namespace Test.MusicManager.Applications
             
             protected override void Dispose(bool isDisposing)
             {
-                if (isDisposing) 
-                { 
-                    DisposeCalled++; 
-                }
+                if (isDisposing) DisposeCalled++; 
                 base.Dispose(isDisposing);
             }
         }

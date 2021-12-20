@@ -23,12 +23,12 @@ namespace Test.MusicManager.Applications.Services
             Assert.AreEqual(shellView, service.ShellView);
 
             bool closingCalled = false;
-            CancelEventHandler eventHandler = (sender, e) =>
+            void EventHandler(object sender, CancelEventArgs e)
             {
                 e.Cancel = true;
                 closingCalled = true;
-            };
-            service.Closing += eventHandler;
+            }
+            service.Closing += EventHandler;
 
             Assert.IsFalse(closingCalled);
             var eventArgs = new CancelEventArgs();
@@ -37,7 +37,7 @@ namespace Test.MusicManager.Applications.Services
             Assert.IsTrue(eventArgs.Cancel);
 
             closingCalled = false;
-            service.Closing -= eventHandler;
+            service.Closing -= EventHandler;
             Assert.IsFalse(closingCalled);
             shellView.RaiseClosing(new CancelEventArgs());
             Assert.IsFalse(closingCalled);
@@ -49,7 +49,7 @@ namespace Test.MusicManager.Applications.Services
             var service = Container.GetExportedValue<ShellService>();
 
             Assert.IsFalse(service.TasksToCompleteBeforeShutdown.Any());
-            var task = Task.FromResult((object)null);
+            var task = Task.CompletedTask;
             service.AddTaskToCompleteBeforeShutdown(task);
             Assert.AreEqual(task, service.TasksToCompleteBeforeShutdown.Single());
         }
@@ -79,8 +79,8 @@ namespace Test.MusicManager.Applications.Services
         {
             var service = Container.GetExportedValue<ShellService>();
 
-            Exception exception = null;
-            string message = null;
+            Exception? exception = null;
+            string? message = null;
             service.ShowErrorAction = (ex, msg) => 
             {
                 exception = ex;

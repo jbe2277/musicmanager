@@ -14,15 +14,9 @@ namespace Test.MusicManager.Applications.Views
         }
         
         public TimeSpan Position { get; set; }
-        
-        public TimeSpan GetPosition()
-        {
-            return Position;
-        }
 
-        public void SetPosition(TimeSpan position)
-        {
-            Position = position;
-        }
+        public TimeSpan GetPosition() => Position;
+
+        public void SetPosition(TimeSpan position) => Position = position;
     }
 }

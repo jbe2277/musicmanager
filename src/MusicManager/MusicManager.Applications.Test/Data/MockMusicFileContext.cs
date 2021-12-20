@@ -13,16 +13,15 @@ namespace Test.MusicManager.Applications.Data
     [Export, Export(typeof(IMusicFileContext)), PartMetadata(UnitTestMetadata.Name, UnitTestMetadata.Data)]
     public class MockMusicFileContext : IMusicFileContext
     {
-        private readonly Dictionary<string, MusicFile> musicFilesCache = new Dictionary<string,MusicFile>();
+        private readonly Dictionary<string, MusicFile> musicFilesCache = new();
 
-        public Action<MusicFile> ApplyChangesAction { get; set; }
+        public Action<MusicFile>? ApplyChangesAction { get; set; }
 
-        public Func<MusicFile, Task> SaveChangesAsyncAction { get; set; }
-
+        public Func<MusicFile, Task>? SaveChangesAsyncAction { get; set; }
 
         public MusicFile Create(string fileName)
         {
-            if (!musicFilesCache.TryGetValue(fileName, out MusicFile musicFile))
+            if (!musicFilesCache.TryGetValue(fileName, out var musicFile))
             {
                 musicFile = MockMusicFile.CreateEmpty(fileName);
                 musicFilesCache.Add(fileName, musicFile);
@@ -32,20 +31,11 @@ namespace Test.MusicManager.Applications.Data
 
         public MusicFile CreateFromMultiple(IEnumerable<MusicFile> musicFiles)
         {
-            return new MockMusicFile(new MusicMetadata(new TimeSpan(0, 3, 33), 320000), null)
-            {
-                SharedMusicFiles = musicFiles.ToArray()
-            };
+            return new MockMusicFile(new MusicMetadata(new TimeSpan(0, 3, 33), 320000), null) { SharedMusicFiles = musicFiles.ToArray() };
         }
 
-        public void ApplyChanges(MusicFile musicFile)
-        {
-            ApplyChangesAction?.Invoke(musicFile);
-        }
+        public void ApplyChanges(MusicFile musicFile) => ApplyChangesAction?.Invoke(musicFile);
 
-        public Task SaveChangesAsync(MusicFile musicFile)
-        {
-            return SaveChangesAsyncAction?.Invoke(musicFile) ?? Task.FromResult((object)null);
-        }
+        public Task SaveChangesAsync(MusicFile musicFile) => SaveChangesAsyncAction?.Invoke(musicFile) ?? Task.CompletedTask;
     }
 }

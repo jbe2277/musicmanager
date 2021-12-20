@@ -19,8 +19,8 @@ namespace Test.MusicManager.Applications.Controllers
     [TestClass]
     public class ModuleControllerTest : ApplicationsTest
     {
-        private ModuleController controller;
-        private ShellService shellService;
+        private ModuleController controller = null!;
+        private ShellService shellService = null!;
         
         protected override void OnInitialize()
         {
@@ -48,7 +48,7 @@ namespace Test.MusicManager.Applications.Controllers
             {
                 if (type == typeof(AppSettings)) return appSettings;
                 if (type == typeof(PlaylistSettings)) return playlistSettings;
-                return null;
+                throw new NotSupportedException(type.Name);
             };
 
             controller.Initialize();
@@ -60,9 +60,8 @@ namespace Test.MusicManager.Applications.Controllers
 
             controller.Shutdown();
 
-
-            shellService.Settings = null;
-            playerController.PlaylistSettings = null;
+            shellService.Settings = null!;
+            playerController.PlaylistSettings = null!;
 
             controller.Initialize();
             controller.Run();

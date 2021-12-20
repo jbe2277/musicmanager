@@ -21,15 +21,14 @@ namespace Test.MusicManager.Applications.Controllers
     [TestClass]
     public class PlayerControllerTest : ApplicationsTest
     {
-        private ObservableCollection<MusicFile> musicFiles;
-        private ShellService shellService;
-        private SelectionService selectionService;
-        private PlayerController controller;
-        private MockPlayerView view;
-        private PlayerViewModel viewModel;
-        private PlaylistManager playlistManager;
-        private PlaylistSettings playlistSettings;
-
+        private ObservableCollection<MusicFile> musicFiles = null!;
+        private ShellService shellService = null!;
+        private SelectionService selectionService = null!;
+        private PlayerController controller = null!;
+        private MockPlayerView view = null!;
+        private PlayerViewModel viewModel = null!;
+        private PlaylistManager playlistManager = null!;
+        private PlaylistSettings playlistSettings = null!;
 
         protected override void OnInitialize()
         {
@@ -54,8 +53,8 @@ namespace Test.MusicManager.Applications.Controllers
             shellService = Container.GetExportedValue<ShellService>();
             shellService.ShowPlaylistViewAction = () => { };
             shellService.ShowMusicPropertiesViewAction = () => { };
-            view = (MockPlayerView)shellService.PlayerView;
-            viewModel = ViewHelper.GetViewModel<PlayerViewModel>(view);
+            view = (MockPlayerView)shellService.PlayerView!;
+            viewModel = ViewHelper.GetViewModel<PlayerViewModel>(view)!;
         }
 
         protected override void OnCleanup()
@@ -71,7 +70,7 @@ namespace Test.MusicManager.Applications.Controllers
         {
             // Simulate that a music file was passed via command line parameter
             var environmentService = Container.GetExportedValue<MockEnvironmentService>();
-            environmentService.MusicFilesToLoad = new[] { musicFiles.First().FileName };
+            environmentService.MusicFilesToLoad = new[] { musicFiles.First().FileName! };
 
             // Another controller is responsible to add first the item into the playlist.
             playlistManager.InsertItems(0, musicFiles.Select(x => new PlaylistItem(x)));
@@ -83,7 +82,7 @@ namespace Test.MusicManager.Applications.Controllers
             playerService.PlayPauseCommand = new DelegateCommand(() => playPauseCommandCalled = true);
 
             controller.Run();
-            Assert.AreEqual(musicFiles[0], playlistManager.CurrentItem.MusicFile);
+            Assert.AreEqual(musicFiles[0], playlistManager.CurrentItem!.MusicFile);
             Assert.IsTrue(playPauseCommandCalled);
         }
 
@@ -97,7 +96,7 @@ namespace Test.MusicManager.Applications.Controllers
             playlistManager.InsertItems(0, musicFiles.Select(x => new PlaylistItem(x)));
 
             controller.Run();
-            Assert.AreEqual(musicFiles[0], playlistManager.CurrentItem.MusicFile);
+            Assert.AreEqual(musicFiles[0], playlistManager.CurrentItem!.MusicFile);
             Assert.AreEqual(TimeSpan.FromSeconds(432), view.Position);
         }
 
@@ -109,8 +108,7 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsFalse(viewModel.PlayerService.PlaySelectedCommand.CanExecute(null));
 
             // Select first music file
-            AssertHelper.CanExecuteChangedEvent(viewModel.PlayerService.PlaySelectedCommand,
-                () => selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]));
+            AssertHelper.CanExecuteChangedEvent(viewModel.PlayerService.PlaySelectedCommand, () => selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]));
             Assert.IsTrue(viewModel.PlayerService.PlaySelectedCommand.CanExecute(null));
 
             // Insert a dummy playlist item which will be replaced by Play
@@ -130,7 +128,7 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsTrue(playPauseCommandCalled);
             Assert.IsTrue(showPlaylistViewCalled);
             AssertHelper.SequenceEqual(musicFiles, playlistManager.Items.Select(x => x.MusicFile));
-            Assert.AreEqual(musicFiles.First(), playlistManager.CurrentItem.MusicFile);
+            Assert.AreEqual(musicFiles.First(), playlistManager.CurrentItem!.MusicFile);
         }
 
         [TestMethod]
@@ -141,8 +139,7 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsFalse(viewModel.PlayerService.EnqueueSelectedCommand.CanExecute(null));
 
             // Select first music file
-            AssertHelper.CanExecuteChangedEvent(viewModel.PlayerService.PlaySelectedCommand,
-                () => selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]));
+            AssertHelper.CanExecuteChangedEvent(viewModel.PlayerService.PlaySelectedCommand, () => selectionService.SelectedMusicFiles.Add(selectionService.MusicFiles[0]));
             Assert.IsTrue(viewModel.PlayerService.EnqueueSelectedCommand.CanExecute(null));
 
             // Enqueue the selected music file
@@ -210,7 +207,7 @@ namespace Test.MusicManager.Applications.Controllers
             viewModel.ShowMusicPropertiesCommand.Execute(null);
             Assert.IsTrue(showMusicPropertiesViewActionCalled);
             var musicPropertiesViewModel = Container.GetExportedValue<MusicPropertiesViewModel>();
-            Assert.AreEqual(playlistManager.CurrentItem.MusicFile, musicPropertiesViewModel.MusicFile);
+            Assert.AreEqual(playlistManager.CurrentItem!.MusicFile, musicPropertiesViewModel.MusicFile);
         }
 
         [TestMethod]

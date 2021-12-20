@@ -14,8 +14,8 @@ namespace Test.MusicManager.Applications.Controllers
     [TestClass]
     public class PlaylistControllerIntegrationTest : IntegrationTest
     {
-        private ModuleController moduleController;
-        
+        private ModuleController moduleController = null!;
+
         protected override void OnInitialize()
         {
             base.OnInitialize();
@@ -39,8 +39,8 @@ namespace Test.MusicManager.Applications.Controllers
             string playlistFileName = Environment.CurrentDirectory + @"\TestPlaylist.m3u";
             
             var shellService = Container.GetExportedValue<ShellService>();
-            var view = shellService.PlaylistView;
-            var viewModel = ViewHelper.GetViewModel<PlaylistViewModel>((IView)view);
+            var view = shellService.PlaylistView!;
+            var viewModel = ViewHelper.GetViewModel<PlaylistViewModel>((IView)view)!;
             viewModel.InsertFilesAction(0, new[] 
             { 
                 musicFileName1,

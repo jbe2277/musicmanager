@@ -40,7 +40,7 @@ namespace Test.MusicManager.Applications.DataModels
             AssertHelper.PropertyChangedEvent(dataModel, x => x.DisplaySearchFilter, () => dataModel.UserSearchFilter = "01 Culture");
             Assert.AreEqual("01 Culture; A filter is set", dataModel.DisplaySearchFilter);
 
-            AssertHelper.PropertyChangedEvent(dataModel, x => x.DisplaySearchFilter, () => dataModel.ArtistFilter = null);
+            AssertHelper.PropertyChangedEvent(dataModel, x => x.DisplaySearchFilter, () => dataModel.ArtistFilter = "");
             Assert.AreEqual("01 Culture", dataModel.DisplaySearchFilter);
 
             dataModel.Clear();

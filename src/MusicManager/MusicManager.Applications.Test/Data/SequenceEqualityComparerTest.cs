@@ -20,11 +20,9 @@ namespace Test.MusicManager.Applications.Data
             Assert.IsFalse(comparer.Equals(list1, null));
             Assert.IsFalse(comparer.Equals(null, list1));
 
-            Assert.AreEqual(list1[0].GetHashCode() ^ list1[1].GetHashCode() ^ list1[2].GetHashCode(),
-                comparer.GetHashCode(list1));
+            Assert.AreEqual(list1![0].GetHashCode() ^ list1[1].GetHashCode() ^ list1[2].GetHashCode(), comparer.GetHashCode(list1));
             Assert.AreEqual("Han".GetHashCode(), comparer.GetHashCode(new[] { "Han" }));
-            Assert.AreEqual(0, comparer.GetHashCode(null));
-            Assert.AreEqual(0, comparer.GetHashCode(new string[0]));
+            Assert.AreEqual(0, comparer.GetHashCode(System.Array.Empty<string>()));
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Waf.UnitTesting;
 using Waf.MusicManager.Applications.Data;
 
@@ -17,7 +16,7 @@ namespace Test.MusicManager.Applications.Data
             var ls = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
             Assert.AreEqual("", StringListConverter.ToString(null));
-            Assert.AreEqual("", StringListConverter.ToString(new string[0]));
+            Assert.AreEqual("", StringListConverter.ToString(Array.Empty<string>()));
             Assert.AreEqual("", StringListConverter.ToString(new[] { "" }));
 
             Assert.AreEqual("Pop", StringListConverter.ToString(new[] { "Pop" }));

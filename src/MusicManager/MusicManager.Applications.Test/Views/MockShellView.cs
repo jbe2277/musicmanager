@@ -25,14 +25,11 @@ namespace Test.MusicManager.Applications.Views
 
         public bool IsVisible { get; private set; }
 
-        public event CancelEventHandler Closing;
+        public event CancelEventHandler? Closing;
         
-        public event EventHandler Closed;
+        public event EventHandler? Closed;
 
-        public void Show()
-        {
-            IsVisible = true;
-        }
+        public void Show() => IsVisible = true;
 
         public void Close()
         {
@@ -48,14 +45,8 @@ namespace Test.MusicManager.Applications.Views
             Height = double.NaN;
         }
 
-        public void RaiseClosing(CancelEventArgs e)
-        {
-            Closing?.Invoke(this, e);
-        }
+        public void RaiseClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
 
-        protected void OnClosed(EventArgs e)
-        {
-            Closed?.Invoke(this, e);
-        }
+        protected void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
     }
 }

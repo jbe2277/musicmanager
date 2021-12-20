@@ -19,7 +19,7 @@ namespace Test.MusicManager.Applications.ViewModels
         {
             var viewModel = Container.GetExportedValue<PlaylistViewModel>();
             var view = Container.GetExportedValue<MockPlaylistView>();
-            PlaylistItem scrollIntoViewItem = null;
+            PlaylistItem? scrollIntoViewItem = null;
             view.ScrollIntoViewStub = x => scrollIntoViewItem = x;
             bool focusSearchBoxCalled = false;
             view.FocusSearchBoxStub = () => focusSearchBoxCalled = true;
@@ -110,7 +110,7 @@ namespace Test.MusicManager.Applications.ViewModels
         {
             var viewModel = Container.GetExportedValue<PlaylistViewModel>();
             var view = Container.GetExportedValue<MockPlaylistView>();
-            PlaylistItem scrollIntoViewItem = null;
+            PlaylistItem? scrollIntoViewItem = null;
             view.ScrollIntoViewStub = x => scrollIntoViewItem = x;
 
             var musicFiles = new[]
@@ -118,7 +118,7 @@ namespace Test.MusicManager.Applications.ViewModels
                 CreateMockMusicFile(@"C:\Music\Foo.mp3", "1 title", "1 artist"),
                 CreateMockMusicFile(@"C:\Music\Baz.wma", "2 TiTle", "2 ArTisT"),
                 CreateMockMusicFile(@"C:\Music\Abc.mp3", "3 TITLE", "3a artist", "3B ARTIST"),
-                new MusicFile(x => Task.FromResult((MusicMetadata)null), "do not load"),
+                new MusicFile(x => Task.FromResult((MusicMetadata?)null), "do not load"),
             };
             var playlistManager = new PlaylistManager();
             playlistManager.AddAndReplaceItems(musicFiles.Select(x => new PlaylistItem(x)));
@@ -143,7 +143,7 @@ namespace Test.MusicManager.Applications.ViewModels
             Assert.IsNull(scrollIntoViewItem);
 
             // Ensure that the search feature does not load the metadata of all Playlist items.
-            Assert.IsFalse(musicFiles.Last().IsMetadataLoaded);
+            Assert.IsFalse(musicFiles[^1].IsMetadataLoaded);
         }
 
         private static MusicFile CreateMockMusicFile(string fileName, string title, params string[] artists)

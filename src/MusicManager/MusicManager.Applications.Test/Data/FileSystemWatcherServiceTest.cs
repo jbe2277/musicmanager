@@ -12,10 +12,9 @@ namespace Test.MusicManager.Applications.Data
     [TestClass]
     public class FileSystemWatcherServiceTest : IntegrationTest
     {
-        private readonly List<string> fileNames = new List<string>();
-        private string testWatcherDirectory;
+        private readonly List<string> fileNames = new();
+        private string testWatcherDirectory = null!;
         
-
         protected override void OnInitialize()
         {
             base.OnInitialize();
@@ -26,25 +25,21 @@ namespace Test.MusicManager.Applications.Data
         protected override void OnCleanup()
         {
             base.OnCleanup();
-
-            foreach (string fileName in fileNames)
+            foreach (var fileName in fileNames)
             {
                 try
                 {
                     File.Delete(Path.Combine(testWatcherDirectory, fileName));
                 }
-                catch (DirectoryNotFoundException)
-                { }
-                catch (FileNotFoundException)
-                { }
+                catch (DirectoryNotFoundException) { }
+                catch (FileNotFoundException) { }
             }
 
             try
             {
                 Directory.Delete(testWatcherDirectory);
             }
-            catch (DirectoryNotFoundException)
-            { }
+            catch (DirectoryNotFoundException) { }
         }
 
         [TestMethod, TestCategory("IntegrationTest")]

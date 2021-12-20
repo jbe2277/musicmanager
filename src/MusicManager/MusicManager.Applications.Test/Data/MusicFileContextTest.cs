@@ -52,7 +52,7 @@ namespace Test.MusicManager.Applications.Data
             var musicFile = ctx.Create(fileName);
             musicFile.GetMetadataAsync().Wait(Context);
 
-            Assert.IsTrue(musicFile.Metadata.IsSupported);
+            Assert.IsTrue(musicFile.Metadata!.IsSupported);
             Assert.IsTrue(musicFile.Metadata.Duration.Ticks > 0);
             Assert.IsTrue(musicFile.Metadata.Bitrate > 0);
             Assert.IsFalse(musicFile.Metadata.Artists.Any());
@@ -73,15 +73,13 @@ namespace Test.MusicManager.Applications.Data
             Assert.AreNotEqual(musicFile, musicFile2);
             Assert.AreNotEqual(musicFile.Metadata, musicFile2.Metadata);
 
-            var notSupportedByFlac = new[] { nameof(MusicMetadata.Rating), nameof(MusicMetadata.Bitrate),
-                    nameof(MusicMetadata.Publisher), nameof(MusicMetadata.Subtitle) };
-            TestHelper.AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent) 
-                && (!isFlac || !notSupportedByFlac.Contains(p.Name)));
+            var notSupportedByFlac = new[] { nameof(MusicMetadata.Rating), nameof(MusicMetadata.Bitrate), nameof(MusicMetadata.Publisher), nameof(MusicMetadata.Subtitle) };
+            TestHelper.AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent) && (!isFlac || !notSupportedByFlac.Contains(p.Name)));
         }
 
-        private void SetMusicFileData(MusicFile musicFile)
+        private static void SetMusicFileData(MusicFile musicFile)
         {
-            musicFile.Metadata.Artists = new[] { "Artist1", "Artist2" };
+            musicFile.Metadata!.Artists = new[] { "Artist1", "Artist2" };
             musicFile.Metadata.Title = "Title";
             musicFile.Metadata.Rating = 75;
             musicFile.Metadata.Album = "Album";
@@ -125,7 +123,7 @@ namespace Test.MusicManager.Applications.Data
             var musicFile = ctx.Create(fileName);
             musicFile.GetMetadataAsync().Wait(Context);
 
-            Assert.IsFalse(musicFile.Metadata.IsSupported);
+            Assert.IsFalse(musicFile.Metadata!.IsSupported);
             if (isAudioAvailable)
             {
                 Assert.IsTrue(musicFile.Metadata.Duration.Ticks > 0);
@@ -168,20 +166,20 @@ namespace Test.MusicManager.Applications.Data
             var ctx = Container.GetExportedValue<MusicFileContext>();
             var musicFile1 = ctx.Create(fileName1);
             var musicFile2 = ctx.Create(fileName2);
-            AssertHelper.ExpectedException<ArgumentException>(() => ctx.CreateFromMultiple(new MusicFile[0]));
+            AssertHelper.ExpectedException<ArgumentException>(() => ctx.CreateFromMultiple(Array.Empty<MusicFile>()));
             var sharedMusicFile = ctx.CreateFromMultiple(new[] { musicFile1, musicFile2 });
             sharedMusicFile.GetMetadataAsync().Wait(Context);
 
-            Assert.IsTrue(sharedMusicFile.Metadata.IsSupported);
+            Assert.IsTrue(sharedMusicFile.Metadata!.IsSupported);
             Assert.IsFalse(sharedMusicFile.Metadata.HasChanges);
             Assert.IsFalse(sharedMusicFile.Metadata.Artists.Any());
             SetMusicFileData(sharedMusicFile);
             Assert.IsTrue(sharedMusicFile.Metadata.HasChanges);
             Assert.IsTrue(sharedMusicFile.Metadata.Artists.Any());
 
-            Assert.IsFalse(musicFile1.Metadata.Artists.Any());
+            Assert.IsFalse(musicFile1.Metadata!.Artists.Any());
             ctx.ApplyChanges(sharedMusicFile);
-            Assert.IsTrue(musicFile2.Metadata.Artists.Any());
+            Assert.IsTrue(musicFile2.Metadata!.Artists.Any());
 
             TestHelper.AssertHaveEqualPropertyValues(sharedMusicFile.Metadata, musicFile1.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
             TestHelper.AssertHaveEqualPropertyValues(sharedMusicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
@@ -191,7 +189,7 @@ namespace Test.MusicManager.Applications.Data
             musicFile2.Metadata.Title = "Title2";
             sharedMusicFile = ctx.CreateFromMultiple(new[] { musicFile1, musicFile2 });
             sharedMusicFile.GetMetadataAsync().Wait(Context);
-            Assert.AreEqual("", sharedMusicFile.Metadata.Title);
+            Assert.AreEqual("", sharedMusicFile.Metadata!.Title);
             
             ctx.ApplyChanges(sharedMusicFile); // Nothing happens because sharedMusicFile has no changes.
             

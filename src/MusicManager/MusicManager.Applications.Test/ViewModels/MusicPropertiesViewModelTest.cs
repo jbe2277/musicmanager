@@ -18,7 +18,7 @@ namespace Test.MusicManager.Applications.ViewModels
             var clipboardService = Container.GetExportedValue<MockClipboardService>();
             var viewModel = Container.GetExportedValue<MusicPropertiesViewModel>();
             
-            string clipboardText = null;
+            string? clipboardText = null;
             clipboardService.SetTextAction = txt => clipboardText = txt;
 
             viewModel.CopyFileNameCommand.Execute(null);
@@ -43,20 +43,20 @@ namespace Test.MusicManager.Applications.ViewModels
 
             Assert.IsTrue(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
             viewModel.AutoFillFromFileNameCommand.Execute(null);
-            Assert.AreEqual("Culture Beat", musicFile.Metadata.Artists.First());
+            Assert.AreEqual("Culture Beat", musicFile.Metadata!.Artists[0]);
             Assert.AreEqual("Serenity", musicFile.Metadata.Title);
             Assert.IsFalse(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
 
             musicFile = MockMusicFile.CreateEmpty(@"\\server\share\Culture Beat Serenity.wma");
             viewModel.MusicFile = musicFile;
             viewModel.AutoFillFromFileNameCommand.Execute(null);
-            Assert.IsFalse(musicFile.Metadata.Artists.Any());
+            Assert.IsFalse(musicFile.Metadata!.Artists.Any());
             Assert.AreEqual("Culture Beat Serenity", musicFile.Metadata.Title);
 
             musicFile = MockMusicFile.CreateEmpty(@"C:\Culture Beat - Serenity - Epilog.wma");
             viewModel.MusicFile = musicFile;
             viewModel.AutoFillFromFileNameCommand.Execute(null);
-            Assert.AreEqual("Culture Beat", musicFile.Metadata.Artists.First());
+            Assert.AreEqual("Culture Beat", musicFile.Metadata!.Artists[0]);
             Assert.AreEqual("Serenity - Epilog", musicFile.Metadata.Title);
 
             // CanExecute returns false when metadata are not supported.
@@ -69,20 +69,19 @@ namespace Test.MusicManager.Applications.ViewModels
         public void UpdateAutoFillFromFileNameTestCommand()
         {
             var viewModel = Container.GetExportedValue<MusicPropertiesViewModel>();
-
             Assert.IsFalse(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
 
             var musicFile = MockMusicFile.CreateEmpty(@"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.mp3");
             viewModel.MusicFile = musicFile;
             Assert.IsTrue(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
 
-            AssertHelper.CanExecuteChangedEvent(viewModel.AutoFillFromFileNameCommand, () => musicFile.Metadata.Title = "Serenity");
+            AssertHelper.CanExecuteChangedEvent(viewModel.AutoFillFromFileNameCommand, () => musicFile.Metadata!.Title = "Serenity");
             Assert.IsFalse(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
 
-            AssertHelper.CanExecuteChangedEvent(viewModel.AutoFillFromFileNameCommand, () => musicFile.Metadata.Title = "");
+            AssertHelper.CanExecuteChangedEvent(viewModel.AutoFillFromFileNameCommand, () => musicFile.Metadata!.Title = "");
             Assert.IsTrue(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
 
-            AssertHelper.CanExecuteChangedEvent(viewModel.AutoFillFromFileNameCommand, () => musicFile.Metadata.Artists = new[] { "Culture Beat" });
+            AssertHelper.CanExecuteChangedEvent(viewModel.AutoFillFromFileNameCommand, () => musicFile.Metadata!.Artists = new[] { "Culture Beat" });
             Assert.IsFalse(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
 
         }

@@ -24,7 +24,6 @@ namespace Test.MusicManager.Applications.ViewModels
             MockInfoView.ShowDialogAction = view =>
             {
                 isShowDialogCalled = true;
-
                 Assert.IsTrue(viewModel.ShowWebsiteCommand.CanExecute(null));
             };
 

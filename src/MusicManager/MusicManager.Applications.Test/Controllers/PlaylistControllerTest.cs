@@ -17,14 +17,13 @@ namespace Test.MusicManager.Applications.Controllers
     [TestClass]
     public class PlaylistControllerTest : ApplicationsTest
     {
-        private ObservableCollection<MusicFile> musicFiles;
-        private MockMusicFileContext musicFileContext;
-        private ShellService shellService;
-        private SelectionService selectionService;
-        private PlaylistController controller;
-        private PlaylistViewModel viewModel;
-        private PlaylistManager playlistManager;
-
+        private ObservableCollection<MusicFile> musicFiles = null!;
+        private MockMusicFileContext musicFileContext = null!;
+        private ShellService shellService = null!;
+        private SelectionService selectionService = null!;
+        private PlaylistController controller = null!;
+        private PlaylistViewModel viewModel = null!;
+        private PlaylistManager playlistManager = null!;
 
         protected override void OnInitialize()
         {
@@ -47,8 +46,8 @@ namespace Test.MusicManager.Applications.Controllers
             controller.Run();
 
             shellService = Container.GetExportedValue<ShellService>();
-            var view = shellService.PlaylistView;
-            viewModel = ViewHelper.GetViewModel<PlaylistViewModel>((IView)view);
+            var view = shellService.PlaylistView!;
+            viewModel = ViewHelper.GetViewModel<PlaylistViewModel>((IView)view)!;
         }
 
         protected override void OnCleanup()
@@ -71,7 +70,7 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsFalse(viewModel.RemoveSelectedCommand.CanExecute(null));
 
             AssertHelper.CanExecuteChangedEvent(viewModel.PlaySelectedCommand, () =>
-                SetSelection(viewModel, playlistManager.Items.First()));
+                SetSelection(viewModel, playlistManager.Items[0]));
 
             Assert.IsTrue(viewModel.PlaySelectedCommand.CanExecute(null));
             Assert.IsTrue(viewModel.RemoveSelectedCommand.CanExecute(null));
@@ -85,7 +84,7 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsNull(playlistManager.CurrentItem);
             viewModel.PlaySelectedCommand.Execute(null);
             Assert.IsTrue(playPauseCalled);
-            Assert.AreEqual(playlistManager.Items.First(), playlistManager.CurrentItem);
+            Assert.AreEqual(playlistManager.Items[0], playlistManager.CurrentItem);
 
             // Remove the selected item
             var selectedItem = viewModel.SelectedPlaylistItem;
@@ -93,14 +92,13 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.AreNotEqual(selectedItem, playlistManager.Items.Single());
             Assert.AreEqual(playlistManager.Items.Single(), viewModel.SelectedPlaylistItem);
             // -- simulate the WPF behavior of updating the SelectedPlaylistItems as well
-            SetSelection(viewModel, viewModel.SelectedPlaylistItem);
+            SetSelection(viewModel, viewModel.SelectedPlaylistItem!);
             
             // Play the next selected item
             viewModel.PlaySelectedCommand.Execute(null);
 
             // Remove the last item as well
-            AssertHelper.CanExecuteChangedEvent(viewModel.RemoveSelectedCommand,
-                () => viewModel.RemoveSelectedCommand.Execute(null));
+            AssertHelper.CanExecuteChangedEvent(viewModel.RemoveSelectedCommand, () => viewModel.RemoveSelectedCommand.Execute(null));
             Assert.IsFalse(viewModel.RemoveSelectedCommand.CanExecute(null));
             Assert.IsFalse(playlistManager.Items.Any());
             Assert.IsNull(viewModel.SelectedPlaylistItem);
@@ -118,11 +116,11 @@ namespace Test.MusicManager.Applications.Controllers
             viewModel.InsertMusicFilesAction(0, musicFiles);
 
             // Select the first playlist item
-            SetSelection(viewModel, playlistManager.Items.First());
+            SetSelection(viewModel, playlistManager.Items[0]);
 
             // Show music properties view of the selected item
-            var musicPropertiesView = shellService.MusicPropertiesView;
-            var musicPropertiesViewModel = ViewHelper.GetViewModel<MusicPropertiesViewModel>((IView)musicPropertiesView);
+            var musicPropertiesView = shellService.MusicPropertiesView!;
+            var musicPropertiesViewModel = ViewHelper.GetViewModel<MusicPropertiesViewModel>((IView)musicPropertiesView)!;
             Assert.IsNull(musicPropertiesViewModel.MusicFile);
 
             bool showMusicPropertiesViewCalled = false;
@@ -130,7 +128,7 @@ namespace Test.MusicManager.Applications.Controllers
             
             viewModel.ShowMusicPropertiesCommand.Execute(null);
             Assert.IsTrue(showMusicPropertiesViewCalled);
-            Assert.AreEqual(viewModel.SelectedPlaylistItem.MusicFile, musicPropertiesViewModel.MusicFile);
+            Assert.AreEqual(viewModel.SelectedPlaylistItem!.MusicFile, musicPropertiesViewModel.MusicFile);
 
             // Clear playlist
             Assert.AreEqual(2, playlistManager.Items.Count);
@@ -138,14 +136,11 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.AreEqual(0, playlistManager.Items.Count);
         }
 
-        private void SetSelection(PlaylistViewModel viewModel, params PlaylistItem[] items)
+        private static void SetSelection(PlaylistViewModel viewModel, params PlaylistItem[] items)
         {
             viewModel.SelectedPlaylistItem = items.Last();
             viewModel.SelectedPlaylistItems.Clear();
-            foreach (var item in items)
-            {
-                viewModel.SelectedPlaylistItems.Add(item);
-            }
+            foreach (var x in items) viewModel.SelectedPlaylistItems.Add(x);
         }
     }
 }
