@@ -21,7 +21,7 @@ namespace Waf.MusicManager.Presentation.Controls
             StaysOpenProperty.OverrideMetadata(typeof(Flyout), new FrameworkPropertyMetadata(false));
             AllowsTransparencyProperty.OverrideMetadata(typeof(Flyout), new FrameworkPropertyMetadata(true));
             PopupAnimationProperty.OverrideMetadata(typeof(Flyout), new FrameworkPropertyMetadata(PopupAnimation.Slide));
-            IsOpenProperty.OverrideMetadata(typeof(Flyout), new FrameworkPropertyMetadata(IsOpenPropertyChangedCallback, IsOpenCoerceValueCallback));
+            IsOpenProperty.OverrideMetadata(typeof(Flyout), new FrameworkPropertyMetadata((d, e) => { }, IsOpenCoerceValueCallback));
         }
 
         public Flyout()
@@ -55,8 +55,7 @@ namespace Waf.MusicManager.Presentation.Controls
                 }
                 else
                 {
-                    // Handedness = right handed; shows the context menus on the left side
-                    SetBaseHorizontalOffset(-target.ActualWidth + child.ActualWidth + HorizontalOffset);
+                    SetBaseHorizontalOffset(-target.ActualWidth + child.ActualWidth + HorizontalOffset);  // Handedness = right handed; shows the context menus on the left side
                 }
             }
             else if (HorizontalFlyoutAlignment == HorizontalFlyoutAlignment.Right)
@@ -67,8 +66,7 @@ namespace Waf.MusicManager.Presentation.Controls
                 }
                 else
                 {
-                    // Handedness = right handed; shows the context menus on the left side
-                    SetBaseHorizontalOffset(HorizontalOffset);
+                    SetBaseHorizontalOffset(HorizontalOffset);  // Handedness = right handed; shows the context menus on the left side
                 }
             }
             else
@@ -79,8 +77,7 @@ namespace Waf.MusicManager.Presentation.Controls
                 }
                 else
                 {
-                    // Handedness = right handed; shows the context menus on the left side
-                    SetBaseHorizontalOffset((-target.ActualWidth / 2) + (child.ActualWidth / 2) + HorizontalOffset);
+                    SetBaseHorizontalOffset((-target.ActualWidth / 2) + (child.ActualWidth / 2) + HorizontalOffset);  // Handedness = right handed; shows the context menus on the left side
                 }
             }
             child.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
@@ -88,10 +85,7 @@ namespace Waf.MusicManager.Presentation.Controls
 
         protected override void OnPreviewKeyUp(KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                IsOpen = false;
-            }
+            if (e.Key == Key.Escape) IsOpen = false;
             base.OnPreviewKeyUp(e);
         }
 
@@ -101,23 +95,12 @@ namespace Waf.MusicManager.Presentation.Controls
             closedStopwatch.Restart();
         }
 
-        private void SetBaseHorizontalOffset(double value)
-        {
-            SetValue(Popup.HorizontalOffsetProperty, value);
-        }
-
-        private static void IsOpenPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            // Just needed for the FrameworkPropertyMetadata API
-        }
+        private void SetBaseHorizontalOffset(double value) => SetValue(Popup.HorizontalOffsetProperty, value);
 
         private static object IsOpenCoerceValueCallback(DependencyObject d, object baseValue)
         {
             var flyout = (Flyout)d;
-            if (flyout.closedStopwatch.IsRunning && flyout.closedStopwatch.ElapsedMilliseconds < 200)
-            {
-                return DependencyProperty.UnsetValue;
-            }
+            if (flyout.closedStopwatch.IsRunning && flyout.closedStopwatch.ElapsedMilliseconds < 200) return DependencyProperty.UnsetValue;
             return baseValue;
         }
     }

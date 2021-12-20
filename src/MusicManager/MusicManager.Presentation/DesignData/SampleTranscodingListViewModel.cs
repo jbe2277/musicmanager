@@ -9,7 +9,7 @@ namespace Waf.MusicManager.Presentation.DesignData
 {
     public class SampleTranscodingListViewModel : TranscodingListViewModel
     {
-        public SampleTranscodingListViewModel() : base(new MockTranscodingListView(), null)
+        public SampleTranscodingListViewModel() : base(new MockTranscodingListView(), null!)
         {
             var musicFiles = new[] 
             {

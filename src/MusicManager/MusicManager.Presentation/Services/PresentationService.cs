@@ -11,8 +11,7 @@ namespace Waf.MusicManager.Presentation.Services
     {
         public void Initialize()
         {
-            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
-                XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
         }
     }
 }

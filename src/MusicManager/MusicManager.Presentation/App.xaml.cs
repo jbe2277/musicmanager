@@ -28,9 +28,9 @@ namespace Waf.MusicManager.Presentation
             Tuple.Create("MusicManager.*", LogLevel.Warn),
         };
 
-        private AggregateCatalog catalog;
-        private CompositionContainer container;
-        private IEnumerable<IModuleController> moduleControllers;
+        private AggregateCatalog? catalog;
+        private CompositionContainer? container;
+        private IEnumerable<IModuleController> moduleControllers = Array.Empty<IModuleController>();
         
         public App()
         {
@@ -86,38 +86,28 @@ namespace Waf.MusicManager.Presentation
         protected override void OnExit(ExitEventArgs e)
         {
             foreach (var moduleController in moduleControllers.Reverse()) { moduleController.Shutdown(); }
-
-            // Wait until all registered tasks are finished
-            var shellService = container.GetExportedValue<IShellService>();
-            var tasksToWait = shellService.TasksToCompleteBeforeShutdown.ToArray();
-            while (tasksToWait.Any(t => !t.IsCompleted))
+            if (container is not null)
             {
-                DispatcherHelper.DoEvents();
+                var shellService = container.GetExportedValue<IShellService>();
+                var tasksToWait = shellService.TasksToCompleteBeforeShutdown.ToArray();
+                while (tasksToWait.Any(t => !t.IsCompleted)) DispatcherHelper.DoEvents();  // Wait until all registered tasks are finished
             }
-            
-            // Dispose
-            container.Dispose();
-            catalog.Dispose();
+            container?.Dispose();
+            catalog?.Dispose();
             base.OnExit(e);
         }
 
         private static void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => HandleException(e.Exception, false);
 
-        private static void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            HandleException(e.ExceptionObject as Exception, e.IsTerminating);
-        }
+        private static void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e) => HandleException(e.ExceptionObject as Exception, e.IsTerminating);
 
-        private static void HandleException(Exception e, bool isTerminating)
+        private static void HandleException(Exception? e, bool isTerminating)
         {
-            if (e == null) { return; }
-
+            if (e == null) return;
             Log.App.Error(e, "Unknown application error.");
-
             if (!isTerminating)
             {
-                MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Presentation.Properties.Resources.UnknownError, e.ToString()),
-                    ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Presentation.Properties.Resources.UnknownError, e.ToString()), ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

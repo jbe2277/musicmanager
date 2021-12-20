@@ -15,17 +15,16 @@ namespace Waf.MusicManager.Presentation.Controls
     public class ListBoxDragDropHelper<TItem>
     {
         private readonly ListBox listBox;
-        private readonly Action<int, IEnumerable<TItem>> moveItemsAction;
-        private readonly Func<DragEventArgs, IEnumerable> tryGetInsertItemsAction;
+        private readonly Action<int, IEnumerable<TItem>>? moveItemsAction;
+        private readonly Func<DragEventArgs, IEnumerable?> tryGetInsertItemsAction;
         private readonly Action<int, IEnumerable> insertItemsAction;
         private readonly InsertMarkerAdorner insertMarkerAdorner;
         private readonly ThrottledAction throttledAutoScrollAction;
-        private DragEventArgs lastPreviewDragOverEventArgs;
-        private ListBoxItem dragSource;
+        private DragEventArgs? lastPreviewDragOverEventArgs;
+        private ListBoxItem? dragSource;
         private Point? startPoint;
 
-        public ListBoxDragDropHelper(ListBox listBox, Action<int, IEnumerable<TItem>> moveItemsAction, 
-            Func<DragEventArgs, IEnumerable> tryGetInsertItemsAction, Action<int, IEnumerable> insertItemsAction)
+        public ListBoxDragDropHelper(ListBox listBox, Action<int, IEnumerable<TItem>>? moveItemsAction, Func<DragEventArgs, IEnumerable?> tryGetInsertItemsAction, Action<int, IEnumerable> insertItemsAction)
         {
             this.listBox = listBox;
             this.moveItemsAction = moveItemsAction;
@@ -35,11 +34,7 @@ namespace Waf.MusicManager.Presentation.Controls
             throttledAutoScrollAction = new ThrottledAction(ThrottledAutoScroll, ThrottledActionMode.InvokeMaxEveryDelayTime, TimeSpan.FromMilliseconds(250));
 
             listBox.Loaded += ListBoxLoaded;
-            if (listBox.IsLoaded)
-            {
-                InitializeAdornerLayer();
-            }
-
+            if (listBox.IsLoaded) InitializeAdornerLayer();
             listBox.PreviewDragOver += ListBoxPreviewDragOver;
             listBox.Drop += ListBoxDrop;
 
@@ -52,21 +47,11 @@ namespace Waf.MusicManager.Presentation.Controls
             listBox.ItemContainerStyle = listboxItemStyle;
         }
 
-        private void InitializeAdornerLayer()
-        {
-            var adornerLayer = AdornerLayer.GetAdornerLayer(listBox);
-            adornerLayer.Add(insertMarkerAdorner);
-        }
+        private void InitializeAdornerLayer() => AdornerLayer.GetAdornerLayer(listBox).Add(insertMarkerAdorner);
 
-        private void ListBoxLoaded(object sender, RoutedEventArgs e)
-        {
-            InitializeAdornerLayer();
-        }
+        private void ListBoxLoaded(object? sender, RoutedEventArgs e) => InitializeAdornerLayer();
 
-        private void ListBoxItemPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            startPoint = e.GetPosition(null);
-        }
+        private void ListBoxItemPreviewMouseLeftButtonDown(object? sender, MouseButtonEventArgs e) => startPoint = e.GetPosition(null);
 
         private void ListBoxItemPreviewMouseMove(object sender, MouseEventArgs e)
         {
@@ -91,7 +76,7 @@ namespace Waf.MusicManager.Presentation.Controls
             }
         }
 
-        private void ListBoxPreviewDragOver(object sender, DragEventArgs e)
+        private void ListBoxPreviewDragOver(object? sender, DragEventArgs e)
         {
             if (!CanMoveItems(e) && !CanInsertItems(e))
             {
@@ -105,7 +90,8 @@ namespace Waf.MusicManager.Presentation.Controls
 
         private void ThrottledAutoScroll()
         {
-            var scrollViewer = FindVisualChild<ScrollViewer>(listBox);
+            if (lastPreviewDragOverEventArgs is null) return;
+            var scrollViewer = FindVisualChild<ScrollViewer>(listBox) ?? throw new InvalidOperationException("ScrollViewer not found");
             const double tolerance = 15;
             const double offset = 3;
             double delta = 0;
@@ -120,10 +106,7 @@ namespace Waf.MusicManager.Presentation.Controls
                 delta = +offset;
             }
 
-            if (delta != 0)
-            {
-                scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + delta);
-            }
+            if (delta != 0) scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + delta);
         }
 
         private void ListBoxItemDragEnter(object sender, DragEventArgs e)
@@ -141,10 +124,7 @@ namespace Waf.MusicManager.Presentation.Controls
             }
         }
 
-        private void ListBoxItemDragLeave(object sender, DragEventArgs e)
-        {
-            insertMarkerAdorner.ResetMarker();
-        }
+        private void ListBoxItemDragLeave(object? sender, DragEventArgs e) => insertMarkerAdorner.ResetMarker();
 
         private void ListBoxItemDrop(object sender, DragEventArgs e)
         {
@@ -158,11 +138,11 @@ namespace Waf.MusicManager.Presentation.Controls
 
             if (e.Effects == DragDropEffects.Move)
             {
-                moveItemsAction(newIndex, (TItem[])e.Data.GetData(typeof(TItem[])));
+                moveItemsAction!(newIndex, (TItem[])e.Data.GetData(typeof(TItem[])));
             }
             else if (e.Effects.HasFlag(DragDropEffects.Copy))
             {
-                var droppedData = tryGetInsertItemsAction(e);
+                var droppedData = tryGetInsertItemsAction(e) ?? throw new InvalidOperationException("DroppedData is null");
                 insertItemsAction(newIndex + 1, droppedData);
                 SelectItems(newIndex + 1, droppedData.Cast<object>().Count());
             }
@@ -181,11 +161,11 @@ namespace Waf.MusicManager.Presentation.Controls
 
             if (e.Effects == DragDropEffects.Move)
             {
-                moveItemsAction(newIndex, (TItem[])e.Data.GetData(typeof(TItem[])));
+                moveItemsAction!(newIndex, (TItem[])e.Data.GetData(typeof(TItem[])));
             }
             else if (e.Effects.HasFlag(DragDropEffects.Copy))
             {
-                var droppedData = tryGetInsertItemsAction(e);
+                var droppedData = tryGetInsertItemsAction(e) ?? throw new InvalidOperationException("DroppedData is null"); ;
                 insertItemsAction(newIndex + 1, droppedData);
                 SelectItems(newIndex + 1, droppedData.Cast<object>().Count());
             }
@@ -196,7 +176,6 @@ namespace Waf.MusicManager.Presentation.Controls
         private bool CanMoveItems(DragEventArgs e)
         {
             if (moveItemsAction == null) return false;
-            
             return e.Data.GetData(typeof(TItem[])) is TItem[] items && items.Any();
         }
 
@@ -218,11 +197,7 @@ namespace Waf.MusicManager.Presentation.Controls
 
         private void FocusSelectedItem()
         {
-            if (Keyboard.FocusedElement == listBox && listBox.SelectedItems.Count > 1)
-            {
-                // This happens when moving multiple items at once. If we set the focus now then it clears the selection.
-                return;
-            }
+            if (Keyboard.FocusedElement == listBox && listBox.SelectedItems.Count > 1) return;  // This happens when moving multiple items at once. If we set the focus now then it clears the selection.
             listBox.Dispatcher.InvokeAsync(() =>
             {
                 var listBoxItem = (ListBoxItem)listBox.ItemContainerGenerator.ContainerFromItem(listBox.SelectedItem);
@@ -230,11 +205,11 @@ namespace Waf.MusicManager.Presentation.Controls
             }, DispatcherPriority.Background);
         }
 
-        private static TChild FindVisualChild<TChild>(DependencyObject obj) where TChild : DependencyObject
+        private static TChild? FindVisualChild<TChild>(DependencyObject obj) where TChild : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
-                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                var child = VisualTreeHelper.GetChild(obj, i);
                 if (child is TChild foundChild)
                 {
                     return foundChild;
@@ -242,10 +217,7 @@ namespace Waf.MusicManager.Presentation.Controls
                 else
                 {
                     var childOfChild = FindVisualChild<TChild>(child);
-                    if (childOfChild != null)
-                    {
-                        return childOfChild;
-                    }
+                    if (childOfChild != null) return childOfChild;
                 }
             }
             return null;

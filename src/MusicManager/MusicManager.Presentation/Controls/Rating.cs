@@ -11,7 +11,7 @@ namespace Waf.MusicManager.Presentation.Controls
     [TemplatePart(Name="PART_RatingItems", Type=typeof(ItemsControl))]
     public class Rating : Slider
     {
-        private ItemsControl itemsControl;
+        private ItemsControl itemsControl = null!;
         private ReadOnlyCollection<RatingItem> ratingItems;
         
         static Rating()
@@ -38,27 +38,18 @@ namespace Waf.MusicManager.Presentation.Controls
         protected override void OnValueChanged(double oldValue, double newValue)
         {
             base.OnValueChanged(oldValue, newValue);
-            foreach (var ratingItem in ratingItems)
-            {
-                ratingItem.Value = Value;
-            }
+            foreach (var x in ratingItems) x.Value = Value;
         }
 
         private void ItemMouseEnter(object sender, MouseEventArgs e)
         {
             double mouseOverValue = ((RatingItem)sender).ItemValue;
-            foreach (var ratingItem in ratingItems)
-            {
-                ratingItem.MouseOverValue = mouseOverValue;
-            }
+            foreach (var x in ratingItems) x.MouseOverValue = mouseOverValue;
         }
 
         private void ItemMouseLeave(object sender, MouseEventArgs e)
         {
-            foreach (var ratingItem in ratingItems)
-            {
-                ratingItem.MouseOverValue = -1;
-            }
+            foreach (var x in ratingItems) x.MouseOverValue = -1;
         }
 
         private void ItemClick(object sender, RoutedEventArgs e)

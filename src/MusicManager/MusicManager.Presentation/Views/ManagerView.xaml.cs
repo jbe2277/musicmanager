@@ -27,7 +27,7 @@ namespace Waf.MusicManager.Presentation.Views
         public ManagerView()
         {
             InitializeComponent();
-            viewModel = new Lazy<ManagerViewModel>(this.GetViewModel<ManagerViewModel>);
+            viewModel = new Lazy<ManagerViewModel>(() => this.GetViewModel<ManagerViewModel>()!);
             autoColumns = new List<DataGridColumn>()
             {
                 ratingColumn,
@@ -40,15 +40,12 @@ namespace Waf.MusicManager.Presentation.Views
 
             Loaded += LoadedHandler;
             musicFilesGrid.Sorting += MusicFilesGridSorting;
-            DependencyPropertyDescriptor.FromProperty(DataGridColumn.WidthProperty, typeof(DataGridColumn)).AddValueChanged(this.titleColumn, TitleColumnWidthChanged);
+            DependencyPropertyDescriptor.FromProperty(DataGridColumn.WidthProperty, typeof(DataGridColumn)).AddValueChanged(titleColumn, TitleColumnWidthChanged);
         }
 
         private ManagerViewModel ViewModel => viewModel.Value;
 
-        private void LoadedHandler(object sender, RoutedEventArgs e)
-        {
-            FocusMusicFilesGrid();
-        }
+        private void LoadedHandler(object sender, RoutedEventArgs e) => FocusMusicFilesGrid();
 
         private void DirectoryButtonClick(object sender, RoutedEventArgs e)
         {
@@ -59,25 +56,13 @@ namespace Waf.MusicManager.Presentation.Views
             userPathBox.Select(int.MaxValue, 0);
         }
 
-        private void FolderBrowserPopupClosed(object sender, EventArgs e)
-        {
-            FocusMusicFilesGrid();
-        }
+        private void FolderBrowserPopupClosed(object sender, EventArgs e) => FocusMusicFilesGrid();
 
-        private void LoadRecursiveClick(object sender, RoutedEventArgs e)
-        {
-            folderBrowserPopup.IsOpen = false;
-        }
+        private void LoadRecursiveClick(object sender, RoutedEventArgs e) => folderBrowserPopup.IsOpen = false;
 
-        private void DataGridRowContextMenuOpening(object sender, RoutedEventArgs e)
-        {
-            ((FrameworkElement)sender).ContextMenu.DataContext = ViewModel;
-        }
+        private void DataGridRowContextMenuOpening(object sender, RoutedEventArgs e) => ((FrameworkElement)sender).ContextMenu.DataContext = ViewModel;
 
-        private void DataGridRowMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {    
-            ViewModel.PlayerService.PlaySelectedCommand.Execute(null);   
-        }
+        private void DataGridRowMouseDoubleClick(object sender, MouseButtonEventArgs e) => ViewModel.PlayerService.PlaySelectedCommand.Execute(null);   
 
         private void DataGridRowMouseMove(object sender, MouseEventArgs e)
         {
@@ -135,10 +120,7 @@ namespace Waf.MusicManager.Presentation.Views
             ViewModel.SelectionService.MusicFiles.Sort = sort;
         }
 
-        private void TitleColumnWidthChanged(object sender, EventArgs e)
-        {
-            Dispatcher.InvokeAsync(AutoShowHideColumns, DispatcherPriority.Background);
-        }
+        private void TitleColumnWidthChanged(object? sender, EventArgs e) => Dispatcher.InvokeAsync(AutoShowHideColumns, DispatcherPriority.Background);
 
         private void AutoShowHideColumns()
         {
@@ -170,19 +152,19 @@ namespace Waf.MusicManager.Presentation.Views
             musicFilesGrid.CurrentCell = new DataGridCellInfo(musicFilesGrid.SelectedItem, musicFilesGrid.Columns[0]);
         }
 
-        private static int TitleColumnComparison(MusicFileDataModel x, MusicFileDataModel y)
+        private static int TitleColumnComparison(MusicFileDataModel? x, MusicFileDataModel? y)
         {
-            var titleX = MusicTitleHelper.GetTitleText(x.MusicFile.FileName, 
+            var titleX = x is null ? null : MusicTitleHelper.GetTitleText(x.MusicFile.FileName, 
                     x.MusicFile.IsMetadataLoaded ? x.MusicFile.Metadata.Artists : null, x.MusicFile.IsMetadataLoaded ? x.MusicFile.Metadata.Title : null);
-            var titleY = MusicTitleHelper.GetTitleText(y.MusicFile.FileName, 
+            var titleY = y is null ? null : MusicTitleHelper.GetTitleText(y.MusicFile.FileName, 
                     y.MusicFile.IsMetadataLoaded ? y.MusicFile.Metadata.Artists : null, y.MusicFile.IsMetadataLoaded ? y.MusicFile.Metadata.Title : null);
             return string.Compare(titleX, titleY, StringComparison.CurrentCulture);
         }
 
-        private static int GenreColumnComparison(MusicFileDataModel x, MusicFileDataModel y)
+        private static int GenreColumnComparison(MusicFileDataModel? x, MusicFileDataModel? y)
         {
-            var genreX = x.MusicFile.IsMetadataLoaded ? StringListConverter.ToString(x.MusicFile.Metadata.Genre) : "";
-            var genreY = y.MusicFile.IsMetadataLoaded ?  StringListConverter.ToString(y.MusicFile.Metadata.Genre) : "";
+            var genreX = x is null ? null : x.MusicFile.IsMetadataLoaded ? StringListConverter.ToString(x.MusicFile.Metadata.Genre) : "";
+            var genreY = y is null ? null : y.MusicFile.IsMetadataLoaded ?  StringListConverter.ToString(y.MusicFile.Metadata.Genre) : "";
             return string.Compare(genreX, genreY, StringComparison.CurrentCulture);
         }
     }

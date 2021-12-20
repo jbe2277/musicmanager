@@ -24,55 +24,40 @@ namespace Waf.MusicManager.Presentation.Views
         public PlaylistView()
         {
             InitializeComponent();
-            viewModel = new Lazy<PlaylistViewModel>(this.GetViewModel<PlaylistViewModel>);
+            viewModel = new Lazy<PlaylistViewModel>(() => this.GetViewModel<PlaylistViewModel>()!);
             listBoxDragDropHelper = new ListBoxDragDropHelper<PlaylistItem>(playlistListBox, MoveItems, TryGetInsertItems, InsertItems);
             Loaded += FirstTimeLoadedHandler;
         }
 
         private PlaylistViewModel ViewModel => viewModel.Value;
 
-        public void FocusSearchBox()
-        {
-            searchBox.Focus();
-        }
-        
+        public void FocusSearchBox() => searchBox.Focus();
+
         public void FocusSelectedItem()
         {
             var listBoxItem = (ListBoxItem)playlistListBox.ItemContainerGenerator.ContainerFromItem(playlistListBox.SelectedItem);
             listBoxItem?.Focus();
         }
 
-        public void ScrollIntoView(PlaylistItem item)
-        {
-            playlistListBox.ScrollIntoView(item);
-        }
-        
+        public void ScrollIntoView(PlaylistItem item) => playlistListBox.ScrollIntoView(item);
+
         private void FirstTimeLoadedHandler(object sender, RoutedEventArgs e)
         {
             Loaded -= FirstTimeLoadedHandler;
             ViewModel.PlaylistManager.PropertyChanged += PlaylistManagerPropertyChanged;
         }
 
-        private void PlaylistManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void PlaylistManagerPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PlaylistManager.CurrentItem))
             {
-                if (ViewModel.PlaylistManager.CurrentItem != null)
-                {
-                    playlistListBox.ScrollIntoView(ViewModel.PlaylistManager.CurrentItem);
-                }
+                if (ViewModel.PlaylistManager.CurrentItem != null) playlistListBox.ScrollIntoView(ViewModel.PlaylistManager.CurrentItem);
             }
         }
-        
-        private void ListBoxItemContextMenuOpening(object sender, RoutedEventArgs e)
-        {
-            ((FrameworkElement)sender).ContextMenu.DataContext = ViewModel;
-        }
 
-        private void ListBoxItemMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {                
-            ViewModel.PlaySelectedCommand.Execute(null);   
-        }
+        private void ListBoxItemContextMenuOpening(object sender, RoutedEventArgs e) => ((FrameworkElement)sender).ContextMenu.DataContext = ViewModel;
+
+        private void ListBoxItemMouseDoubleClick(object sender, MouseButtonEventArgs e) => ViewModel.PlaySelectedCommand.Execute(null);
 
         private void StatusBarButtonClick(object sender, RoutedEventArgs e)
         {
@@ -80,15 +65,9 @@ namespace Waf.MusicManager.Presentation.Views
             menuPopup.IsOpen = true;
         }
 
-        private void MoveItems(int newIndex, IEnumerable<PlaylistItem> itemsToMove)
-        {
-            ViewModel.PlaylistManager.MoveItems(newIndex, itemsToMove);
-        }
+        private void MoveItems(int newIndex, IEnumerable<PlaylistItem> itemsToMove) => ViewModel.PlaylistManager.MoveItems(newIndex, itemsToMove);
 
-        private IEnumerable TryGetInsertItems(DragEventArgs e)
-        {
-            return e.Data.GetData(DataFormats.FileDrop) as IEnumerable ?? e.Data.GetData(typeof(MusicFile[])) as IEnumerable;
-        }
+        private IEnumerable? TryGetInsertItems(DragEventArgs e) => e.Data.GetData(DataFormats.FileDrop) as IEnumerable ?? e.Data.GetData(typeof(MusicFile[])) as IEnumerable;
 
         private void InsertItems(int index, IEnumerable itemsToInsert)
         {

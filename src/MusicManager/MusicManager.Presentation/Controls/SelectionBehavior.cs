@@ -19,15 +19,9 @@ namespace Waf.MusicManager.Presentation.Controls
             DependencyProperty.RegisterAttached("SyncSelectedItems", typeof(IList), typeof(SelectionBehavior), new FrameworkPropertyMetadata(null, SyncSelectedItemsPropertyChanged));
 
         [AttachedPropertyBrowsableForType(typeof(Selector))]
-        public static IList GetSyncSelectedItems(DependencyObject obj)
-        {
-            return (IList)obj.GetValue(SyncSelectedItemsProperty);
-        }
+        public static IList GetSyncSelectedItems(DependencyObject obj) => (IList)obj.GetValue(SyncSelectedItemsProperty);
 
-        public static void SetSyncSelectedItems(DependencyObject obj, IList value)
-        {
-            obj.SetValue(SyncSelectedItemsProperty, value);
-        }
+        public static void SetSyncSelectedItems(DependencyObject obj, IList value) => obj.SetValue(SyncSelectedItemsProperty, value);
 
         private static void SyncSelectedItemsPropertyChanged(DependencyObject element, DependencyPropertyChangedEventArgs e)
         {
@@ -43,7 +37,7 @@ namespace Waf.MusicManager.Presentation.Controls
 
                 if (multiSelector.SelectedItems.Count > 0) multiSelector.SelectedItems.Clear();
                 foreach (var x in list) multiSelector.SelectedItems.Add(x);
-                
+
                 if (list is not INotifyCollectionChanged observableList) return;
 
                 multiSelectorWithObservableList.Add(Tuple.Create(multiSelector, observableList));
@@ -60,13 +54,13 @@ namespace Waf.MusicManager.Presentation.Controls
             selector.SelectionChanged -= SelectorSelectionChanged;  // Remove a previously added event handler.
 
             var item = multiSelectorWithObservableList.FirstOrDefault(x => x.Item1.Selector == selector);
-            if (item == null) { return; }
+            if (item == null) return;
 
             multiSelectorWithObservableList.Remove(item);
-            CollectionChangedEventManager.RemoveHandler(item.Item2, ListCollectionChanged);    
+            CollectionChangedEventManager.RemoveHandler(item.Item2, ListCollectionChanged);
         }
 
-        
+
         private static void ListCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (syncListsThatAreUpdating.Contains(sender!)) return;
@@ -77,30 +71,18 @@ namespace Waf.MusicManager.Presentation.Controls
             {
                 if (e.Action == NotifyCollectionChangedAction.Add)
                 {
-                    foreach (var items in e.NewItems!)
-                    {
-                        multiSelector.SelectedItems.Add(items);
-                    }
+                    foreach (var x in e.NewItems!) multiSelector.SelectedItems.Add(x);
                 }
                 else if (e.Action == NotifyCollectionChangedAction.Remove)
                 {
-                    foreach (var items in e.OldItems!)
-                    {
-                        multiSelector.SelectedItems.Remove(items);
-                    }
+                    foreach (var x in e.OldItems!) multiSelector.SelectedItems.Remove(x);
                 }
                 else if (e.Action == NotifyCollectionChangedAction.Reset)
                 {
                     multiSelector.SelectedItems.Clear();
-                    foreach (var item in (IEnumerable)sender!)
-                    {
-                        multiSelector.SelectedItems.Add(item);
-                    }
+                    foreach (var x in (IEnumerable)sender!) multiSelector.SelectedItems.Add(x);
                 }
-                else
-                {
-                    throw new NotSupportedException();
-                }
+                else throw new NotSupportedException();
             }
             finally
             {
@@ -111,22 +93,16 @@ namespace Waf.MusicManager.Presentation.Controls
         private static void SelectorSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selector = (Selector)sender;
-            if (selectorsThatAreUpdating.Contains(selector)) { return; }
-            
+            if (selectorsThatAreUpdating.Contains(selector)) return;
+
             var list = GetSyncSelectedItems(selector);
-            if (list == null) { return; }
+            if (list == null) return;
 
             syncListsThatAreUpdating.Add(list);
             try
             {
-                foreach (var item in e.RemovedItems)
-                {
-                    list.Remove(item);
-                }
-                foreach (var item in e.AddedItems)
-                {
-                    list.Add(item);
-                }
+                foreach (var x in e.RemovedItems) list.Remove(x);
+                foreach (var x in e.AddedItems) list.Add(x);
             }
             finally
             {
@@ -134,12 +110,12 @@ namespace Waf.MusicManager.Presentation.Controls
             }
         }
 
-        private static IMultiSelector? TryGetMultiSelector(Selector selector)
+        private static IMultiSelector? TryGetMultiSelector(Selector selector) => selector switch
         {
-            if (selector is ListBox listBoxSelector) { return new ListBoxAdapter(listBoxSelector); }
-            if (selector is MultiSelector multiSelector) { return new MultiSelectorAdapter(multiSelector); }
-            return null;
-        }
+            ListBox x => new ListBoxAdapter(x),
+            MultiSelector y => new MultiSelectorAdapter(y),
+            _ => null
+        };
 
 
         private interface IMultiSelector

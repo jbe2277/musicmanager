@@ -7,7 +7,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Waf.Applications;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Applications.Views;
@@ -22,12 +21,12 @@ namespace Waf.MusicManager.Presentation.Views
     {
         private readonly Lazy<TranscodingListViewModel> viewModel;
         private readonly ListBoxDragDropHelper<TranscodeItem> listBoxDragDropHelper;
-        private ListCollectionView transcodeItemsCollectionView;
+        private ListCollectionView transcodeItemsCollectionView = null!;
 
         public TranscodingListView()
         {
             InitializeComponent();
-            viewModel = new Lazy<TranscodingListViewModel>(this.GetViewModel<TranscodingListViewModel>);
+            viewModel = new Lazy<TranscodingListViewModel>(() => this.GetViewModel<TranscodingListViewModel>()!);
             listBoxDragDropHelper = new ListBoxDragDropHelper<TranscodeItem>(transcodingListBox, null, TryGetInsertItems, InsertItems);
             Loaded += FirstTimeLoadedHandler;
         }
@@ -49,17 +48,11 @@ namespace Waf.MusicManager.Presentation.Views
             var statusGroupDescription = new PropertyGroupDescription(nameof(TranscodeItem.TranscodeStatus));
             transcodeItemsCollectionView.GroupDescriptions.Add(statusGroupDescription);
 
-            foreach (var item in ViewModel.TranscodingManager.TranscodeItems)
-            {
-                PropertyChangedEventManager.AddHandler(item, TranscodeItemPropertyChanged, "");
-            }
+            foreach (var x in ViewModel.TranscodingManager.TranscodeItems) PropertyChangedEventManager.AddHandler(x, TranscodeItemPropertyChanged, "");
             CollectionChangedEventManager.AddHandler(ViewModel.TranscodingManager.TranscodeItems, TranscodeItemsCollectionChanged);
         }
 
-        private static IEnumerable TryGetInsertItems(DragEventArgs e)
-        {
-            return e.Data.GetData(DataFormats.FileDrop) as IEnumerable ?? e.Data.GetData(typeof(MusicFile[])) as IEnumerable;
-        }
+        private static IEnumerable? TryGetInsertItems(DragEventArgs e) => e.Data.GetData(DataFormats.FileDrop) as IEnumerable ?? e.Data.GetData(typeof(MusicFile[])) as IEnumerable;
 
         private void InsertItems(int index, IEnumerable itemsToInsert)
         {
@@ -73,42 +66,27 @@ namespace Waf.MusicManager.Presentation.Views
             }
         }
 
-        private void TranscodeItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void TranscodeItemsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (var item in e.OldItems!.Cast<TranscodeItem>())
-                {
-                    PropertyChangedEventManager.RemoveHandler(item, TranscodeItemPropertyChanged, "");
-                }
+                foreach (var x in e.OldItems!.Cast<TranscodeItem>()) PropertyChangedEventManager.RemoveHandler(x, TranscodeItemPropertyChanged, "");
             }
             else if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (var item in e.NewItems!.Cast<TranscodeItem>())
-                {
-                    PropertyChangedEventManager.AddHandler(item, TranscodeItemPropertyChanged, "");
-                }
+                foreach (var x in e.NewItems!.Cast<TranscodeItem>()) PropertyChangedEventManager.AddHandler(x, TranscodeItemPropertyChanged, "");
                 transcodingListBox.ScrollIntoView(ViewModel.TranscodingManager.TranscodeItems[^1]);
             }
-            else
-            {
-                throw new NotSupportedException("This action type is not supported: " + e.Action);
-            }
+            else throw new NotSupportedException("This action type is not supported: " + e.Action);
             transcodeItemsCollectionView.Refresh();  // Workaround because live shaping does not support to sort groupings.
         }
         
         private void TranscodeItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(TranscodeItem.TranscodeStatus))
-            {
-                transcodeItemsCollectionView.Refresh();  // Workaround because live shaping does not support to sort groupings.
-            }
+            if (e.PropertyName == nameof(TranscodeItem.TranscodeStatus)) transcodeItemsCollectionView.Refresh();  // Workaround because live shaping does not support to sort groupings.
         }
 
-        private void ListBoxItemContextMenuOpening(object sender, RoutedEventArgs e)
-        {
-            ((FrameworkElement)sender).ContextMenu.DataContext = ViewModel;
-        }
+        private void ListBoxItemContextMenuOpening(object sender, RoutedEventArgs e) => ((FrameworkElement)sender).ContextMenu.DataContext = ViewModel;
 
         private void StatusBarButtonClick(object sender, RoutedEventArgs e)
         {

@@ -7,12 +7,11 @@ namespace Waf.MusicManager.Presentation.Controls
     public class InsertMarkerAdorner : Adorner
     {
         private readonly FrameworkElement control;
-        private FrameworkElement item;
+        private FrameworkElement? item;
         private bool showMarkerAfterItem;
         private Rect adornerViewRect;
 
-        public InsertMarkerAdorner(FrameworkElement control)
-            : base(control)
+        public InsertMarkerAdorner(FrameworkElement control) : base(control)
         {
             this.control = control;
         }

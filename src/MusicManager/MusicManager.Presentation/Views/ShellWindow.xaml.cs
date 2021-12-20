@@ -20,7 +20,7 @@ namespace Waf.MusicManager.Presentation.Views
         public ShellWindow()
         {
             InitializeComponent();
-            viewModel = new Lazy<ShellViewModel>(this.GetViewModel<ShellViewModel>);
+            viewModel = new Lazy<ShellViewModel>(() => this.GetViewModel<ShellViewModel>()!);
             Loaded += LoadedHandler;
 
             // Workaround: Need to load both DrawingImages now; otherwise the first one is not shown at the beginning.
@@ -77,12 +77,9 @@ namespace Waf.MusicManager.Presentation.Views
             UpdatePlayPauseButton();
         }
 
-        private void PlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void PlayerServicePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(IPlayerService.IsPlayCommand))
-            {
-                UpdatePlayPauseButton();
-            }
+            if (e.PropertyName == nameof(IPlayerService.IsPlayCommand)) UpdatePlayPauseButton();
         }
 
         private void UpdatePlayPauseButton()
@@ -97,7 +94,7 @@ namespace Waf.MusicManager.Presentation.Views
             }
         }
 
-        private void ShellServicePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ShellServicePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IShellService.IsApplicationBusy))
             {

@@ -51,11 +51,8 @@ namespace Waf.MusicManager.Presentation.Controls
         private void UpdateContent()
         {
             var newTextParts = SplitText();
-            if (textParts.SequenceEqual(newTextParts))
-            {
-                return;
-            }
-
+            if (textParts.SequenceEqual(newTextParts)) return;
+            
             var highlightBackground = HighlightBackground;
             Inlines.Clear();
             bool isHighlight = false;
@@ -72,7 +69,6 @@ namespace Waf.MusicManager.Presentation.Controls
                         Inlines.Add(new Run(textPart));
                     }
                 }
-
                 isHighlight = !isHighlight;
             }
             textParts = newTextParts;
@@ -83,32 +79,23 @@ namespace Waf.MusicManager.Presentation.Controls
             var text = Text;
             var searchText = SearchText;
 
-            if (string.IsNullOrEmpty(searchText))
-            {
-                return new[] { text };
-            }
-
+            if (string.IsNullOrEmpty(searchText)) return new[] { text };
+            
             var parts = new List<string>();
             var index = 0;
             var comparisonType = IsMatchCase ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase;
             while (true)
             {
                 int position = text.IndexOf(searchText, index, comparisonType);
-                if (position < 0)
-                {
-                    break;
-                }
-                parts.Add(text.Substring(index, (position - index)));
+                if (position < 0) break;
+                parts.Add(text[index..position]);
                 parts.Add(text.Substring(position, searchText.Length));
                 index = position + searchText.Length;
             }
-            parts.Add(text.Substring(index, text.Length - index));
+            parts.Add(text[index..]);
             return parts;
         }
 
-        private static void ControlPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((SearchableTextBlock)d).UpdateContent();
-        }
+        private static void ControlPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e) => ((SearchableTextBlock)d).UpdateContent();
     } 
 }

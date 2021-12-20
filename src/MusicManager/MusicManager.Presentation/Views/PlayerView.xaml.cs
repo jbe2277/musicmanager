@@ -11,7 +11,6 @@ using System.Windows.Threading;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Applications.Views;
-using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.Playlists;
 
 namespace Waf.MusicManager.Presentation.Views
@@ -31,18 +30,16 @@ namespace Waf.MusicManager.Presentation.Views
         private bool suppressPositionSliderValueChanged;
         private double lastUserSliderValue;
         
-        
         [ImportingConstructor]
         public PlayerView(PlayerService playerService)
         {
             InitializeComponent();
-            viewModel = new Lazy<PlayerViewModel>(this.GetViewModel<PlayerViewModel>);
+            viewModel = new Lazy<PlayerViewModel>(() => this.GetViewModel<PlayerViewModel>()!);
             this.playerService = playerService;
             mediaPlayer = new MediaPlayer();
             duratonConverter = new Converters.DurationConverter();
 
-            updateTimer = new DispatcherTimer();
-            updateTimer.Interval = TimeSpan.FromMilliseconds(100);
+            updateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
             updateTimer.Tick += UpdateTimerTick;
 
             throttledSliderValueChangedAction = new ThrottledAction(ThrottledSliderValueChanged, ThrottledActionMode.InvokeMaxEveryDelayTime, TimeSpan.FromMilliseconds(100));
@@ -59,14 +56,11 @@ namespace Waf.MusicManager.Presentation.Views
         }
 
         private PlayerViewModel ViewModel => viewModel.Value;
-        
-        public TimeSpan GetPosition() { return mediaPlayer.Position; }
 
-        public void SetPosition(TimeSpan position) 
-        { 
-            positionSlider.Value = position.TotalSeconds;
-        }
-        
+        public TimeSpan GetPosition() => mediaPlayer.Position;
+
+        public void SetPosition(TimeSpan position) => positionSlider.Value = position.TotalSeconds;
+
         private void FirstTimeLoadedHandler(object sender, RoutedEventArgs e)
         {
             Loaded -= FirstTimeLoadedHandler;
@@ -85,20 +79,19 @@ namespace Waf.MusicManager.Presentation.Views
         {
             updateTimer.Stop();
             playerService.IsPlayCommand = true;
-            
-            if (ViewModel.PlaylistManager.CurrentItem != null)
+
+            var file = ViewModel.PlaylistManager.CurrentItem?.MusicFile.FileName;
+            if (file != null)
             {
-                var musicUri = new Uri(ViewModel.PlaylistManager.CurrentItem.MusicFile.FileName);
+                var musicUri = new Uri(file);
                 if (mediaPlayer.Source != musicUri)
                 {
                     mediaPlayer.Open(musicUri);
-                    
                     positionSlider.Maximum = 1; // Use a default value that will be updated as soon the metadata is loaded.
                     positionSlider.Value = 0;
-
                     try
                     {
-                        var metadata = await ViewModel.PlaylistManager.CurrentItem.MusicFile.GetMetadataAsync();
+                        var metadata = await ViewModel.PlaylistManager.CurrentItem!.MusicFile.GetMetadataAsync();
                         positionSlider.Maximum = metadata.Duration.TotalSeconds;
                     }
                     catch (Exception ex)
@@ -113,18 +106,12 @@ namespace Waf.MusicManager.Presentation.Views
             }
         }
         
-        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(PlayerViewModel.Volume))
-            {
-                mediaPlayer.Volume = ViewModel.Volume;
-            }
+            if (e.PropertyName == nameof(PlayerViewModel.Volume)) mediaPlayer.Volume = ViewModel.Volume;
         }
 
-        private bool CanPrevious()
-        {
-            return mediaPlayer.Position.TotalSeconds > 1 || ViewModel.PreviousTrackCommand.CanExecute(null);
-        }
+        private bool CanPrevious() => mediaPlayer.Position.TotalSeconds > 1 || ViewModel.PreviousTrackCommand.CanExecute(null);
 
         private void Previous()
         {
@@ -134,27 +121,15 @@ namespace Waf.MusicManager.Presentation.Views
             }
             else
             {
-                if (ViewModel.PreviousTrackCommand.CanExecute(null))
-                {
-                    ViewModel.PreviousTrackCommand.Execute(null);
-                }
+                ViewModel.PreviousTrackCommand.Execute(null);
             }
         }
 
-        private bool CanNext()
-        {
-            return ViewModel.NextTrackCommand.CanExecute(null);
-        }
+        private bool CanNext() => ViewModel.NextTrackCommand.CanExecute(null);
 
-        private void Next()
-        {
-            if (ViewModel.NextTrackCommand.CanExecute(null))
-            {
-                ViewModel.NextTrackCommand.Execute(null);
-            }
-        }
+        private void Next() => ViewModel.NextTrackCommand.Execute(null);
 
-        private void PlaylistManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void PlaylistManagerPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PlaylistManager.CurrentItem))
             {
@@ -163,11 +138,8 @@ namespace Waf.MusicManager.Presentation.Views
             }
         }
 
-        private bool CanPlayPause()
-        {
-            return ViewModel.PlaylistManager?.CurrentItem?.MusicFile != null;
-        }
-        
+        private bool CanPlayPause() => ViewModel.PlaylistManager?.CurrentItem?.MusicFile != null;
+
         private void PlayPause()
         {
             if (!updateTimer.IsEnabled)
@@ -194,7 +166,7 @@ namespace Waf.MusicManager.Presentation.Views
             playerService.IsPlayCommand = true;
         }
 
-        private void UpdateTimerTick(object sender, EventArgs e)
+        private void UpdateTimerTick(object? sender, EventArgs e)
         {
             suppressPositionSliderValueChanged = true;
             if (!throttledSliderValueChangedAction.IsRunning)
@@ -217,18 +189,14 @@ namespace Waf.MusicManager.Presentation.Views
         {
             positionLabel.Text = (string)duratonConverter.Convert(TimeSpan.FromSeconds(e.NewValue), null, null, null);
 
-            if (suppressPositionSliderValueChanged) { return; }
-
+            if (suppressPositionSliderValueChanged) return;
             lastUserSliderValue = e.NewValue;
             throttledSliderValueChangedAction.InvokeAccumulated();
         }
 
-        private void ThrottledSliderValueChanged()
-        {
-            mediaPlayer.Position = TimeSpan.FromSeconds(lastUserSliderValue);
-        }
+        private void ThrottledSliderValueChanged() => mediaPlayer.Position = TimeSpan.FromSeconds(lastUserSliderValue);
 
-        private void MediaPlayerMediaFailed(object sender, ExceptionEventArgs e)
+        private void MediaPlayerMediaFailed(object? sender, ExceptionEventArgs e)
         {
             Log.Default.Warn(e.ErrorException, "MediaPlayer.MediaFailed");
             if (e.ErrorException is InvalidWmpVersionException)
@@ -242,10 +210,7 @@ namespace Waf.MusicManager.Presentation.Views
             PlayNextOrPause();
         }
 
-        private void MediaPlayerMediaEnded(object sender, EventArgs e)
-        {
-            PlayNextOrPause();
-        }
+        private void MediaPlayerMediaEnded(object? sender, EventArgs e) => PlayNextOrPause();
 
         private void PlayNextOrPause()
         {
@@ -261,10 +226,7 @@ namespace Waf.MusicManager.Presentation.Views
             }
         }
 
-        private void VolumeButtonClick(object sender, RoutedEventArgs e)
-        {
-            volumePopup.IsOpen = true;
-        }
+        private void VolumeButtonClick(object sender, RoutedEventArgs e) => volumePopup.IsOpen = true;
 
         private void ToggleMuteClick(object sender, RoutedEventArgs e)
         {
@@ -286,9 +248,6 @@ namespace Waf.MusicManager.Presentation.Views
             slider.SetCurrentValue(Slider.ValueProperty, slider.Value + delta);
         }
 
-        private void MoreButtonClick(object sender, RoutedEventArgs e)
-        {
-            morePopup.IsOpen = true;
-        }
+        private void MoreButtonClick(object sender, RoutedEventArgs e) => morePopup.IsOpen = true;
     }
 }

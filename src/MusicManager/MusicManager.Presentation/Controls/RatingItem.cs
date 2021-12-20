@@ -34,11 +34,9 @@ namespace Waf.MusicManager.Presentation.Controls
             get => value;
             set
             {
-                if (this.value != value)
-                {
-                    this.value = value;
-                    UpdateRatingItemState();
-                }
+                if (this.value == value) return;
+                this.value = value;
+                UpdateRatingItemState();
             }
         }
 
@@ -47,27 +45,16 @@ namespace Waf.MusicManager.Presentation.Controls
             get => mouseOverValue;
             set
             {
-                if (mouseOverValue != value)
-                {
-                    mouseOverValue = value;
-                    UpdateRatingItemState();
-                }
+                if (mouseOverValue == value) return;
+                mouseOverValue = value;
+                UpdateRatingItemState();
             }
         }
 
         private void UpdateRatingItemState()
         {
             RatingItemState state;
-            double stateValue;
-            if (MouseOverValue >= 1)
-            {
-                stateValue = MouseOverValue;
-            }
-            else
-            {
-                stateValue = Value;
-            }
-               
+            double stateValue = MouseOverValue >= 1 ? MouseOverValue : Value;
             if (stateValue >= ItemValue)
             {
                 state = RatingItemState.Filled;
