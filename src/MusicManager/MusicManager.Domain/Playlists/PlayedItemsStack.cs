@@ -23,17 +23,11 @@ namespace Waf.MusicManager.Domain.Playlists
             return result;
         }
 
-        public bool Contains(T item)
-        {
-            return playlistItems.Contains(item);
-        }
+        public bool Contains(T item) => playlistItems.Contains(item);
 
         public void Add(T item)
         {
-            if (playlistItems.Count >= capacity)
-            {
-                playlistItems.RemoveFirst();
-            }
+            if (playlistItems.Count >= capacity) playlistItems.RemoveFirst();
             playlistItems.AddLast(item);
         }
 
@@ -47,9 +41,6 @@ namespace Waf.MusicManager.Domain.Playlists
             while (removed);
         }
 
-        public void Clear()
-        {
-            playlistItems.Clear();
-        }
+        public void Clear() => playlistItems.Clear();
     }
 }

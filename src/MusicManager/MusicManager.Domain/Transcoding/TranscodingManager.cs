@@ -15,14 +15,8 @@ namespace Waf.MusicManager.Domain.Transcoding
 
         public IReadOnlyObservableList<TranscodeItem> TranscodeItems { get; }
 
-        public void AddTranscodeItem(TranscodeItem item)
-        {
-            transcodeItems.Add(item);
-        }
+        public void AddTranscodeItem(TranscodeItem item) => transcodeItems.Add(item);
 
-        public void RemoveTranscodeItem(TranscodeItem item)
-        {
-            transcodeItems.Remove(item);
-        }
+        public void RemoveTranscodeItem(TranscodeItem item) => transcodeItems.Remove(item);
     }
 }

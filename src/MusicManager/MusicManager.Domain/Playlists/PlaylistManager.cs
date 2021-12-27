@@ -190,10 +190,7 @@ namespace Waf.MusicManager.Domain.Playlists
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
-            if (new[] { nameof(CurrentItem), nameof(Repeat), nameof(Shuffle) }.Contains(e.PropertyName))
-            {
-                UpdateCanPreviousAndCanNextItem();
-            }
+            if (e.PropertyName is nameof(CurrentItem) or nameof(Repeat) or nameof(Shuffle)) UpdateCanPreviousAndCanNextItem();
         }
 
         private void UpdateCanPreviousAndCanNextItem()
@@ -235,14 +232,14 @@ namespace Waf.MusicManager.Domain.Playlists
             {
                 foreach (PlaylistItem newItem in e.NewItems!)
                 {
-                    if (!newItem.MusicFile.IsMetadataLoaded) { newItem.MusicFile.PropertyChanged += MusicFilePropertyChanged; }
+                    if (!newItem.MusicFile.IsMetadataLoaded) newItem.MusicFile.PropertyChanged += MusicFilePropertyChanged;
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 foreach (PlaylistItem oldItem in e.OldItems!)
                 {
-                    if (!oldItem.MusicFile.IsMetadataLoaded) { oldItem.MusicFile.PropertyChanged -= MusicFilePropertyChanged; }
+                    if (!oldItem.MusicFile.IsMetadataLoaded) oldItem.MusicFile.PropertyChanged -= MusicFilePropertyChanged;
                 }
             }
             if (e.Action != NotifyCollectionChangedAction.Move) UpdateTotalDuration();

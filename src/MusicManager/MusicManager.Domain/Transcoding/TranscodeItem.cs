@@ -32,10 +32,8 @@ namespace Waf.MusicManager.Domain.Transcoding
             get => progress;
             set
             {
-                if (SetProperty(ref progress, value))
-                {
-                    UpdateStatus();
-                }
+                if (!SetProperty(ref progress, value)) return;
+                UpdateStatus();
             }
         }
 
@@ -44,31 +42,20 @@ namespace Waf.MusicManager.Domain.Transcoding
             get => error;
             set
             {
-                if (SetProperty(ref error, value))
-                {
-                    UpdateStatus();
-                }
+                if (!SetProperty(ref error, value)) return;
+                UpdateStatus();
             }
         }
 
         private void UpdateStatus()
         {
-            if (Error != null) 
-            { 
-                TranscodeStatus = TranscodeStatus.Error; 
-            }
-            else if (Progress == 0) 
-            { 
-                TranscodeStatus = TranscodeStatus.Pending; 
-            }
-            else if (Progress < 1) 
-            { 
-                TranscodeStatus = TranscodeStatus.InProgress; 
-            }
-            else 
-            { 
-                TranscodeStatus = TranscodeStatus.Completed; 
-            }
+            TranscodeStatus = this switch
+            {
+                { Error: not null } => TranscodeStatus.Error,
+                { Progress: 0 } => TranscodeStatus.Pending,
+                { Progress: < 1} => TranscodeStatus.InProgress,
+                _ => TranscodeStatus.Completed
+            };
         }
     }
 }

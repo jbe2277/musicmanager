@@ -27,15 +27,9 @@ namespace Waf.MusicManager.Domain.MusicFiles
             private set => SetProperty(ref hasChanges, value);
         }
 
-        public IReadOnlyCollection<string> GetChanges()
-        { 
-            return changes.ToArray(); 
-        }
+        public IReadOnlyCollection<string> GetChanges() => changes.ToArray();
 
-        public void EntityLoadCompleted()
-        {
-            entityLoaded = true;
-        }
+        public void EntityLoadCompleted() => entityLoaded = true;
 
         public void ClearChanges()
         {

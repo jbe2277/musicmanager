@@ -4,8 +4,8 @@ namespace Waf.MusicManager.Domain.MusicFiles
 {
     public static class Genres
     {
-        private static readonly string[] defaultValues = 
-        { 
+        public static IReadOnlyList<string> DefaultValues { get; } = new[]
+        {
             "Blues",
             "Classical",
             "Comedy",
@@ -24,8 +24,5 @@ namespace Waf.MusicManager.Domain.MusicFiles
             "Soundtrack",
             "Techno"
         };
-
-
-        public static IReadOnlyList<string> DefaultValues => defaultValues;
     }
 }
