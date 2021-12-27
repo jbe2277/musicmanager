@@ -18,7 +18,7 @@ namespace Test.MusicManager.Presentation.Converters
             var converter = new StringListToStringConverter();
 
             Assert.AreEqual("", converter.Convert(null, null, null, null));
-            Assert.AreEqual("", converter.Convert(new string[0], null, null, null));
+            Assert.AreEqual("", converter.Convert(Array.Empty<string>(), null, null, null));
             Assert.AreEqual("", converter.Convert(new[] { "" }, null, null, null));
 
             Assert.AreEqual("Pop", converter.Convert(new[] { "Pop" }, null, null, null));

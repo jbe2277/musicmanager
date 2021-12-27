@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Waf.UnitTesting;
 using Waf.MusicManager.Presentation.Converters;
 
 namespace Test.MusicManager.Presentation.Converters
