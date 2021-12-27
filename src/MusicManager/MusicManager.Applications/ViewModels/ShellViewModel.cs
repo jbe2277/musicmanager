@@ -19,7 +19,7 @@ namespace Waf.MusicManager.Applications.ViewModels
         private readonly AppSettings settings;
         private readonly ObservableCollection<Tuple<Exception?, string>> errors;
         private object? detailsView;
-        
+
         [ImportingConstructor]
         public ShellViewModel(IShellView view, IShellService shellService, IPlayerService playerService) : base(view)
         {
@@ -36,8 +36,7 @@ namespace Waf.MusicManager.Applications.ViewModels
 
             // Restore the window size when the values are valid.
             if (settings.Left >= 0 && settings.Top >= 0 && settings.Width > 0 && settings.Height > 0
-                && settings.Left + settings.Width <= view.VirtualScreenWidth
-                && settings.Top + settings.Height <= view.VirtualScreenHeight)
+                && settings.Left + settings.Width <= view.VirtualScreenWidth && settings.Top + settings.Height <= view.VirtualScreenHeight)
             {
                 view.Left = settings.Left;
                 view.Top = settings.Top;

@@ -36,7 +36,7 @@ namespace Waf.MusicManager.Applications.ViewModels
         }
 
         public ISelectionService SelectionService => selectionService.Value;
-        
+
         public IManagerStatusService ManagerStatusService { get; }
 
         public IPlayerService PlayerService { get; }
@@ -103,9 +103,6 @@ namespace Waf.MusicManager.Applications.ViewModels
             set => SetProperty(ref deleteSelectedFilesCommand, value);
         }
 
-        private void ClearSearch()
-        {
-            SearchFilter.Clear();
-        }
+        private void ClearSearch() => SearchFilter.Clear();
     }
 }

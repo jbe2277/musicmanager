@@ -11,11 +11,11 @@ namespace Waf.MusicManager.Applications.Data.Metadata
     internal abstract class SaveMetadata
     {
         protected virtual bool IsSupported => true;
-        
+
         public async Task SaveChangesAsync(MusicFile musicFile)
         {
             if (!IsSupported || !musicFile.IsMetadataLoaded || !musicFile.Metadata.HasChanges) return;
-            
+
             // Manipulating changes must be done synchronously; no await call is allowed before ClearChanges().
             var metadata = musicFile.Metadata;
             var changedProperties = metadata.GetChanges();
@@ -69,7 +69,7 @@ namespace Waf.MusicManager.Applications.Data.Metadata
         protected void ApplyList<T>(IList<T> target, IEnumerable<T> source)
         {
             target.Clear();
-            foreach (T x in source) target.Add(x);
+            foreach (var x in source) target.Add(x);
         }
     }
 }

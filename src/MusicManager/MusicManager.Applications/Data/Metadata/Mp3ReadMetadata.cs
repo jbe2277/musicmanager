@@ -19,11 +19,7 @@ namespace Waf.MusicManager.Applications.Data.Metadata
         private static IEnumerable<string> TryParseFromOneItem(IEnumerable<string> source)
         {
             // The WinRT API does not support some of the multiple tags for MP3 files.
-            if (source.Count() == 1)
-            {
-                return StringListConverter.FromString(source.First());
-            }
-            return source.ToArray();
+            return source.Count() == 1 ? StringListConverter.FromString(source.First()) : source.ToArray();
         }
     }
 }

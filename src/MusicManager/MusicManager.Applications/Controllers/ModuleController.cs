@@ -99,19 +99,10 @@ namespace Waf.MusicManager.Applications.Controllers
             ManagerController.Shutdown();
         }
 
-        private void ShowMusicPropertiesView()
-        {
-            ShellViewModel.IsMusicPropertiesViewVisible = true;
-        }
+        private void ShowMusicPropertiesView() => ShellViewModel.IsMusicPropertiesViewVisible = true;
 
-        private void ShowPlaylistView()
-        {
-            ShellViewModel.IsPlaylistViewVisible = true;
-        }
+        private void ShowPlaylistView() => ShellViewModel.IsPlaylistViewVisible = true;
 
-        private void ShowTranscodingListView()
-        {
-            ShellViewModel.IsTranscodingListViewVisible = true;
-        }
+        private void ShowTranscodingListView() => ShellViewModel.IsTranscodingListViewVisible = true;
     }
 }

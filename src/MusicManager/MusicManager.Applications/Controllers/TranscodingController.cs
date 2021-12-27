@@ -73,7 +73,7 @@ namespace Waf.MusicManager.Applications.Controllers
 
             shellService.Closing += ShellServiceClosing;
             selectionService.MusicFiles.CollectionChanged += (sender, e) => throttledMusicFilesCollectionChangedAction.InvokeAccumulated();
-            ((INotifyCollectionChanged)selectionService.SelectedMusicFiles).CollectionChanged += SelectedMusicFilesCollectionChanged;
+            selectionService.SelectedMusicFiles.CollectionChanged += SelectedMusicFilesCollectionChanged;
         }
 
         public void Shutdown()

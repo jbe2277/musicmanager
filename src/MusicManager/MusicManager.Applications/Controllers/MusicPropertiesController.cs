@@ -46,7 +46,7 @@ namespace Waf.MusicManager.Applications.Controllers
             ServiceLocator.RegisterInstance<IChangeTrackerService>(changeTrackerService);
 
             PlaylistManager.PropertyChanged += PlaylistManagerPropertyChanged;
-            ((INotifyCollectionChanged)selectionService.SelectedMusicFiles).CollectionChanged += SelectedMusicFilesCollectionChanged;
+            selectionService.SelectedMusicFiles.CollectionChanged += SelectedMusicFilesCollectionChanged;
             shellService.MusicPropertiesView = MusicPropertiesViewModel.View;
         }
 

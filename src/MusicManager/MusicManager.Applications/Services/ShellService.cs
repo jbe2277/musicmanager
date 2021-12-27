@@ -27,14 +27,14 @@ namespace Waf.MusicManager.Applications.Services
 
         [ImportingConstructor]
         public ShellService(Lazy<IShellView> shellView)
-	    {
+        {
             this.shellView = shellView;
             tasksToCompleteBeforeShutdown = new List<Task>();
             applicationBusyContext = new List<ApplicationBusyContext>();
-	    }
+        }
 
         public AppSettings Settings { get; set; } = null!;
-        
+
         public object ShellView => shellView.Value;
 
         public object? ContentView
@@ -85,7 +85,7 @@ namespace Waf.MusicManager.Applications.Services
 
         public event CancelEventHandler? Closing
         {
-            add 
+            add
             { 
                 closing += value;
                 InitializeClosingEvent();
@@ -94,9 +94,9 @@ namespace Waf.MusicManager.Applications.Services
         }
 
         public void ShowError(Exception exception, string displayMessage) => ShowErrorAction(exception, displayMessage);
-        
+
         public void ShowMusicPropertiesView() => ShowMusicPropertiesViewAction();
-        
+
         public void ShowPlaylistView() => ShowPlaylistViewAction();
 
         public void ShowTranscodingListView() => ShowTranscodingListViewAction();

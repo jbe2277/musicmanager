@@ -8,14 +8,11 @@ namespace Waf.MusicManager.Applications.Properties
     [DataContract]
     public sealed class PlaylistSettings : UserSettingsBase
     {
-        [DataMember(Name = "FileNames")] 
-        private readonly List<string> fileNames = new();
+        [DataMember(Name = "FileNames")] private readonly List<string> fileNames = new();
 
-        [DataMember]
-        public string? LastPlayedFileName { get; set; }
+        [DataMember] public string? LastPlayedFileName { get; set; }
 
-        [DataMember]
-        public TimeSpan LastPlayedFilePosition { get; set; }
+        [DataMember] public TimeSpan LastPlayedFilePosition { get; set; }
         
         public IReadOnlyList<string> FileNames { get { return fileNames; } }
 

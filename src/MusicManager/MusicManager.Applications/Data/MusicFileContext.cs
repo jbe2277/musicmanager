@@ -54,7 +54,7 @@ namespace Waf.MusicManager.Applications.Data
         private static async Task<MusicMetadata> LoadMetadata(string fileName, Task? runningTranscodingTask)
         {
             if (runningTranscodingTask != null) await runningTranscodingTask.ConfigureAwait(false);
-            
+
             var file = await StorageFile.GetFileFromPathAsync(fileName).AsTask().ConfigureAwait(false);
             var musicProperties = await file.Properties.GetMusicPropertiesAsync().AsTask().ConfigureAwait(false);
 
@@ -75,7 +75,7 @@ namespace Waf.MusicManager.Applications.Data
             await TaskUtility.WhenAllFast(musicFiles.Select(x => x.GetMetadataAsync()));
 
             var duration = GetSharedValueOrDefault(musicFiles, x => x.Duration);
-            var bitrate = GetSharedValueOrDefault(musicFiles, x => x.Bitrate);        
+            var bitrate = GetSharedValueOrDefault(musicFiles, x => x.Bitrate);
             return new MusicMetadata(duration, bitrate)
             {
                 Title = GetSharedValueOrDefault(musicFiles, x => x.Title) ?? "",
@@ -126,7 +126,7 @@ namespace Waf.MusicManager.Applications.Data
 
         private void CompactCache()
         {
-            long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+            var elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
             stopwatch.Restart();
             // Performance optimization: Do not compact the cache more often than every second.
             if (elapsedMilliseconds < 1000) return;
@@ -158,10 +158,7 @@ namespace Waf.MusicManager.Applications.Data
             }
         }
 
-        private bool TryRemoveFromCache(string fileName)
-        {
-            return musicFilesCache.TryRemove(fileName, out _);
-        }
+        private bool TryRemoveFromCache(string fileName) => musicFilesCache.TryRemove(fileName, out _);
 
         private static T? GetSharedValueOrDefault<T>(IEnumerable<MusicFile> musicFiles, Func<MusicMetadata, T> getValue, IEqualityComparer<T>? comparer = null)
         {

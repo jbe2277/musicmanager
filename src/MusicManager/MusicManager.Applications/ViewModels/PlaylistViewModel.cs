@@ -25,7 +25,7 @@ namespace Waf.MusicManager.Applications.ViewModels
         private ICommand saveListCommand = DelegateCommand.DisabledCommand;
         private ICommand clearListCommand = DelegateCommand.DisabledCommand;
         private string? searchText;
-        
+
         [ImportingConstructor]
         public PlaylistViewModel(IPlaylistView view) : base(view)
         {
@@ -118,7 +118,7 @@ namespace Waf.MusicManager.Applications.ViewModels
                 }
 
                 if (searchMode == SearchMode.Previous) itemsToSearch = itemsToSearch.Reverse();
-                
+
                 var foundItem = itemsToSearch.FirstOrDefault(x => IsContained(x.MusicFile, SearchText));
                 if (foundItem != null)
                 {

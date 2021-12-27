@@ -17,11 +17,11 @@ namespace Waf.MusicManager.Applications.Data
                 // Try to parse a user-friendly (localized) path.
                 var pathSegments = GetPathSegments(path);
                 corePath = pathSegments[0];
-                foreach (string pathSegment in pathSegments.Skip(1))
+                foreach (var pathSegment in pathSegments.Skip(1))
                 {
                     var folder = await StorageFolder.GetFolderFromPathAsync(corePath).AsTask().ConfigureAwait(false);
                     var subFolders = await folder.GetFoldersAsync().AsTask().ConfigureAwait(false);
-                    var foundFolder = subFolders.FirstOrDefault(x => 
+                    var foundFolder = subFolders.FirstOrDefault(x =>
                         pathSegment.Equals(x.Name, StringComparison.OrdinalIgnoreCase) || pathSegment.Equals(x.DisplayName, StringComparison.OrdinalIgnoreCase));
                     if (foundFolder == null)
                     {
@@ -45,8 +45,8 @@ namespace Waf.MusicManager.Applications.Data
             {
                 var pathSegments = GetPathSegments(path);
                 displayPath = pathSegments[0];
-                string currentPath = pathSegments[0];
-                foreach (string pathSegment in pathSegments.Skip(1))
+                var currentPath = pathSegments[0];
+                foreach (var pathSegment in pathSegments.Skip(1))
                 {
                     currentPath = Path.Combine(currentPath, pathSegment);
                     var folder = await StorageFolder.GetFolderFromPathAsync(currentPath).AsTask().ConfigureAwait(false);
@@ -64,7 +64,7 @@ namespace Waf.MusicManager.Applications.Data
         {
             var root = Path.GetPathRoot(path);
             if (string.IsNullOrEmpty(root)) return Array.Empty<string>();
-            string innerPath = path[root.Length..];
+            var innerPath = path[root.Length..];
             innerPath = innerPath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
             var pathSegments = new[] { root }.Concat(innerPath.Split(Path.DirectorySeparatorChar).Where(x => !string.IsNullOrEmpty(x))).ToArray();
             return pathSegments;

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.MusicManager.Applications.Views;
-using Waf.MusicManager.Domain;
 
 namespace Waf.MusicManager.Applications.ViewModels
 {
@@ -12,8 +11,7 @@ namespace Waf.MusicManager.Applications.ViewModels
     public class InfoViewModel : ViewModel<IInfoView>
     {
         [ImportingConstructor]
-        public InfoViewModel(IInfoView view)
-            : base(view)
+        public InfoViewModel(IInfoView view) : base(view)
         {
             ShowWebsiteCommand = new DelegateCommand(ShowWebsite);
         }
@@ -30,14 +28,11 @@ namespace Waf.MusicManager.Applications.ViewModels
 
         public bool Is64BitProcess => Environment.Is64BitProcess;
 
-        public void ShowDialog(object owner)
-        {
-            ViewCore.ShowDialog(owner);
-        }
+        public void ShowDialog(object owner) => ViewCore.ShowDialog(owner);
 
         private void ShowWebsite(object? parameter)
         {
-            string url = (string)parameter!;
+            var url = (string)parameter!;
             try
             {
                 Process.Start(url);

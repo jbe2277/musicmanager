@@ -109,14 +109,8 @@ namespace Waf.MusicManager.Applications.Data
         private static IReadOnlyList<string> AddMoreExtensionsWhenSupported(IReadOnlyList<string> extensions)
         {
             IEnumerable<string> result = extensions;
-            if (IsFlacSupported)
-            {
-                result = result.Concat(new[] { ".flac" });
-            }
-            if (IsMkvSupported)
-            {
-                result = result.Concat(new[] { ".mkv" });
-            }
+            if (IsFlacSupported) result = result.Concat(new[] { ".flac" });
+            if (IsMkvSupported) result = result.Concat(new[] { ".mkv" });
             return result.ToArray();
         }
     }

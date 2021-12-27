@@ -72,8 +72,8 @@ namespace Waf.MusicManager.Applications.ViewModels
             set => SetProperty(ref volume, value);
         }
 
-        public TimeSpan GetPosition() { return ViewCore.GetPosition(); }
+        public TimeSpan GetPosition() => ViewCore.GetPosition();
 
-        public void SetPosition(TimeSpan position) { ViewCore.SetPosition(position); }
+        public void SetPosition(TimeSpan position) => ViewCore.SetPosition(position);
     }
 }

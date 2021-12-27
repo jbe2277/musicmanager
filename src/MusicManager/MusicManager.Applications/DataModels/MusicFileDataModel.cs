@@ -23,7 +23,7 @@ namespace Waf.MusicManager.Applications.DataModels
 
         public MusicFile MusicFile { get; }
 
-        public string ArtistsString => string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : Array.Empty<string>()); 
+        public string ArtistsString => string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : Array.Empty<string>());
 
         private void MetadataLoaded() => PropertyChangedEventManager.AddHandler(MusicFile.Metadata, MetadataPropertyChanged, "");
 

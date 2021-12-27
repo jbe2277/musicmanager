@@ -19,12 +19,12 @@ namespace Waf.MusicManager.Applications.DataModels
         private uint ratingFilter;
         private uint? fromYearFilter;
         private uint? toYearFilter;
-        
+
         public string DisplaySearchFilter
         {
-            get 
+            get
             {
-                string result = "";
+                var result = "";
                 if (!string.IsNullOrEmpty(UserSearchFilter))
                 {
                     result = UserSearchFilter;
@@ -44,7 +44,7 @@ namespace Waf.MusicManager.Applications.DataModels
                 return result;
             }
         }
-        
+
         public string UserSearchFilter
         {
             get => userSearchFilter;
@@ -98,7 +98,7 @@ namespace Waf.MusicManager.Applications.DataModels
             get => fromYearFilter?.ToString(CultureInfo.CurrentCulture);
             set
             {
-                uint? newValue = string.IsNullOrEmpty(value) ? (uint?)null : uint.Parse(value, CultureInfo.CurrentCulture);
+                uint? newValue = string.IsNullOrEmpty(value) ? null : uint.Parse(value, CultureInfo.CurrentCulture);
                 if (fromYearFilter != newValue)
                 {
                     fromYearFilter = newValue;
@@ -112,7 +112,7 @@ namespace Waf.MusicManager.Applications.DataModels
             get => toYearFilter?.ToString(CultureInfo.CurrentCulture);
             set
             {
-                uint? newValue = string.IsNullOrEmpty(value) ? (uint?)null : uint.Parse(value, CultureInfo.CurrentCulture);
+                uint? newValue = string.IsNullOrEmpty(value) ? null : uint.Parse(value, CultureInfo.CurrentCulture);
                 if (toYearFilter != newValue)
                 {
                     toYearFilter = newValue;

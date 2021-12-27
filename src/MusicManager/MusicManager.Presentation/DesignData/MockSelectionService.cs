@@ -20,7 +20,7 @@ namespace Waf.MusicManager.Presentation.DesignData
 
         public ObservableListView<MusicFileDataModel> MusicFiles { get; }
 
-        public IList<MusicFileDataModel> SelectedMusicFiles { get; }
+        public ObservableCollection<MusicFileDataModel> SelectedMusicFiles { get; }
         
         public void SetMusicFiles(IEnumerable<MusicFileDataModel> musicFiles)
         {

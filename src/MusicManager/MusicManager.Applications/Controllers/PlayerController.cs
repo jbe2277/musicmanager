@@ -86,7 +86,7 @@ namespace Waf.MusicManager.Applications.Controllers
             shellService.PlayerView = PlayerViewModel.View;
 
             selectionService.MusicFiles.CollectionChanged += MusicFilesCollectionChanged;
-            ((INotifyCollectionChanged)selectionService.SelectedMusicFiles).CollectionChanged += SelectedMusicFilesCollectionChanged;
+            selectionService.SelectedMusicFiles.CollectionChanged += SelectedMusicFilesCollectionChanged;
         }
 
         public void Run()
@@ -123,46 +123,22 @@ namespace Waf.MusicManager.Applications.Controllers
             shellService.Settings.Shuffle = PlaylistManager.Shuffle;
             shellService.Settings.Repeat = PlaylistManager.Repeat;
         }
-        
-        private bool CanPlayAll()
-        {
-            return selectionService.MusicFiles.Any();
-        }
 
-        private void PlayAll()
-        {
-            Play(selectionService.MusicFiles.Select(x => x.MusicFile));
-        }
+        private bool CanPlayAll() => selectionService.MusicFiles.Any();
 
-        private bool CanPlaySelected()
-        {
-            return selectionService.SelectedMusicFiles.Any();
-        }
+        private void PlayAll() => Play(selectionService.MusicFiles.Select(x => x.MusicFile));
 
-        private void PlaySelected()
-        {
-            Play(selectionService.SelectedMusicFiles.Select(x => x.MusicFile));
-        }
+        private bool CanPlaySelected() => selectionService.SelectedMusicFiles.Any();
 
-        private bool CanEnqueueAll()
-        {
-            return selectionService.MusicFiles.Any();
-        }
+        private void PlaySelected() => Play(selectionService.SelectedMusicFiles.Select(x => x.MusicFile));
 
-        private void EnqueueAll()
-        {
-            Enqueue(selectionService.MusicFiles.Select(x => x.MusicFile));
-        }
+        private bool CanEnqueueAll() => selectionService.MusicFiles.Any();
 
-        private bool CanEnqueueSelected()
-        {
-            return selectionService.SelectedMusicFiles.Any();
-        }
+        private void EnqueueAll() => Enqueue(selectionService.MusicFiles.Select(x => x.MusicFile));
 
-        private void EnqueueSelected()
-        {
-            Enqueue(selectionService.SelectedMusicFiles.Select(x => x.MusicFile));
-        }
+        private bool CanEnqueueSelected() => selectionService.SelectedMusicFiles.Any();
+
+        private void EnqueueSelected() => Enqueue(selectionService.SelectedMusicFiles.Select(x => x.MusicFile));
 
         private void Play(IEnumerable<MusicFile> musicFiles)
         {
@@ -179,10 +155,7 @@ namespace Waf.MusicManager.Applications.Controllers
             shellService.ShowPlaylistView();
         }
 
-        private bool CanPreviousTrack()
-        {
-            return PlaylistManager.CanPreviousItem;
-        }
+        private bool CanPreviousTrack() => PlaylistManager.CanPreviousItem;
 
         private void PreviousTrack()
         {
@@ -191,10 +164,7 @@ namespace Waf.MusicManager.Applications.Controllers
             if (wasPlaying) { playerService.Play(); }
         }
 
-        private bool CanNextTrack()
-        {
-            return PlaylistManager.CanNextItem;
-        }
+        private bool CanNextTrack() => PlaylistManager.CanNextItem;
 
         private void NextTrack()
         {
@@ -227,7 +197,7 @@ namespace Waf.MusicManager.Applications.Controllers
             {
                 playerService.PlayingMusicFile = PlaylistManager.CurrentItem?.MusicFile;
             }
-            else if (new[] { nameof(PlaylistManager.CanPreviousItem), nameof(PlaylistManager.CanNextItem) }.Contains(e.PropertyName))
+            else if (e.PropertyName is nameof(PlaylistManager.CanPreviousItem) or nameof(PlaylistManager.CanNextItem))
             {
                 UpdateCommands();
             }

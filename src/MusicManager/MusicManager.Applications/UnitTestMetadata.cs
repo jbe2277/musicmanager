@@ -10,14 +10,9 @@ namespace Waf.MusicManager.Applications
 
         public static bool IsContained(ComposablePartDefinition definition, object? value = null)
         {
-            if (value == null)
-            {
-                return definition.Metadata.ContainsKey(Name);
-            }
-            else
-            {
-                return definition.Metadata.ContainsKey(Name) && definition.Metadata[Name].Equals(value);
-            }
+            return value == null
+                ? definition.Metadata.ContainsKey(Name)
+                : definition.Metadata.ContainsKey(Name) && definition.Metadata[Name].Equals(value);
         }
     }
 }

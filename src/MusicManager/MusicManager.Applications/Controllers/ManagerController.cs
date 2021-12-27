@@ -98,10 +98,7 @@ namespace Waf.MusicManager.Applications.Controllers
             shellService.ContentView = ManagerViewModel.View;
         }
 
-        public void Shutdown()
-        {
-            shellService.Settings.CurrentPath = ManagerViewModel.FolderBrowser.CurrentPath;
-        }
+        public void Shutdown() => shellService.Settings.CurrentPath = ManagerViewModel.FolderBrowser.CurrentPath;
 
         private bool CanNavigateDirectoryUp() => !string.IsNullOrEmpty(ManagerViewModel.FolderBrowser.CurrentPath);
         

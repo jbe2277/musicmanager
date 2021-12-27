@@ -11,7 +11,6 @@ namespace Waf.MusicManager.Applications.Data
         private readonly TaskScheduler taskScheduler;
         private readonly FileSystemWatcher watcher;
 
-        [ImportingConstructor]
         public FileSystemWatcherService()
         {
             taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
@@ -54,19 +53,19 @@ namespace Waf.MusicManager.Applications.Data
         private void WatcherCreated(object? sender, FileSystemEventArgs e)
         {
             Log.Default.Trace(nameof(WatcherCreated));
-            TaskHelper.Run(() => OnCreated(e), taskScheduler); 
+            TaskHelper.Run(() => OnCreated(e), taskScheduler);
         }
 
         private void WatcherRenamed(object? sender, RenamedEventArgs e)
         {
             Log.Default.Trace(nameof(WatcherRenamed));
-            TaskHelper.Run(() => OnRenamed(e), taskScheduler); 
+            TaskHelper.Run(() => OnRenamed(e), taskScheduler);
         }
 
         private void WatcherDeleted(object? sender, FileSystemEventArgs e)
         {
             Log.Default.Trace(nameof(WatcherDeleted));
-            TaskHelper.Run(() => OnDeleted(e), taskScheduler); 
+            TaskHelper.Run(() => OnDeleted(e), taskScheduler);
         }
 
         protected override void Dispose(bool isDisposing)
