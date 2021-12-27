@@ -8,11 +8,11 @@ using System.ComponentModel.Composition.Hosting;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
 using System.Waf.Presentation;
 using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Threading;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
@@ -31,13 +31,9 @@ namespace Waf.MusicManager.Presentation
         private AggregateCatalog? catalog;
         private CompositionContainer? container;
         private IEnumerable<IModuleController> moduleControllers = Array.Empty<IModuleController>();
-        
+
         public App()
         {
-            Directory.CreateDirectory(EnvironmentService.ProfilePath);
-            ProfileOptimization.SetProfileRoot(EnvironmentService.ProfilePath);
-            ProfileOptimization.StartProfile("Startup.profile");
-
             var fileTarget = new FileTarget("fileTarget")
             {
                 FileName = Path.Combine(EnvironmentService.LogPath, "App.log"),
@@ -45,14 +41,10 @@ namespace Waf.MusicManager.Presentation
                 ArchiveAboveSize = 1024 * 1024 * 5,  // 5 MB
                 MaxArchiveFiles = 2,
             };
-            var logConfig = new LoggingConfiguration();
-            logConfig.DefaultCultureInfo = CultureInfo.InvariantCulture;
+            var logConfig = new LoggingConfiguration { DefaultCultureInfo = CultureInfo.InvariantCulture };
             logConfig.AddTarget(fileTarget);
             var maxLevel = LogLevel.AllLoggingLevels.Last();
-            foreach (var logSetting in logSettings)
-            {
-                logConfig.AddRule(logSetting.Item2, maxLevel, fileTarget, logSetting.Item1);
-            }
+            foreach (var x in logSettings) logConfig.AddRule(x.Item2, maxLevel, fileTarget, x.Item1);
             LogManager.Configuration = logConfig;
         }
 
@@ -61,7 +53,7 @@ namespace Waf.MusicManager.Presentation
             base.OnStartup(e);
             Log.App.Info("{0} {1} is starting; OS: {2}", ApplicationInfo.ProductName, ApplicationInfo.Version, Environment.OSVersion);
 
-#if !(DEBUG)
+#if !DEBUG
             DispatcherUnhandledException += AppDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
@@ -74,9 +66,7 @@ namespace Waf.MusicManager.Presentation
             batch.AddExportedValue(container);
             container.Compose(batch);
 
-            // Initialize all presentation services
-            var presentationServices = container.GetExportedValues<IPresentationService>();
-            foreach (var presentationService in presentationServices) { presentationService.Initialize(); }
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
 
             moduleControllers = container.GetExportedValues<IModuleController>();
             foreach (var x in moduleControllers) x.Initialize();
@@ -85,7 +75,7 @@ namespace Waf.MusicManager.Presentation
 
         protected override void OnExit(ExitEventArgs e)
         {
-            foreach (var moduleController in moduleControllers.Reverse()) { moduleController.Shutdown(); }
+            foreach (var x in moduleControllers.Reverse()) x.Shutdown();
             if (container is not null)
             {
                 var shellService = container.GetExportedValue<IShellService>();
