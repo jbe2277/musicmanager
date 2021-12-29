@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-
-namespace Waf.MusicManager.Applications;
+﻿namespace Waf.MusicManager.Applications;
 
 public abstract class Disposable : IDisposable
 {

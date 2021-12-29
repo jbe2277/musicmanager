@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using Waf.MusicManager.Applications.Properties;
+﻿using Waf.MusicManager.Applications.Properties;
 
 namespace Waf.MusicManager.Applications.Services;
 

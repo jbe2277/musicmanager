@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Waf.MusicManager.Applications.Data.Metadata;
+﻿using Waf.MusicManager.Applications.Data.Metadata;
 
 namespace Waf.MusicManager.Applications.Data;
 

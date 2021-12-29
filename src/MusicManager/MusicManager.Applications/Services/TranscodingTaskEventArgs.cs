@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Waf.MusicManager.Applications.Services;
+﻿namespace Waf.MusicManager.Applications.Services;
 
 public class TranscodingTaskEventArgs : EventArgs
 {

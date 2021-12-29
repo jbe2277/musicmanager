@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Waf.Foundation;
-
-namespace Waf.MusicManager.Applications.DataModels;
+﻿namespace Waf.MusicManager.Applications.DataModels;
 
 public class FolderBrowserDataModel : Model
 {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Waf.MusicManager.Domain.MusicFiles;
+﻿using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Waf.MusicManager.Applications.Services;
 

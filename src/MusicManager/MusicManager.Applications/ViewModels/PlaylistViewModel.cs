@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
-using System.Linq;
+﻿using System.ComponentModel.Composition;
 using System.Waf.Applications;
-using System.Waf.Foundation;
 using System.Windows.Input;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.Views;

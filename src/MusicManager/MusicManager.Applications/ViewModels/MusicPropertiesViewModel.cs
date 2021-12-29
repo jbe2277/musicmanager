@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.IO;
-using System.Linq;
 using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.MusicManager.Applications.Services;

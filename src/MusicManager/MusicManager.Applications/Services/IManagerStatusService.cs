@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Waf.MusicManager.Applications.Services;
+﻿namespace Waf.MusicManager.Applications.Services;
 
 public interface IManagerStatusService : INotifyPropertyChanged
 {

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Waf.MusicManager.Applications.Services;

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Waf.MusicManager.Applications.Data;
+﻿namespace Waf.MusicManager.Applications.Data;
 
 internal class SequenceEqualityComparer<T> : IEqualityComparer<IEnumerable<T>>
 {

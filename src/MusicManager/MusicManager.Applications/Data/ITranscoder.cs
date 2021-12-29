@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Waf.MusicManager.Applications.Data;
+﻿namespace Waf.MusicManager.Applications.Data;
 
 public interface ITranscoder
 {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Windows.Foundation;
+﻿using Windows.Foundation;
 using Waf.MusicManager.Domain;
 
 namespace Waf.MusicManager.Applications;

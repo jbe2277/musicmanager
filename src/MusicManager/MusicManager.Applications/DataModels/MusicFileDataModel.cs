@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Globalization;
-using System.Waf.Foundation;
+﻿using System.Globalization;
 using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Waf.MusicManager.Applications.DataModels;

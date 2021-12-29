@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Windows.Storage.FileProperties;
+﻿using Windows.Storage.FileProperties;
 
 namespace Waf.MusicManager.Applications.Data.Metadata;
 
