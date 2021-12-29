@@ -18,7 +18,7 @@ namespace Test.MusicManager.Domain.Transcoding
             var musicFile1 = new MockMusicFile(new MusicMetadata(TimeSpan.FromSeconds(33), 320), "TestFile1.wma");
             var musicFile2 = new MockMusicFile(new MusicMetadata(TimeSpan.FromSeconds(33), 320), "TestFile2.wma");
             var item1 = new TranscodeItem(musicFile1, "TestFile1.mp3");
-            var item2 = new TranscodeItem(musicFile1, "TestFile2.mp3");
+            var item2 = new TranscodeItem(musicFile2, "TestFile2.mp3");
 
             var manager = new TranscodingManager();
             Assert.IsFalse(manager.TranscodeItems.Any());

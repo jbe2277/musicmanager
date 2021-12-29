@@ -11,9 +11,9 @@ namespace Waf.MusicManager.Presentation.Controls
 {
     public static class SelectionBehavior
     {
-        private static readonly List<Tuple<IMultiSelector, INotifyCollectionChanged>> multiSelectorWithObservableList = new List<Tuple<IMultiSelector, INotifyCollectionChanged>>();
-        private static readonly HashSet<object> syncListsThatAreUpdating = new HashSet<object>();
-        private static readonly HashSet<Selector> selectorsThatAreUpdating = new HashSet<Selector>();
+        private static readonly List<Tuple<IMultiSelector, INotifyCollectionChanged>> multiSelectorWithObservableList = new();
+        private static readonly HashSet<object> syncListsThatAreUpdating = new();
+        private static readonly HashSet<Selector> selectorsThatAreUpdating = new();
 
         public static readonly DependencyProperty SyncSelectedItemsProperty =
             DependencyProperty.RegisterAttached("SyncSelectedItems", typeof(IList), typeof(SelectionBehavior), new FrameworkPropertyMetadata(null, SyncSelectedItemsPropertyChanged));

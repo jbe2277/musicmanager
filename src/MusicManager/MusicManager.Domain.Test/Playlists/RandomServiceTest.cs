@@ -13,12 +13,8 @@ namespace Test.MusicManager.Domain.MusicFiles
         public void NextRandomNumber()
         {
             var randomService = new RandomService();
-
-            for (int i = 0; i < 10; i++)
-            {
-                Assert.IsTrue(randomService.NextRandomNumber(2) <= 2);
-            }
-
+            for (int i = 0; i < 10; i++) Assert.IsTrue(randomService.NextRandomNumber(2) <= 2);
+            
             AssertHelper.ExpectedException<ArgumentOutOfRangeException>(() => randomService.NextRandomNumber(int.MaxValue));   
         }
     }

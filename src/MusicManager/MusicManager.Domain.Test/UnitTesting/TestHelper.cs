@@ -46,10 +46,7 @@ namespace Test.MusicManager.Domain.UnitTesting
         [AssemblyCleanup]
         public static void Cleanup()
         {
-            foreach (var tempFile in tempFiles)
-            {
-                if (File.Exists(tempFile)) File.Delete(tempFile);
-            }
+            foreach (var x in tempFiles.Where(y => File.Exists(y))) { File.Delete(x); }
         }
     }
 }

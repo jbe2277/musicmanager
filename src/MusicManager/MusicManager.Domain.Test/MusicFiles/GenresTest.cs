@@ -11,7 +11,7 @@ namespace Test.MusicManager.Domain.MusicFiles
         [TestMethod]
         public void DefaultValuesTest()
         {
-            Assert.IsTrue(Genres.DefaultValues.Count() > 5);
+            Assert.IsTrue(Genres.DefaultValues.Count > 5);
         }
     }
 }

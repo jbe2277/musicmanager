@@ -11,14 +11,10 @@ namespace Test.MusicManager.Domain.MusicFiles
             GetMetadataAsync().GetAwaiter().GetResult();  // Ensure that the metadata is loaded.
         }
 
-        public static MusicFile CreateEmpty(string fileName)
+        public static MusicFile CreateEmpty(string fileName) => new MockMusicFile(new MusicMetadata(new TimeSpan(0, 3, 33), 320000)
         {
-            var musicFile = new MockMusicFile(new MusicMetadata(new TimeSpan(0, 3, 33), 320000)
-            {
-                Artists = Array.Empty<string>(),
-                Title = ""
-            }, fileName);
-            return musicFile;
-        }
+            Artists = Array.Empty<string>(),
+            Title = ""
+        }, fileName);
     }
 }

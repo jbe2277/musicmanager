@@ -51,8 +51,7 @@ namespace Test.MusicManager.Domain.MusicFiles
             changeTrackerService.EntityHasChangesAction = e => entityHasChangesCallCount++;
 
             // No change tracking during loading state
-            var entity = new MockEntity();
-            entity.Name = "Bill";
+            var entity = new MockEntity { Name = "Bill" };
             Assert.AreEqual(0, entityHasChangesCallCount);
             Assert.IsFalse(entity.HasChanges);
 

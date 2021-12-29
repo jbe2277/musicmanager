@@ -24,7 +24,7 @@ namespace Waf.MusicManager.Presentation.DesignData
 
         private class MockPlayerView : MockView, IPlayerView
         {
-            public TimeSpan GetPosition() => new TimeSpan(0, 3, 33);
+            public TimeSpan GetPosition() => new(0, 3, 33);
 
             public void SetPosition(TimeSpan position) { }
         }

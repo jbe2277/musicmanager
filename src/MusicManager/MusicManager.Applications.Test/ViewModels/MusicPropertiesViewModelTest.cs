@@ -83,7 +83,6 @@ namespace Test.MusicManager.Applications.ViewModels
 
             AssertHelper.CanExecuteChangedEvent(viewModel.AutoFillFromFileNameCommand, () => musicFile.Metadata!.Artists = new[] { "Culture Beat" });
             Assert.IsFalse(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
-
         }
     }
 }

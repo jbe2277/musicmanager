@@ -86,14 +86,7 @@ namespace Test.MusicManager.Applications.UnitTesting
         
         private void AddCatalogCore(Type typeInAssembly, Func<ComposablePartDefinition, bool>? filter = null)
         {
-            if (filter == null)
-            {
-                catalog?.Catalogs.Add(new AssemblyCatalog(typeInAssembly.Assembly));
-            }
-            else
-            {
-                catalog?.Catalogs.Add(new FilteredCatalog(new AssemblyCatalog(typeInAssembly.Assembly), filter));
-            }
+            catalog?.Catalogs.Add(filter == null ? new AssemblyCatalog(typeInAssembly.Assembly) : new FilteredCatalog(new AssemblyCatalog(typeInAssembly.Assembly), filter));
         }
     }
 }

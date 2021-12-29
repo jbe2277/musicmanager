@@ -56,7 +56,6 @@ namespace Test.MusicManager.Applications.Controllers
             base.OnCleanup();
         }
         
-
         [TestMethod]
         public void PlayAndRemoveSelectedTest()
         {
@@ -69,8 +68,7 @@ namespace Test.MusicManager.Applications.Controllers
             Assert.IsFalse(viewModel.PlaySelectedCommand.CanExecute(null));
             Assert.IsFalse(viewModel.RemoveSelectedCommand.CanExecute(null));
 
-            AssertHelper.CanExecuteChangedEvent(viewModel.PlaySelectedCommand, () =>
-                SetSelection(viewModel, playlistManager.Items[0]));
+            AssertHelper.CanExecuteChangedEvent(viewModel.PlaySelectedCommand, () => SetSelection(viewModel, playlistManager.Items[0]));
 
             Assert.IsTrue(viewModel.PlaySelectedCommand.CanExecute(null));
             Assert.IsTrue(viewModel.RemoveSelectedCommand.CanExecute(null));

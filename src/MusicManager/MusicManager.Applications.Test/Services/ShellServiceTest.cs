@@ -87,7 +87,7 @@ namespace Test.MusicManager.Applications.Services
                 message = msg;
             };
 
-            Exception testException = new InvalidOperationException();
+            var testException = new InvalidOperationException();
             string testMessage = "Test";
             service.ShowError(testException, testMessage);
             Assert.AreEqual(testException, exception);

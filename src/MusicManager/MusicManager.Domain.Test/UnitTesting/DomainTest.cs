@@ -15,10 +15,7 @@ namespace Test.MusicManager.Domain.UnitTesting
         }
 
         [TestCleanup]
-        public void Cleanup()
-        {
-            OnCleanup();
-        }
+        public void Cleanup() => OnCleanup();
 
         protected virtual void OnInitialize() { }
 

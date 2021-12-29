@@ -37,7 +37,6 @@ namespace Test.MusicManager.Applications.Controllers
             base.OnCleanup();
         }
         
-
         [TestMethod]
         public void LaodAndSaveSettings()
         {

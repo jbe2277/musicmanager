@@ -10,7 +10,7 @@ namespace Test.MusicManager.Domain.MusicFiles
     [TestClass]
     public class MusicFileTest : DomainTest
     {
-        private readonly AssertUnobservedExceptions assertUnobservedExceptions = new AssertUnobservedExceptions(); 
+        private readonly AssertUnobservedExceptions assertUnobservedExceptions = new(); 
 
         protected override void OnInitialize()
         {
@@ -54,10 +54,7 @@ namespace Test.MusicManager.Domain.MusicFiles
         [TestMethod]
         public void ImplicitLoadMetadataWithException()
         {
-            var musicFile = new MusicFile(fileName =>  
-            {
-                throw new InvalidOperationException("Test Exception");
-            }, "");
+            var musicFile = new MusicFile(fileName => { throw new InvalidOperationException("Test Exception"); }, "");
 
             Assert.IsNull(musicFile.Metadata);
             Assert.IsFalse(musicFile.IsMetadataLoaded);

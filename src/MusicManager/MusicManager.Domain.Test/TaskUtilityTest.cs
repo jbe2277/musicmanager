@@ -10,7 +10,7 @@ namespace Test.MusicManager.Domain
     [TestClass]
     public class TaskUtilityTest : DomainTest
     {
-        private readonly AssertUnobservedExceptions assertUnobservedExceptions = new AssertUnobservedExceptions();
+        private readonly AssertUnobservedExceptions assertUnobservedExceptions = new();
 
         protected override void OnInitialize()
         {
