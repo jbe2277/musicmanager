@@ -2,16 +2,15 @@
 using System.Threading.Tasks;
 using Waf.MusicManager.Domain.MusicFiles;
 
-namespace Waf.MusicManager.Applications.Data
+namespace Waf.MusicManager.Applications.Data;
+
+public interface IMusicFileContext
 {
-    public interface IMusicFileContext
-    {
-        MusicFile Create(string fileName);
+    MusicFile Create(string fileName);
 
-        MusicFile CreateFromMultiple(IEnumerable<MusicFile> musicFiles);
+    MusicFile CreateFromMultiple(IEnumerable<MusicFile> musicFiles);
 
-        void ApplyChanges(MusicFile musicFile);
+    void ApplyChanges(MusicFile musicFile);
 
-        Task SaveChangesAsync(MusicFile musicFile);
-    }
+    Task SaveChangesAsync(MusicFile musicFile);
 }

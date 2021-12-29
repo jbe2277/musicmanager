@@ -4,42 +4,41 @@ using System.Globalization;
 using System.Waf.Foundation;
 using Waf.MusicManager.Domain.MusicFiles;
 
-namespace Waf.MusicManager.Applications.DataModels
+namespace Waf.MusicManager.Applications.DataModels;
+
+public class MusicFileDataModel : Model
 {
-    public class MusicFileDataModel : Model
+    public MusicFileDataModel(MusicFile musicFile)
     {
-        public MusicFileDataModel(MusicFile musicFile)
+        MusicFile = musicFile;
+        if (musicFile.IsMetadataLoaded)
         {
-            MusicFile = musicFile;
-            if (musicFile.IsMetadataLoaded)
-            {
-                MetadataLoaded();
-            }
-            else
-            {
-                PropertyChangedEventManager.AddHandler(musicFile, MusicFilePropertyChanged, "");
-            }
+            MetadataLoaded();
         }
-
-        public MusicFile MusicFile { get; }
-
-        public string ArtistsString => string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : Array.Empty<string>());
-
-        private void MetadataLoaded() => PropertyChangedEventManager.AddHandler(MusicFile.Metadata, MetadataPropertyChanged, "");
-
-        private void MusicFilePropertyChanged(object? sender, PropertyChangedEventArgs e)
+        else
         {
-            if (e.PropertyName == nameof(MusicFile.IsMetadataLoaded))
-            {
-                PropertyChangedEventManager.RemoveHandler(MusicFile, MusicFilePropertyChanged, "");
-                MetadataLoaded();
-                RaisePropertyChanged(nameof(ArtistsString));
-            }
+            PropertyChangedEventManager.AddHandler(musicFile, MusicFilePropertyChanged, "");
         }
+    }
 
-        private void MetadataPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    public MusicFile MusicFile { get; }
+
+    public string ArtistsString => string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : Array.Empty<string>());
+
+    private void MetadataLoaded() => PropertyChangedEventManager.AddHandler(MusicFile.Metadata, MetadataPropertyChanged, "");
+
+    private void MusicFilePropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(MusicFile.IsMetadataLoaded))
         {
-            if (e.PropertyName == nameof(MusicMetadata.Artists)) RaisePropertyChanged(nameof(ArtistsString));
+            PropertyChangedEventManager.RemoveHandler(MusicFile, MusicFilePropertyChanged, "");
+            MetadataLoaded();
+            RaisePropertyChanged(nameof(ArtistsString));
         }
+    }
+
+    private void MetadataPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(MusicMetadata.Artists)) RaisePropertyChanged(nameof(ArtistsString));
     }
 }

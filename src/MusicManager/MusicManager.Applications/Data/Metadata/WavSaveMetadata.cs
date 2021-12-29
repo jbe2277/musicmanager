@@ -1,7 +1,6 @@
-﻿namespace Waf.MusicManager.Applications.Data.Metadata
+﻿namespace Waf.MusicManager.Applications.Data.Metadata;
+
+internal class WavSaveMetadata : SaveMetadata
 {
-    internal class WavSaveMetadata : SaveMetadata
-    {
-        protected override bool IsSupported => false;
-    }
+    protected override bool IsSupported => false;
 }

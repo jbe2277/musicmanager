@@ -1,10 +1,9 @@
-﻿namespace Waf.MusicManager.Domain.Transcoding
+﻿namespace Waf.MusicManager.Domain.Transcoding;
+
+public enum TranscodeStatus
 {
-    public enum TranscodeStatus
-    {
-        InProgress,
-        Pending,
-        Error,
-        Completed
-    }
+    InProgress,
+    Pending,
+    Error,
+    Completed
 }

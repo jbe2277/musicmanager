@@ -1,9 +1,8 @@
-﻿namespace Waf.MusicManager.Presentation.Controls
+﻿namespace Waf.MusicManager.Presentation.Controls;
+
+public enum RatingItemState
 {
-    public enum RatingItemState
-    {
-        Empty,
-        Partial,
-        Filled
-    }
+    Empty,
+    Partial,
+    Filled
 }

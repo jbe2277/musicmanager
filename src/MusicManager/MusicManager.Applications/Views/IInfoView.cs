@@ -1,9 +1,8 @@
 ﻿using System.Waf.Applications;
 
-namespace Waf.MusicManager.Applications.Views
+namespace Waf.MusicManager.Applications.Views;
+
+public interface IInfoView : IView
 {
-    public interface IInfoView : IView
-    {
-        void ShowDialog(object owner);
-    }
+    void ShowDialog(object owner);
 }

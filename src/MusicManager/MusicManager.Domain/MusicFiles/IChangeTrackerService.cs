@@ -1,7 +1,6 @@
-﻿namespace Waf.MusicManager.Domain.MusicFiles
+﻿namespace Waf.MusicManager.Domain.MusicFiles;
+
+public interface IChangeTrackerService
 {
-    public interface IChangeTrackerService
-    {
-        void EntityHasChanges(Entity entity);
-    }
+    void EntityHasChanges(Entity entity);
 }

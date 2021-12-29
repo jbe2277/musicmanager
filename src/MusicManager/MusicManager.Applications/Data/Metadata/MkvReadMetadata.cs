@@ -1,7 +1,6 @@
-﻿namespace Waf.MusicManager.Applications.Data.Metadata
+﻿namespace Waf.MusicManager.Applications.Data.Metadata;
+
+internal class MkvReadMetadata : ReadMetadata
 {
-    internal class MkvReadMetadata : ReadMetadata
-    {
-        protected override bool IsSupported => false;
-    }
+    protected override bool IsSupported => false;
 }

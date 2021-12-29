@@ -1,9 +1,8 @@
-﻿namespace Waf.MusicManager.Applications.DataModels
+﻿namespace Waf.MusicManager.Applications.DataModels;
+
+public enum FilterOperator
 {
-    public enum FilterOperator
-    {
-        Ignore,
-        GreaterThanOrEqual,
-        LessThanOrEqual
-    }
+    Ignore,
+    GreaterThanOrEqual,
+    LessThanOrEqual
 }

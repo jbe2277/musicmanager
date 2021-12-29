@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
 
-namespace Waf.MusicManager.Applications.Services
-{
-    public interface IManagerStatusService : INotifyPropertyChanged
-    {
-        bool UpdatingFilesList { get; }
+namespace Waf.MusicManager.Applications.Services;
 
-        int TotalFilesCount { get; }
-    }
+public interface IManagerStatusService : INotifyPropertyChanged
+{
+    bool UpdatingFilesList { get; }
+
+    int TotalFilesCount { get; }
 }

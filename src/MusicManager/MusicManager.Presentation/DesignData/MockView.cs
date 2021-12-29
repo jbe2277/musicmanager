@@ -1,9 +1,8 @@
 ﻿using System.Waf.Applications;
 
-namespace Waf.MusicManager.Presentation.DesignData
+namespace Waf.MusicManager.Presentation.DesignData;
+
+public class MockView : IView
 {
-    public class MockView : IView
-    {
-        public object? DataContext { get; set; }
-    }
+    public object? DataContext { get; set; }
 }

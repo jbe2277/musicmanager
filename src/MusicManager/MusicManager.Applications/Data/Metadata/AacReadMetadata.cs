@@ -1,6 +1,5 @@
-﻿namespace Waf.MusicManager.Applications.Data.Metadata
+﻿namespace Waf.MusicManager.Applications.Data.Metadata;
+
+internal class AacReadMetadata : Mp4ReadMetadata
 {
-    internal class AacReadMetadata : Mp4ReadMetadata
-    {
-    }
 }

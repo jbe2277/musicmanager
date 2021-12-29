@@ -1,9 +1,8 @@
-﻿namespace Waf.MusicManager.Presentation.Controls
+﻿namespace Waf.MusicManager.Presentation.Controls;
+
+public enum HorizontalFlyoutAlignment
 {
-    public enum HorizontalFlyoutAlignment
-    {
-        Left,
-        Center,
-        Right
-    }
+    Left,
+    Center,
+    Right
 }

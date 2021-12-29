@@ -15,87 +15,86 @@ using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Presentation.Services;
 
-namespace Waf.MusicManager.Presentation
+namespace Waf.MusicManager.Presentation;
+
+public partial class App
 {
-    public partial class App
+    private static readonly Tuple<string, LogLevel>[] logSettings =
     {
-        private static readonly Tuple<string, LogLevel>[] logSettings =
+        Tuple.Create("App", LogLevel.Info),
+        Tuple.Create("MusicManager.*", LogLevel.Warn),
+    };
+
+    private AggregateCatalog? catalog;
+    private CompositionContainer? container;
+    private IEnumerable<IModuleController> moduleControllers = Array.Empty<IModuleController>();
+
+    public App()
+    {
+        var fileTarget = new FileTarget("fileTarget")
         {
-            Tuple.Create("App", LogLevel.Info),
-            Tuple.Create("MusicManager.*", LogLevel.Warn),
+            FileName = Path.Combine(EnvironmentService.LogPath, "App.log"),
+            Layout = "${date:format=yyyy-MM-dd HH\\:mm\\:ss.ff} ${level} ${processid} ${logger} ${message}  ${exception}",
+            ArchiveAboveSize = 1024 * 1024 * 5,  // 5 MB
+            MaxArchiveFiles = 2,
         };
+        var logConfig = new LoggingConfiguration { DefaultCultureInfo = CultureInfo.InvariantCulture };
+        logConfig.AddTarget(fileTarget);
+        var maxLevel = LogLevel.AllLoggingLevels.Last();
+        foreach (var x in logSettings) logConfig.AddRule(x.Item2, maxLevel, fileTarget, x.Item1);
+        LogManager.Configuration = logConfig;
+    }
 
-        private AggregateCatalog? catalog;
-        private CompositionContainer? container;
-        private IEnumerable<IModuleController> moduleControllers = Array.Empty<IModuleController>();
-
-        public App()
-        {
-            var fileTarget = new FileTarget("fileTarget")
-            {
-                FileName = Path.Combine(EnvironmentService.LogPath, "App.log"),
-                Layout = "${date:format=yyyy-MM-dd HH\\:mm\\:ss.ff} ${level} ${processid} ${logger} ${message}  ${exception}",
-                ArchiveAboveSize = 1024 * 1024 * 5,  // 5 MB
-                MaxArchiveFiles = 2,
-            };
-            var logConfig = new LoggingConfiguration { DefaultCultureInfo = CultureInfo.InvariantCulture };
-            logConfig.AddTarget(fileTarget);
-            var maxLevel = LogLevel.AllLoggingLevels.Last();
-            foreach (var x in logSettings) logConfig.AddRule(x.Item2, maxLevel, fileTarget, x.Item1);
-            LogManager.Configuration = logConfig;
-        }
-
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-            Log.App.Info("{0} {1} is starting; OS: {2}", ApplicationInfo.ProductName, ApplicationInfo.Version, Environment.OSVersion);
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        base.OnStartup(e);
+        Log.App.Info("{0} {1} is starting; OS: {2}", ApplicationInfo.ProductName, ApplicationInfo.Version, Environment.OSVersion);
 
 #if !DEBUG
-            DispatcherUnhandledException += AppDispatcherUnhandledException;
-            AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
+        DispatcherUnhandledException += AppDispatcherUnhandledException;
+        AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
-            catalog = new AggregateCatalog();
-            catalog.Catalogs.Add(new AssemblyCatalog(typeof(IMessageService).Assembly));
-            catalog.Catalogs.Add(new AssemblyCatalog(typeof(ShellViewModel).Assembly));
-            catalog.Catalogs.Add(new AssemblyCatalog(typeof(App).Assembly));
-            container = new CompositionContainer(catalog, CompositionOptions.DisableSilentRejection);
-            var batch = new CompositionBatch();
-            batch.AddExportedValue(container);
-            container.Compose(batch);
+        catalog = new AggregateCatalog();
+        catalog.Catalogs.Add(new AssemblyCatalog(typeof(IMessageService).Assembly));
+        catalog.Catalogs.Add(new AssemblyCatalog(typeof(ShellViewModel).Assembly));
+        catalog.Catalogs.Add(new AssemblyCatalog(typeof(App).Assembly));
+        container = new CompositionContainer(catalog, CompositionOptions.DisableSilentRejection);
+        var batch = new CompositionBatch();
+        batch.AddExportedValue(container);
+        container.Compose(batch);
 
-            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+        FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
 
-            moduleControllers = container.GetExportedValues<IModuleController>();
-            foreach (var x in moduleControllers) x.Initialize();
-            foreach (var x in moduleControllers) x.Run();
-        }
+        moduleControllers = container.GetExportedValues<IModuleController>();
+        foreach (var x in moduleControllers) x.Initialize();
+        foreach (var x in moduleControllers) x.Run();
+    }
 
-        protected override void OnExit(ExitEventArgs e)
+    protected override void OnExit(ExitEventArgs e)
+    {
+        foreach (var x in moduleControllers.Reverse()) x.Shutdown();
+        if (container is not null)
         {
-            foreach (var x in moduleControllers.Reverse()) x.Shutdown();
-            if (container is not null)
-            {
-                var shellService = container.GetExportedValue<IShellService>();
-                var tasksToWait = shellService.TasksToCompleteBeforeShutdown.ToArray();
-                while (tasksToWait.Any(t => !t.IsCompleted)) DispatcherHelper.DoEvents();  // Wait until all registered tasks are finished
-            }
-            container?.Dispose();
-            catalog?.Dispose();
-            base.OnExit(e);
+            var shellService = container.GetExportedValue<IShellService>();
+            var tasksToWait = shellService.TasksToCompleteBeforeShutdown.ToArray();
+            while (tasksToWait.Any(t => !t.IsCompleted)) DispatcherHelper.DoEvents();  // Wait until all registered tasks are finished
         }
+        container?.Dispose();
+        catalog?.Dispose();
+        base.OnExit(e);
+    }
 
-        private static void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => HandleException(e.Exception, false);
+    private static void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => HandleException(e.Exception, false);
 
-        private static void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e) => HandleException(e.ExceptionObject as Exception, e.IsTerminating);
+    private static void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e) => HandleException(e.ExceptionObject as Exception, e.IsTerminating);
 
-        private static void HandleException(Exception? e, bool isTerminating)
+    private static void HandleException(Exception? e, bool isTerminating)
+    {
+        if (e == null) return;
+        Log.App.Error(e, "Unknown application error.");
+        if (!isTerminating)
         {
-            if (e == null) return;
-            Log.App.Error(e, "Unknown application error.");
-            if (!isTerminating)
-            {
-                MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Presentation.Properties.Resources.UnknownError, e.ToString()), ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Presentation.Properties.Resources.UnknownError, e.ToString()), ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace Waf.MusicManager.Domain.Playlists
+﻿namespace Waf.MusicManager.Domain.Playlists;
+
+public interface IRandomService
 {
-    public interface IRandomService
-    {
-        int NextRandomNumber(int maxValue);
-    }
+    int NextRandomNumber(int maxValue);
 }

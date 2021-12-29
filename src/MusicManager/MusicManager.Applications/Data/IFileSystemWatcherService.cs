@@ -1,19 +1,18 @@
 ﻿using System.IO;
 
-namespace Waf.MusicManager.Applications.Data
+namespace Waf.MusicManager.Applications.Data;
+
+public interface IFileSystemWatcherService
 {
-    public interface IFileSystemWatcherService
-    {
-        NotifyFilters NotifyFilter { get; set; }
+    NotifyFilters NotifyFilter { get; set; }
 
-        string Path { get; set; }
+    string Path { get; set; }
         
-        bool EnableRaisingEvents { get; set; }
+    bool EnableRaisingEvents { get; set; }
 
-        event FileSystemEventHandler? Created;
+    event FileSystemEventHandler? Created;
 
-        event RenamedEventHandler? Renamed;
+    event RenamedEventHandler? Renamed;
 
-        event FileSystemEventHandler? Deleted;
-    }
+    event FileSystemEventHandler? Deleted;
 }

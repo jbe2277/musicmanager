@@ -2,30 +2,29 @@
 using System.ComponentModel;
 using System.Waf.Applications;
 
-namespace Waf.MusicManager.Applications.Views
+namespace Waf.MusicManager.Applications.Views;
+
+public interface IShellView : IView
 {
-    public interface IShellView : IView
-    {
-        double VirtualScreenWidth { get; }
+    double VirtualScreenWidth { get; }
 
-        double VirtualScreenHeight { get; }
+    double VirtualScreenHeight { get; }
 
-        double Left { get; set; }
+    double Left { get; set; }
 
-        double Top { get; set; }
+    double Top { get; set; }
 
-        double Width { get; set; }
+    double Width { get; set; }
 
-        double Height { get; set; }
+    double Height { get; set; }
 
-        bool IsMaximized { get; set; }
+    bool IsMaximized { get; set; }
 
-        event CancelEventHandler? Closing;
+    event CancelEventHandler? Closing;
         
-        event EventHandler? Closed;
+    event EventHandler? Closed;
 
-        void Show();
+    void Show();
 
-        void Close();
-    }
+    void Close();
 }

@@ -3,77 +3,76 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Waf.MusicManager.Presentation.Controls
+namespace Waf.MusicManager.Presentation.Controls;
+
+[TemplatePart(Name="PART_RatingItems", Type=typeof(ItemsControl))]
+public class Rating : Slider
 {
-    [TemplatePart(Name="PART_RatingItems", Type=typeof(ItemsControl))]
-    public class Rating : Slider
-    {
-        private ItemsControl itemsControl = null!;
-        private ReadOnlyCollection<RatingItem> ratingItems;
+    private ItemsControl itemsControl = null!;
+    private ReadOnlyCollection<RatingItem> ratingItems;
         
-        static Rating()
+    static Rating()
+    {
+        MinimumProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure));
+        MaximumProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(5.0, FrameworkPropertyMetadataOptions.AffectsMeasure));
+        IsSnapToTickEnabledProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(true));
+        SmallChangeProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(1.0));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(typeof(Rating)));
+    }
+
+    public Rating()
+    {
+        ratingItems = new ReadOnlyCollection<RatingItem>(Array.Empty<RatingItem>());
+    }
+
+    public override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+        itemsControl = (ItemsControl)GetTemplateChild("PART_RatingItems");
+        GenerateRatingItems();
+    }
+
+    protected override void OnValueChanged(double oldValue, double newValue)
+    {
+        base.OnValueChanged(oldValue, newValue);
+        foreach (var x in ratingItems) x.Value = Value;
+    }
+
+    private void ItemMouseEnter(object sender, MouseEventArgs e)
+    {
+        double mouseOverValue = ((RatingItem)sender).ItemValue;
+        foreach (var x in ratingItems) x.MouseOverValue = mouseOverValue;
+    }
+
+    private void ItemMouseLeave(object sender, MouseEventArgs e) { foreach (var x in ratingItems) x.MouseOverValue = -1; }
+
+    private void ItemClick(object sender, RoutedEventArgs e)
+    {
+        double clickValue = ((RatingItem)sender).ItemValue;
+        SetCurrentValue(ValueProperty, clickValue);
+    }
+
+    private void GenerateRatingItems()
+    {
+        // Clean up old items
+        foreach (var item in ratingItems)
         {
-            MinimumProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure));
-            MaximumProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(5.0, FrameworkPropertyMetadataOptions.AffectsMeasure));
-            IsSnapToTickEnabledProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(true));
-            SmallChangeProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(1.0));
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Rating), new FrameworkPropertyMetadata(typeof(Rating)));
+            item.MouseEnter -= ItemMouseEnter;
+            item.MouseLeave -= ItemMouseLeave;
+            item.Click -= ItemClick;
         }
-
-        public Rating()
-        {
-            ratingItems = new ReadOnlyCollection<RatingItem>(Array.Empty<RatingItem>());
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-            itemsControl = (ItemsControl)GetTemplateChild("PART_RatingItems");
-            GenerateRatingItems();
-        }
-
-        protected override void OnValueChanged(double oldValue, double newValue)
-        {
-            base.OnValueChanged(oldValue, newValue);
-            foreach (var x in ratingItems) x.Value = Value;
-        }
-
-        private void ItemMouseEnter(object sender, MouseEventArgs e)
-        {
-            double mouseOverValue = ((RatingItem)sender).ItemValue;
-            foreach (var x in ratingItems) x.MouseOverValue = mouseOverValue;
-        }
-
-        private void ItemMouseLeave(object sender, MouseEventArgs e) { foreach (var x in ratingItems) x.MouseOverValue = -1; }
-
-        private void ItemClick(object sender, RoutedEventArgs e)
-        {
-            double clickValue = ((RatingItem)sender).ItemValue;
-            SetCurrentValue(ValueProperty, clickValue);
-        }
-
-        private void GenerateRatingItems()
-        {
-            // Clean up old items
-            foreach (var item in ratingItems)
-            {
-                item.MouseEnter -= ItemMouseEnter;
-                item.MouseLeave -= ItemMouseLeave;
-                item.Click -= ItemClick;
-            }
             
-            // Create new items
-            var items = new List<RatingItem>();
-            for (int i = 0; i < Convert.ToInt32(GetValue(MaximumProperty), CultureInfo.InvariantCulture); i++)
-            {
-                var item = new RatingItem() { ItemValue = i + 1, Value = Value };
-                item.MouseEnter += ItemMouseEnter;
-                item.MouseLeave += ItemMouseLeave;
-                item.Click += ItemClick;
-                items.Add(item);
-            }
-            ratingItems = new ReadOnlyCollection<RatingItem>(items);
-            itemsControl.ItemsSource = ratingItems;
+        // Create new items
+        var items = new List<RatingItem>();
+        for (int i = 0; i < Convert.ToInt32(GetValue(MaximumProperty), CultureInfo.InvariantCulture); i++)
+        {
+            var item = new RatingItem() { ItemValue = i + 1, Value = Value };
+            item.MouseEnter += ItemMouseEnter;
+            item.MouseLeave += ItemMouseLeave;
+            item.Click += ItemClick;
+            items.Add(item);
         }
+        ratingItems = new ReadOnlyCollection<RatingItem>(items);
+        itemsControl.ItemsSource = ratingItems;
     }
 }

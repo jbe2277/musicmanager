@@ -2,12 +2,11 @@
 using System.Waf.Applications;
 using Waf.MusicManager.Applications.DataModels;
 
-namespace Waf.MusicManager.Applications.Services
-{
-    public interface ISelectionService
-    {
-        ObservableListView<MusicFileDataModel> MusicFiles { get; }
+namespace Waf.MusicManager.Applications.Services;
 
-        ObservableCollection<MusicFileDataModel> SelectedMusicFiles { get; }
-    }
+public interface ISelectionService
+{
+    ObservableListView<MusicFileDataModel> MusicFiles { get; }
+
+    ObservableCollection<MusicFileDataModel> SelectedMusicFiles { get; }
 }

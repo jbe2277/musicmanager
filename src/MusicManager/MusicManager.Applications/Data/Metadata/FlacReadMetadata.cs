@@ -2,19 +2,18 @@
 using System.Linq;
 using Windows.Storage.FileProperties;
 
-namespace Waf.MusicManager.Applications.Data.Metadata
-{
-    internal class FlacReadMetadata : ReadMetadata
-    {
-        protected override IEnumerable<string> ReadConductors(MusicProperties properties, IDictionary<string, object> customProperties)
-        {
-            return TryParseFromOneItem(base.ReadConductors(properties, customProperties));
-        }
+namespace Waf.MusicManager.Applications.Data.Metadata;
 
-        private static IEnumerable<string> TryParseFromOneItem(IEnumerable<string> source)
-        {
-            // The WinRT API does not support some of the multiple tags for MP3 files.
-            return source.Count() == 1 ? StringListConverter.FromString(source.First()) : source.ToArray();
-        }
+internal class FlacReadMetadata : ReadMetadata
+{
+    protected override IEnumerable<string> ReadConductors(MusicProperties properties, IDictionary<string, object> customProperties)
+    {
+        return TryParseFromOneItem(base.ReadConductors(properties, customProperties));
+    }
+
+    private static IEnumerable<string> TryParseFromOneItem(IEnumerable<string> source)
+    {
+        // The WinRT API does not support some of the multiple tags for MP3 files.
+        return source.Count() == 1 ? StringListConverter.FromString(source.First()) : source.ToArray();
     }
 }

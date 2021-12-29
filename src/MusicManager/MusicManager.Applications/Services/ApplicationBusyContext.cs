@@ -1,16 +1,15 @@
 ﻿using System;
 
-namespace Waf.MusicManager.Applications.Services
+namespace Waf.MusicManager.Applications.Services;
+
+internal class ApplicationBusyContext : IDisposable
 {
-    internal class ApplicationBusyContext : IDisposable
+    private readonly Action<ApplicationBusyContext> disposeCallback;
+
+    public ApplicationBusyContext(Action<ApplicationBusyContext> disposeCallback)
     {
-        private readonly Action<ApplicationBusyContext> disposeCallback;
-
-        public ApplicationBusyContext(Action<ApplicationBusyContext> disposeCallback)
-        {
-            this.disposeCallback = disposeCallback;
-        }
-
-        public void Dispose() => disposeCallback(this);
+        this.disposeCallback = disposeCallback;
     }
+
+    public void Dispose() => disposeCallback(this);
 }

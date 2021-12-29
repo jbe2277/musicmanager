@@ -8,90 +8,89 @@ using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Applications.Views;
 
-namespace Waf.MusicManager.Presentation.Views
+namespace Waf.MusicManager.Presentation.Views;
+
+[Export(typeof(IShellView))]
+public partial class ShellWindow : IShellView
 {
-    [Export(typeof(IShellView))]
-    public partial class ShellWindow : IShellView
+    private readonly Lazy<ShellViewModel> viewModel;
+
+    public ShellWindow()
     {
-        private readonly Lazy<ShellViewModel> viewModel;
+        InitializeComponent();
+        viewModel = new Lazy<ShellViewModel>(() => this.GetViewModel<ShellViewModel>()!);
+        Loaded += LoadedHandler;
 
-        public ShellWindow()
+        // Workaround: Need to load both DrawingImages now; otherwise the first one is not shown at the beginning.
+        playPauseButton.ImageSource = (ImageSource)FindResource("PlayButtonImage");
+        playPauseButton.ImageSource = (ImageSource)FindResource("PauseButtonImage");
+    }
+
+    public double VirtualScreenWidth => SystemParameters.VirtualScreenWidth;
+
+    public double VirtualScreenHeight => SystemParameters.VirtualScreenHeight;
+
+    public bool IsMaximized
+    {
+        get => WindowState == WindowState.Maximized;
+        set
         {
-            InitializeComponent();
-            viewModel = new Lazy<ShellViewModel>(() => this.GetViewModel<ShellViewModel>()!);
-            Loaded += LoadedHandler;
-
-            // Workaround: Need to load both DrawingImages now; otherwise the first one is not shown at the beginning.
-            playPauseButton.ImageSource = (ImageSource)FindResource("PlayButtonImage");
-            playPauseButton.ImageSource = (ImageSource)FindResource("PauseButtonImage");
+            if (value) WindowState = WindowState.Maximized;
+            else if (WindowState == WindowState.Maximized) WindowState = WindowState.Normal;
         }
+    }
 
-        public double VirtualScreenWidth => SystemParameters.VirtualScreenWidth;
+    private ShellViewModel ViewModel => viewModel.Value;
 
-        public double VirtualScreenHeight => SystemParameters.VirtualScreenHeight;
-
-        public bool IsMaximized
+    protected override void OnPreviewKeyDown(KeyEventArgs e)
+    {
+        base.OnPreviewKeyDown(e);
+        if (e.Key == Key.MediaPlayPause)
         {
-            get => WindowState == WindowState.Maximized;
-            set
-            {
-                if (value) WindowState = WindowState.Maximized;
-                else if (WindowState == WindowState.Maximized) WindowState = WindowState.Normal;
+            ViewModel.PlayerService.PlayPauseCommand.Execute(null);
+            e.Handled = true;
+        }
+        else if (e.Key == Key.MediaPreviousTrack)
+        {
+            ViewModel.PlayerService.PreviousCommand.Execute(null);
+            e.Handled = true;
+        }
+        else if (e.Key == Key.MediaNextTrack)
+        {
+            ViewModel.PlayerService.NextCommand.Execute(null);
+            e.Handled = true;
+        }
+    }
+
+    private void LoadedHandler(object sender, RoutedEventArgs e)
+    {
+        ViewModel.ShellService.PropertyChanged += ShellServicePropertyChanged;
+        ViewModel.PlayerService.PropertyChanged += PlayerServicePropertyChanged;
+        UpdatePlayPauseButton();
+    }
+
+    private void PlayerServicePropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(IPlayerService.IsPlayCommand)) UpdatePlayPauseButton();
+    }
+
+    private void UpdatePlayPauseButton()
+    {
+        playPauseButton.ImageSource = ViewModel.PlayerService.IsPlayCommand ? (ImageSource)FindResource("PlayButtonImage") : (ImageSource)FindResource("PauseButtonImage");
+    }
+
+    private void ShellServicePropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(IShellService.IsApplicationBusy))
+        {
+            if (ViewModel.ShellService.IsApplicationBusy)
+            {        
+                Mouse.OverrideCursor = Cursors.Wait;    
             }
-        }
-
-        private ShellViewModel ViewModel => viewModel.Value;
-
-        protected override void OnPreviewKeyDown(KeyEventArgs e)
-        {
-            base.OnPreviewKeyDown(e);
-            if (e.Key == Key.MediaPlayPause)
+            else
             {
-                ViewModel.PlayerService.PlayPauseCommand.Execute(null);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.MediaPreviousTrack)
-            {
-                ViewModel.PlayerService.PreviousCommand.Execute(null);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.MediaNextTrack)
-            {
-                ViewModel.PlayerService.NextCommand.Execute(null);
-                e.Handled = true;
-            }
-        }
-
-        private void LoadedHandler(object sender, RoutedEventArgs e)
-        {
-            ViewModel.ShellService.PropertyChanged += ShellServicePropertyChanged;
-            ViewModel.PlayerService.PropertyChanged += PlayerServicePropertyChanged;
-            UpdatePlayPauseButton();
-        }
-
-        private void PlayerServicePropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(IPlayerService.IsPlayCommand)) UpdatePlayPauseButton();
-        }
-
-        private void UpdatePlayPauseButton()
-        {
-            playPauseButton.ImageSource = ViewModel.PlayerService.IsPlayCommand ? (ImageSource)FindResource("PlayButtonImage") : (ImageSource)FindResource("PauseButtonImage");
-        }
-
-        private void ShellServicePropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(IShellService.IsApplicationBusy))
-            {
-                if (ViewModel.ShellService.IsApplicationBusy)
-                {        
-                    Mouse.OverrideCursor = Cursors.Wait;    
-                }
-                else
-                {
-                    // Delay removing the wait cursor so that the UI has finished its work as well.
-                    Dispatcher.InvokeAsync(() => Mouse.OverrideCursor = null, DispatcherPriority.ApplicationIdle);
-                }
+                // Delay removing the wait cursor so that the UI has finished its work as well.
+                Dispatcher.InvokeAsync(() => Mouse.OverrideCursor = null, DispatcherPriority.ApplicationIdle);
             }
         }
     }

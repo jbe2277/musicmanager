@@ -1,7 +1,6 @@
-﻿namespace Waf.MusicManager.Applications.Services
+﻿namespace Waf.MusicManager.Applications.Services;
+
+public interface IClipboardService
 {
-    public interface IClipboardService
-    {
-        void SetText(string text);
-    }
+    void SetText(string text);
 }

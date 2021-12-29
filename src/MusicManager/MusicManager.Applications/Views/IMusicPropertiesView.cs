@@ -1,8 +1,7 @@
 ﻿using System.Waf.Applications;
 
-namespace Waf.MusicManager.Applications.Views
+namespace Waf.MusicManager.Applications.Views;
+
+public interface IMusicPropertiesView : IView
 {
-    public interface IMusicPropertiesView : IView
-    {
-    }
 }

@@ -1,6 +1,5 @@
-﻿namespace Waf.MusicManager.Applications.Data.Metadata
+﻿namespace Waf.MusicManager.Applications.Data.Metadata;
+
+internal class WmaReadMetadata : ReadMetadata
 {
-    internal class WmaReadMetadata : ReadMetadata
-    {
-    }
 }

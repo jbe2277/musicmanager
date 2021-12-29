@@ -1,9 +1,8 @@
 ﻿using NLog;
 
-namespace Waf.MusicManager.Applications
+namespace Waf.MusicManager.Applications;
+
+internal static class Log
 {
-    internal static class Log
-    {
-        public static Logger Default { get; } = LogManager.GetLogger("MusicManager.A");
-    }
+    public static Logger Default { get; } = LogManager.GetLogger("MusicManager.A");
 }

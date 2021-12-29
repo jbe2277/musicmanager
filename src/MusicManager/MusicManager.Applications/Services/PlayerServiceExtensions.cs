@@ -1,10 +1,9 @@
-﻿namespace Waf.MusicManager.Applications.Services
+﻿namespace Waf.MusicManager.Applications.Services;
+
+public static class PlayerServiceExtensions
 {
-    public static class PlayerServiceExtensions
+    public static void Play(this IPlayerService playerService)
     {
-        public static void Play(this IPlayerService playerService)
-        {
-            if (playerService.IsPlayCommand) playerService.PlayPauseCommand.Execute(null);
-        }
+        if (playerService.IsPlayCommand) playerService.PlayPauseCommand.Execute(null);
     }
 }

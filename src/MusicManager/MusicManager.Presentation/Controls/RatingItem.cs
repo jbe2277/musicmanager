@@ -1,73 +1,72 @@
 ﻿using System.Windows;
 using System.Windows.Controls.Primitives;
 
-namespace Waf.MusicManager.Presentation.Controls
+namespace Waf.MusicManager.Presentation.Controls;
+
+public class RatingItem : ButtonBase
 {
-    public class RatingItem : ButtonBase
-    {
-        private static readonly DependencyPropertyKey IsMouseOverRatingPropertyKey =
-            DependencyProperty.RegisterReadOnly(nameof(IsMouseOverRating), typeof(bool), typeof(RatingItem), new FrameworkPropertyMetadata(false));
+    private static readonly DependencyPropertyKey IsMouseOverRatingPropertyKey =
+        DependencyProperty.RegisterReadOnly(nameof(IsMouseOverRating), typeof(bool), typeof(RatingItem), new FrameworkPropertyMetadata(false));
 
-        public static readonly DependencyProperty IsMouseOverRatingProperty = IsMouseOverRatingPropertyKey.DependencyProperty;
+    public static readonly DependencyProperty IsMouseOverRatingProperty = IsMouseOverRatingPropertyKey.DependencyProperty;
 
-        private static readonly DependencyPropertyKey RatingItemStatePropertyKey =
-            DependencyProperty.RegisterReadOnly(nameof(RatingItemState), typeof(RatingItemState), typeof(RatingItem), new FrameworkPropertyMetadata(RatingItemState.Empty));
+    private static readonly DependencyPropertyKey RatingItemStatePropertyKey =
+        DependencyProperty.RegisterReadOnly(nameof(RatingItemState), typeof(RatingItemState), typeof(RatingItem), new FrameworkPropertyMetadata(RatingItemState.Empty));
 
-        public static readonly DependencyProperty RatingItemStateProperty = RatingItemStatePropertyKey.DependencyProperty;
+    public static readonly DependencyProperty RatingItemStateProperty = RatingItemStatePropertyKey.DependencyProperty;
         
-        static RatingItem()
+    static RatingItem()
+    {
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(RatingItem), new FrameworkPropertyMetadata(typeof(RatingItem)));
+    }
+
+    private double value;
+    private double mouseOverValue;
+
+    public bool IsMouseOverRating => (bool)GetValue(IsMouseOverRatingProperty);
+
+    public RatingItemState RatingItemState => (RatingItemState)GetValue(RatingItemStateProperty);
+
+    internal int ItemValue { get; set; }
+
+    internal double Value
+    {
+        get => value;
+        set
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(RatingItem), new FrameworkPropertyMetadata(typeof(RatingItem)));
+            if (this.value == value) return;
+            this.value = value;
+            UpdateRatingItemState();
         }
+    }
 
-        private double value;
-        private double mouseOverValue;
-
-        public bool IsMouseOverRating => (bool)GetValue(IsMouseOverRatingProperty);
-
-        public RatingItemState RatingItemState => (RatingItemState)GetValue(RatingItemStateProperty);
-
-        internal int ItemValue { get; set; }
-
-        internal double Value
+    internal double MouseOverValue
+    {
+        get => mouseOverValue;
+        set
         {
-            get => value;
-            set
-            {
-                if (this.value == value) return;
-                this.value = value;
-                UpdateRatingItemState();
-            }
+            if (mouseOverValue == value) return;
+            mouseOverValue = value;
+            UpdateRatingItemState();
         }
+    }
 
-        internal double MouseOverValue
+    private void UpdateRatingItemState()
+    {
+        RatingItemState state;
+        double stateValue = MouseOverValue >= 1 ? MouseOverValue : Value;
+        if (stateValue >= ItemValue)
         {
-            get => mouseOverValue;
-            set
-            {
-                if (mouseOverValue == value) return;
-                mouseOverValue = value;
-                UpdateRatingItemState();
-            }
+            state = RatingItemState.Filled;
         }
-
-        private void UpdateRatingItemState()
+        else if (stateValue > ItemValue - 1)
         {
-            RatingItemState state;
-            double stateValue = MouseOverValue >= 1 ? MouseOverValue : Value;
-            if (stateValue >= ItemValue)
-            {
-                state = RatingItemState.Filled;
-            }
-            else if (stateValue > ItemValue - 1)
-            {
-                state = RatingItemState.Partial;
-            }
-            else
-            {
-                state = RatingItemState.Empty;
-            }
-            SetValue(RatingItemStatePropertyKey, state);
+            state = RatingItemState.Partial;
         }
+        else
+        {
+            state = RatingItemState.Empty;
+        }
+        SetValue(RatingItemStatePropertyKey, state);
     }
 }
