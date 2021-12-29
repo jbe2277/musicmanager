@@ -23,7 +23,7 @@ namespace Test.MusicManager.Applications.Services
             Assert.AreEqual(shellView, service.ShellView);
 
             bool closingCalled = false;
-            void EventHandler(object sender, CancelEventArgs e)
+            void EventHandler(object? sender, CancelEventArgs e)
             {
                 e.Cancel = true;
                 closingCalled = true;

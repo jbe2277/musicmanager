@@ -95,7 +95,7 @@ namespace Waf.MusicManager.Applications.Controllers
             return TranscodingListViewModel.View;
         }
 
-        private void ShellServiceClosing(object sender, CancelEventArgs e)
+        private void ShellServiceClosing(object? sender, CancelEventArgs e)
         {
             if (cancellationTokenSources.Any()) e.Cancel = !messageService.ShowYesNoQuestion(shellService.ShellView, Resources.AbortRunningConverts);
         }
