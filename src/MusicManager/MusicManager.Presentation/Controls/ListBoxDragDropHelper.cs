@@ -59,10 +59,7 @@ namespace Waf.MusicManager.Presentation.Controls
             {
                 var position = e.GetPosition(null);
                 if (Math.Abs(position.X - startPoint.Value.X) < SystemParameters.MinimumHorizontalDragDistance
-                    && Math.Abs(position.Y - startPoint.Value.Y) < SystemParameters.MinimumVerticalDragDistance)
-                {
-                    return;
-                }
+                    && Math.Abs(position.Y - startPoint.Value.Y) < SystemParameters.MinimumVerticalDragDistance) return;
                 
                 var target = (ListBoxItem)sender;
                 var items = listBox.Items.Cast<TItem>().ToList();
@@ -153,10 +150,8 @@ namespace Waf.MusicManager.Presentation.Controls
         private void ListBoxDrop(object sender, DragEventArgs e)
         {
             insertMarkerAdorner.ResetMarker();
-            if (!CanMoveItems(e) && !CanInsertItems(e))
-            {
-                return;
-            }
+            if (!CanMoveItems(e) && !CanInsertItems(e)) return;
+            
             int newIndex = listBox.Items.Count - 1;
 
             if (e.Effects == DragDropEffects.Move)
@@ -189,10 +184,7 @@ namespace Waf.MusicManager.Presentation.Controls
         {
             var items = listBox.Items.Cast<object>().Skip(index).Take(count);            
             listBox.SelectedItems.Clear();
-            foreach (var item in items)
-            {
-                listBox.SelectedItems.Add(item);
-            }
+            foreach (var x in items) listBox.SelectedItems.Add(x);
         }
 
         private void FocusSelectedItem()

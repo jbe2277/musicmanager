@@ -47,10 +47,7 @@ namespace Waf.MusicManager.Presentation.Controls
             foreach (var x in ratingItems) x.MouseOverValue = mouseOverValue;
         }
 
-        private void ItemMouseLeave(object sender, MouseEventArgs e)
-        {
-            foreach (var x in ratingItems) x.MouseOverValue = -1;
-        }
+        private void ItemMouseLeave(object sender, MouseEventArgs e) { foreach (var x in ratingItems) x.MouseOverValue = -1; }
 
         private void ItemClick(object sender, RoutedEventArgs e)
         {

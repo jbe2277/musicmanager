@@ -37,14 +37,8 @@ namespace Waf.MusicManager.Presentation.Views
             get => WindowState == WindowState.Maximized;
             set
             {
-                if (value)
-                {
-                    WindowState = WindowState.Maximized;
-                }
-                else if (WindowState == WindowState.Maximized)
-                {
-                    WindowState = WindowState.Normal;
-                }
+                if (value) WindowState = WindowState.Maximized;
+                else if (WindowState == WindowState.Maximized) WindowState = WindowState.Normal;
             }
         }
 
@@ -84,14 +78,7 @@ namespace Waf.MusicManager.Presentation.Views
 
         private void UpdatePlayPauseButton()
         {
-            if (ViewModel.PlayerService.IsPlayCommand)
-            {
-                playPauseButton.ImageSource = (ImageSource)FindResource("PlayButtonImage");
-            }
-            else
-            {
-                playPauseButton.ImageSource = (ImageSource)FindResource("PauseButtonImage");
-            }
+            playPauseButton.ImageSource = ViewModel.PlayerService.IsPlayCommand ? (ImageSource)FindResource("PlayButtonImage") : (ImageSource)FindResource("PauseButtonImage");
         }
 
         private void ShellServicePropertyChanged(object? sender, PropertyChangedEventArgs e)

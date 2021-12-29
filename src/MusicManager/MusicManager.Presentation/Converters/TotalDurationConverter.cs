@@ -11,10 +11,7 @@ namespace Waf.MusicManager.Presentation.Converters
         {
             var isTotalDurationEstimated = (bool)values[0]!;
             var totalDuration = (string)new DurationConverter().Convert(values[1], null, null, null);
-            if (isTotalDurationEstimated)
-            {
-                totalDuration = string.Format(CultureInfo.CurrentCulture, Resources.AboutDuration, totalDuration);
-            }
+            if (isTotalDurationEstimated) totalDuration = string.Format(CultureInfo.CurrentCulture, Resources.AboutDuration, totalDuration);
             return totalDuration;
         }
 

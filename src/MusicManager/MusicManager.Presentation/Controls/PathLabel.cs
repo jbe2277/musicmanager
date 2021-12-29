@@ -10,8 +10,7 @@ namespace Waf.MusicManager.Presentation.Controls
     // Usage: Set the HorizontalContentAlignment of the Parent Control to Stretch.
     public class PathLabel : Label
     {
-        public static readonly DependencyProperty PathProperty =
-            DependencyProperty.Register(nameof(Path), typeof(string), typeof(PathLabel), new FrameworkPropertyMetadata("", PathChangedHandler));
+        public static readonly DependencyProperty PathProperty = DependencyProperty.Register(nameof(Path), typeof(string), typeof(PathLabel), new FrameworkPropertyMetadata("", PathChangedHandler));
 
         private readonly TextBlock textBlock;
         private double pixelsPerDip = 1;

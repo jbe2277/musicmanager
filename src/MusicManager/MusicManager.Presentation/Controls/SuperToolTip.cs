@@ -10,11 +10,9 @@ namespace Waf.MusicManager.Presentation.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SuperToolTip), new FrameworkPropertyMetadata(typeof(SuperToolTip)));
         }
         
-        public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register(nameof(Title), typeof(string), typeof(SuperToolTip), new FrameworkPropertyMetadata(""));
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(SuperToolTip), new FrameworkPropertyMetadata(""));
 
-        public static readonly DependencyProperty DescriptionProperty =
-            DependencyProperty.Register(nameof(Description), typeof(string), typeof(SuperToolTip), new FrameworkPropertyMetadata(""));
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(nameof(Description), typeof(string), typeof(SuperToolTip), new FrameworkPropertyMetadata(""));
 
         public string Title
         {

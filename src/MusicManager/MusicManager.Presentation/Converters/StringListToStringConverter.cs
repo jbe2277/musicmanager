@@ -8,22 +8,10 @@ namespace Waf.MusicManager.Presentation.Converters
 {
     public class StringListToStringConverter : IValueConverter
     {
-        public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
-        {
-            var list = (IEnumerable<string>)value!;
-            return StringListConverter.ToString(list, GetSeparator(parameter));
-        }
+        public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture) => StringListConverter.ToString((IEnumerable<string>)value!, GetSeparator(parameter));
 
-        public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture)
-        {
-            var text = (string)value!;
-            return StringListConverter.FromString(text, GetSeparator(parameter));
-        }
+        public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture) => StringListConverter.FromString((string)value!, GetSeparator(parameter));
 
-        private static string? GetSeparator(object? commandParameter)
-        {
-            if (ConverterHelper.IsParameterSet("ListSeparator", commandParameter)) return null;
-            return Environment.NewLine;
-        }
+        private static string? GetSeparator(object? commandParameter) => ConverterHelper.IsParameterSet("ListSeparator", commandParameter) ? null : Environment.NewLine;
     }
 }

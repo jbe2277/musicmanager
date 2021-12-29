@@ -60,14 +60,8 @@ namespace Waf.MusicManager.Presentation.Controls
             {
                 if (!string.IsNullOrEmpty(textPart))
                 {
-                    if (isHighlight)
-                    {
-                        Inlines.Add(new Run(textPart) { Background = highlightBackground });
-                    }
-                    else
-                    {
-                        Inlines.Add(new Run(textPart));
-                    }
+                    if (isHighlight) Inlines.Add(new Run(textPart) { Background = highlightBackground });
+                    else Inlines.Add(new Run(textPart));
                 }
                 isHighlight = !isHighlight;
             }

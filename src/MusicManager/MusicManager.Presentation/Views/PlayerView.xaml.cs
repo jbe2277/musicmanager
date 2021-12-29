@@ -142,14 +142,8 @@ namespace Waf.MusicManager.Presentation.Views
 
         private void PlayPause()
         {
-            if (!updateTimer.IsEnabled)
-            {
-                PlayCore();
-            }
-            else
-            {
-                PauseCore();
-            }
+            if (!updateTimer.IsEnabled) PlayCore();
+            else PauseCore();
         }
 
         private void PlayCore()
@@ -169,12 +163,8 @@ namespace Waf.MusicManager.Presentation.Views
         private void UpdateTimerTick(object? sender, EventArgs e)
         {
             suppressPositionSliderValueChanged = true;
-            if (!throttledSliderValueChangedAction.IsRunning)
-            {
-                positionSlider.Value = mediaPlayer.Position.TotalSeconds;
-            }
+            if (!throttledSliderValueChangedAction.IsRunning) positionSlider.Value = mediaPlayer.Position.TotalSeconds;
             suppressPositionSliderValueChanged = false;
-
             previousCommand.RaiseCanExecuteChanged();
         }
 
@@ -231,14 +221,7 @@ namespace Waf.MusicManager.Presentation.Views
         private void ToggleMuteClick(object sender, RoutedEventArgs e)
         {
             mediaPlayer.IsMuted = !mediaPlayer.IsMuted;
-            if (mediaPlayer.IsMuted)
-            {
-                volumeButton.Content = muteButton.Content = "\uE198";
-            }
-            else
-            {
-                volumeButton.Content = muteButton.Content = "\uE15D";
-            }
+            volumeButton.Content = muteButton.Content = mediaPlayer.IsMuted ? "\uE198" : "\uE15D";
         }
 
         private void VolumeSliderMouseWheel(object sender, MouseWheelEventArgs e)
