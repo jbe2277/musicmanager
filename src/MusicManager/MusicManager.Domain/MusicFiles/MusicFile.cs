@@ -1,7 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Waf.Foundation;
-
-namespace Waf.MusicManager.Domain.MusicFiles
+﻿namespace Waf.MusicManager.Domain.MusicFiles
 {
     public class MusicFile : Model
     {

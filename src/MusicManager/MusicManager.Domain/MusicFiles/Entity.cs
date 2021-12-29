@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-using System.Waf.Foundation;
+﻿using System.Runtime.CompilerServices;
 
 namespace Waf.MusicManager.Domain.MusicFiles
 {

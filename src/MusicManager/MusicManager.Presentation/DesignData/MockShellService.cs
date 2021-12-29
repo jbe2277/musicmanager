@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Waf.Foundation;
-using Waf.MusicManager.Applications.Properties;
+﻿using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 
 namespace Waf.MusicManager.Presentation.DesignData

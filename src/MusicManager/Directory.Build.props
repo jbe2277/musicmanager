@@ -7,7 +7,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-	<EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <NoWarn>$(NoWarn);CA1014</NoWarn>
   </PropertyGroup>
 
@@ -29,4 +29,12 @@
       </PropertyGroup>
     </Otherwise>
   </Choose>
+
+  <ItemGroup>
+    <Using Include="System.Collections.ObjectModel" />
+    <Using Include="System.Collections.Specialized" />
+    <Using Include="System.ComponentModel" />
+    <Using Include="System.Diagnostics.CodeAnalysis" />
+    <Using Include="System.Waf.Foundation" />
+  </ItemGroup>
 </Project>

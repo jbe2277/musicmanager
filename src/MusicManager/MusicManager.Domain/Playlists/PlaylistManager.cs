@@ -1,8 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Waf.Foundation;
-using Waf.MusicManager.Domain.MusicFiles;
+﻿using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Waf.MusicManager.Domain.Playlists
 {

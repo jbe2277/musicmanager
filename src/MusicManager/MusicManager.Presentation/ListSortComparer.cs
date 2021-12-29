@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Waf.MusicManager.Presentation
+﻿namespace Waf.MusicManager.Presentation
 {
     public class ListSortComparer<T> : IComparer<T>
     {

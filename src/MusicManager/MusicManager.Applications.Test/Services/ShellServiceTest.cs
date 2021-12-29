@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.ComponentModel;
 using Test.MusicManager.Applications.UnitTesting;
 using Test.MusicManager.Applications.Views;
 using Waf.MusicManager.Applications.Services;

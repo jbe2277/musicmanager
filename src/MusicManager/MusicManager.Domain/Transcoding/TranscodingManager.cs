@@ -1,7 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Waf.Foundation;
-
-namespace Waf.MusicManager.Domain.Transcoding
+﻿namespace Waf.MusicManager.Domain.Transcoding
 {
     public class TranscodingManager
     {
