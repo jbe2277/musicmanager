@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Waf.MusicManager.Domain.Playlists
+﻿namespace Waf.MusicManager.Domain.Playlists
 {
     internal class PlayedItemsStack<T>
     {

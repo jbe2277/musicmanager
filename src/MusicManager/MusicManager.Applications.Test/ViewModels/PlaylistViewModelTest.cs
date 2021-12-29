@@ -1,7 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Test.MusicManager.Applications.UnitTesting;
 using Test.MusicManager.Applications.Views;
 using Test.MusicManager.Domain.MusicFiles;

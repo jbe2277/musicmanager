@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Threading.Tasks;
 using System.Waf.UnitTesting;
 using Waf.MusicManager.Domain;
 using Test.MusicManager.Domain.UnitTesting;

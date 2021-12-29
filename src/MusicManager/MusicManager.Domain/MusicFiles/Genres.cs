@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Waf.MusicManager.Domain.MusicFiles
+﻿namespace Waf.MusicManager.Domain.MusicFiles
 {
     public static class Genres
     {

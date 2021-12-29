@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.Linq;
 using System.Waf.Applications;
 using System.Waf.Presentation.Controls;
 using System.Windows;

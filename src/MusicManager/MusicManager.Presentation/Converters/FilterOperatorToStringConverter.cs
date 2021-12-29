@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Data;
 using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Presentation.Properties;

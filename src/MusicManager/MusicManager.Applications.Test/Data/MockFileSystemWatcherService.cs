@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.Composition;
-using System.IO;
 using Waf.MusicManager.Applications;
 using Waf.MusicManager.Applications.Data;
 

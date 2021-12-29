@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
 using Test.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.Transcoding;

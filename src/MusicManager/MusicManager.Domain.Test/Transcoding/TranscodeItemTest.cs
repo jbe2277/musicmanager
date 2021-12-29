@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Waf.UnitTesting;
 using Test.MusicManager.Domain.MusicFiles;
 using Test.MusicManager.Domain.UnitTesting;

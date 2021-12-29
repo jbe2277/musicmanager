@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Waf.MusicManager.Applications.DataModels;
+﻿using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Applications.Views;

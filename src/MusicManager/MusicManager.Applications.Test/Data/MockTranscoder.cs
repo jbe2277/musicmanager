@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.Composition;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.Composition;
 using Waf.MusicManager.Applications;
 using Waf.MusicManager.Applications.Data;
 

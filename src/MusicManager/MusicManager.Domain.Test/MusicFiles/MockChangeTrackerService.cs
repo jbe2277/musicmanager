@@ -1,5 +1,4 @@
-﻿using System;
-using Waf.MusicManager.Domain.MusicFiles;
+﻿using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Test.MusicManager.Domain.MusicFiles
 {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Waf.MusicManager.Domain.MusicFiles;
+﻿using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Test.MusicManager.Domain.MusicFiles
 {

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Waf.MusicManager.Domain.Playlists
+﻿namespace Waf.MusicManager.Domain.Playlists
 {
     internal static class StatisticsHelper
     {

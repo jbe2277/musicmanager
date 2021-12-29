@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Test.MusicManager.Domain.UnitTesting
+﻿namespace Test.MusicManager.Domain.UnitTesting
 {
     public class AssertUnobservedExceptions
     {

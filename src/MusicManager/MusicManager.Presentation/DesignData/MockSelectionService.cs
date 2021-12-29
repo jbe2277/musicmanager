@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Waf.Applications;
 using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Services;

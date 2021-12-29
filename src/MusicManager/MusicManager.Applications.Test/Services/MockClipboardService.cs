@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using Waf.MusicManager.Applications.Services;
 
 namespace Test.MusicManager.Applications.Services

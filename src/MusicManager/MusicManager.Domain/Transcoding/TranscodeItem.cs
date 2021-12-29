@@ -1,5 +1,4 @@
-﻿using System;
-using System.Waf.Foundation;
+﻿using System.Waf.Foundation;
 using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Waf.MusicManager.Domain.Transcoding

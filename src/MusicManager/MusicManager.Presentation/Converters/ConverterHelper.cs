@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Waf.MusicManager.Presentation.Converters
+﻿namespace Waf.MusicManager.Presentation.Converters
 {
     internal static class ConverterHelper
     {

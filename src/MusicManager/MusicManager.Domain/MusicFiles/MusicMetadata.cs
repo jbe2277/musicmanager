@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Waf.MusicManager.Domain.MusicFiles
+﻿namespace Waf.MusicManager.Domain.MusicFiles
 {
     public class MusicMetadata : Entity
     {
