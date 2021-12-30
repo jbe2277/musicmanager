@@ -7,21 +7,21 @@ internal static class SupportedFileTypes
     private static readonly string[] musicFileExtensions = { ".mp3", ".wma", ".wav", ".m4a", ".mp4" };
     private static readonly string[] playlistFileExtensions = { ".m3u", ".wpl" };
 
-    private static readonly Mp3ReadMetadata mp3ReadMetadata = new Mp3ReadMetadata();
-    private static readonly WmaReadMetadata wmaReadMetadata = new WmaReadMetadata();
-    private static readonly AacReadMetadata aacReadMetadata = new AacReadMetadata();
-    private static readonly WavReadMetadata wavReadMetadata = new WavReadMetadata();
-    private static readonly Mp4ReadMetadata mp4ReadMetadata = new Mp4ReadMetadata();
-    private static readonly FlacReadMetadata flacReadMetadata = new FlacReadMetadata();
-    private static readonly MkvReadMetadata mkvReadMetadata = new MkvReadMetadata();
+    private static readonly Mp3ReadMetadata mp3ReadMetadata = new();
+    private static readonly WmaReadMetadata wmaReadMetadata = new();
+    private static readonly AacReadMetadata aacReadMetadata = new();
+    private static readonly WavReadMetadata wavReadMetadata = new();
+    private static readonly Mp4ReadMetadata mp4ReadMetadata = new();
+    private static readonly FlacReadMetadata flacReadMetadata = new();
+    private static readonly MkvReadMetadata mkvReadMetadata = new();
 
-    private static readonly Mp3SaveMetadata mp3SaveMetadata = new Mp3SaveMetadata();
-    private static readonly WmaSaveMetadata wmaSaveMetadata = new WmaSaveMetadata();
-    private static readonly AacSaveMetadata aacSaveMetadata = new AacSaveMetadata();
-    private static readonly WavSaveMetadata wavSaveMetadata = new WavSaveMetadata();
-    private static readonly Mp4SaveMetadata mp4SaveMetadata = new Mp4SaveMetadata();
-    private static readonly FlacSaveMetadata flacSaveMetadata = new FlacSaveMetadata();
-    private static readonly MkvSaveMetadata mkvSaveMetadata = new MkvSaveMetadata();
+    private static readonly Mp3SaveMetadata mp3SaveMetadata = new();
+    private static readonly WmaSaveMetadata wmaSaveMetadata = new();
+    private static readonly AacSaveMetadata aacSaveMetadata = new();
+    private static readonly WavSaveMetadata wavSaveMetadata = new();
+    private static readonly Mp4SaveMetadata mp4SaveMetadata = new();
+    private static readonly FlacSaveMetadata flacSaveMetadata = new();
+    private static readonly MkvSaveMetadata mkvSaveMetadata = new();
 
     public static IReadOnlyList<string> MusicFileExtensions => AddMoreExtensionsWhenSupported(musicFileExtensions);
 

@@ -141,7 +141,7 @@ internal class TranscodingController
     private static string GetDestinationFileName(string sourceFileName)
     {
         int indexOfLastPoint = sourceFileName.LastIndexOf('.');
-        var newFileName = indexOfLastPoint < 0 ? sourceFileName : sourceFileName.Substring(0, indexOfLastPoint);
+        var newFileName = indexOfLastPoint < 0 ? sourceFileName : sourceFileName[..indexOfLastPoint];
         return newFileName + ".mp3";
     }
         
