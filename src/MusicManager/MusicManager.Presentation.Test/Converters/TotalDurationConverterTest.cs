@@ -4,19 +4,18 @@ using System.Waf.UnitTesting;
 using Waf.MusicManager.Presentation.Converters;
 using Waf.MusicManager.Presentation.Properties;
 
-namespace Test.MusicManager.Presentation.Converters
-{
-    [TestClass]
-    public class TotalDurationConverterTest
-    {
-        [TestMethod]
-        public void ConvertTest()
-        {
-            var converter = new TotalDurationConverter();
-            Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, Resources.AboutDuration, "0:03"), converter.Convert(new object[] { true, TimeSpan.FromSeconds(3) }, null, null, null));
-            Assert.AreEqual("0:04", converter.Convert(new object[] { false, TimeSpan.FromSeconds(4) }, null, null, null));
+namespace Test.MusicManager.Presentation.Converters;
 
-            AssertHelper.ExpectedException<NotSupportedException>(() => converter.ConvertBack(null, null, null, null));
-        }
+[TestClass]
+public class TotalDurationConverterTest
+{
+    [TestMethod]
+    public void ConvertTest()
+    {
+        var converter = new TotalDurationConverter();
+        Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, Resources.AboutDuration, "0:03"), converter.Convert(new object[] { true, TimeSpan.FromSeconds(3) }, null, null, null));
+        Assert.AreEqual("0:04", converter.Convert(new object[] { false, TimeSpan.FromSeconds(4) }, null, null, null));
+
+        AssertHelper.ExpectedException<NotSupportedException>(() => converter.ConvertBack(null, null, null, null));
     }
 }

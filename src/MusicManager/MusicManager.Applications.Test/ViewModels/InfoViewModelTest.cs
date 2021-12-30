@@ -3,32 +3,31 @@ using Test.MusicManager.Applications.UnitTesting;
 using Test.MusicManager.Applications.Views;
 using Waf.MusicManager.Applications.ViewModels;
 
-namespace Test.MusicManager.Applications.ViewModels
+namespace Test.MusicManager.Applications.ViewModels;
+
+[TestClass]
+public class InfoViewModelTest : ApplicationsTest
 {
-    [TestClass]
-    public class InfoViewModelTest : ApplicationsTest
+    protected override void OnCleanup()
     {
-        protected override void OnCleanup()
-        {
-            MockInfoView.ShowDialogAction = null;
-            base.OnCleanup();
-        }
+        MockInfoView.ShowDialogAction = null;
+        base.OnCleanup();
+    }
         
-        [TestMethod]
-        public void BasicInfoViewModelTest()
+    [TestMethod]
+    public void BasicInfoViewModelTest()
+    {
+        var viewModel = Container.GetExportedValue<InfoViewModel>();
+        var ownerWindow = new object();
+
+        bool isShowDialogCalled = false;
+        MockInfoView.ShowDialogAction = view =>
         {
-            var viewModel = Container.GetExportedValue<InfoViewModel>();
-            var ownerWindow = new object();
+            isShowDialogCalled = true;
+            Assert.IsTrue(viewModel.ShowWebsiteCommand.CanExecute(null));
+        };
 
-            bool isShowDialogCalled = false;
-            MockInfoView.ShowDialogAction = view =>
-            {
-                isShowDialogCalled = true;
-                Assert.IsTrue(viewModel.ShowWebsiteCommand.CanExecute(null));
-            };
-
-            viewModel.ShowDialog(ownerWindow);
-            Assert.IsTrue(isShowDialogCalled);
-        }
+        viewModel.ShowDialog(ownerWindow);
+        Assert.IsTrue(isShowDialogCalled);
     }
 }

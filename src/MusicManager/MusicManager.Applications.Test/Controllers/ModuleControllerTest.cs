@@ -9,87 +9,86 @@ using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Domain.Playlists;
 
-namespace Test.MusicManager.Applications.Controllers
+namespace Test.MusicManager.Applications.Controllers;
+
+[TestClass]
+public class ModuleControllerTest : ApplicationsTest
 {
-    [TestClass]
-    public class ModuleControllerTest : ApplicationsTest
+    private ModuleController controller = null!;
+    private ShellService shellService = null!;
+        
+    protected override void OnInitialize()
     {
-        private ModuleController controller = null!;
-        private ShellService shellService = null!;
+        base.OnInitialize();
+        controller = Container.GetExportedValue<ModuleController>();
+        shellService = Container.GetExportedValue<ShellService>();
+        controller.Initialize();
+        controller.Run();
+    }
+
+    protected override void OnCleanup()
+    {
+        controller.Shutdown();
+        base.OnCleanup();
+    }
         
-        protected override void OnInitialize()
+    [TestMethod]
+    public void LaodAndSaveSettings()
+    {
+        var appSettings = new AppSettings();
+        var playlistSettings = new PlaylistSettings();
+        var settingsService = Container.GetExportedValue<MockSettingsService>();
+        settingsService.GetStub = type =>
         {
-            base.OnInitialize();
-            controller = Container.GetExportedValue<ModuleController>();
-            shellService = Container.GetExportedValue<ShellService>();
-            controller.Initialize();
-            controller.Run();
-        }
+            if (type == typeof(AppSettings)) return appSettings;
+            if (type == typeof(PlaylistSettings)) return playlistSettings;
+            throw new NotSupportedException(type.Name);
+        };
 
-        protected override void OnCleanup()
-        {
-            controller.Shutdown();
-            base.OnCleanup();
-        }
+        controller.Initialize();
+        controller.Run();
+
+        var playerController = Container.GetExportedValue<PlayerController>();
+        shellService.Settings.Height = 42;
+        playerController.PlaylistManager.CurrentItem = new PlaylistItem(MockMusicFile.CreateEmpty("Test"));
+
+        controller.Shutdown();
+
+        shellService.Settings = null!;
+        playerController.PlaylistSettings = null!;
+
+        controller.Initialize();
+        controller.Run();
+
+        Assert.AreEqual(42, shellService.Settings.Height);
+        Assert.AreEqual("Test", playerController.PlaylistSettings.LastPlayedFileName);
+    }
         
-        [TestMethod]
-        public void LaodAndSaveSettings()
-        {
-            var appSettings = new AppSettings();
-            var playlistSettings = new PlaylistSettings();
-            var settingsService = Container.GetExportedValue<MockSettingsService>();
-            settingsService.GetStub = type =>
-            {
-                if (type == typeof(AppSettings)) return appSettings;
-                if (type == typeof(PlaylistSettings)) return playlistSettings;
-                throw new NotSupportedException(type.Name);
-            };
-
-            controller.Initialize();
-            controller.Run();
-
-            var playerController = Container.GetExportedValue<PlayerController>();
-            shellService.Settings.Height = 42;
-            playerController.PlaylistManager.CurrentItem = new PlaylistItem(MockMusicFile.CreateEmpty("Test"));
-
-            controller.Shutdown();
-
-            shellService.Settings = null!;
-            playerController.PlaylistSettings = null!;
-
-            controller.Initialize();
-            controller.Run();
-
-            Assert.AreEqual(42, shellService.Settings.Height);
-            Assert.AreEqual("Test", playerController.PlaylistSettings.LastPlayedFileName);
-        }
-        
-        [TestMethod]
-        public void ShowDetailViewsTest()
-        {
-            var view = Container.GetExportedValue<MockShellView>();
-            Assert.IsTrue(view.IsVisible);
+    [TestMethod]
+    public void ShowDetailViewsTest()
+    {
+        var view = Container.GetExportedValue<MockShellView>();
+        Assert.IsTrue(view.IsVisible);
             
-            var viewModel = Container.GetExportedValue<ShellViewModel>();
-            Assert.IsFalse(viewModel.IsMusicPropertiesViewVisible);
-            Assert.IsTrue(viewModel.IsPlaylistViewVisible);
-            Assert.IsFalse(viewModel.IsTranscodingListViewVisible);
+        var viewModel = Container.GetExportedValue<ShellViewModel>();
+        Assert.IsFalse(viewModel.IsMusicPropertiesViewVisible);
+        Assert.IsTrue(viewModel.IsPlaylistViewVisible);
+        Assert.IsFalse(viewModel.IsTranscodingListViewVisible);
 
             
-            shellService.ShowMusicPropertiesView();
-            Assert.IsTrue(viewModel.IsMusicPropertiesViewVisible);
-            Assert.IsFalse(viewModel.IsPlaylistViewVisible);
-            Assert.IsFalse(viewModel.IsTranscodingListViewVisible);
+        shellService.ShowMusicPropertiesView();
+        Assert.IsTrue(viewModel.IsMusicPropertiesViewVisible);
+        Assert.IsFalse(viewModel.IsPlaylistViewVisible);
+        Assert.IsFalse(viewModel.IsTranscodingListViewVisible);
 
-            shellService.ShowTranscodingListView();
-            Assert.IsFalse(viewModel.IsMusicPropertiesViewVisible);
-            Assert.IsFalse(viewModel.IsPlaylistViewVisible);
-            Assert.IsTrue(viewModel.IsTranscodingListViewVisible);
+        shellService.ShowTranscodingListView();
+        Assert.IsFalse(viewModel.IsMusicPropertiesViewVisible);
+        Assert.IsFalse(viewModel.IsPlaylistViewVisible);
+        Assert.IsTrue(viewModel.IsTranscodingListViewVisible);
 
-            shellService.ShowPlaylistView();
-            Assert.IsFalse(viewModel.IsMusicPropertiesViewVisible);
-            Assert.IsTrue(viewModel.IsPlaylistViewVisible);
-            Assert.IsFalse(viewModel.IsTranscodingListViewVisible);
-        }
+        shellService.ShowPlaylistView();
+        Assert.IsFalse(viewModel.IsMusicPropertiesViewVisible);
+        Assert.IsTrue(viewModel.IsPlaylistViewVisible);
+        Assert.IsFalse(viewModel.IsTranscodingListViewVisible);
     }
 }

@@ -3,18 +3,17 @@ using System.Waf.UnitTesting;
 using Waf.MusicManager.Domain.Playlists;
 using Test.MusicManager.Domain.UnitTesting;
 
-namespace Test.MusicManager.Domain.MusicFiles
+namespace Test.MusicManager.Domain.MusicFiles;
+
+[TestClass]
+public class RandomServiceTest : DomainTest
 {
-    [TestClass]
-    public class RandomServiceTest : DomainTest
+    [TestMethod]
+    public void NextRandomNumber()
     {
-        [TestMethod]
-        public void NextRandomNumber()
-        {
-            var randomService = new RandomService();
-            for (int i = 0; i < 10; i++) Assert.IsTrue(randomService.NextRandomNumber(2) <= 2);
+        var randomService = new RandomService();
+        for (int i = 0; i < 10; i++) Assert.IsTrue(randomService.NextRandomNumber(2) <= 2);
             
-            AssertHelper.ExpectedException<ArgumentOutOfRangeException>(() => randomService.NextRandomNumber(int.MaxValue));   
-        }
+        AssertHelper.ExpectedException<ArgumentOutOfRangeException>(() => randomService.NextRandomNumber(int.MaxValue));   
     }
 }

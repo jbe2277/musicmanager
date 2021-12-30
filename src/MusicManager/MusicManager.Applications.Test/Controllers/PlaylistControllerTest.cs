@@ -10,133 +10,132 @@ using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.Playlists;
 
-namespace Test.MusicManager.Applications.Controllers
+namespace Test.MusicManager.Applications.Controllers;
+
+[TestClass]
+public class PlaylistControllerTest : ApplicationsTest
 {
-    [TestClass]
-    public class PlaylistControllerTest : ApplicationsTest
+    private ObservableCollection<MusicFile> musicFiles = null!;
+    private MockMusicFileContext musicFileContext = null!;
+    private ShellService shellService = null!;
+    private SelectionService selectionService = null!;
+    private PlaylistController controller = null!;
+    private PlaylistViewModel viewModel = null!;
+    private PlaylistManager playlistManager = null!;
+
+    protected override void OnInitialize()
     {
-        private ObservableCollection<MusicFile> musicFiles = null!;
-        private MockMusicFileContext musicFileContext = null!;
-        private ShellService shellService = null!;
-        private SelectionService selectionService = null!;
-        private PlaylistController controller = null!;
-        private PlaylistViewModel viewModel = null!;
-        private PlaylistManager playlistManager = null!;
+        base.OnInitialize();
 
-        protected override void OnInitialize()
+        musicFileContext = Container.GetExportedValue<MockMusicFileContext>();
+        musicFiles = new ObservableCollection<MusicFile>()
         {
-            base.OnInitialize();
+            musicFileContext.Create(@"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.wav"),
+            musicFileContext.Create(@"C:\Culture Beat - Serenity - Epilog.wma"),
+        };
+        selectionService = Container.GetExportedValue<SelectionService>();
+        selectionService.Initialize(musicFiles);
 
-            musicFileContext = Container.GetExportedValue<MockMusicFileContext>();
-            musicFiles = new ObservableCollection<MusicFile>()
-            {
-               musicFileContext.Create(@"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.wav"),
-               musicFileContext.Create(@"C:\Culture Beat - Serenity - Epilog.wma"),
-            };
-            selectionService = Container.GetExportedValue<SelectionService>();
-            selectionService.Initialize(musicFiles);
+        playlistManager = new PlaylistManager();
+        controller = Container.GetExportedValue<PlaylistController>();
+        controller.PlaylistSettings = new PlaylistSettings();
+        controller.PlaylistManager = playlistManager;
+        controller.Initialize();
+        controller.Run();
 
-            playlistManager = new PlaylistManager();
-            controller = Container.GetExportedValue<PlaylistController>();
-            controller.PlaylistSettings = new PlaylistSettings();
-            controller.PlaylistManager = playlistManager;
-            controller.Initialize();
-            controller.Run();
+        shellService = Container.GetExportedValue<ShellService>();
+        var view = shellService.PlaylistView!;
+        viewModel = ViewHelper.GetViewModel<PlaylistViewModel>((IView)view)!;
+    }
 
-            shellService = Container.GetExportedValue<ShellService>();
-            var view = shellService.PlaylistView!;
-            viewModel = ViewHelper.GetViewModel<PlaylistViewModel>((IView)view)!;
-        }
-
-        protected override void OnCleanup()
-        {
-            controller.Shutdown();
-            base.OnCleanup();
-        }
+    protected override void OnCleanup()
+    {
+        controller.Shutdown();
+        base.OnCleanup();
+    }
         
-        [TestMethod]
-        public void PlayAndRemoveSelectedTest()
-        {
-            // Add music files to playlist
-            Assert.IsFalse(playlistManager.Items.Any());
-            viewModel.InsertMusicFilesAction(0, musicFiles);
-            Assert.AreEqual(2, playlistManager.Items.Count);
+    [TestMethod]
+    public void PlayAndRemoveSelectedTest()
+    {
+        // Add music files to playlist
+        Assert.IsFalse(playlistManager.Items.Any());
+        viewModel.InsertMusicFilesAction(0, musicFiles);
+        Assert.AreEqual(2, playlistManager.Items.Count);
 
-            // Select the first playlist item
-            Assert.IsFalse(viewModel.PlaySelectedCommand.CanExecute(null));
-            Assert.IsFalse(viewModel.RemoveSelectedCommand.CanExecute(null));
+        // Select the first playlist item
+        Assert.IsFalse(viewModel.PlaySelectedCommand.CanExecute(null));
+        Assert.IsFalse(viewModel.RemoveSelectedCommand.CanExecute(null));
 
-            AssertHelper.CanExecuteChangedEvent(viewModel.PlaySelectedCommand, () => SetSelection(viewModel, playlistManager.Items[0]));
+        AssertHelper.CanExecuteChangedEvent(viewModel.PlaySelectedCommand, () => SetSelection(viewModel, playlistManager.Items[0]));
 
-            Assert.IsTrue(viewModel.PlaySelectedCommand.CanExecute(null));
-            Assert.IsTrue(viewModel.RemoveSelectedCommand.CanExecute(null));
+        Assert.IsTrue(viewModel.PlaySelectedCommand.CanExecute(null));
+        Assert.IsTrue(viewModel.RemoveSelectedCommand.CanExecute(null));
 
-            // Play the selected item
-            var playerService = Container.GetExportedValue<PlayerService>();
-            playerService.IsPlayCommand = true;
-            bool playPauseCalled = false;
-            playerService.PlayPauseCommand = new DelegateCommand(() => playPauseCalled = true);
+        // Play the selected item
+        var playerService = Container.GetExportedValue<PlayerService>();
+        playerService.IsPlayCommand = true;
+        bool playPauseCalled = false;
+        playerService.PlayPauseCommand = new DelegateCommand(() => playPauseCalled = true);
 
-            Assert.IsNull(playlistManager.CurrentItem);
-            viewModel.PlaySelectedCommand.Execute(null);
-            Assert.IsTrue(playPauseCalled);
-            Assert.AreEqual(playlistManager.Items[0], playlistManager.CurrentItem);
+        Assert.IsNull(playlistManager.CurrentItem);
+        viewModel.PlaySelectedCommand.Execute(null);
+        Assert.IsTrue(playPauseCalled);
+        Assert.AreEqual(playlistManager.Items[0], playlistManager.CurrentItem);
 
-            // Remove the selected item
-            var selectedItem = viewModel.SelectedPlaylistItem;
-            viewModel.RemoveSelectedCommand.Execute(null);
-            Assert.AreNotEqual(selectedItem, playlistManager.Items.Single());
-            Assert.AreEqual(playlistManager.Items.Single(), viewModel.SelectedPlaylistItem);
-            // -- simulate the WPF behavior of updating the SelectedPlaylistItems as well
-            SetSelection(viewModel, viewModel.SelectedPlaylistItem!);
+        // Remove the selected item
+        var selectedItem = viewModel.SelectedPlaylistItem;
+        viewModel.RemoveSelectedCommand.Execute(null);
+        Assert.AreNotEqual(selectedItem, playlistManager.Items.Single());
+        Assert.AreEqual(playlistManager.Items.Single(), viewModel.SelectedPlaylistItem);
+        // -- simulate the WPF behavior of updating the SelectedPlaylistItems as well
+        SetSelection(viewModel, viewModel.SelectedPlaylistItem!);
             
-            // Play the next selected item
-            viewModel.PlaySelectedCommand.Execute(null);
+        // Play the next selected item
+        viewModel.PlaySelectedCommand.Execute(null);
 
-            // Remove the last item as well
-            AssertHelper.CanExecuteChangedEvent(viewModel.RemoveSelectedCommand, () => viewModel.RemoveSelectedCommand.Execute(null));
-            Assert.IsFalse(viewModel.RemoveSelectedCommand.CanExecute(null));
-            Assert.IsFalse(playlistManager.Items.Any());
-            Assert.IsNull(viewModel.SelectedPlaylistItem);
-        }
+        // Remove the last item as well
+        AssertHelper.CanExecuteChangedEvent(viewModel.RemoveSelectedCommand, () => viewModel.RemoveSelectedCommand.Execute(null));
+        Assert.IsFalse(viewModel.RemoveSelectedCommand.CanExecute(null));
+        Assert.IsFalse(playlistManager.Items.Any());
+        Assert.IsNull(viewModel.SelectedPlaylistItem);
+    }
 
-        [TestMethod]
-        public void ShowMusicPropertiesTest()
-        {
-            // Initialize the MusicPropertiesController
-            var musicPropertiesController = Container.GetExportedValue<MusicPropertiesController>();
-            musicPropertiesController.PlaylistManager = playlistManager;
-            musicPropertiesController.Initialize();
+    [TestMethod]
+    public void ShowMusicPropertiesTest()
+    {
+        // Initialize the MusicPropertiesController
+        var musicPropertiesController = Container.GetExportedValue<MusicPropertiesController>();
+        musicPropertiesController.PlaylistManager = playlistManager;
+        musicPropertiesController.Initialize();
             
-            // Add music files to playlist
-            viewModel.InsertMusicFilesAction(0, musicFiles);
+        // Add music files to playlist
+        viewModel.InsertMusicFilesAction(0, musicFiles);
 
-            // Select the first playlist item
-            SetSelection(viewModel, playlistManager.Items[0]);
+        // Select the first playlist item
+        SetSelection(viewModel, playlistManager.Items[0]);
 
-            // Show music properties view of the selected item
-            var musicPropertiesView = shellService.MusicPropertiesView!;
-            var musicPropertiesViewModel = ViewHelper.GetViewModel<MusicPropertiesViewModel>((IView)musicPropertiesView)!;
-            Assert.IsNull(musicPropertiesViewModel.MusicFile);
+        // Show music properties view of the selected item
+        var musicPropertiesView = shellService.MusicPropertiesView!;
+        var musicPropertiesViewModel = ViewHelper.GetViewModel<MusicPropertiesViewModel>((IView)musicPropertiesView)!;
+        Assert.IsNull(musicPropertiesViewModel.MusicFile);
 
-            bool showMusicPropertiesViewCalled = false;
-            shellService.ShowMusicPropertiesViewAction = () => showMusicPropertiesViewCalled = true;
+        bool showMusicPropertiesViewCalled = false;
+        shellService.ShowMusicPropertiesViewAction = () => showMusicPropertiesViewCalled = true;
             
-            viewModel.ShowMusicPropertiesCommand.Execute(null);
-            Assert.IsTrue(showMusicPropertiesViewCalled);
-            Assert.AreEqual(viewModel.SelectedPlaylistItem!.MusicFile, musicPropertiesViewModel.MusicFile);
+        viewModel.ShowMusicPropertiesCommand.Execute(null);
+        Assert.IsTrue(showMusicPropertiesViewCalled);
+        Assert.AreEqual(viewModel.SelectedPlaylistItem!.MusicFile, musicPropertiesViewModel.MusicFile);
 
-            // Clear playlist
-            Assert.AreEqual(2, playlistManager.Items.Count);
-            viewModel.ClearListCommand.Execute(null);
-            Assert.AreEqual(0, playlistManager.Items.Count);
-        }
+        // Clear playlist
+        Assert.AreEqual(2, playlistManager.Items.Count);
+        viewModel.ClearListCommand.Execute(null);
+        Assert.AreEqual(0, playlistManager.Items.Count);
+    }
 
-        private static void SetSelection(PlaylistViewModel viewModel, params PlaylistItem[] items)
-        {
-            viewModel.SelectedPlaylistItem = items.Last();
-            viewModel.SelectedPlaylistItems.Clear();
-            foreach (var x in items) viewModel.SelectedPlaylistItems.Add(x);
-        }
+    private static void SetSelection(PlaylistViewModel viewModel, params PlaylistItem[] items)
+    {
+        viewModel.SelectedPlaylistItem = items.Last();
+        viewModel.SelectedPlaylistItems.Clear();
+        foreach (var x in items) viewModel.SelectedPlaylistItems.Add(x);
     }
 }

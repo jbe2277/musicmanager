@@ -1,16 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Waf.MusicManager.Presentation.Converters;
 
-namespace Test.MusicManager.Presentation.Converters
+namespace Test.MusicManager.Presentation.Converters;
+
+[TestClass]
+public class PathToDirectoryNameConverterTest
 {
-    [TestClass]
-    public class PathToDirectoryNameConverterTest
+    [TestMethod]
+    public void ConvertTest()
     {
-        [TestMethod]
-        public void ConvertTest()
-        {
-            var converter = new PathToDirectoryNameConverter();
-            Assert.AreEqual(@"C:\Users\Test\Music", converter.Convert(@"C:\Users\Test\Music\Test - File.mp3", null, null, null));
-        }
+        var converter = new PathToDirectoryNameConverter();
+        Assert.AreEqual(@"C:\Users\Test\Music", converter.Convert(@"C:\Users\Test\Music\Test - File.mp3", null, null, null));
     }
 }

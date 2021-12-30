@@ -1,8 +1,7 @@
-﻿namespace Test.MusicManager.Applications.UnitTesting
+﻿namespace Test.MusicManager.Applications.UnitTesting;
+
+public enum UnitTestLevel
 {
-    public enum UnitTestLevel
-    {
-        UnitTest,
-        IntegrationTest
-    }
+    UnitTest,
+    IntegrationTest
 }
