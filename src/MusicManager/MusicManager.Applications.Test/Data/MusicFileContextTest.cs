@@ -106,7 +106,7 @@ public class MusicFileContextTest : IntegrationTest
     }
 
     [TestMethod, TestCategory("IntegrationTest")]
-    public void SaveAndLoadCorructFile()
+    public void SaveAndLoadCorruptFile()
     {
         var fileName = TestHelper.GetTempFileName(".wma");
         File.Copy(Environment.CurrentDirectory + @"\Files\Corrupt.wma", fileName, true);

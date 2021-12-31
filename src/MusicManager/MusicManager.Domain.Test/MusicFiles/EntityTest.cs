@@ -23,21 +23,15 @@ public class EntityTest : DomainTest
         var entity = new MockEntity();
         entity.EntityLoadCompleted();
         Assert.IsFalse(entity.HasChanges);
-        var changesSnapshot1 = entity.Changes;
-        Assert.IsFalse(changesSnapshot1.Any());
+        Assert.IsFalse(entity.Changes.Any());
 
         AssertHelper.PropertyChangedEvent(entity, x => x.HasChanges, () => entity.Name = "Bill");
         Assert.IsTrue(entity.HasChanges);
-        var changesSnapshot2 = entity.Changes;
-        Assert.IsFalse(changesSnapshot1.Any());
-        Assert.AreEqual("Name", changesSnapshot2.Single());
+        Assert.AreEqual("Name", entity.Changes.Single());
 
         AssertHelper.PropertyChangedEvent(entity, x => x.HasChanges, () => entity.ClearChanges());
         Assert.IsFalse(entity.HasChanges);
-        var changesSnapshot3 = entity.Changes;
-        Assert.IsFalse(changesSnapshot1.Any());
-        Assert.AreEqual("Name", changesSnapshot2.Single());
-        Assert.IsFalse(changesSnapshot3.Any());
+        Assert.IsFalse(entity.Changes.Any());
 
         entity.Name = "Bill";
         Assert.IsFalse(entity.HasChanges);

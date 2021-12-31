@@ -14,7 +14,7 @@ internal abstract class SaveMetadata
 
         // Manipulating changes must be done synchronously; no await call is allowed before ClearChanges().
         var metadata = musicFile.Metadata;
-        var changedProperties = metadata.Changes;
+        var changedProperties = metadata.Changes.ToHashSet();  // Snapshot
         metadata.ClearChanges();
 
         var file = await StorageFile.GetFileFromPathAsync(musicFile.FileName);
