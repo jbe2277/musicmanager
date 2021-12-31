@@ -93,7 +93,7 @@ internal class MusicFileContext : IMusicFileContext
         if (musicFile == null || !musicFile.IsMetadataLoaded || !musicFile.Metadata.HasChanges || !musicFile.SharedMusicFiles.Any()) return;
 
         var metadata = musicFile.Metadata;
-        var changedProperties = metadata.GetChanges();
+        var changedProperties = metadata.Changes;
         foreach (var sharedMetadata in musicFile.SharedMusicFiles.Select(x => GetMetadata(x)))
         {
             if (changedProperties.Contains(nameof(MusicMetadata.Artists))) { sharedMetadata.Artists = metadata.Artists; }

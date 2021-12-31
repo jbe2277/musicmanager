@@ -17,11 +17,6 @@ public static class TaskUtility
         var taskCompletionSource = new TaskCompletionSource<object?>();
         int count = tasksArray.Length;
 
-        static void ObserveException(Exception? ex)
-        {
-            // Nothing to do.
-        }
-
         foreach (var task in tasksArray)
         {
             task.ContinueWith(t =>
@@ -43,15 +38,13 @@ public static class TaskUtility
                 else
                 {
                     // Decrement the count and continue if this was the last task.
-                    if (Interlocked.Decrement(ref count) == 0)
-                    {
-                        taskCompletionSource.SetResult(null);
-                    }
+                    if (Interlocked.Decrement(ref count) == 0) taskCompletionSource.SetResult(null);
                 }
 
             }, TaskContinuationOptions.ExecuteSynchronously);
         }
-
         return taskCompletionSource.Task;
+
+        static void ObserveException(Exception? ex) { /* Nothing to do. */ }
     }
 }

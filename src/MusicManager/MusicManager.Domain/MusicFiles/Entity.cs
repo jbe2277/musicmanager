@@ -21,7 +21,7 @@ public abstract class Entity : Model
         private set => SetProperty(ref hasChanges, value);
     }
 
-    public IReadOnlyCollection<string> GetChanges() => changes.ToArray();
+    public IReadOnlySet<string> Changes => changes;
 
     public void EntityLoadCompleted() => entityLoaded = true;
 
@@ -33,16 +33,13 @@ public abstract class Entity : Model
 
     protected bool SetPropertyAndTrackChanges<T>([NotNullIfNotNull(parameterName: "value"), MaybeNull] ref T field, [AllowNull] T value, [CallerMemberName] string propertyName = null!)
     {
-        if (SetProperty(ref field, value, propertyName))
+        if (!SetProperty(ref field, value, propertyName)) return false;
+        if (entityLoaded)
         {
-            if (entityLoaded)
-            {
-                HasChanges = true;
-                changes.Add(propertyName);
-            }
-            return true;
+            HasChanges = true;
+            changes.Add(propertyName);
         }
-        return false;
+        return true;
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)

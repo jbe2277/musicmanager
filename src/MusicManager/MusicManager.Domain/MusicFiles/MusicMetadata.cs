@@ -26,10 +26,7 @@ public class MusicMetadata : Entity
     {
     }
 
-    public static MusicMetadata CreateUnsupported(TimeSpan duration, long bitrate)
-    {
-        return new MusicMetadata(duration, bitrate, false);
-    }
+    public static MusicMetadata CreateUnsupported(TimeSpan duration, long bitrate) => new MusicMetadata(duration, bitrate, false);
 
     public object Parent { get; set; } = null!;
 
