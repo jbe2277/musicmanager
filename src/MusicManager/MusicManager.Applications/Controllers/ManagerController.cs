@@ -2,15 +2,12 @@
 using System.Globalization;
 using System.IO;
 using System.Waf.Applications;
-using Waf.MusicManager.Applications.Data;
 using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
-using Windows.Storage;
-using Windows.Storage.Search;
 
 namespace Waf.MusicManager.Applications.Controllers;
 
@@ -19,6 +16,7 @@ internal class ManagerController
 {
     private readonly IShellService shellService;
     private readonly IEnvironmentService environmentService;
+    private readonly IFileService fileService;
     private readonly IMusicFileContext musicFileContext;
     private readonly SelectionService selectionService;
     private readonly ManagerStatusService managerStatusService;
@@ -36,11 +34,12 @@ internal class ManagerController
     private CancellationTokenSource? updateMusicFilesCancellation;
         
     [ImportingConstructor]
-    public ManagerController(IShellService shellService, IEnvironmentService environmentService, IMusicFileContext musicFileContext, SelectionService selectionService, 
+    public ManagerController(IShellService shellService, IEnvironmentService environmentService, IFileService fileService, IMusicFileContext musicFileContext, SelectionService selectionService, 
         ManagerStatusService managerStatusService, IFileSystemWatcherService fileSystemWatcherService, Lazy<ManagerViewModel> managerViewModel)
     {
         this.shellService = shellService;
         this.environmentService = environmentService;
+        this.fileService = fileService;
         this.musicFileContext = musicFileContext;
         this.selectionService = selectionService;
         this.managerStatusService = managerStatusService;
@@ -101,9 +100,7 @@ internal class ManagerController
         {
             using (shellService.SetApplicationBusy())
             {
-                var folder = StorageFolder.GetFolderFromPathAsync(ManagerViewModel.FolderBrowser.CurrentPath).GetResult();
-                var parent = folder.GetParentAsync().GetResult();
-                ManagerViewModel.FolderBrowser.CurrentPath = parent?.Path ?? "";
+                ManagerViewModel.FolderBrowser.CurrentPath = fileService.GetParentPath(ManagerViewModel.FolderBrowser.CurrentPath).GetResult() ?? "";
             }
         }
         catch (Exception)
@@ -117,7 +114,7 @@ internal class ManagerController
         
     private void NavigatePublicHome() => ManagerViewModel.FolderBrowser.CurrentPath = environmentService.PublicMusicPath;
 
-    private void LoadRecursive() => UpdateMusicFiles(FolderDepth.Deep);
+    private void LoadRecursive() => UpdateMusicFiles(true);
 
     private void NavigateToSelectedSubDirectory()
     {
@@ -136,8 +133,7 @@ internal class ManagerController
     {
         try
         {
-            var file = await StorageFile.GetFileFromPathAsync(fileName);
-            await file.DeleteAsync();
+            await fileService.DeleteFile(fileName);
         }
         catch (Exception ex)
         {
@@ -149,7 +145,7 @@ internal class ManagerController
     {
         try
         {
-            ManagerViewModel.FolderBrowser.SubDirectories = GetSubFoldersFromPath(ManagerViewModel.FolderBrowser.CurrentPath);
+            ManagerViewModel.FolderBrowser.SubDirectories = fileService.GetSubFoldersFromPath(ManagerViewModel.FolderBrowser.CurrentPath).GetResult();
         }
         catch (Exception ex)
         {
@@ -157,7 +153,7 @@ internal class ManagerController
         }
     }
 
-    private async void UpdateMusicFiles(FolderDepth folderDepth)
+    private async void UpdateMusicFiles(bool deep)
     {
         updateMusicFilesCancellation?.Cancel();
         var cancellation = new CancellationTokenSource();
@@ -170,11 +166,11 @@ internal class ManagerController
         try
         {
             var filesCount = 0;
-            if (Directory.Exists(path))
+            if (fileService.DirectoryExists(path))
             {
                 var userSearchFilter = ManagerViewModel.SearchFilter.UserSearchFilter;
                 var applicationSearchFilter = ManagerViewModel.SearchFilter.ApplicationSearchFilter;
-                var files = await GetFilesAsync(path, folderDepth, userSearchFilter, applicationSearchFilter, cancellation.Token);
+                var files = await GetFilesAsync(path, deep, userSearchFilter, applicationSearchFilter, cancellation.Token);
 
                 filesCount = files.Count;
 
@@ -207,15 +203,15 @@ internal class ManagerController
         if (e.PropertyName == nameof(FolderBrowserDataModel.UserPath))
         {
             // This might throw an exception => shown in the Path TextBox as validation error.
-            ManagerViewModel.FolderBrowser.CurrentPath = GetFolderFromPath(ManagerViewModel.FolderBrowser.UserPath).Path!;
+            ManagerViewModel.FolderBrowser.CurrentPath = fileService.GetFolderFromPath(ManagerViewModel.FolderBrowser.UserPath).GetResult().Path!;
         }
         if (e.PropertyName == nameof(FolderBrowserDataModel.CurrentPath))
         {
             navigateDirectoryUpCommand.RaiseCanExecuteChanged();
-            ManagerViewModel.FolderBrowser.UserPath = FolderHelper.GetDisplayPath(ManagerViewModel.FolderBrowser.CurrentPath!).GetResult();
+            ManagerViewModel.FolderBrowser.UserPath = fileService.GetDisplayPath(ManagerViewModel.FolderBrowser.CurrentPath!).GetResult();
             UpdateSubDirectories();
             ManagerViewModel.SearchFilter.Clear();
-            UpdateMusicFiles(FolderDepth.Shallow);
+            UpdateMusicFiles(false);
         }
     }
 
@@ -227,18 +223,18 @@ internal class ManagerController
             var applicationSearchFilter = ManagerViewModel.SearchFilter.ApplicationSearchFilter;
             if (string.IsNullOrEmpty(userSearchFilter) && string.IsNullOrEmpty(applicationSearchFilter))
             {
-                UpdateMusicFiles(FolderDepth.Shallow);  // Reset the search; behave like the user navigated into another folder.
+                UpdateMusicFiles(false);  // Reset the search; behave like the user navigated into another folder.
             }
             else
             {
-                UpdateMusicFiles(FolderDepth.Deep);
+                UpdateMusicFiles(true);
             }   
         }
     }
 
-    private Task<IReadOnlyList<string>> GetFilesAsync(string directory, FolderDepth folderDepth, string userSearchFilter, string applicationSearchFilter, CancellationToken cancellation)
+    private Task<IReadOnlyList<string>> GetFilesAsync(string directory, bool deep, string userSearchFilter, string applicationSearchFilter, CancellationToken cancellation)
     {
-        if (folderDepth == FolderDepth.Shallow)
+        if (!deep)
         {
             fileSystemWatcherService.Path = directory;
             fileSystemWatcherService.EnableRaisingEvents = true;
@@ -249,75 +245,12 @@ internal class ManagerController
         }
             
         // It is necessary to run this in an own task => otherwise, reentrance would block the UI thread although this should not happen.
-        return Task.Run(() => GetFilesCore(directory, folderDepth, userSearchFilter, applicationSearchFilter, cancellation));
-    }
-
-    private static IReadOnlyList<string> GetFilesCore(string directory, FolderDepth folderDepth, string userSearchFilter, string applicationSearchFilter, CancellationToken cancellation)
-    {
-        // This method is run in an task (not in the UI thread) => static ensures some thread-safety.
-        var folder = StorageFolder.GetFolderFromPathAsync(directory).GetResult(cancellation);
-        var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, SupportedFileTypes.MusicFileExtensions) 
-        { 
-            UserSearchFilter = userSearchFilter ?? "", 
-            ApplicationSearchFilter = applicationSearchFilter ?? "", 
-            FolderDepth = folderDepth 
-        };
-        var result = folder.CreateFileQueryWithOptions(queryOptions);
-            
-        // It seems that GetFilesAsync does not check the cancellationToken; so get only parts of the file results in a loop.
-        Log.Default.Trace("ManagerController.UpdateMusicFiles:GetFilesAsync Start");
-        var files = new List<string>();
-        uint index = 0;
-        int resultCount;
-        const uint maxFiles = 100;
-        do
-        {
-            var filesResult = result.GetFilesAsync(index, maxFiles).GetResult(cancellation);
-            resultCount = filesResult.Count;
-            files.AddRange(filesResult.Select(x => x.Path));
-            index += maxFiles;
-        }
-        while (resultCount == maxFiles);
-        Log.Default.Trace("ManagerController.UpdateMusicFiles:GetFilesAsync End");
-        return files;
-    }
-
-    private static IReadOnlyList<FolderItem> GetSubFoldersFromPath(string path)
-    {
-        if (!string.IsNullOrEmpty(path))
-        {
-            var folder = StorageFolder.GetFolderFromPathAsync(path).GetResult();
-            var result = folder.CreateFolderQuery();
-            var folders = result.GetFoldersAsync().GetResult();
-            return folders.Select(x => new FolderItem(x.Path, x.DisplayName)).ToArray();
-        }
-        else
-        {
-            var driveInfos = DriveInfo.GetDrives();
-            return driveInfos.Select(x =>
-            {
-                var displayName = StorageFolder.GetFolderFromPathAsync(x.RootDirectory.FullName).GetResult().DisplayName;
-                return new FolderItem(x.RootDirectory.FullName, displayName);
-            }).ToArray();
-        }
-    }
-
-    private static FolderItem GetFolderFromPath(string path)
-    {
-        if (!string.IsNullOrEmpty(path))
-        {
-            var folder = FolderHelper.GetFolderFromLocalizedPathAsync(path).GetResult();
-            return new FolderItem(folder.Path, folder.DisplayName);
-        }
-        else
-        {
-            return new FolderItem(null, "Root");
-        }
+        return fileService.GetFiles(directory, deep, userSearchFilter, applicationSearchFilter, cancellation);
     }
 
     private void InsertMusicFile(string fileName)
     {
-        if (!SupportedFileTypes.MusicFileExtensions.Contains(Path.GetExtension(fileName))) return;
+        if (!fileService.IsFileSupported(fileName)) return;
             
         var insertFileName = Path.GetFileName(fileName);
         int i;

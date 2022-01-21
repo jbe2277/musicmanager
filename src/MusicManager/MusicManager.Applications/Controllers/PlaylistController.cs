@@ -2,14 +2,12 @@
 using System.IO;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
-using Waf.MusicManager.Applications.Data;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
+using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.Playlists;
-using Windows.Media.Playlists;
-using Windows.Storage;
 
 namespace Waf.MusicManager.Applications.Controllers;
 
@@ -19,6 +17,7 @@ internal class PlaylistController : IPlaylistService
     private readonly IFileDialogService fileDialogService;
     private readonly IShellService shellService;
     private readonly IEnvironmentService environmentService;
+    private readonly IFileService fileService;
     private readonly IMusicFileContext musicFileContext;
     private readonly IPlayerService playerService;
     private readonly IMusicPropertiesService musicPropertiesService;
@@ -33,13 +32,14 @@ internal class PlaylistController : IPlaylistService
     private readonly FileType savePlaylistFileType;
 
     [ImportingConstructor]
-    public PlaylistController(IFileDialogService fileDialogService, IShellService shellService, IEnvironmentService environmentService, 
+    public PlaylistController(IFileDialogService fileDialogService, IShellService shellService, IEnvironmentService environmentService, IFileService fileService,
         IMusicFileContext musicFileContext, IPlayerService playerService, IMusicPropertiesService musicPropertiesService, Lazy<PlaylistViewModel> playlistViewModel)
     {
         this.fileDialogService = fileDialogService;
         this.playlistViewModel = playlistViewModel;
         this.shellService = shellService;
         this.environmentService = environmentService;
+        this.fileService = fileService;
         this.musicFileContext = musicFileContext;
         this.playerService = playerService;
         this.musicPropertiesService = musicPropertiesService;
@@ -49,8 +49,8 @@ internal class PlaylistController : IPlaylistService
         openListCommand = new DelegateCommand(OpenList);
         saveListCommand = new DelegateCommand(SaveList);
         clearListCommand = new DelegateCommand(ClearList);
-        openPlaylistFileType = new FileType(Resources.Playlist, SupportedFileTypes.PlaylistFileExtensions);
-        savePlaylistFileType = new FileType(Resources.Playlist, SupportedFileTypes.PlaylistFileExtensions[0]);
+        openPlaylistFileType = new FileType(Resources.Playlist, IFileService.PlaylistFileExtensions);
+        savePlaylistFileType = new FileType(Resources.Playlist, IFileService.PlaylistFileExtensions[0]);
     }
 
     public PlaylistSettings PlaylistSettings { get; set; } = null!;
@@ -141,15 +141,12 @@ internal class PlaylistController : IPlaylistService
     private void InsertFiles(int index, IEnumerable<string> fileNames)
     {
         Log.Default.Trace("PlaylistController.InsertFiles:Start");
-        var musicFileNames = fileNames.Where(x => SupportedFileTypes.MusicFileExtensions.Contains(Path.GetExtension(x))).ToArray();
+        var musicFileNames = fileNames.Where(x => fileService.IsFileSupported(x)).ToArray();
         InsertFilesCore(index, musicFileNames);
 
         Log.Default.Trace("PlaylistController.InsertFiles:OpenPlaylists");
-        var playlistFileNames = fileNames.Where(x => SupportedFileTypes.PlaylistFileExtensions.Contains(Path.GetExtension(x))).ToArray();
-        foreach (var playlistFileName in playlistFileNames)
-        {
-            OpenListCore(playlistFileName);
-        }
+        var playlistFileNames = fileNames.Where(x => IFileService.PlaylistFileExtensions.Contains(Path.GetExtension(x))).ToArray();
+        foreach (var x in playlistFileNames) OpenListCore(x);
 
         Log.Default.Trace("PlaylistController.InsertFiles:End");
     }
@@ -165,12 +162,10 @@ internal class PlaylistController : IPlaylistService
 
     private void OpenListCore(string playlistFileName)
     {
-        Playlist playlist;
+        IReadOnlyList<string> playlist;
         try
         {
-            var playlistFile = StorageFile.GetFileFromPathAsync(playlistFileName).GetResult();
-            // MS Issue: LoadAsync cannot load a playlist when one of the files do not exists anymore.
-            playlist = Playlist.LoadAsync(playlistFile).GetResult();
+            playlist = fileService.ReadPlaylist(playlistFileName).GetResult();
         }
         catch (Exception ex)
         {
@@ -178,7 +173,7 @@ internal class PlaylistController : IPlaylistService
             shellService.ShowError(ex, Resources.CouldNotLoadPlaylist);
             return;
         }
-        InsertFilesCore(PlaylistManager.Items.Count, playlist.Files.Select(x => x.Path).ToArray());
+        InsertFilesCore(PlaylistManager.Items.Count, playlist);
     }
 
     private void InsertFilesCore(int index, IEnumerable<string> fileNames)
@@ -200,28 +195,10 @@ internal class PlaylistController : IPlaylistService
     {
         var result = fileDialogService.ShowSaveFileDialog(shellService.ShellView, savePlaylistFileType);
         if (!result.IsValid) return;
-            
-        var playlist = new Playlist();
+
         try
         {
-            foreach (var item in PlaylistManager.Items)
-            {
-                var file = StorageFile.GetFileFromPathAsync(item.MusicFile.FileName).GetResult();
-                playlist.Files.Add(file);
-            }
-        }
-        catch (Exception ex)
-        {
-            Log.Default.Error(ex, "SaveList GetStorageFiles");
-            shellService.ShowError(ex, Resources.CouldNotSavePlaylistBecauseMissingFiles);
-            return;
-        }
-            
-        try
-        {
-            var targetFolder = StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(result.FileName)).GetResult();
-            var name = Path.GetFileNameWithoutExtension(result.FileName);
-            playlist.SaveAsAsync(targetFolder, name, NameCollisionOption.ReplaceExisting, PlaylistFormat.M3u).Wait();
+            fileService.SavePlaylist(result.FileName!, PlaylistManager.Items.Select(x => x.MusicFile.FileName!).ToArray()).Wait();
         }
         catch (Exception ex)
         {

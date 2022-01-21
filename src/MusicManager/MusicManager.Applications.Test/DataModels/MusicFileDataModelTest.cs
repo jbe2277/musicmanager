@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Globalization;
 using System.Waf.UnitTesting;
-using Test.MusicManager.Applications.UnitTesting;
 using Test.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Domain.MusicFiles;

@@ -14,8 +14,4 @@
     <ProjectReference Include="..\MusicManager.Applications\MusicManager.Applications.csproj" />
     <ProjectReference Include="..\MusicManager.Domain.Test\MusicManager.Domain.Test.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Files\*" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
 </Project>

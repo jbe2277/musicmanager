@@ -138,9 +138,6 @@
   <data name="CouldNotSavePlaylist" xml:space="preserve">
     <value>Die Playlist konnte nicht gespeichert werden.</value>
   </data>
-  <data name="CouldNotSavePlaylistBecauseMissingFiles" xml:space="preserve">
-    <value>Die Playlist konnte nicht gespeichert werden, weil Dateien fehlen. Bitte korrigieren Sie zuerst die Playlist.</value>
-  </data>
   <data name="FilterIsSet" xml:space="preserve">
     <value>Ein Filter wird verwendet</value>
   </data>

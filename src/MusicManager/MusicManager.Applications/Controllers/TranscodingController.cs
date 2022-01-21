@@ -2,7 +2,6 @@
 using System.IO;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
-using Waf.MusicManager.Applications.Data;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;

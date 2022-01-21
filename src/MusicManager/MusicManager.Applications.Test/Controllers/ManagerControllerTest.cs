@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Waf.Applications;
 using System.Waf.UnitTesting;
-using Test.MusicManager.Applications.Data;
 using Test.MusicManager.Applications.Services;
-using Test.MusicManager.Applications.UnitTesting;
 using Test.MusicManager.Applications.Views;
 using Waf.MusicManager.Applications.Controllers;
 using Waf.MusicManager.Applications.Services;
@@ -14,9 +12,6 @@ namespace Test.MusicManager.Applications.Controllers;
 [TestClass]
 public class ManagerControllerTest : ApplicationsTest
 {
-    private const string subDirectory = "Files";
-    private static readonly string subDirectoryPath = Path.Combine(Environment.CurrentDirectory, subDirectory);
-        
     private ManagerController controller = null!;
     private ShellService shellService = null!;
     private IManagerStatusService managerStatusService = null!;
@@ -44,97 +39,34 @@ public class ManagerControllerTest : ApplicationsTest
     }
         
     [TestMethod]
-    public void NavigateFolderBrowser()
-    {
-        Assert.IsFalse(viewModel.NavigateDirectoryUpCommand.CanExecute(null));
-        Assert.IsTrue(viewModel.FolderBrowser.SubDirectories.Any(x => @"C:\".Equals(x.Path, StringComparison.OrdinalIgnoreCase)));
-
-        AssertHelper.CanExecuteChangedEvent(viewModel.NavigateDirectoryUpCommand, () => viewModel.FolderBrowser.CurrentPath = subDirectoryPath);
-        AssertHelper.PropertyChangedEvent(viewModel.FolderBrowser, x => x.SubDirectories, () => viewModel.NavigateDirectoryUpCommand.Execute(null));
-        Assert.AreEqual(Environment.CurrentDirectory, viewModel.FolderBrowser.CurrentPath);
-
-        AssertHelper.ExpectedException<InvalidOperationException>(() => viewModel.NavigateToSelectedSubDirectoryCommand.Execute(null));
-            
-        viewModel.FolderBrowser.SelectedSubDirectory = viewModel.FolderBrowser.SubDirectories.First(x => subDirectoryPath.Equals(x.Path, StringComparison.OrdinalIgnoreCase));
-        viewModel.NavigateToSelectedSubDirectoryCommand.Execute(null);
-        Assert.AreEqual(subDirectoryPath, viewModel.FolderBrowser.CurrentPath);
-
-        var environmentService = Container.GetExportedValue<MockEnvironmentService>();
-        environmentService.MusicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-        environmentService.PublicMusicPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
-
-        viewModel.NavigateHomeCommand.Execute(null);
-        Assert.AreEqual(environmentService.MusicPath, viewModel.FolderBrowser.CurrentPath);
-
-        viewModel.NavigatePublicHomeCommand.Execute(null);
-        Assert.AreEqual(environmentService.PublicMusicPath, viewModel.FolderBrowser.CurrentPath);
-    }
-
-    [TestMethod]
-    public void UpdateMusicFilesAndSearchFilter()
-    {
-        Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
-            
-        AssertHelper.PropertyChangedEvent(managerStatusService, x => x.UpdatingFilesList, () => viewModel.FolderBrowser.CurrentPath = subDirectoryPath);
-        Assert.IsTrue(managerStatusService.UpdatingFilesList);
-        Assert.AreEqual(-1, managerStatusService.TotalFilesCount);
-
-        // Music files are updated asynchronously
-        Assert.IsFalse(selectionService.MusicFiles.Any());
-        Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
-        Assert.IsTrue(selectionService.MusicFiles.Any(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
-        Assert.IsTrue(managerStatusService.TotalFilesCount > 0);
-
-        // Move a directory up.
-        Assert.IsFalse(managerStatusService.UpdatingFilesList);
-        viewModel.NavigateDirectoryUpCommand.Execute(null);
-        Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
-        Assert.IsFalse(selectionService.MusicFiles.Any(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
-
-        // Load recursive all subdirectories
-        Assert.IsFalse(managerStatusService.UpdatingFilesList);
-        viewModel.LoadRecursiveCommand.Execute(null);
-        Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
-        Assert.IsTrue(selectionService.MusicFiles.Any(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
-
-        // Search for TestMp3
-        Assert.IsFalse(managerStatusService.UpdatingFilesList);
-        viewModel.SearchFilter.UserSearchFilter = "TestMp3";
-        Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
-        Assert.IsNotNull(selectionService.MusicFiles.Single(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
-
-        // Search for NoFilesToFind
-        Assert.IsFalse(managerStatusService.UpdatingFilesList);
-        viewModel.SearchFilter.UserSearchFilter = "NoFilesToFind";
-        Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
-        Assert.IsFalse(selectionService.MusicFiles.Any());
-    }
-
-    [TestMethod]
     public void FileSystemWatcherService()
     {
+        var path = @"C:\Music";
+        var fileService = Container.GetExportedValue<MockFileService>();
+        fileService.GetFilesStub = (dir, deep, f1, f2, c) => Task.FromResult((IReadOnlyList<string>)new[] { Path.Combine(path, "TestMP3.mp3"), Path.Combine(path, "Test42.mp3") });
+
         var fileSystemWatcherService = Container.GetExportedValue<MockFileSystemWatcherService>();
-        viewModel.FolderBrowser.CurrentPath = subDirectoryPath;
-        Assert.IsTrue(subDirectoryPath.Equals(fileSystemWatcherService.Path, StringComparison.OrdinalIgnoreCase));
+        viewModel.FolderBrowser.CurrentPath = path;
+        Assert.IsTrue(path.Equals(fileSystemWatcherService.Path, StringComparison.OrdinalIgnoreCase));
         Assert.IsTrue(fileSystemWatcherService.EnableRaisingEvents);
 
         viewModel.LoadRecursiveCommand.Execute(null);
         Assert.IsFalse(fileSystemWatcherService.EnableRaisingEvents);
 
         viewModel.FolderBrowser.CurrentPath = "";
-        viewModel.FolderBrowser.CurrentPath = subDirectoryPath;
+        viewModel.FolderBrowser.CurrentPath = path;
         Context.WaitFor(() => managerStatusService.UpdatingFilesList == false, TimeSpan.FromSeconds(5));
         Assert.IsTrue(selectionService.MusicFiles.Any(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
 
-        fileSystemWatcherService.RaiseDeleted(new FileSystemEventArgs(WatcherChangeTypes.Deleted, subDirectoryPath, "testmp3.mp3"));
+        fileSystemWatcherService.RaiseDeleted(new FileSystemEventArgs(WatcherChangeTypes.Deleted, path, "testmp3.mp3"));
         Assert.IsFalse(selectionService.MusicFiles.Any(x => x.MusicFile.FileName!.EndsWith("TestMP3.mp3", StringComparison.OrdinalIgnoreCase)));
         Assert.IsTrue(selectionService.MusicFiles.Any());
 
-        fileSystemWatcherService.RaiseCreated(new FileSystemEventArgs(WatcherChangeTypes.Created, subDirectoryPath, "aaa.mp3"));
-        Assert.IsTrue(Path.Combine(subDirectoryPath, "aaa.mp3").Equals(selectionService.MusicFiles.First().MusicFile.FileName, StringComparison.OrdinalIgnoreCase));
+        fileSystemWatcherService.RaiseCreated(new FileSystemEventArgs(WatcherChangeTypes.Created, path, "aaa.mp3"));
+        Assert.IsTrue(Path.Combine(path, "aaa.mp3").Equals(selectionService.MusicFiles.First().MusicFile.FileName, StringComparison.OrdinalIgnoreCase));
 
-        fileSystemWatcherService.RaiseRenamed(new RenamedEventArgs(WatcherChangeTypes.Renamed, subDirectoryPath, "zzz.mp3", "aaa.mp3"));
-        Assert.IsTrue(Path.Combine(subDirectoryPath, "zzz.mp3").Equals(selectionService.MusicFiles.Last().MusicFile.FileName, StringComparison.OrdinalIgnoreCase));
+        fileSystemWatcherService.RaiseRenamed(new RenamedEventArgs(WatcherChangeTypes.Renamed, path, "zzz.mp3", "aaa.mp3"));
+        Assert.IsTrue(Path.Combine(path, "zzz.mp3").Equals(selectionService.MusicFiles.Last().MusicFile.FileName, StringComparison.OrdinalIgnoreCase));
     }
 
     [TestMethod]

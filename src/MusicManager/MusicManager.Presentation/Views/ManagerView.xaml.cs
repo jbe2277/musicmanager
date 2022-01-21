@@ -6,11 +6,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Waf.MusicManager.Applications.Data;
 using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Applications.Views;
+using Waf.MusicManager.Presentation.Services;
 
 namespace Waf.MusicManager.Presentation.Views;
 

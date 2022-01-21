@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Waf.MusicManager.Applications.Data;
+using Waf.MusicManager.Presentation.Services;
 
 namespace Waf.MusicManager.Presentation.Controls;
 
@@ -48,7 +48,7 @@ public class PathLabel : Label
             return;
         }
 
-        var pathElements = FolderHelper.GetPathSegments(path).ToArray();
+        var pathElements = FileService.GetPathSegments(path).ToArray();
         for (int i = 2; i < pathElements.Length; i++)
         {
             path = string.Join(System.IO.Path.DirectorySeparatorChar.ToString(), new[] { pathElements[0], "..." }.Concat(pathElements.Skip(i)));

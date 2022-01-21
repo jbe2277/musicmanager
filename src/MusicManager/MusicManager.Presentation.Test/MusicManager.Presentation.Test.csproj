@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MusicManager.Applications.Test\MusicManager.Applications.Test.csproj" />
     <ProjectReference Include="..\MusicManager.Domain\MusicManager.Domain.csproj" />
     <ProjectReference Include="..\MusicManager.Applications\MusicManager.Applications.csproj" />
     <ProjectReference Include="..\MusicManager.Domain.Test\MusicManager.Domain.Test.csproj" />

@@ -138,9 +138,6 @@
   <data name="CouldNotSavePlaylist" xml:space="preserve">
     <value>The playlist could not be saved.</value>
   </data>
-  <data name="CouldNotSavePlaylistBecauseMissingFiles" xml:space="preserve">
-    <value>The playlist could not be saved because not all files within the playlist could be found. Please correct the playlist first.</value>
-  </data>
   <data name="FilterIsSet" xml:space="preserve">
     <value>A filter is set</value>
   </data>
