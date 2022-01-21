@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Test.MusicManager.Domain.UnitTesting;
 using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Test.MusicManager.Domain.MusicFiles;
@@ -30,7 +29,7 @@ public class MusicMetadataTest : DomainTest
 
         metadata1.ApplyValuesFrom(metadata2);
 
-        TestHelper.AssertHaveEqualPropertyValues(metadata2, metadata1, p => p.Name != nameof(MusicMetadata.Parent));
+        AssertHaveEqualPropertyValues(metadata2, metadata1, p => p.Name != nameof(MusicMetadata.Parent));
     }
 
     [TestMethod]

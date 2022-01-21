@@ -3,7 +3,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Waf.UnitTesting;
 using System.Waf.UnitTesting.Mocks;
-using Test.MusicManager.Domain.UnitTesting;
+using Test.MusicManager.Domain;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;

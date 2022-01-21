@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Waf.UnitTesting;
-using Test.MusicManager.Domain.UnitTesting;
 using Waf.MusicManager.Presentation.Services;
 
 namespace Test.MusicManager.Presentation.Services;

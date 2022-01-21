@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Waf.UnitTesting;
-using Test.MusicManager.Domain.UnitTesting;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Presentation.Services;
 
@@ -69,7 +68,7 @@ public class MusicFileContextTest : PresentationTest
         Assert.AreNotEqual(musicFile.Metadata, musicFile2.Metadata);
 
         var notSupportedByFlac = new[] { nameof(MusicMetadata.Rating), nameof(MusicMetadata.Bitrate), nameof(MusicMetadata.Publisher), nameof(MusicMetadata.Subtitle) };
-        TestHelper.AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent) && (!isFlac || !notSupportedByFlac.Contains(p.Name)));
+        AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent) && (!isFlac || !notSupportedByFlac.Contains(p.Name)));
     }
 
     private static void SetMusicFileData(MusicFile musicFile)
@@ -147,7 +146,7 @@ public class MusicFileContextTest : PresentationTest
 
         Assert.AreNotEqual(musicFile, musicFile2);
         Assert.AreNotEqual(musicFile.Metadata, musicFile2.Metadata);
-        TestHelper.AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
+        AssertHaveEqualPropertyValues(musicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
     }
 
     [TestMethod, TestCategory("IntegrationTest")]
@@ -176,8 +175,8 @@ public class MusicFileContextTest : PresentationTest
         ctx.ApplyChanges(sharedMusicFile);
         Assert.IsTrue(musicFile2.Metadata!.Artists.Any());
 
-        TestHelper.AssertHaveEqualPropertyValues(sharedMusicFile.Metadata, musicFile1.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
-        TestHelper.AssertHaveEqualPropertyValues(sharedMusicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
+        AssertHaveEqualPropertyValues(sharedMusicFile.Metadata, musicFile1.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
+        AssertHaveEqualPropertyValues(sharedMusicFile.Metadata, musicFile2.Metadata, p => p.Name != nameof(MusicMetadata.Parent));
 
 
         musicFile1.Metadata.Title = "Title1";

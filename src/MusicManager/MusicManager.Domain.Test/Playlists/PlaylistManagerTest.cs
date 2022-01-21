@@ -3,7 +3,6 @@ using System.Waf.UnitTesting;
 using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.Playlists;
-using Test.MusicManager.Domain.UnitTesting;
 
 namespace Test.MusicManager.Domain.MusicFiles;
 

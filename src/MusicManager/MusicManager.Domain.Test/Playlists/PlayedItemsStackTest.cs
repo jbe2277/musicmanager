@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Waf.MusicManager.Domain.Playlists;
-using Test.MusicManager.Domain.UnitTesting;
 
 namespace Test.MusicManager.Domain.Playlists;
 
