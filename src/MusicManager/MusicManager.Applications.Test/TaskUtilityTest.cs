@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Waf.UnitTesting;
-using Waf.MusicManager.Domain;
-namespace Test.MusicManager.Domain;
+using Test.MusicManager.Domain;
+using Waf.MusicManager.Applications;
+
+namespace Test.MusicManager.Applications;
 
 [TestClass]
 public class TaskUtilityTest : DomainTest

@@ -1,5 +1,5 @@
 ﻿using Windows.Foundation;
-using Waf.MusicManager.Domain;
+using Waf.MusicManager.Applications;
 
 namespace Waf.MusicManager.Presentation;
 

@@ -2,8 +2,8 @@
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
+using Waf.MusicManager.Applications;
 using Waf.MusicManager.Applications.Services;
-using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
 using Windows.Storage;
 

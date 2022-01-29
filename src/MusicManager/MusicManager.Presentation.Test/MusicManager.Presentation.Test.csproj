@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Waf.UnitTesting.Wpf" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MusicManager.Applications.Test\MusicManager.Applications.Test.csproj" />
     <ProjectReference Include="..\MusicManager.Domain\MusicManager.Domain.csproj" />
     <ProjectReference Include="..\MusicManager.Applications\MusicManager.Applications.csproj" />

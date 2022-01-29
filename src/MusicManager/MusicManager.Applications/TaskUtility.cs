@@ -1,4 +1,4 @@
-﻿namespace Waf.MusicManager.Domain;
+﻿namespace Waf.MusicManager.Applications;
 
 public static class TaskUtility
 {

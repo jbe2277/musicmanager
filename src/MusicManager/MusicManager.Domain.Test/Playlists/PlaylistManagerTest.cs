@@ -246,7 +246,7 @@ public class PlaylistManagerTest : DomainTest
         manager.AddItems(new[] { new PlaylistItem(secondFile) });
         Assert.IsTrue(manager.IsTotalDurationEstimated);
         Assert.AreEqual(TimeSpan.FromSeconds(20), manager.TotalDuration);
-        AssertHelper.PropertyChangedEvent(manager, x => x.TotalDuration, () => secondFile.GetMetadataAsync().GetResult());
+        AssertHelper.PropertyChangedEvent(manager, x => x.TotalDuration, () => _ = secondFile.GetMetadataAsync().Result);
         Assert.IsFalse(manager.IsTotalDurationEstimated);
         Assert.AreEqual(TimeSpan.FromSeconds(30), manager.TotalDuration);
 

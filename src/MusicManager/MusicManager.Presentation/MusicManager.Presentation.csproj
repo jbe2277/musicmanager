@@ -10,13 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Waf.Wpf" Version="6.4.0" />
-    <PackageReference Include="NLog" Version="4.7.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MusicManager.Applications\MusicManager.Applications.csproj" />
-    <ProjectReference Include="..\MusicManager.Domain\MusicManager.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
