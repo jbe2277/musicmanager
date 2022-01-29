@@ -6,7 +6,6 @@ using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
-using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Waf.MusicManager.Applications.Controllers;

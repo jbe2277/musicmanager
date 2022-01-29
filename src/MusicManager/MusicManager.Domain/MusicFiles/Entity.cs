@@ -27,8 +27,8 @@ public abstract class Entity : Model
 
     public void ClearChanges()
     {
-        HasChanges = false;
         changes.Clear();
+        HasChanges = false;
     }
 
     protected bool SetPropertyAndTrackChanges<T>([NotNullIfNotNull(parameterName: "value"), MaybeNull] ref T field, [AllowNull] T value, [CallerMemberName] string propertyName = null!)
@@ -36,8 +36,8 @@ public abstract class Entity : Model
         if (!SetProperty(ref field, value, propertyName)) return false;
         if (entityLoaded)
         {
-            HasChanges = true;
             changes.Add(propertyName);
+            HasChanges = true;
         }
         return true;
     }

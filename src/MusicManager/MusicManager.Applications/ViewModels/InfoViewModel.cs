@@ -34,7 +34,7 @@ public class InfoViewModel : ViewModel<IInfoView>
         var url = (string)parameter!;
         try
         {
-            Process.Start(url);
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
         catch (Exception e)
         {
