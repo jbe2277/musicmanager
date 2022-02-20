@@ -34,7 +34,7 @@ public partial class App
         var fileTarget = new FileTarget("fileTarget")
         {
             FileName = Path.Combine(EnvironmentService.LogPath, "App.log"),
-            Layout = "${date:format=yyyy-MM-dd HH\\:mm\\:ss.ff} ${level} ${processid} ${logger} ${message}  ${exception}",
+            Layout = "${date:format=yyyy-MM-dd HH\\:mm\\:ss.ff} ${level} ${processid} ${logger} ${message}  ${exception:format=tostring}",
             ArchiveAboveSize = 1024 * 1024 * 5,  // 5 MB
             MaxArchiveFiles = 2,
         };
@@ -94,7 +94,7 @@ public partial class App
         Log.App.Error(e, "Unknown application error.");
         if (!isTerminating)
         {
-            MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Presentation.Properties.Resources.UnknownError, e.ToString()), ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Presentation.Properties.Resources.UnknownError, e), ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
