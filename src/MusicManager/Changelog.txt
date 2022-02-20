@@ -3,7 +3,7 @@ Changelog
 
 
 Version 3.0.0.100 (Release)
-- Change required .NET 6
+- Migrate to .NET 6
 - Update the Win Application Framework (WAF) to 6.4.0.
 - Simplify code by using C# 10 features.
 - Migrate to new Windows Runtime (WinRT) integration.
