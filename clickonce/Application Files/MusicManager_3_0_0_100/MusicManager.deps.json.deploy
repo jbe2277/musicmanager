@@ -1,0 +1,157 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "MusicManager/3.0.0.100": {
+        "dependencies": {
+          "Waf.MusicManager.Applications": "3.0.0.100",
+          "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.18362.22"
+        },
+        "runtime": {
+          "MusicManager.dll": {}
+        },
+        "resources": {
+          "de/MusicManager.resources.dll": {
+            "locale": "de"
+          }
+        }
+      },
+      "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.18362.22": {
+        "runtime": {
+          "Microsoft.Windows.SDK.NET.dll": {
+            "assemblyVersion": "10.0.18362.22",
+            "fileVersion": "10.0.18362.22"
+          },
+          "WinRT.Runtime.dll": {
+            "assemblyVersion": "1.4.0.0",
+            "fileVersion": "1.4.0.37231"
+          }
+        }
+      },
+      "NLog/4.7.1": {
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.7.1.11754"
+          }
+        }
+      },
+      "System.ComponentModel.Annotations/4.5.0": {},
+      "System.ComponentModel.Composition/4.7.0": {
+        "runtime": {
+          "lib/netcoreapp2.0/System.ComponentModel.Composition.dll": {
+            "assemblyVersion": "4.0.1.0",
+            "fileVersion": "4.700.19.56404"
+          }
+        }
+      },
+      "System.Waf.Core/6.4.0": {
+        "dependencies": {
+          "System.ComponentModel.Annotations": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Waf.Core.dll": {
+            "assemblyVersion": "6.4.0.100",
+            "fileVersion": "6.4.0.100"
+          }
+        }
+      },
+      "System.Waf.Wpf/6.4.0": {
+        "dependencies": {
+          "System.ComponentModel.Composition": "4.7.0",
+          "System.Waf.Core": "6.4.0"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/System.Waf.Wpf.dll": {
+            "assemblyVersion": "6.4.0.100",
+            "fileVersion": "6.4.0.100"
+          }
+        }
+      },
+      "Waf.MusicManager.Applications/3.0.0.100": {
+        "dependencies": {
+          "System.Waf.Wpf": "6.4.0",
+          "Waf.MusicManager.Domain": "3.0.0.100"
+        },
+        "runtime": {
+          "Waf.MusicManager.Applications.dll": {}
+        },
+        "resources": {
+          "de/Waf.MusicManager.Applications.resources.dll": {
+            "locale": "de"
+          }
+        }
+      },
+      "Waf.MusicManager.Domain/3.0.0.100": {
+        "dependencies": {
+          "NLog": "4.7.1",
+          "System.Waf.Core": "6.4.0"
+        },
+        "runtime": {
+          "Waf.MusicManager.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MusicManager/3.0.0.100": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.18362.22": {
+      "type": "runtimepack",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NLog/4.7.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-t2iJR+RvF6YJr4sHjF2z9Fsd/HE5olOTPLKonR6sjqLP2bgG0oJE5J4cR92WJwdyS6UJx/iLdefNGM2dV2ptLQ==",
+      "path": "nlog/4.7.1",
+      "hashPath": "nlog.4.7.1.nupkg.sha512"
+    },
+    "System.ComponentModel.Annotations/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UxYQ3FGUOtzJ7LfSdnYSFd7+oEv6M8NgUatatIN2HxNtDdlcvFAf+VIq4Of9cDMJEJC0aSRv/x898RYhB4Yppg==",
+      "path": "system.componentmodel.annotations/4.5.0",
+      "hashPath": "system.componentmodel.annotations.4.5.0.nupkg.sha512"
+    },
+    "System.ComponentModel.Composition/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TKOHGbuqp7++lEna7+p19kTR8rKeAeoo2Faab2n2q7spV2CWPevmUkghMG6POKfSdeQhtAJoNZ33FT+01CNe3g==",
+      "path": "system.componentmodel.composition/4.7.0",
+      "hashPath": "system.componentmodel.composition.4.7.0.nupkg.sha512"
+    },
+    "System.Waf.Core/6.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6WQDAhlR1I7+1xMQr2uMTNPwEtk+4ublpsDr/ejzzobAE4OFYsPrNwq0qes1ReWNUPNyQKf1ijlyMl6o9CmShg==",
+      "path": "system.waf.core/6.4.0",
+      "hashPath": "system.waf.core.6.4.0.nupkg.sha512"
+    },
+    "System.Waf.Wpf/6.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ge8609Zl5eJ3anbrHeKVYEboxZoIoai4ygHjOq6UGun+flqZHJMSpdQhsNJ5qqUpJ/x/iEOLKgxlgJ0QHiTZIA==",
+      "path": "system.waf.wpf/6.4.0",
+      "hashPath": "system.waf.wpf.6.4.0.nupkg.sha512"
+    },
+    "Waf.MusicManager.Applications/3.0.0.100": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Waf.MusicManager.Domain/3.0.0.100": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
