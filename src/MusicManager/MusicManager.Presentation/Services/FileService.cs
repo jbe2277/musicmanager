@@ -79,7 +79,6 @@ namespace Waf.MusicManager.Presentation.Services
 
         public async Task<IReadOnlyList<string>> GetFiles(string directory, bool deep, string userSearchFilter, string applicationSearchFilter, CancellationToken cancellation)
         {
-            // This method is run in an task (not in the UI thread) => static ensures some thread-safety.
             var folder = await StorageFolder.GetFolderFromPathAsync(directory).AsTask(cancellation).ConfigureAwait(false);
             var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, SupportedFileTypes.MusicFileExtensions)
             {
