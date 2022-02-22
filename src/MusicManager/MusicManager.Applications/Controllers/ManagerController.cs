@@ -242,8 +242,6 @@ internal class ManagerController
         {
             fileSystemWatcherService.EnableRaisingEvents = false;
         }
-            
-        // It is necessary to run this in an own task => otherwise, reentrance would block the UI thread although this should not happen.
         return fileService.GetFiles(directory, deep, userSearchFilter, applicationSearchFilter, cancellation);
     }
 
