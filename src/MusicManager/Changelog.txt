@@ -3,7 +3,7 @@ Changelog
 
 
 Version 3.0.1.100 (Release)
-- Fix crash in file navigation.
+- Fix crash in file navigation. Details: https://github.com/microsoft/CsWinRT/issues/1112
 - Improve exception logging.
 
 
