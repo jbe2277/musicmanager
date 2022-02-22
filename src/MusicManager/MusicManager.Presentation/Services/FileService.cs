@@ -79,7 +79,7 @@ namespace Waf.MusicManager.Presentation.Services
 
         public async Task<IReadOnlyList<string>> GetFiles(string directory, bool deep, string userSearchFilter, string applicationSearchFilter, CancellationToken cancellation)
         {
-            var folder = await StorageFolder.GetFolderFromPathAsync(directory).AsTask(cancellation).ConfigureAwait(false);
+            var folder = await StorageFolder.GetFolderFromPathAsync(directory).AsTask(cancellation);  // Not allowed to use .ConfigureAwait(false) -> see https://github.com/microsoft/CsWinRT/issues/1112
             var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, SupportedFileTypes.MusicFileExtensions)
             {
                 UserSearchFilter = userSearchFilter ?? "",
