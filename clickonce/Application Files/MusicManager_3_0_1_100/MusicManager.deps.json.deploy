@@ -6,9 +6,9 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "MusicManager/3.0.0.100": {
+      "MusicManager/3.0.1.100": {
         "dependencies": {
-          "Waf.MusicManager.Applications": "3.0.0.100",
+          "Waf.MusicManager.Applications": "3.0.1.100",
           "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.18362.22"
         },
         "runtime": {
@@ -72,7 +72,7 @@
           }
         }
       },
-      "Waf.MusicManager.Applications/3.0.0.100": {
+      "Waf.MusicManager.Applications/3.0.1.100": {
         "dependencies": {
           "System.Waf.Wpf": "6.4.0",
           "Waf.MusicManager.Domain": "3.0.0.100"
@@ -98,7 +98,7 @@
     }
   },
   "libraries": {
-    "MusicManager/3.0.0.100": {
+    "MusicManager/3.0.1.100": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -143,7 +143,7 @@
       "path": "system.waf.wpf/6.4.0",
       "hashPath": "system.waf.wpf.6.4.0.nupkg.sha512"
     },
-    "Waf.MusicManager.Applications/3.0.0.100": {
+    "Waf.MusicManager.Applications/3.0.1.100": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

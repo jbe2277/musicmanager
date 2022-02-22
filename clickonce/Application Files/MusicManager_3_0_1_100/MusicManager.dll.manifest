@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="MusicManager.exe" version="3.0.0.100" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="MusicManager.exe" version="3.0.1.100" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="Resources\Images\MusicManager.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -60,7 +60,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>u10E9C21yamXWcF06w1TEa4Re7G4YGxiWZHidSZKM74=</dsig:DigestValue>
+      <dsig:DigestValue>MbqtWdtOlWc1D6XBASX+aGnyW+si4/Ae1wW/22yM+7w=</dsig:DigestValue>
     </hash>
   </file>
   <file name="de\Waf.MusicManager.Applications.resources.dll" size="5120">
@@ -69,7 +69,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>eq3D5X1bLrTrLMKoP592HULlfpIUSKo0sy0EoNmTpHM=</dsig:DigestValue>
+      <dsig:DigestValue>mEjZEmj66SKFNlQOQjHUtcqZZOK6UdR2INH1RxPXuSY=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Microsoft.Windows.SDK.NET.dll" size="24517520">
@@ -87,25 +87,25 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>d60cMOhl1GEvVZynk8cz29hfxy7S/iU41/t0FHdFzgc=</dsig:DigestValue>
+      <dsig:DigestValue>lNTmiKkU7FODU7n+x61tDWYF+89NLi+S8u4m/z1cRTw=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="MusicManager.dll" size="300544">
+  <file name="MusicManager.dll" size="301056">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>97w4Y54flNbbMcOpNuip6h3y1rXW39Jg7/8nR/2DUCg=</dsig:DigestValue>
+      <dsig:DigestValue>gGAmecvmyj6ALS9HyI4ofh5agzKW55cv/lGZuk1Wr+k=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="MusicManager.exe" size="199680">
+  <file name="MusicManager.exe" size="200192">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>pPToyN1eJ0jIyxTTzMdDMFv+zJ0aOGrEKzhG/7bLWLY=</dsig:DigestValue>
+      <dsig:DigestValue>mZ+iHRil91pcL/AH8yU2bX1aiXvk139sJ4qqnTPt/BA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="MusicManager.runtimeconfig.json" size="372">
@@ -168,7 +168,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>KM3qvwxXCiFh3smzUIGM6UEh3UbLaeDz/Et4Q+s54Pg=</dsig:DigestValue>
+      <dsig:DigestValue>VD4RwNK5Z9jzxwX/Iq3oOx2rCxaMHVm9f43WfftmtZg=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Waf.MusicManager.Domain.dll" size="23040">
