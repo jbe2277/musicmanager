@@ -77,7 +77,11 @@ public partial class App
         {
             var shellService = container.GetExportedValue<IShellService>();
             var tasksToWait = shellService.TasksToCompleteBeforeShutdown.ToArray();
-            while (tasksToWait.Any(t => !t.IsCompleted)) DispatcherHelper.DoEvents();  // Wait until all registered tasks are finished
+            while (tasksToWait.Any(t => !t.IsCompleted))  // Wait until all registered tasks are finished
+            {
+                DispatcherHelper.DoEvents();
+                Thread.Sleep(25);
+            }
         }
         container?.Dispose();
         catalog?.Dispose();
