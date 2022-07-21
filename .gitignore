@@ -17,3 +17,7 @@ TestResults/
 
 # NuGet Packages Directory
 packages/
+
+# Packaging
+AppPackages/
+BundleArtifacts/
