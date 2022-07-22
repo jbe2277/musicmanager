@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows10.0.18362</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.19041</TargetFramework>
     <RootNamespace>Test.MusicManager.Applications</RootNamespace>
     <AssemblyName>Test.MusicManager.Applications</AssemblyName>
   </PropertyGroup>
