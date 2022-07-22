@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Version 3.0.2.100 (Release)
+- Deploy via Microsoft Store
+- Improve app shutdown regarding CPU resource usage.
+- Update used packages.
+
 
 Version 3.0.1.100 (Release)
 - Fix crash in file navigation. Details: https://github.com/microsoft/CsWinRT/issues/1112
