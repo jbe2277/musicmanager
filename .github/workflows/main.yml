@@ -9,7 +9,13 @@ jobs:
     runs-on: windows-2022
     steps:
     - uses: actions/checkout@v2
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
     - name: Build
-      run: dotnet build ./src/MusicManager/MusicManager.sln -c Release
-    - name: Test
-      run: dotnet test ./src/MusicManager/MusicManager.sln -c Release --no-build
+      run: msbuild ./src/MusicManager/MusicManager.sln /restore /p:Configuration=Release /p:GenerateAppxPackageOnBuild=false
+    - name: Test Domain
+      run: dotnet test ./src/MusicManager/MusicManager.Domain.Test/MusicManager.Domain.Test.csproj -c Release --no-build
+    - name: Test Applications
+      run: dotnet test ./src/MusicManager/MusicManager.Applications.Test/MusicManager.Applications.Test.csproj -c Release --no-build
+    - name: Test Presentation
+      run: dotnet test ./src/MusicManager/MusicManager.Presentation.Test/MusicManager.Presentation.Test.csproj -c Release --no-build
