@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using System.Globalization;
 using System.Waf.Applications;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +10,7 @@ using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Applications.Views;
 using Waf.MusicManager.Domain.Playlists;
+using Windows.Media;
 
 namespace Waf.MusicManager.Presentation.Views;
 
@@ -18,6 +20,7 @@ public partial class PlayerView : IPlayerView
     private readonly Lazy<PlayerViewModel> viewModel;
     private readonly PlayerService playerService;
     private readonly MediaPlayer mediaPlayer;
+    private readonly SystemMediaTransportControls transportControls;
     private readonly DispatcherTimer updateTimer;
     private readonly ThrottledAction throttledSliderValueChangedAction;
     private readonly Converters.DurationConverter duratonConverter;
@@ -33,6 +36,7 @@ public partial class PlayerView : IPlayerView
         InitializeComponent();
         viewModel = new Lazy<PlayerViewModel>(() => this.GetViewModel<PlayerViewModel>()!);
         this.playerService = playerService;
+        transportControls = Windows.Media.Playback.BackgroundMediaPlayer.Current.SystemMediaTransportControls;        
         mediaPlayer = new MediaPlayer();
         duratonConverter = new Converters.DurationConverter();
 
@@ -48,7 +52,13 @@ public partial class PlayerView : IPlayerView
         playerService.PlayPauseCommand = playPauseCommand;
         playerService.NextCommand = nextCommand;
         playerService.IsPlayCommand = true;
-            
+
+        playerService.PropertyChanged += PlayerServicePropertyChanged;
+        previousCommand.CanExecuteChanged += PreviousCommandCanExecuteChanged;
+        playPauseCommand.CanExecuteChanged += PlayPauseCommandCanExecuteChanged;
+        nextCommand.CanExecuteChanged += NextCommandCanExecuteChanged;
+        transportControls.ButtonPressed += TransportControlsButtonPressed;
+
         Loaded += FirstTimeLoadedHandler;
     }
 
@@ -84,12 +94,19 @@ public partial class PlayerView : IPlayerView
             if (mediaPlayer.Source != musicUri)
             {
                 mediaPlayer.Open(musicUri);
+                transportControls.PlaybackStatus = MediaPlaybackStatus.Stopped;
                 positionSlider.Maximum = 1; // Use a default value that will be updated as soon the metadata is loaded.
                 positionSlider.Value = 0;
                 try
                 {
                     var metadata = await ViewModel.PlaylistManager.CurrentItem!.MusicFile.GetMetadataAsync();
                     positionSlider.Maximum = metadata.Duration.TotalSeconds;
+                    var updater = transportControls.DisplayUpdater;
+                    updater.Type = MediaPlaybackType.Music;
+                    updater.MusicProperties.Artist = string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", metadata.Artists);
+                    updater.MusicProperties.AlbumArtist = metadata.AlbumArtist;
+                    updater.MusicProperties.Title = metadata.Title;
+                    updater.Update();
                 }
                 catch (Exception ex)
                 {
@@ -100,6 +117,7 @@ public partial class PlayerView : IPlayerView
         else
         {
             mediaPlayer.Close();
+            transportControls.PlaybackStatus = MediaPlaybackStatus.Closed;
         }
     }
         
@@ -146,6 +164,7 @@ public partial class PlayerView : IPlayerView
     private void PlayCore()
     {
         mediaPlayer.Play();
+        transportControls.PlaybackStatus = MediaPlaybackStatus.Playing;
         updateTimer.Start();
         playerService.IsPlayCommand = false;
     }
@@ -153,6 +172,7 @@ public partial class PlayerView : IPlayerView
     private void PauseCore()
     {
         mediaPlayer.Pause();
+        transportControls.PlaybackStatus = MediaPlaybackStatus.Paused;
         updateTimer.Stop();
         playerService.IsPlayCommand = true;
     }
@@ -229,4 +249,29 @@ public partial class PlayerView : IPlayerView
     }
 
     private void MoreButtonClick(object sender, RoutedEventArgs e) => morePopup.IsOpen = true;
+
+    private void TransportControlsButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
+    {
+        Dispatcher.BeginInvoke(() =>
+        {
+            if (args.Button is SystemMediaTransportControlsButton.Play or SystemMediaTransportControlsButton.Pause) playPauseCommand.Execute(null);
+            else if (args.Button == SystemMediaTransportControlsButton.Previous) previousCommand.Execute(null);
+            else if (args.Button == SystemMediaTransportControlsButton.Next) nextCommand.Execute(null);
+        });
+    }
+
+    private void PlayPauseCommandCanExecuteChanged(object? sender, EventArgs e) => UpdatePlayPauseControls();
+
+    private void PlayerServicePropertyChanged(object? sender, PropertyChangedEventArgs e) { if (e.PropertyName == nameof(IPlayerService.IsPlayCommand)) UpdatePlayPauseControls(); }
+
+    private void UpdatePlayPauseControls()
+    {
+        var playPauseEnabled = playPauseCommand.CanExecute(null);
+        transportControls.IsPlayEnabled = playPauseEnabled && playerService.IsPlayCommand;
+        transportControls.IsPauseEnabled = playPauseEnabled && !playerService.IsPlayCommand;
+    }
+
+    private void PreviousCommandCanExecuteChanged(object? sender, EventArgs e) => transportControls.IsPreviousEnabled = previousCommand.CanExecute(null);
+
+    private void NextCommandCanExecuteChanged(object? sender, EventArgs e) => transportControls.IsNextEnabled = nextCommand.CanExecute(null);
 }

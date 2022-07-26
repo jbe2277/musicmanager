@@ -42,26 +42,6 @@ public partial class ShellWindow : IShellView
 
     private ShellViewModel ViewModel => viewModel.Value;
 
-    protected override void OnPreviewKeyDown(KeyEventArgs e)
-    {
-        base.OnPreviewKeyDown(e);
-        if (e.Key == Key.MediaPlayPause)
-        {
-            ViewModel.PlayerService.PlayPauseCommand.Execute(null);
-            e.Handled = true;
-        }
-        else if (e.Key == Key.MediaPreviousTrack)
-        {
-            ViewModel.PlayerService.PreviousCommand.Execute(null);
-            e.Handled = true;
-        }
-        else if (e.Key == Key.MediaNextTrack)
-        {
-            ViewModel.PlayerService.NextCommand.Execute(null);
-            e.Handled = true;
-        }
-    }
-
     private void LoadedHandler(object sender, RoutedEventArgs e)
     {
         ViewModel.ShellService.PropertyChanged += ShellServicePropertyChanged;

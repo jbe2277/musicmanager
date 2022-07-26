@@ -2,7 +2,7 @@ Changelog
 ---------
 
 Version 3.0.2.100 (Release)
-- Deploy via Microsoft Store
+- Deploy via Microsoft Store.
 - Improve app shutdown regarding CPU resource usage.
 - Update used packages.
 
