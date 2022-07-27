@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Version 3.1.0.100 (Release)
+- Support ARM64 systems native (performance).
+- Support Windows media controls.
+
+
 Version 3.0.2.100 (Release)
 - Deploy via Microsoft Store.
 - Improve app shutdown regarding CPU resource usage.
