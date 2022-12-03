@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Waf.MusicManager.Domain</AssemblyName>
     <RootNamespace>Waf.MusicManager.Domain</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Waf.Core" Version="6.4.0" />
-    <PackageReference Include="NLog" Version="4.7.1" />
+    <PackageReference Include="NLog" Version="5.1.0" />
   </ItemGroup>
 </Project>
