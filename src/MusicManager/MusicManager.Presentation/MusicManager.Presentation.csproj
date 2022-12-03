@@ -7,6 +7,15 @@
     <AssemblyName>MusicManager</AssemblyName>
     <AssemblyTitle>Waf Music Manager</AssemblyTitle>
     <ApplicationIcon>Resources\Images\MusicManager.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x64;ARM64</Platforms>
+    <GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'ARM64' ">
+    <PlatformTarget>ARM64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
