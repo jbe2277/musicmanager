@@ -141,7 +141,7 @@ internal class PlaylistController : IPlaylistService
     private void InsertFiles(int index, IEnumerable<string> fileNames)
     {
         Log.Default.Trace("PlaylistController.InsertFiles:Start");
-        var musicFileNames = fileNames.Where(x => fileService.IsFileSupported(x)).ToArray();
+        var musicFileNames = fileNames.Where(fileService.IsFileSupported).ToArray();
         InsertFilesCore(index, musicFileNames);
 
         Log.Default.Trace("PlaylistController.InsertFiles:OpenPlaylists");

@@ -212,7 +212,7 @@ public class PlaylistManager : Model
     {
         var loadedItems = items.Where(x => x.MusicFile.IsMetadataLoaded).OrderBy(x => x.MusicFile.Metadata!.Duration).ToArray();
 
-        double mean = StatisticsHelper.TruncatedMean(loadedItems.Take(200).Select(x => x.MusicFile.Metadata!.Duration.TotalSeconds), 0.05);
+        double mean = StatisticsHelper.TruncatedMean(loadedItems.Take(200).Select(x => x.MusicFile.Metadata!.Duration.TotalSeconds).ToArray(), 0.05);
         int notLoadedCount = items.Count - loadedItems.Length;
 
         IsTotalDurationEstimated = notLoadedCount > 0;

@@ -24,7 +24,7 @@ public class MockMusicFileContext : IMusicFileContext
         return musicFile;
     }
 
-    public MusicFile CreateFromMultiple(IEnumerable<MusicFile> musicFiles)
+    public MusicFile CreateFromMultiple(IReadOnlyList<MusicFile> musicFiles)
     {
         return new MockMusicFile(new MusicMetadata(new TimeSpan(0, 3, 33), 320000), null) { SharedMusicFiles = musicFiles.ToArray() };
     }

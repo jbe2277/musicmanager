@@ -6,7 +6,7 @@ public interface IMusicFileContext
 {
     MusicFile Create(string fileName);
 
-    MusicFile CreateFromMultiple(IEnumerable<MusicFile> musicFiles);
+    MusicFile CreateFromMultiple(IReadOnlyList<MusicFile> musicFiles);
 
     void ApplyChanges(MusicFile musicFile);
 

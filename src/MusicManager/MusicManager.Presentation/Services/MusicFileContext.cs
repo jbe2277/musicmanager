@@ -57,7 +57,7 @@ internal class MusicFileContext : IMusicFileContext
         return await readMetadata.CreateMusicMetadata(musicProperties, CancellationToken.None);
     }
 
-    public MusicFile CreateFromMultiple(IEnumerable<MusicFile> musicFiles)
+    public MusicFile CreateFromMultiple(IReadOnlyList<MusicFile> musicFiles)
     {
         if (!musicFiles.Any()) throw new ArgumentException("The collection must have at least one item.", nameof(musicFiles));
         var localMusicFiles = musicFiles.ToArray();
@@ -155,7 +155,7 @@ internal class MusicFileContext : IMusicFileContext
 
     private bool TryRemoveFromCache(string fileName) => musicFilesCache.TryRemove(fileName, out _);
 
-    private static T? GetSharedValueOrDefault<T>(IEnumerable<MusicFile> musicFiles, Func<MusicMetadata, T> getValue, IEqualityComparer<T>? comparer = null)
+    private static T? GetSharedValueOrDefault<T>(IReadOnlyList<MusicFile> musicFiles, Func<MusicMetadata, T> getValue, IEqualityComparer<T>? comparer = null)
     {
         comparer ??= EqualityComparer<T>.Default;
         var firstMusicFile = musicFiles.FirstOrDefault();

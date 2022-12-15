@@ -2,9 +2,9 @@
 
 internal static class StatisticsHelper
 {
-    public static double TruncatedMean(IEnumerable<double> values, double truncateRate)
+    public static double TruncatedMean(IReadOnlyList<double> values, double truncateRate)
     {
-        var count = values.Count();
+        var count = values.Count;
         if (count < 1) return 0;
 
         int truncateCount = (int)(count * truncateRate);
