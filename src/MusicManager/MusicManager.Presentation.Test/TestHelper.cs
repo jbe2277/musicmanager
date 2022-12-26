@@ -18,6 +18,10 @@ public static class TestHelper
     [AssemblyCleanup]
     public static void Cleanup()
     {
-        foreach (var x in tempFiles.Where(y => File.Exists(y))) { File.Delete(x); }
+        foreach (var x in tempFiles.Where(File.Exists)) 
+        { 
+            try { File.Delete(x); }
+            catch { }
+        }
     }
 }
