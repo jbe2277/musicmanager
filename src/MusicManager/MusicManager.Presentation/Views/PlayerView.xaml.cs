@@ -51,7 +51,6 @@ public partial class PlayerView : IPlayerView
         playerService.PreviousCommand = previousCommand;
         playerService.PlayPauseCommand = playPauseCommand;
         playerService.NextCommand = nextCommand;
-        playerService.IsPlayCommand = true;
 
         playerService.PropertyChanged += PlayerServicePropertyChanged;
         previousCommand.CanExecuteChanged += PreviousCommandCanExecuteChanged;
@@ -84,9 +83,7 @@ public partial class PlayerView : IPlayerView
 
     private async void OpenCurrentItem()
     {
-        updateTimer.Stop();
         playerService.IsPlayCommand = true;
-
         var file = ViewModel.PlaylistManager.CurrentItem?.MusicFile.FileName;
         if (file != null)
         {
@@ -157,7 +154,7 @@ public partial class PlayerView : IPlayerView
 
     private void PlayPause()
     {
-        if (!updateTimer.IsEnabled) PlayCore();
+        if (playerService.IsPlayCommand) PlayCore();
         else PauseCore();
     }
 
@@ -165,7 +162,6 @@ public partial class PlayerView : IPlayerView
     {
         mediaPlayer.Play();
         transportControls.PlaybackStatus = MediaPlaybackStatus.Playing;
-        updateTimer.Start();
         playerService.IsPlayCommand = false;
     }
 
@@ -173,7 +169,6 @@ public partial class PlayerView : IPlayerView
     {
         mediaPlayer.Pause();
         transportControls.PlaybackStatus = MediaPlaybackStatus.Paused;
-        updateTimer.Stop();
         playerService.IsPlayCommand = true;
     }
 
@@ -223,6 +218,7 @@ public partial class PlayerView : IPlayerView
     {
         if (ViewModel.NextTrackCommand.CanExecute(null))
         {
+            positionSlider.Value = 0;
             ViewModel.NextTrackCommand.Execute(null);
         }
         else
@@ -266,6 +262,7 @@ public partial class PlayerView : IPlayerView
 
     private void UpdatePlayPauseControls()
     {
+        if (playerService.IsPlayCommand) updateTimer.Stop(); else updateTimer.Start();
         var playPauseEnabled = playPauseCommand.CanExecute(null);
         transportControls.IsPlayEnabled = playPauseEnabled && playerService.IsPlayCommand;
         transportControls.IsPauseEnabled = playPauseEnabled && !playerService.IsPlayCommand;

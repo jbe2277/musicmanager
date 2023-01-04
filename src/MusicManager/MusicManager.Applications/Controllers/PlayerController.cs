@@ -156,7 +156,7 @@ internal class PlayerController
     {
         var wasPlaying = !playerService.IsPlayCommand;
         PlaylistManager.PreviousItem();
-        if (wasPlaying) { playerService.Play(); }
+        if (wasPlaying) playerService.Play();
     }
 
     private bool CanNextTrack() => PlaylistManager.CanNextItem;
@@ -165,7 +165,7 @@ internal class PlayerController
     {
         var wasPlaying = !playerService.IsPlayCommand;
         PlaylistManager.NextItem();
-        if (wasPlaying) { playerService.Play(); }
+        if (wasPlaying) playerService.Play();
     }
 
     private void ShowInfo()

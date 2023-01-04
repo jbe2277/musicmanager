@@ -15,7 +15,7 @@ public class PlayerService : Model, IPlayerService
     private ICommand previousCommand = DelegateCommand.DisabledCommand;
     private ICommand playPauseCommand = DelegateCommand.DisabledCommand;
     private ICommand nextCommand = DelegateCommand.DisabledCommand;
-    private bool isPlayCommand;
+    private bool isPlayCommand = true;
     private MusicFile? playingMusicFile;
 
     public ICommand PlayAllCommand
