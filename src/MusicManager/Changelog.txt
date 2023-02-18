@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+Version 3.2.2.100 (Release)
+- Improve compatibility with m3u playlist files (load files from VLC).
+
+
 Version 3.2.1.100 (Release)
 - Fix Repeat mode if only 1 track is in the playlist.
 
