@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using System.IO;
+using System.Web;
 using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Services;
 using Windows.Media.Playlists;
@@ -117,7 +118,7 @@ namespace Waf.MusicManager.Presentation.Services
             var playlistFile = await StorageFile.GetFileFromPathAsync(playlistFileName).AsTask().ConfigureAwait(false);
             // MS Issue: LoadAsync cannot load a playlist when one of the files do not exists anymore.
             var playlist = await Playlist.LoadAsync(playlistFile).AsTask().ConfigureAwait(false);
-            return playlist.Files.Select(x => x.Path).ToArray();
+            return playlist.Files.Select(x => HttpUtility.UrlDecode(x.Path)).ToArray();
         }
 
         public async Task SavePlaylist(string playlistFileName, IReadOnlyList<string> fileNames)

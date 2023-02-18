@@ -107,7 +107,7 @@ internal class MusicPropertiesController : IMusicPropertiesService
         if (playingMusicFile != null && allFilesToSave.Contains(playingMusicFile)) musicFilesToSaveAfterPlaying.Add(playingMusicFile);
 
         if (!filesToSave.Any()) return;
-        var tasks = filesToSave.Select(x => SaveChangesCoreAsync(x)).ToArray();
+        var tasks = filesToSave.Select(SaveChangesCoreAsync).ToArray();
         try
         {
             await Task.WhenAll(tasks);
