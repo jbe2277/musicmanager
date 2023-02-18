@@ -7,6 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Waf.Core" Version="6.4.1" />
-    <PackageReference Include="NLog" Version="5.1.0" />
+    <PackageReference Include="NLog" Version="5.1.2" />
   </ItemGroup>
 </Project>
