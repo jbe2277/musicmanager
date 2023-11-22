@@ -10,9 +10,9 @@ public class SampleMusicPropertiesViewModel : MusicPropertiesViewModel
     {
         MusicFile = new SampleMusicFile(new MusicMetadata(new TimeSpan(0, 3, 45), 320000)
         {
-            Artists = new[] { @"Culture Beat" },
+            Artists = [ @"Culture Beat" ],
             Title = @"Serenity (Epilog)",
-            Genre = new[] { "Electronic", "Dance" }
+            Genre = [ "Electronic", "Dance" ]
         }, @"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity");
     }
 

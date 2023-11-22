@@ -106,8 +106,8 @@ internal static class SupportedFileTypes
     private static IReadOnlyList<string> AddMoreExtensionsWhenSupported(IReadOnlyList<string> extensions)
     {
         IEnumerable<string> result = extensions;
-        if (IsFlacSupported) result = result.Concat(new[] { ".flac" });
-        if (IsMkvSupported) result = result.Concat(new[] { ".mkv" });
+        if (IsFlacSupported) result = result.Concat([ ".flac" ]);
+        if (IsMkvSupported) result = result.Concat([ ".mkv" ]);
         return result.ToArray();
     }
 }

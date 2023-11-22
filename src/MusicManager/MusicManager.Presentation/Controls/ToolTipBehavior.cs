@@ -11,13 +11,13 @@ public static class ToolTipBehavior
     [AttachedPropertyBrowsableForType(typeof(TextBlock))]
     public static bool GetAutoToolTip(DependencyObject element)
     {
-        if (element == null) throw new ArgumentNullException(nameof(element));
+        ArgumentNullException.ThrowIfNull(element);
         return (bool)element.GetValue(AutoToolTipProperty);
     }
 
     public static void SetAutoToolTip(DependencyObject element, bool value)
     {
-        if (element == null) throw new ArgumentNullException(nameof(element));
+        ArgumentNullException.ThrowIfNull(element);
         element.SetValue(AutoToolTipProperty, value);
     }
 

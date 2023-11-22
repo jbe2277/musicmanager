@@ -14,18 +14,18 @@ public class SampleManagerViewModel : ManagerViewModel
         {
             new SampleMusicFile(new MusicMetadata(new TimeSpan(0, 3, 45), 320)
             {
-                Artists = new[] { @"Culture Beat" },
+                Artists = [ @"Culture Beat" ],
                 Title = @"Serenity (Epilog)",
                     
             }, @"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.mp3"),
             new SampleMusicFile(new MusicMetadata(new TimeSpan(0, 2, 2), 320)
             {
-                Artists = new[] { "First artist", "Second artist" },
+                Artists = [ "First artist", "Second artist" ],
                 Title = "",
             }, ""),
             new SampleMusicFile(new MusicMetadata(new TimeSpan(1, 33, 0), 320)
             {
-                Artists = Array.Empty<string>(),
+                Artists = [],
                 Title = "",
             }, @"C:\Users\Public\Music\Dancefloor\Culture Beat - Mr. Vain.mp3")
         };

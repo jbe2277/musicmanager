@@ -13,9 +13,9 @@ public class SamplePlayerViewModel : PlayerViewModel
         {
             CurrentItem = new PlaylistItem(new SampleMusicFile(new MusicMetadata(new TimeSpan(0, 3, 45), 320)
             {
-                Artists = new[] { @"Culture Beat" },
+                Artists = [ @"Culture Beat" ],
                 Title = @"Serenity (Epilog)",
-                Genre = new[] { "Electronic", "Dance" }
+                Genre = [ "Electronic", "Dance" ]
             }, @"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity"))
         };
     }

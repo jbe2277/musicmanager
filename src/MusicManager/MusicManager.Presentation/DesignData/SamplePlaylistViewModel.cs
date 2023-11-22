@@ -13,17 +13,17 @@ public class SamplePlaylistViewModel : PlaylistViewModel
         {
             new SampleMusicFile(new MusicMetadata(new TimeSpan(0, 3, 45), 320000)
             {
-                Artists = new[] { @"Culture Beat" },
+                Artists = [ @"Culture Beat" ],
                 Title = @"Serenity (Epilog)",
             }, @"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity"),
             new SampleMusicFile(new MusicMetadata(new TimeSpan(0, 2, 2), 320000)
             {
-                Artists = new[] { "First artist", "Second artist" },
+                Artists = [ "First artist", "Second artist" ],
                 Title = "This track has a very long title. Let's see how the UI handles this.",
             }, ""),
             new SampleMusicFile(new MusicMetadata(new TimeSpan(1, 33, 0), 320000)
             {
-                Artists = Array.Empty<string>(),
+                Artists = [],
                 Title = "",
             }, @"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity"),
             new MusicFile(x => { throw new InvalidOperationException("Sample exception."); }, @"C:\corruptfile.mp3")
