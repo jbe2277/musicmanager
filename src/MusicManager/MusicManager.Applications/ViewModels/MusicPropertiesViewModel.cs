@@ -62,7 +62,7 @@ public class MusicPropertiesViewModel : ViewModel<IMusicPropertiesView>
     private void AutoFillFromFileName()
     {
         var fileName = Path.GetFileNameWithoutExtension(MusicFile?.FileName) ?? throw new InvalidOperationException("MusicFile?.FileName must not be null");
-        var metadata = fileName.Split(new[] { '-' }, 2).Select(x => x.Trim()).ToArray();
+        var metadata = fileName.Split(['-'], 2).Select(x => x.Trim()).ToArray();
         if (metadata.Length == 2)
         {
             MusicFile!.Metadata!.Artists = new[] { metadata[0] };
