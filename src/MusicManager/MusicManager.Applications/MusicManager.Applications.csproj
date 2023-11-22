@@ -15,6 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Test.MusicManager.Applications" />
+    <InternalsVisibleTo Include="Test.MusicManager.Presentation" />
+
     <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
     <Compile Update="Properties\Resources.Designer.cs" AutoGen="True" DependentUpon="Resources.resx" DesignTime="True" />
   </ItemGroup>

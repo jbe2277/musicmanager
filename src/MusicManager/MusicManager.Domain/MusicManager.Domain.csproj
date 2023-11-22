@@ -9,4 +9,8 @@
     <PackageReference Include="System.Waf.Core" Version="7.0.1-alpha.0.58" />
     <PackageReference Include="NLog" Version="5.2.6" />
   </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Test.MusicManager.Domain"/>
+  </ItemGroup>
 </Project>
