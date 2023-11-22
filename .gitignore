@@ -21,3 +21,4 @@ packages/
 # Packaging
 AppPackages/
 BundleArtifacts/
+*.assets.cache
