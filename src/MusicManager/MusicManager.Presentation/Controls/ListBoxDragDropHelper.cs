@@ -26,8 +26,8 @@ public class ListBoxDragDropHelper<TItem>
         this.moveItemsAction = moveItemsAction;
         this.tryGetInsertItemsAction = tryGetInsertItemsAction ?? (eventArgs => null);
         this.insertItemsAction = insertItemsAction;
-        insertMarkerAdorner = new InsertMarkerAdorner(listBox);
-        throttledAutoScrollAction = new ThrottledAction(ThrottledAutoScroll, ThrottledActionMode.InvokeMaxEveryDelayTime, TimeSpan.FromMilliseconds(250));
+        insertMarkerAdorner = new(listBox);
+        throttledAutoScrollAction = new(ThrottledAutoScroll, ThrottledActionMode.InvokeMaxEveryDelayTime, TimeSpan.FromMilliseconds(250));
 
         listBox.Loaded += ListBoxLoaded;
         if (listBox.IsLoaded) InitializeAdornerLayer();
@@ -59,7 +59,7 @@ public class ListBoxDragDropHelper<TItem>
                 
             var target = (ListBoxItem)sender;
             var items = listBox.Items.Cast<TItem>().ToList();
-            var selectedItems = listBox.SelectedItems.Cast<TItem>().OrderBy(x => items.IndexOf(x)).ToArray();
+            var selectedItems = listBox.SelectedItems.Cast<TItem>().OrderBy(items.IndexOf).ToArray();
                 
             dragSource = target;
             DragDrop.DoDragDrop(target, selectedItems, DragDropEffects.Move);

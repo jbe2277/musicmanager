@@ -1,14 +1,8 @@
 ﻿namespace Waf.MusicManager.Applications.Services;
 
-public class TranscodingTaskEventArgs : EventArgs
+public class TranscodingTaskEventArgs(string fileName, Task transcodingTask) : EventArgs
 {
-    public TranscodingTaskEventArgs(string fileName, Task transcodingTask)
-    {
-        FileName = fileName;
-        TranscodingTask = transcodingTask;
-    }
+    public string FileName { get; } = fileName;
 
-    public string FileName { get; }
-
-    public Task TranscodingTask { get; }
+    public Task TranscodingTask { get; } = transcodingTask;
 }

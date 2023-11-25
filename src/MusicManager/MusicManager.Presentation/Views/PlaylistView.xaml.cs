@@ -21,8 +21,8 @@ public partial class PlaylistView : IPlaylistView
     public PlaylistView()
     {
         InitializeComponent();
-        viewModel = new Lazy<PlaylistViewModel>(() => this.GetViewModel<PlaylistViewModel>()!);
-        listBoxDragDropHelper = new ListBoxDragDropHelper<PlaylistItem>(playlistListBox, MoveItems, TryGetInsertItems, InsertItems);
+        viewModel = new(() => this.GetViewModel<PlaylistViewModel>()!);
+        listBoxDragDropHelper = new(playlistListBox, MoveItems, TryGetInsertItems, InsertItems);
         Loaded += FirstTimeLoadedHandler;
     }
 

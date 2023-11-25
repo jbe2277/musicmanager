@@ -8,15 +8,9 @@ namespace Waf.MusicManager.Applications.Services;
 [Export, Export(typeof(ISelectionService))]
 internal class SelectionService : ISelectionService
 {
-    [ImportingConstructor]
-    public SelectionService()
-    {
-        SelectedMusicFiles = new ObservableCollection<MusicFileDataModel>();
-    }
-
     public ObservableListView<MusicFileDataModel> MusicFiles { get; private set; } = null!;
 
-    public ObservableCollection<MusicFileDataModel> SelectedMusicFiles { get; }
+    public ObservableList<MusicFileDataModel> SelectedMusicFiles { get; } = [];
 
     public void Initialize(IEnumerable<MusicFile> musicFiles)
     {

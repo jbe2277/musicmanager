@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using System.IO;
 using System.Web;
-using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Services;
 using Windows.Media.Playlists;
 using Windows.Storage;

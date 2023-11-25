@@ -2,12 +2,7 @@
 
 namespace Waf.MusicManager.Domain.Playlists;
 
-public class PlaylistItem : Model
+public class PlaylistItem(MusicFile musicFile) : Model
 {
-    public PlaylistItem(MusicFile musicFile)
-    {
-        MusicFile = musicFile;
-    }
-
-    public MusicFile MusicFile { get; }
+    public MusicFile MusicFile { get; } = musicFile;
 }

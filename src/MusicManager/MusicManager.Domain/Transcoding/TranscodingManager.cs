@@ -2,11 +2,11 @@
 
 public class TranscodingManager
 {
-    private readonly ObservableCollection<TranscodeItem> transcodeItems;
+    private readonly ObservableList<TranscodeItem> transcodeItems;
 
     public TranscodingManager()
     {
-        transcodeItems = new ObservableCollection<TranscodeItem>();
+        transcodeItems = [];
         TranscodeItems = new ReadOnlyObservableList<TranscodeItem>(transcodeItems);
     }
 

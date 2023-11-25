@@ -1,13 +1,6 @@
 ﻿namespace Waf.MusicManager.Applications.Services;
 
-internal class ApplicationBusyContext : IDisposable
+internal sealed class ApplicationBusyContext(Action<ApplicationBusyContext> disposeCallback) : IDisposable
 {
-    private readonly Action<ApplicationBusyContext> disposeCallback;
-
-    public ApplicationBusyContext(Action<ApplicationBusyContext> disposeCallback)
-    {
-        this.disposeCallback = disposeCallback;
-    }
-
     public void Dispose() => disposeCallback(this);
 }

@@ -24,7 +24,7 @@ public class PlaylistViewModel : ViewModel<IPlaylistView>
     [ImportingConstructor]
     public PlaylistViewModel(IPlaylistView view) : base(view)
     {
-        SelectedPlaylistItems = new ObservableCollection<PlaylistItem>();
+        SelectedPlaylistItems = [];
         SearchNextCommand = new DelegateCommand(SearchNext);
         SearchPreviousCommand = new DelegateCommand(SearchPrevious);
         ClearSearchCommand = new DelegateCommand(ClearSearch);
@@ -42,7 +42,7 @@ public class PlaylistViewModel : ViewModel<IPlaylistView>
         set => SetProperty(ref selectedPlaylistItem, value);
     }
 
-    public IList<PlaylistItem> SelectedPlaylistItems { get; }
+    public ObservableList<PlaylistItem> SelectedPlaylistItems { get; }
 
     public ICommand PlaySelectedCommand
     {

@@ -5,7 +5,6 @@ using System.Waf.Applications.Services;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
-using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.Playlists;
 
@@ -43,14 +42,14 @@ internal class PlaylistController : IPlaylistService
         this.musicFileContext = musicFileContext;
         this.playerService = playerService;
         this.musicPropertiesService = musicPropertiesService;
-        playSelectedCommand = new DelegateCommand(PlaySelected, CanPlaySelected);
-        removeSelectedCommand = new DelegateCommand(RemoveSelected, CanRemoveSelected);
-        showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
-        openListCommand = new DelegateCommand(OpenList);
-        saveListCommand = new DelegateCommand(SaveList);
-        clearListCommand = new DelegateCommand(ClearList);
-        openPlaylistFileType = new FileType(Resources.Playlist, IFileService.PlaylistFileExtensions);
-        savePlaylistFileType = new FileType(Resources.Playlist, IFileService.PlaylistFileExtensions[0]);
+        playSelectedCommand = new(PlaySelected, CanPlaySelected);
+        removeSelectedCommand = new(RemoveSelected, CanRemoveSelected);
+        showMusicPropertiesCommand = new(ShowMusicProperties);
+        openListCommand = new(OpenList);
+        saveListCommand = new(SaveList);
+        clearListCommand = new(ClearList);
+        openPlaylistFileType = new(Resources.Playlist, IFileService.PlaylistFileExtensions);
+        savePlaylistFileType = new(Resources.Playlist, IFileService.PlaylistFileExtensions[0]);
     }
 
     public PlaylistSettings PlaylistSettings { get; set; } = null!;
@@ -214,9 +213,5 @@ internal class PlaylistController : IPlaylistService
         if (e.PropertyName == nameof(PlaylistViewModel.SelectedPlaylistItem)) UpdateCommands();
     }
 
-    private void UpdateCommands()
-    {
-        playSelectedCommand.RaiseCanExecuteChanged();
-        removeSelectedCommand.RaiseCanExecuteChanged();
-    }
+    private void UpdateCommands() => DelegateCommand.RaiseCanExecuteChanged(playSelectedCommand, removeSelectedCommand);
 }

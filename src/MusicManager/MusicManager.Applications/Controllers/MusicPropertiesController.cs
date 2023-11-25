@@ -25,8 +25,8 @@ internal class MusicPropertiesController : IMusicPropertiesService
         this.musicFileContext = musicFileContext;
         this.selectionService = selectionService;
         this.musicPropertiesViewModel = musicPropertiesViewModel;
-        changeTrackerService = new ChangeTrackerService();
-        musicFilesToSaveAfterPlaying = new HashSet<MusicFile>();
+        changeTrackerService = new();
+        musicFilesToSaveAfterPlaying = [];
     }
 
     public PlaylistManager PlaylistManager { get; set; } = null!;
@@ -49,7 +49,7 @@ internal class MusicPropertiesController : IMusicPropertiesService
 
         if (musicFilesToSaveAfterPlaying.Any())
         {
-            allFilesSavedCompletion = new TaskCompletionSource<object?>();
+            allFilesSavedCompletion = new();
             shellService.AddTaskToCompleteBeforeShutdown(allFilesSavedCompletion.Task);
         }
     }
@@ -78,7 +78,7 @@ internal class MusicPropertiesController : IMusicPropertiesService
 
     private async Task SaveMusicFilesToSaveAfterPlayingAsync()
     {
-        var tasks = musicFilesToSaveAfterPlaying.ToArray().Select(x => SaveChangesAsync(x));
+        var tasks = musicFilesToSaveAfterPlaying.ToArray().Select(SaveChangesAsync);
         await Task.WhenAll(tasks);
     }
 
@@ -98,7 +98,7 @@ internal class MusicPropertiesController : IMusicPropertiesService
         }
         else
         {
-            allFilesToSave = new[] { musicFile };
+            allFilesToSave = [ musicFile ];
         }
 
         // Filter out the music file that is currently playing

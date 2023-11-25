@@ -11,7 +11,7 @@ namespace Waf.MusicManager.Applications.ViewModels;
 public class ShellViewModel : ViewModel<IShellView>
 {
     private readonly AppSettings settings;
-    private readonly ObservableCollection<Tuple<Exception?, string>> errors;
+    private readonly ObservableList<Tuple<Exception?, string>> errors;
     private object? detailsView;
 
     [ImportingConstructor]
@@ -20,7 +20,7 @@ public class ShellViewModel : ViewModel<IShellView>
         ShellService = shellService;
         PlayerService = playerService;
         settings = shellService.Settings;
-        errors = new ObservableCollection<Tuple<Exception?, string>>();
+        errors = [];
         ExitCommand = new DelegateCommand(Close);
         CloseErrorCommand = new DelegateCommand(CloseError);
         GarbageCollectorCommand = new DelegateCommand(GC.Collect);
@@ -91,9 +91,7 @@ public class ShellViewModel : ViewModel<IShellView>
         base.OnPropertyChanged(e);
         if (e.PropertyName == nameof(DetailsView))
         {
-            RaisePropertyChanged(nameof(IsMusicPropertiesViewVisible));
-            RaisePropertyChanged(nameof(IsPlaylistViewVisible));
-            RaisePropertyChanged(nameof(IsTranscodingListViewVisible));
+            RaisePropertyChanged(nameof(IsMusicPropertiesViewVisible), nameof(IsPlaylistViewVisible), nameof(IsTranscodingListViewVisible));
         }
     }
 

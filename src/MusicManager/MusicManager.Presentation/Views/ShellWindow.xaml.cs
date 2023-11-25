@@ -18,7 +18,7 @@ public partial class ShellWindow : IShellView
     public ShellWindow()
     {
         InitializeComponent();
-        viewModel = new Lazy<ShellViewModel>(() => this.GetViewModel<ShellViewModel>()!);
+        viewModel = new(() => this.GetViewModel<ShellViewModel>()!);
         Loaded += LoadedHandler;
 
         // Workaround: Need to load both DrawingImages now; otherwise the first one is not shown at the beginning.

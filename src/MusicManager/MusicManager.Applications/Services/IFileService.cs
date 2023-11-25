@@ -1,10 +1,10 @@
-﻿using Waf.MusicManager.Applications.DataModels;
-
-namespace Waf.MusicManager.Applications.Services
+﻿namespace Waf.MusicManager.Applications.Services
 {
+    public record FolderItem(string? Path, string DisplayName);
+
     public interface IFileService
     {
-        static IReadOnlyList<string> PlaylistFileExtensions { get; } = new string[] { ".m3u", ".wpl" };
+        static IReadOnlyList<string> PlaylistFileExtensions { get; } = [ ".m3u", ".wpl" ];
 
         bool IsFileSupported(string fileName);
 

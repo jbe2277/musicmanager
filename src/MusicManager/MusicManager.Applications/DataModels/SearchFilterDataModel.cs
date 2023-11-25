@@ -9,7 +9,7 @@ public class SearchFilterDataModel : Model
     private string artistFilter = "";
     private string titleFilter = "";
     private string albumFilter = "";
-    private IReadOnlyList<string> genreFilter = Array.Empty<string>();
+    private IReadOnlyList<string> genreFilter = [];
     private FilterOperator ratingFilterOperator;
     private uint ratingFilter;
     private uint? fromYearFilter;
@@ -144,7 +144,7 @@ public class SearchFilterDataModel : Model
         ArtistFilter = "";
         TitleFilter = "";
         AlbumFilter = "";
-        if (GenreFilter.Any()) GenreFilter = Array.Empty<string>();
+        if (GenreFilter.Any()) GenreFilter = [];
         FromYearFilter = "";
         ToYearFilter = "";
         RatingFilter = 0;

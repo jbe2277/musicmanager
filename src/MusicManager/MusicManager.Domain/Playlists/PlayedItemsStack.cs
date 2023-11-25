@@ -8,7 +8,7 @@ internal class PlayedItemsStack<T>
     public PlayedItemsStack(int capacity)
     {
         this.capacity = capacity;
-        playlistItems = new LinkedList<T>();
+        playlistItems = [];
     }
 
     public int Count => playlistItems.Count;

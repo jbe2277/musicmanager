@@ -15,7 +15,7 @@ internal class EnvironmentService : IEnvironmentService
         
     public EnvironmentService()
     {
-        musicFilesToLoad = new Lazy<IReadOnlyList<string>>(() => Environment.GetCommandLineArgs().Skip(1).ToArray());
+        musicFilesToLoad = new(() => Environment.GetCommandLineArgs().Skip(1).ToArray());
         MusicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
         PublicMusicPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
     }

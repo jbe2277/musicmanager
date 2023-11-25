@@ -2,8 +2,7 @@
 
 public static class Genres
 {
-    public static IReadOnlyList<string> DefaultValues { get; } = new[]
-    {
+    public static IReadOnlyList<string> DefaultValues { get; } = [
         "Blues",
         "Classical",
         "Comedy",
@@ -21,5 +20,5 @@ public static class Genres
         "Rock",
         "Soundtrack",
         "Techno"
-    };
+    ];
 }

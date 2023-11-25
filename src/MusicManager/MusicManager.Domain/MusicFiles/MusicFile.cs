@@ -12,10 +12,10 @@ public class MusicFile : Model
 
     public MusicFile(Func<string?, Task<MusicMetadata?>> loadMetadata, string? fileName)
     {
-        loadMetadataCompletionSource = new TaskCompletionSource<MusicMetadata>();
+        loadMetadataCompletionSource = new();
         this.loadMetadata = loadMetadata;
         FileName = fileName;
-        sharedMusicFiles = Array.Empty<MusicFile>();
+        sharedMusicFiles = [];
     }
 
     public string? FileName { get; }

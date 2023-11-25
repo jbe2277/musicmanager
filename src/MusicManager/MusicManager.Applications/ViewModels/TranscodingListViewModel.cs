@@ -16,12 +16,12 @@ public class TranscodingListViewModel : ViewModel<ITranscodingListView>
     public TranscodingListViewModel(ITranscodingListView view, ITranscodingService transcodingService) : base(view)
     {
         TranscodingService = transcodingService;
-        SelectedTranscodeItems = new ObservableCollection<TranscodeItem>();
+        SelectedTranscodeItems = [];
     }
 
     public ITranscodingService TranscodingService { get; }
 
-    public IList<TranscodeItem> SelectedTranscodeItems { get; }
+    public ObservableList<TranscodeItem> SelectedTranscodeItems { get; }
 
     public TranscodingManager TranscodingManager
     {

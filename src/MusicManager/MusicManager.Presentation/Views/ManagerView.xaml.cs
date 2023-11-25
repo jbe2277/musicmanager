@@ -23,15 +23,14 @@ public partial class ManagerView : IManagerView
     public ManagerView()
     {
         InitializeComponent();
-        viewModel = new Lazy<ManagerViewModel>(() => this.GetViewModel<ManagerViewModel>()!);
-        autoColumns = new List<DataGridColumn>()
-        {
+        viewModel = new(() => this.GetViewModel<ManagerViewModel>()!);
+        autoColumns = [
             ratingColumn,
             genreColumn,
             yearColumn,
             albumColumn,
             trackNoColumn
-        };
+        ];
         autoColumns.ForEach(x => x.Visibility = Visibility.Collapsed);
 
         Loaded += LoadedHandler;
@@ -66,7 +65,7 @@ public partial class ManagerView : IManagerView
         {
             var draggedItem = (DataGridRow)sender;
             var items = musicFilesGrid.ItemsSource.Cast<MusicFileDataModel>().ToList();
-            var selectedItems = musicFilesGrid.SelectedItems.Cast<MusicFileDataModel>().OrderBy(x => items.IndexOf(x)).ToArray();
+            var selectedItems = musicFilesGrid.SelectedItems.Cast<MusicFileDataModel>().OrderBy(items.IndexOf).ToArray();
             DragDrop.DoDragDrop(draggedItem, selectedItems.Select(x => x.MusicFile).ToArray(), DragDropEffects.Copy);
         }
     }

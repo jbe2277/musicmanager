@@ -16,8 +16,7 @@ public class PathLabel : Label
 
     public PathLabel()
     {
-        textBlock = new TextBlock();
-            
+        textBlock = new();
         Loaded += LoadedHandler;
         SizeChanged += SizeChangedHandler;
     }

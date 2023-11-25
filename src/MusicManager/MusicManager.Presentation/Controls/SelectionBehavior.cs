@@ -7,9 +7,9 @@ namespace Waf.MusicManager.Presentation.Controls;
 
 public static class SelectionBehavior
 {
-    private static readonly List<Tuple<IMultiSelector, INotifyCollectionChanged>> multiSelectorWithObservableList = new();
-    private static readonly HashSet<object> syncListsThatAreUpdating = new();
-    private static readonly HashSet<Selector> selectorsThatAreUpdating = new();
+    private static readonly List<(IMultiSelector selector, INotifyCollectionChanged observable)> multiSelectorWithObservableList = [];
+    private static readonly HashSet<object> syncListsThatAreUpdating = [];
+    private static readonly HashSet<Selector> selectorsThatAreUpdating = [];
 
     public static readonly DependencyProperty SyncSelectedItemsProperty =
         DependencyProperty.RegisterAttached("SyncSelectedItems", typeof(IList), typeof(SelectionBehavior), new FrameworkPropertyMetadata(null, SyncSelectedItemsPropertyChanged));
@@ -36,8 +36,8 @@ public static class SelectionBehavior
 
             if (list is not INotifyCollectionChanged observableList) return;
 
-            multiSelectorWithObservableList.Add(Tuple.Create(multiSelector, observableList));
-            CollectionChangedEventManager.AddHandler(observableList, ListCollectionChanged);
+            multiSelectorWithObservableList.Add((multiSelector, observableList));
+            WeakEvent.CollectionChanged.Add(observableList, ListCollectionChanged);
         }
         finally
         {
@@ -48,20 +48,14 @@ public static class SelectionBehavior
     private static void TryCleanUpOldItem(Selector selector)
     {
         selector.SelectionChanged -= SelectorSelectionChanged;  // Remove a previously added event handler.
-
-        var item = multiSelectorWithObservableList.FirstOrDefault(x => x.Item1.Selector == selector);
-        if (item == null) return;
-
-        multiSelectorWithObservableList.Remove(item);
-        CollectionChangedEventManager.RemoveHandler(item.Item2, ListCollectionChanged);
+        multiSelectorWithObservableList.RemoveAll(x => x.selector.Selector == selector);
     }
-
 
     private static void ListCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         if (syncListsThatAreUpdating.Contains(sender!)) return;
 
-        var multiSelector = multiSelectorWithObservableList.First(x => x.Item2 == sender).Item1;
+        var multiSelector = multiSelectorWithObservableList.First(x => x.observable == sender).selector;
         selectorsThatAreUpdating.Add(multiSelector.Selector);
         try
         {
@@ -121,29 +115,15 @@ public static class SelectionBehavior
         IList SelectedItems { get; }
     }
 
-    private class ListBoxAdapter : IMultiSelector
+    private sealed class ListBoxAdapter(ListBox listBox) : IMultiSelector
     {
-        private readonly ListBox listBox;
-
-        public ListBoxAdapter(ListBox listBox)
-        {
-            this.listBox = listBox;
-        }
-
         public Selector Selector => listBox;
 
         public IList SelectedItems => listBox.SelectedItems;
     }
 
-    private class MultiSelectorAdapter : IMultiSelector
+    private sealed class MultiSelectorAdapter(MultiSelector multiSelector) : IMultiSelector
     {
-        private readonly MultiSelector multiSelector;
-
-        public MultiSelectorAdapter(MultiSelector multiSelector)
-        {
-            this.multiSelector = multiSelector;
-        }
-
         public Selector Selector => multiSelector;
 
         public IList SelectedItems => multiSelector.SelectedItems;
