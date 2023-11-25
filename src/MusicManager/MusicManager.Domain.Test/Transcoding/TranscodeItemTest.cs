@@ -12,7 +12,7 @@ public class TranscodeItemTest : DomainTest
     [TestMethod]
     public void PropertiesTest()
     {
-        var musicFile = new MockMusicFile(new MusicMetadata(TimeSpan.FromSeconds(33), 320), "TestFile.wma");
+        var musicFile = new MockMusicFile(new(TimeSpan.FromSeconds(33), 320), "TestFile.wma");
         var item = new TranscodeItem(musicFile, "TestFile.mp3");
 
         Assert.AreEqual(musicFile, item.Source);
@@ -31,7 +31,7 @@ public class TranscodeItemTest : DomainTest
     [TestMethod]
     public void TranscodeStatusTest()
     {
-        var musicFile = new MockMusicFile(new MusicMetadata(TimeSpan.FromSeconds(33), 320), "TestFile.wma");
+        var musicFile = new MockMusicFile(new(TimeSpan.FromSeconds(33), 320), "TestFile.wma");
         var item = new TranscodeItem(musicFile, "TestFile.mp3");
 
         Assert.AreEqual(TranscodeStatus.Pending, item.TranscodeStatus);

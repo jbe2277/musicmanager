@@ -21,7 +21,7 @@ public class SequenceEqualityComparerTest
         Assert.IsFalse(comparer.Equals(null, list1));
 
         Assert.AreEqual(list1![0].GetHashCode() ^ list1[1].GetHashCode() ^ list1[2].GetHashCode(), comparer.GetHashCode(list1));
-        Assert.AreEqual("Han".GetHashCode(), comparer.GetHashCode(new[] { "Han" }));
-        Assert.AreEqual(0, comparer.GetHashCode(System.Array.Empty<string>()));
+        Assert.AreEqual("Han".GetHashCode(), comparer.GetHashCode([ "Han" ]));
+        Assert.AreEqual(0, comparer.GetHashCode([]));
     }
 }

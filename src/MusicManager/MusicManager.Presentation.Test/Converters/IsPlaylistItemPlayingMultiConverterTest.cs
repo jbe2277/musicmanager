@@ -14,7 +14,7 @@ public class IsPlaylistItemPlayingMultiConverterTest
         var item2 = new PlaylistItem(null!);
             
         var converter = new IsPlaylistItemPlayingMultiConverter();
-        Assert.IsTrue((bool)converter.Convert(new[] { item1, item1 }, null, null, null));
-        Assert.IsFalse((bool)converter.Convert(new[] { item1, item2 }, null, null, null));
+        Assert.IsTrue((bool)converter.Convert([ item1, item1 ], null, null, null));
+        Assert.IsFalse((bool)converter.Convert([ item1, item2 ], null, null, null));
     }
 }

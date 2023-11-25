@@ -12,9 +12,9 @@ public class MusicPropertiesProgressVisibilityConverterTest
     public void ConvertTest()
     {
         var converter = new MusicPropertiesProgressVisibilityConverter();
-        Assert.AreEqual(Visibility.Visible, converter.Convert(new object?[] { false, null }, null, null, null));
-        Assert.AreEqual(Visibility.Collapsed, converter.Convert(new object?[] { true, null }, null, null, null));
-        Assert.AreEqual(Visibility.Collapsed, converter.Convert(new object?[] { false, new ArgumentException() }, null, null, null));
+        Assert.AreEqual(Visibility.Visible, converter.Convert([ false, null ], null, null, null));
+        Assert.AreEqual(Visibility.Collapsed, converter.Convert([ true, null ], null, null, null));
+        Assert.AreEqual(Visibility.Collapsed, converter.Convert([ false, new ArgumentException() ], null, null, null));
 
         AssertHelper.ExpectedException<NotSupportedException>(() => converter.ConvertBack(null, null, null, null));
     }

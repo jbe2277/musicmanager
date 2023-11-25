@@ -26,10 +26,10 @@ public abstract class ApplicationsTest : DomainTest
 
         Context = UnitTestSynchronizationContext.Create();
 
-        catalog = new AggregateCatalog();
+        catalog = new();
         OnCatalogInitialize(catalog);
 
-        Container = new CompositionContainer(catalog, CompositionOptions.DisableSilentRejection);
+        Container = new(catalog, CompositionOptions.DisableSilentRejection);
         var batch = new CompositionBatch();
         batch.AddExportedValue(Container);
         Container.Compose(batch);

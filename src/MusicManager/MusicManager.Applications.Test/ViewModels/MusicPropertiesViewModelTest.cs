@@ -78,7 +78,7 @@ public class MusicPropertiesViewModelTest : ApplicationsTest
         AssertHelper.CanExecuteChangedEvent(viewModel.AutoFillFromFileNameCommand, () => musicFile.Metadata!.Title = "");
         Assert.IsTrue(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
 
-        AssertHelper.CanExecuteChangedEvent(viewModel.AutoFillFromFileNameCommand, () => musicFile.Metadata!.Artists = new[] { "Culture Beat" });
+        AssertHelper.CanExecuteChangedEvent(viewModel.AutoFillFromFileNameCommand, () => musicFile.Metadata!.Artists = [ "Culture Beat" ]);
         Assert.IsFalse(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
     }
 }

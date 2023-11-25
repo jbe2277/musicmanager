@@ -21,18 +21,18 @@ internal abstract class SaveMetadata
         var musicProperties = await file.Properties.GetMusicPropertiesAsync();
 
         var customProperties = new Dictionary<string, object>();
-        if (changedProperties.Contains(nameof(MusicMetadata.Title))) { ApplyTitle(musicProperties, customProperties, metadata.Title); }
-        if (changedProperties.Contains(nameof(MusicMetadata.Artists))) { ApplyArtists(musicProperties, customProperties, metadata.Artists); }
-        if (changedProperties.Contains(nameof(MusicMetadata.Rating))) { ApplyRating(musicProperties, customProperties, metadata.Rating); }
-        if (changedProperties.Contains(nameof(MusicMetadata.Album))) { ApplyAlbum(musicProperties, customProperties, metadata.Album); }
-        if (changedProperties.Contains(nameof(MusicMetadata.TrackNumber))) { ApplyTrackNumber(musicProperties, customProperties, metadata.TrackNumber); }
-        if (changedProperties.Contains(nameof(MusicMetadata.Year))) { ApplyYear(musicProperties, customProperties, metadata.Year); }
-        if (changedProperties.Contains(nameof(MusicMetadata.Genre))) { ApplyGenre(musicProperties, customProperties, metadata.Genre); }
-        if (changedProperties.Contains(nameof(MusicMetadata.AlbumArtist))) { ApplyAlbumArtist(musicProperties, customProperties, metadata.AlbumArtist); }
-        if (changedProperties.Contains(nameof(MusicMetadata.Publisher))) { ApplyPublisher(musicProperties, customProperties, metadata.Publisher); }
-        if (changedProperties.Contains(nameof(MusicMetadata.Subtitle))) { ApplySubtitle(musicProperties, customProperties, metadata.Subtitle); }
-        if (changedProperties.Contains(nameof(MusicMetadata.Composers))) { ApplyComposers(musicProperties, customProperties, metadata.Composers); }
-        if (changedProperties.Contains(nameof(MusicMetadata.Conductors))) { ApplyConductors(musicProperties, customProperties, metadata.Conductors); }
+        if (changedProperties.Contains(nameof(MusicMetadata.Title))) ApplyTitle(musicProperties, customProperties, metadata.Title);
+        if (changedProperties.Contains(nameof(MusicMetadata.Artists))) ApplyArtists(musicProperties, customProperties, metadata.Artists);
+        if (changedProperties.Contains(nameof(MusicMetadata.Rating))) ApplyRating(musicProperties, customProperties, metadata.Rating);
+        if (changedProperties.Contains(nameof(MusicMetadata.Album))) ApplyAlbum(musicProperties, customProperties, metadata.Album);
+        if (changedProperties.Contains(nameof(MusicMetadata.TrackNumber))) ApplyTrackNumber(musicProperties, customProperties, metadata.TrackNumber);
+        if (changedProperties.Contains(nameof(MusicMetadata.Year))) ApplyYear(musicProperties, customProperties, metadata.Year);
+        if (changedProperties.Contains(nameof(MusicMetadata.Genre))) ApplyGenre(musicProperties, customProperties, metadata.Genre);
+        if (changedProperties.Contains(nameof(MusicMetadata.AlbumArtist))) ApplyAlbumArtist(musicProperties, customProperties, metadata.AlbumArtist);
+        if (changedProperties.Contains(nameof(MusicMetadata.Publisher))) ApplyPublisher(musicProperties, customProperties, metadata.Publisher);
+        if (changedProperties.Contains(nameof(MusicMetadata.Subtitle))) ApplySubtitle(musicProperties, customProperties, metadata.Subtitle);
+        if (changedProperties.Contains(nameof(MusicMetadata.Composers))) ApplyComposers(musicProperties, customProperties, metadata.Composers);
+        if (changedProperties.Contains(nameof(MusicMetadata.Conductors))) ApplyConductors(musicProperties, customProperties, metadata.Conductors);
 
         Log.Default.Trace("SaveMetadata.SaveChangesAsync:Save: {0}", musicFile.FileName);
         await musicProperties.SavePropertiesAsync(customProperties);

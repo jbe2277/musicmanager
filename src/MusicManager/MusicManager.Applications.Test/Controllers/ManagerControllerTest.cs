@@ -43,7 +43,7 @@ public class ManagerControllerTest : ApplicationsTest
     {
         var path = @"C:\Music";
         var fileService = Container.GetExportedValue<MockFileService>();
-        fileService.GetFilesStub = (dir, deep, f1, f2, c) => Task.FromResult((IReadOnlyList<string>)new[] { Path.Combine(path, "TestMP3.mp3"), Path.Combine(path, "Test42.mp3") });
+        fileService.GetFilesStub = (dir, deep, f1, f2, c) => Task.FromResult<IReadOnlyList<string>>([ Path.Combine(path, "TestMP3.mp3"), Path.Combine(path, "Test42.mp3") ]);
 
         var fileSystemWatcherService = Container.GetExportedValue<MockFileSystemWatcherService>();
         viewModel.FolderBrowser.CurrentPath = path;

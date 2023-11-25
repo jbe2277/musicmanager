@@ -15,12 +15,12 @@ public class StringListConverterTest
         var ls = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         Assert.AreEqual("", StringListConverter.ToString(null));
-        Assert.AreEqual("", StringListConverter.ToString(Array.Empty<string>()));
-        Assert.AreEqual("", StringListConverter.ToString(new[] { "" }));
+        Assert.AreEqual("", StringListConverter.ToString([]));
+        Assert.AreEqual("", StringListConverter.ToString([ "" ]));
 
-        Assert.AreEqual("Pop", StringListConverter.ToString(new[] { "Pop" }));
-        Assert.AreEqual("Pop" + ls + " Rock", StringListConverter.ToString(new[] { "Pop", "Rock" }));
-        Assert.AreEqual("Pop" + nl + "Rock", StringListConverter.ToString(new[] { "Pop", "Rock" }, nl));
+        Assert.AreEqual("Pop", StringListConverter.ToString([ "Pop" ]));
+        Assert.AreEqual("Pop" + ls + " Rock", StringListConverter.ToString([ "Pop", "Rock" ]));
+        Assert.AreEqual("Pop" + nl + "Rock", StringListConverter.ToString([ "Pop", "Rock" ], nl));
     }
 
     [TestMethod]
@@ -29,18 +29,18 @@ public class StringListConverterTest
         var nl = Environment.NewLine;
         var ls = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
             
-        AssertHelper.SequenceEqual(Array.Empty<string>(), StringListConverter.FromString(""));
+        AssertHelper.SequenceEqual([], StringListConverter.FromString(""));
 
-        AssertHelper.SequenceEqual(new[] { "Pop" }, StringListConverter.FromString("Pop"));
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString("Pop" + nl + "Rock", nl));
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString(" Pop" + nl + " Rock", nl));
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString("Pop " + nl + "Rock ", nl));
+        AssertHelper.SequenceEqual([ "Pop" ], StringListConverter.FromString("Pop"));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], StringListConverter.FromString("Pop" + nl + "Rock", nl));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], StringListConverter.FromString(" Pop" + nl + " Rock", nl));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], StringListConverter.FromString("Pop " + nl + "Rock ", nl));
 
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString("Pop" + ls + "Rock"));
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString(" Pop" + ls + " Rock"));
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, StringListConverter.FromString("Pop " + ls + "Rock "));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], StringListConverter.FromString("Pop" + ls + "Rock"));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], StringListConverter.FromString(" Pop" + ls + " Rock"));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], StringListConverter.FromString("Pop " + ls + "Rock "));
 
-        AssertHelper.SequenceEqual(new[] { "Pop" }, StringListConverter.FromString("Pop" + ls));
-        AssertHelper.SequenceEqual(new[] { "Pop" }, StringListConverter.FromString("Pop" + ls + " "));
+        AssertHelper.SequenceEqual([ "Pop" ], StringListConverter.FromString("Pop" + ls));
+        AssertHelper.SequenceEqual([ "Pop" ], StringListConverter.FromString("Pop" + ls + " "));
     }
 }

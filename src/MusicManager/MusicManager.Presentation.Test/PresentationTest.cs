@@ -14,13 +14,12 @@ namespace Test.MusicManager.Presentation
     public class PresentationTest : ApplicationsTest
     {
         // List of exports which must use the real implementation instead of the mock (integration test)
-        private static readonly Type[] exportNames = new[]
-        {
+        private static readonly Type[] exportNames = [
             typeof(IFileService),
             typeof(IFileSystemWatcherService), typeof(FileSystemWatcherService),
             typeof(IMusicFileContext), typeof(MusicFileContext),
             typeof(ITranscoder), typeof(Transcoder),
-        };
+        ];
 
         protected override void OnCatalogInitialize(AggregateCatalog catalog)
         {

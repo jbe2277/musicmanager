@@ -30,16 +30,15 @@ public class PlayerControllerTest : ApplicationsTest
         base.OnInitialize();
 
         var musicFileContext = Container.GetExportedValue<MockMusicFileContext>();
-        musicFiles = new ObservableCollection<MusicFile>()
-        {
+        musicFiles = [
             musicFileContext.Create(@"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.wav"),
             musicFileContext.Create(@"C:\Culture Beat - Serenity - Epilog.wma"),
-        };
+        ];
         selectionService = Container.GetExportedValue<SelectionService>();
         selectionService.Initialize(musicFiles);
 
-        playlistManager = new PlaylistManager();
-        playlistSettings = new PlaylistSettings();
+        playlistManager = new();
+        playlistSettings = new();
         controller = Container.GetExportedValue<PlayerController>();
         controller.PlaylistSettings = playlistSettings;
         controller.PlaylistManager = playlistManager;
@@ -106,7 +105,7 @@ public class PlayerControllerTest : ApplicationsTest
         Assert.IsTrue(viewModel.PlayerService.PlaySelectedCommand.CanExecute(null));
 
         // Insert a dummy playlist item which will be replaced by Play
-        playlistManager.AddAndReplaceItems(new[] { new PlaylistItem(MockMusicFile.CreateEmpty("empty.mp3")) });
+        playlistManager.AddAndReplaceItems([new PlaylistItem(MockMusicFile.CreateEmpty("empty.mp3")) ]);
         Assert.AreEqual(1, playlistManager.Items.Count);
 
         // Play all

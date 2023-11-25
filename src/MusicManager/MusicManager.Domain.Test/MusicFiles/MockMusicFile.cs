@@ -11,7 +11,7 @@ public class MockMusicFile : MusicFile
 
     public static MusicFile CreateEmpty(string fileName) => new MockMusicFile(new MusicMetadata(new TimeSpan(0, 3, 33), 320000)
     {
-        Artists = Array.Empty<string>(),
+        Artists = [],
         Title = ""
     }, fileName);
 }
