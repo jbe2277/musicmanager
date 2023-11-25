@@ -46,7 +46,7 @@ public class PlaylistControllerIntegrationTest : PresentationTest
         Assert.AreEqual(2, viewModel.PlaylistManager.Items.Count);
 
         var fileDialogService = Container.GetExportedValue<MockFileDialogService>();
-        fileDialogService.Result = new FileDialogResult(playlistFileName, new FileType("test", ".m3u"));
+        fileDialogService.Result = new(playlistFileName, new FileType("test", ".m3u"));
         viewModel.SaveListCommand.Execute(null);
 
         Assert.IsTrue(File.Exists(playlistFileName));

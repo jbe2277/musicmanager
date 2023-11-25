@@ -31,18 +31,18 @@ public class StringListToStringConverterTest
         var ls = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         var converter = new StringListToStringConverter();
 
-        AssertHelper.SequenceEqual(Array.Empty<string>(), (string[])converter.ConvertBack("", null, null, null));
+        AssertHelper.SequenceEqual([], (string[])converter.ConvertBack("", null, null, null));
 
-        AssertHelper.SequenceEqual(new[] { "Pop" }, (string[])converter.ConvertBack("Pop", null, null, null));
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, (string[])converter.ConvertBack("Pop" + nl + "Rock", null, null, null));
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, (string[])converter.ConvertBack(" Pop" + nl + " Rock", null, null, null));
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, (string[])converter.ConvertBack("Pop " + nl + "Rock ", null, null, null));
+        AssertHelper.SequenceEqual([ "Pop" ], (string[])converter.ConvertBack("Pop", null, null, null));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], (string[])converter.ConvertBack("Pop" + nl + "Rock", null, null, null));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], (string[])converter.ConvertBack(" Pop" + nl + " Rock", null, null, null));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], (string[])converter.ConvertBack("Pop " + nl + "Rock ", null, null, null));
 
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, (string[])converter.ConvertBack("Pop" + ls + "Rock", null, "ListSeparator", null));
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, (string[])converter.ConvertBack(" Pop" + ls + " Rock", null, "ListSeparator", null));
-        AssertHelper.SequenceEqual(new[] { "Pop", "Rock" }, (string[])converter.ConvertBack("Pop " + ls + "Rock ", null, "ListSeparator", null));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], (string[])converter.ConvertBack("Pop" + ls + "Rock", null, "ListSeparator", null));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], (string[])converter.ConvertBack(" Pop" + ls + " Rock", null, "ListSeparator", null));
+        AssertHelper.SequenceEqual([ "Pop", "Rock" ], (string[])converter.ConvertBack("Pop " + ls + "Rock ", null, "ListSeparator", null));
 
-        AssertHelper.SequenceEqual(new[] { "Pop" }, (string[])converter.ConvertBack("Pop" + ls, null, "ListSeparator", null));
-        AssertHelper.SequenceEqual(new[] { "Pop" }, (string[])converter.ConvertBack("Pop" + ls + " ", null, "ListSeparator", null));
+        AssertHelper.SequenceEqual([ "Pop" ], (string[])converter.ConvertBack("Pop" + ls, null, "ListSeparator", null));
+        AssertHelper.SequenceEqual([ "Pop" ], (string[])converter.ConvertBack("Pop" + ls + " ", null, "ListSeparator", null));
     }
 }

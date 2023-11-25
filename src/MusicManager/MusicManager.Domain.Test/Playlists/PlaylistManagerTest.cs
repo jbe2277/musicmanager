@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Waf.UnitTesting;
-using Waf.MusicManager.Domain;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.Playlists;
 
@@ -14,12 +13,11 @@ public class PlaylistManagerTest : DomainTest
     protected override void OnInitialize()
     {
         base.OnInitialize();
-        threeItems = new[]
-        {
-            new PlaylistItem(new MockMusicFile(new MusicMetadata(TimeSpan.FromMinutes(2), 256) { Album = "1" }, "")),
-            new PlaylistItem(new MockMusicFile(new MusicMetadata(TimeSpan.FromMinutes(2), 256) { Album = "2" }, "")),
-            new PlaylistItem(new MockMusicFile(new MusicMetadata(TimeSpan.FromMinutes(2), 256) { Album = "3" }, "")),
-        };
+        threeItems = [
+            new(new MockMusicFile(new(TimeSpan.FromMinutes(2), 256) { Album = "1" }, "")),
+            new(new MockMusicFile(new(TimeSpan.FromMinutes(2), 256) { Album = "2" }, "")),
+            new(new MockMusicFile(new(TimeSpan.FromMinutes(2), 256) { Album = "3" }, "")),
+        ];
     }
         
     [TestMethod]
@@ -193,14 +191,14 @@ public class PlaylistManagerTest : DomainTest
         manager.AddItems(threeItems);
         Assert.AreEqual(3, manager.Items.Count);
 
-        manager.RemoveItems(new[] { threeItems[2] });
+        manager.RemoveItems([ threeItems[2] ]);
         Assert.AreEqual(2, manager.Items.Count);
 
         manager.AddAndReplaceItems(threeItems);
         Assert.AreEqual(3, manager.Items.Count);
 
-        manager.MoveItems(2, new[] { manager.Items[0] });
-        AssertHelper.SequenceEqual(new[] { threeItems[1], threeItems[2], threeItems[0] }, manager.Items);
+        manager.MoveItems(2, [ manager.Items[0] ]);
+        AssertHelper.SequenceEqual([ threeItems[1], threeItems[2], threeItems[0] ], manager.Items);
     }
 
     [TestMethod]
@@ -213,9 +211,9 @@ public class PlaylistManagerTest : DomainTest
         manager.NextItem();
 
         Assert.IsTrue(manager.CanNextItem);
-        AssertHelper.PropertyChangedEvent(manager, x => x.CanNextItem, () => manager.RemoveItems(new[] { threeItems[2] }));
+        AssertHelper.PropertyChangedEvent(manager, x => x.CanNextItem, () => manager.RemoveItems([ threeItems[2] ]));
         Assert.IsFalse(manager.CanNextItem);
-        AssertHelper.PropertyChangedEvent(manager, x => x.CanNextItem, () => manager.AddItems(new[] { threeItems[2] }));
+        AssertHelper.PropertyChangedEvent(manager, x => x.CanNextItem, () => manager.AddItems([ threeItems[2] ]));
         Assert.IsTrue(manager.CanNextItem);
 
         manager.NextItem();
@@ -224,7 +222,7 @@ public class PlaylistManagerTest : DomainTest
         Assert.AreEqual(threeItems[1], manager.CurrentItem);
 
         Assert.IsTrue(manager.CanPreviousItem);
-        AssertHelper.PropertyChangedEvent(manager, x => x.CanPreviousItem, () => manager.RemoveItems(new[] { threeItems[0] }));
+        AssertHelper.PropertyChangedEvent(manager, x => x.CanPreviousItem, () => manager.RemoveItems([ threeItems[0] ]));
         Assert.IsFalse(manager.CanPreviousItem);
     }
 
@@ -233,8 +231,8 @@ public class PlaylistManagerTest : DomainTest
     {
         var manager = new PlaylistManager();
         Assert.AreEqual(TimeSpan.Zero, manager.TotalDuration);
-        var firstFile = new MockMusicFile(new MusicMetadata(TimeSpan.FromSeconds(10), 0), "");
-        manager.AddAndReplaceItems(new[] { new PlaylistItem(firstFile) });
+        var firstFile = new MockMusicFile(new(TimeSpan.FromSeconds(10), 0), "");
+        manager.AddAndReplaceItems([ new PlaylistItem(firstFile) ]);
             
         var secondMetadata = new MusicMetadata(TimeSpan.FromSeconds(20), 0);
         var secondFile = new MusicFile(async x =>
@@ -243,7 +241,7 @@ public class PlaylistManagerTest : DomainTest
             return secondMetadata;
         }, "");
 
-        manager.AddItems(new[] { new PlaylistItem(secondFile) });
+        manager.AddItems([ new PlaylistItem(secondFile) ]);
         Assert.IsTrue(manager.IsTotalDurationEstimated);
         Assert.AreEqual(TimeSpan.FromSeconds(20), manager.TotalDuration);
         AssertHelper.PropertyChangedEvent(manager, x => x.TotalDuration, () => _ = secondFile.GetMetadataAsync().Result);
@@ -251,7 +249,7 @@ public class PlaylistManagerTest : DomainTest
         Assert.AreEqual(TimeSpan.FromSeconds(30), manager.TotalDuration);
 
         var thirdFile = new MockMusicFile(new MusicMetadata(TimeSpan.FromSeconds(30), 0), "");
-        AssertHelper.PropertyChangedEvent(manager, x => x.TotalDuration, () => manager.AddItems(new[] { new PlaylistItem(thirdFile) }));
+        AssertHelper.PropertyChangedEvent(manager, x => x.TotalDuration, () => manager.AddItems([ new PlaylistItem(thirdFile) ]));
         Assert.AreEqual(TimeSpan.FromSeconds(60), manager.TotalDuration);
     }
 }

@@ -7,12 +7,7 @@ namespace Test.MusicManager.Applications.Views;
 [Export(typeof(IPlayerView))]
 public class MockPlayerView : MockView, IPlayerView
 {
-    public MockPlayerView()
-    {
-        Position = TimeSpan.FromSeconds(33);  
-    }
-        
-    public TimeSpan Position { get; set; }
+    public TimeSpan Position { get; set; } = TimeSpan.FromSeconds(33);
 
     public TimeSpan GetPosition() => Position;
 

@@ -13,8 +13,8 @@ public class TotalDurationConverterTest
     public void ConvertTest()
     {
         var converter = new TotalDurationConverter();
-        Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, Resources.AboutDuration, "0:03"), converter.Convert(new object[] { true, TimeSpan.FromSeconds(3) }, null, null, null));
-        Assert.AreEqual("0:04", converter.Convert(new object[] { false, TimeSpan.FromSeconds(4) }, null, null, null));
+        Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, Resources.AboutDuration, "0:03"), converter.Convert([ true, TimeSpan.FromSeconds(3) ], null, null, null));
+        Assert.AreEqual("0:04", converter.Convert([ false, TimeSpan.FromSeconds(4) ], null, null, null));
 
         AssertHelper.ExpectedException<NotSupportedException>(() => converter.ConvertBack(null, null, null, null));
     }

@@ -5,7 +5,7 @@ namespace Test.MusicManager.Presentation;
 [TestClass]
 public static class TestHelper
 {
-    private static readonly HashSet<string> tempFiles = new();
+    private static readonly HashSet<string> tempFiles = [];
         
     public static string GetTempFileName(string? extension = null)
     {

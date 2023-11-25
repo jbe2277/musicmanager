@@ -12,8 +12,8 @@ public class TranscodingManagerTest : DomainTest
     [TestMethod]
     public void AddRemoveTranscodeItemsTest()
     {
-        var musicFile1 = new MockMusicFile(new MusicMetadata(TimeSpan.FromSeconds(33), 320), "TestFile1.wma");
-        var musicFile2 = new MockMusicFile(new MusicMetadata(TimeSpan.FromSeconds(33), 320), "TestFile2.wma");
+        var musicFile1 = new MockMusicFile(new(TimeSpan.FromSeconds(33), 320), "TestFile1.wma");
+        var musicFile2 = new MockMusicFile(new(TimeSpan.FromSeconds(33), 320), "TestFile2.wma");
         var item1 = new TranscodeItem(musicFile1, "TestFile1.mp3");
         var item2 = new TranscodeItem(musicFile2, "TestFile2.mp3");
 
@@ -23,7 +23,7 @@ public class TranscodingManagerTest : DomainTest
         manager.AddTranscodeItem(item1);
         manager.AddTranscodeItem(item2);
 
-        AssertHelper.SequenceEqual(new[] { item1, item2 }, manager.TranscodeItems);
+        AssertHelper.SequenceEqual([ item1, item2 ], manager.TranscodeItems);
 
         manager.RemoveTranscodeItem(item1);
 

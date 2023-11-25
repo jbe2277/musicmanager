@@ -27,17 +27,16 @@ public class PlaylistControllerTest : ApplicationsTest
         base.OnInitialize();
 
         musicFileContext = Container.GetExportedValue<MockMusicFileContext>();
-        musicFiles = new ObservableCollection<MusicFile>()
-        {
+        musicFiles = [
             musicFileContext.Create(@"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.wav"),
             musicFileContext.Create(@"C:\Culture Beat - Serenity - Epilog.wma"),
-        };
+        ];
         selectionService = Container.GetExportedValue<SelectionService>();
         selectionService.Initialize(musicFiles);
 
-        playlistManager = new PlaylistManager();
+        playlistManager = new();
         controller = Container.GetExportedValue<PlaylistController>();
-        controller.PlaylistSettings = new PlaylistSettings();
+        controller.PlaylistSettings = new();
         controller.PlaylistManager = playlistManager;
         controller.Initialize();
         controller.Run();
@@ -133,7 +132,7 @@ public class PlaylistControllerTest : ApplicationsTest
 
     private static void SetSelection(PlaylistViewModel viewModel, params PlaylistItem[] items)
     {
-        viewModel.SelectedPlaylistItem = items.Last();
+        viewModel.SelectedPlaylistItem = items[^1];
         viewModel.SelectedPlaylistItems.Clear();
         foreach (var x in items) viewModel.SelectedPlaylistItems.Add(x);
     }

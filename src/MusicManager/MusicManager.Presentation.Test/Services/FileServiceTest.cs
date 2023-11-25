@@ -43,15 +43,15 @@ public class FileServiceTest
     public void GetPathSegmentsTest()
     {
         var pathSegments = FileService.GetPathSegments(@"C:\Users\Public\Music");
-        AssertHelper.SequenceEqual(new[] { @"C:\", "Users", "Public", "Music" }, pathSegments);
+        AssertHelper.SequenceEqual([ @"C:\", "Users", "Public", "Music" ], pathSegments);
 
         pathSegments = FileService.GetPathSegments(@"C:\Users\Public\Music\");
-        AssertHelper.SequenceEqual(new[] { @"C:\", "Users", "Public", "Music" }, pathSegments);
+        AssertHelper.SequenceEqual([ @"C:\", "Users", "Public", "Music" ], pathSegments);
 
         pathSegments = FileService.GetPathSegments(@"C:");
-        AssertHelper.SequenceEqual(new[] { @"C:" }, pathSegments);
+        AssertHelper.SequenceEqual([ @"C:" ], pathSegments);
 
         pathSegments = FileService.GetPathSegments(@"\\localhost\Users\Public\Music");
-        AssertHelper.SequenceEqual(new[] { @"\\localhost\Users", "Public", "Music" }, pathSegments);
+        AssertHelper.SequenceEqual([ @"\\localhost\Users", "Public", "Music" ], pathSegments);
     }
 }

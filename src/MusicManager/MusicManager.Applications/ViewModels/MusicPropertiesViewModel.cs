@@ -79,7 +79,7 @@ public class MusicPropertiesViewModel : ViewModel<IMusicPropertiesView>
     private void MetadataLoaded()
     {
         if (MusicFile?.IsMetadataLoaded != true) return;
-        metadataPropertyChangedProxy = WeakEvent.PropertyChanged.Add(MusicFile.Metadata, MetadataPropertyChanged);
+        metadataPropertyChangedProxy = WeakEvent.PropertyChanged.Add(MusicFile.Metadata!, MetadataPropertyChanged);
         autoFillFromFileNameCommand.RaiseCanExecuteChanged();
     }
 

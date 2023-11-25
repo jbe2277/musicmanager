@@ -21,11 +21,10 @@ public class TranscodingControllerTest : ApplicationsTest
         base.OnInitialize();
 
         musicFileContext = Container.GetExportedValue<MockMusicFileContext>();
-        musicFiles = new ObservableCollection<MusicFile>()
-        {
+        musicFiles = [
             musicFileContext.Create(@"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.wav"),
             musicFileContext.Create(@"C:\Culture Beat - Serenity - Epilog.wma"),
-        };
+        ];
         selectionService = Container.GetExportedValue<SelectionService>();
         selectionService.Initialize(musicFiles);
 

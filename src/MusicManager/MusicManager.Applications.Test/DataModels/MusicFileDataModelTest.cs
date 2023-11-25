@@ -17,17 +17,17 @@ public class MusicFileDataModelTest : ApplicationsTest
             
         var musicFile = new MockMusicFile(new MusicMetadata(new TimeSpan(0, 3, 33), 320)
         {
-            Artists = Array.Empty<string>(),
+            Artists = [],
             Title = ""
         }, @"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.mp3");
         var dataModel = new MusicFileDataModel(musicFile);
 
         Assert.AreEqual("", dataModel.ArtistsString);
 
-        AssertHelper.PropertyChangedEvent(dataModel, x => x.ArtistsString, () => musicFile.Metadata!.Artists = new[] { "Culture Beat" });
+        AssertHelper.PropertyChangedEvent(dataModel, x => x.ArtistsString, () => musicFile.Metadata!.Artists = [ "Culture Beat" ]);
         Assert.AreEqual("Culture Beat", dataModel.ArtistsString);
   
-        AssertHelper.PropertyChangedEvent(dataModel, x => x.ArtistsString, () => musicFile.Metadata!.Artists = new[] { "Culture Beat", "Second artist" });
+        AssertHelper.PropertyChangedEvent(dataModel, x => x.ArtistsString, () => musicFile.Metadata!.Artists = [ "Culture Beat", "Second artist" ]);
         Assert.AreEqual("Culture Beat" + ls + " Second artist", dataModel.ArtistsString);
     }
 }
