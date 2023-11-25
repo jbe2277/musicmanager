@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+Version 3.3.0.100 (Release)
+- Migrate to .NET 8.
+
+
 Version 3.2.2.100 (Release)
 - Improve compatibility with m3u playlist files (load files from VLC).
 
