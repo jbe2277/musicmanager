@@ -5,8 +5,6 @@ namespace Waf.MusicManager.Presentation.Services;
 
 internal static class SupportedFileTypes
 {
-    private static readonly string[] musicFileExtensions = [ ".mp3", ".wma", ".wav", ".m4a", ".mp4" ];
-
     private static readonly Mp3ReadMetadata mp3ReadMetadata = new();
     private static readonly WmaReadMetadata wmaReadMetadata = new();
     private static readonly AacReadMetadata aacReadMetadata = new();
@@ -23,13 +21,9 @@ internal static class SupportedFileTypes
     private static readonly FlacSaveMetadata flacSaveMetadata = new();
     private static readonly MkvSaveMetadata mkvSaveMetadata = new();
 
-    public static IReadOnlyList<string> MusicFileExtensions => AddMoreExtensionsWhenSupported(musicFileExtensions);
+    public static IReadOnlyList<string> MusicFileExtensions => [".mp3", ".wma", ".wav", ".m4a", ".mp4", ".flac", ".mkv"];
 
     public static IReadOnlyList<string> PlaylistFileExtensions => IFileService.PlaylistFileExtensions;
-
-    private static bool IsFlacSupported => Environment.OSVersion.Version.Major >= 10;
-
-    private static bool IsMkvSupported => Environment.OSVersion.Version.Major >= 10;
 
     internal static ReadMetadata GetReadMetadata(string fileExtension)
     {
@@ -53,11 +47,11 @@ internal static class SupportedFileTypes
         {
             return mp4ReadMetadata;
         }
-        else if (IsFlacSupported && fileExtension.Equals(".flac", StringComparison.OrdinalIgnoreCase))
+        else if (fileExtension.Equals(".flac", StringComparison.OrdinalIgnoreCase))
         {
             return flacReadMetadata;
         }
-        else if (IsMkvSupported && fileExtension.Equals(".mkv", StringComparison.OrdinalIgnoreCase))
+        else if (fileExtension.Equals(".mkv", StringComparison.OrdinalIgnoreCase))
         {
             return mkvReadMetadata;
         }
@@ -89,11 +83,11 @@ internal static class SupportedFileTypes
         {
             return mp4SaveMetadata;
         }
-        else if (IsFlacSupported && fileExtension.Equals(".flac", StringComparison.OrdinalIgnoreCase))
+        else if (fileExtension.Equals(".flac", StringComparison.OrdinalIgnoreCase))
         {
             return flacSaveMetadata;
         }
-        else if (IsMkvSupported && fileExtension.Equals(".mkv", StringComparison.OrdinalIgnoreCase))
+        else if (fileExtension.Equals(".mkv", StringComparison.OrdinalIgnoreCase))
         {
             return mkvSaveMetadata;
         }
@@ -101,13 +95,5 @@ internal static class SupportedFileTypes
         {
             throw new NotSupportedException("The provided extension '" + fileExtension + "' is not supported.");
         }
-    }
-
-    private static IReadOnlyList<string> AddMoreExtensionsWhenSupported(IReadOnlyList<string> extensions)
-    {
-        IEnumerable<string> result = extensions;
-        if (IsFlacSupported) result = result.Concat([ ".flac" ]);
-        if (IsMkvSupported) result = result.Concat([ ".mkv" ]);
-        return result.ToArray();
     }
 }
