@@ -41,14 +41,14 @@ internal class TranscodingController
         this.transcodingService = transcodingService;
         this.transcoder = transcoder;
         this.transcodingListViewModel = transcodingListViewModel;
-        cancellationTokenSources = new Dictionary<TranscodeItem, CancellationTokenSource>();
-        convertToMp3AllCommand = new DelegateCommand(ConvertToMp3All, CanConvertToMp3All);
-        convertToMp3SelectedCommand = new DelegateCommand(ConvertToMp3Selected, CanConvertToMp3Selected);
-        cancelAllCommand = new DelegateCommand(CancelAll, CanCancelAll);
-        cancelSelectedCommand = new DelegateCommand(CancelSelected, CanCancelSelected);
-        throttler = new SemaphoreSlim(Environment.ProcessorCount);  // Do not dispose the throttler; it is used after Shutdown to cancel the open tasks
-        transcodingManager = new TranscodingManager();
-        throttledMusicFilesCollectionChangedAction = new ThrottledAction(ThrottledMusicFilesCollectionChanged, ThrottledActionMode.InvokeOnlyIfIdleForDelayTime, TimeSpan.FromMilliseconds(10));
+        cancellationTokenSources = [];
+        convertToMp3AllCommand = new(ConvertToMp3All, CanConvertToMp3All);
+        convertToMp3SelectedCommand = new(ConvertToMp3Selected, CanConvertToMp3Selected);
+        cancelAllCommand = new(CancelAll, CanCancelAll);
+        cancelSelectedCommand = new(CancelSelected, CanCancelSelected);
+        throttler = new(Environment.ProcessorCount);  // Do not dispose the throttler; it is used after Shutdown to cancel the open tasks
+        transcodingManager = new();
+        throttledMusicFilesCollectionChangedAction = new(ThrottledMusicFilesCollectionChanged, ThrottledActionMode.InvokeOnlyIfIdleForDelayTime, TimeSpan.FromMilliseconds(10));
     }
 
     private TranscodingListViewModel TranscodingListViewModel => transcodingListViewModel.Value;
@@ -60,7 +60,7 @@ internal class TranscodingController
         transcodingService.CancelAllCommand = cancelAllCommand;
         transcodingService.CancelSelectedCommand = cancelSelectedCommand;
 
-        shellService.TranscodingListView = new Lazy<object>(InitializeTranscodingListView);
+        shellService.TranscodingListView = new(InitializeTranscodingListView);
 
         shellService.Closing += ShellServiceClosing;
         selectionService.MusicFiles.CollectionChanged += (sender, e) => throttledMusicFilesCollectionChangedAction.InvokeAccumulated();
@@ -71,7 +71,7 @@ internal class TranscodingController
     {
         if (cancellationTokenSources.Any())
         {
-            allTranscodingsCanceledCompletion = new TaskCompletionSource<object?>();
+            allTranscodingsCanceledCompletion = new();
             CancelAll();
             shellService.AddTaskToCompleteBeforeShutdown(allTranscodingsCanceledCompletion.Task);
         }
@@ -82,7 +82,7 @@ internal class TranscodingController
         TranscodingListViewModel.TranscodingManager = transcodingManager;
         TranscodingListViewModel.InsertFilesAction = InsertFiles;
         TranscodingListViewModel.InsertMusicFilesAction = InsertMusicFiles;
-        CollectionChangedEventManager.AddHandler((INotifyCollectionChanged)TranscodingListViewModel.SelectedTranscodeItems, SelectedTranscodeItemsCollectionChanged);
+        CollectionChangedEventManager.AddHandler(TranscodingListViewModel.SelectedTranscodeItems, SelectedTranscodeItemsCollectionChanged);
         return TranscodingListViewModel.View;
     }
 
@@ -179,9 +179,9 @@ internal class TranscodingController
         finally
         {
             cancellationTokenSources.Remove(transcodeItem);
-            if (allTranscodingsCanceledCompletion != null && !cancellationTokenSources.Any())
+            if (!cancellationTokenSources.Any())
             {
-                allTranscodingsCanceledCompletion.SetResult(null);
+                allTranscodingsCanceledCompletion?.SetResult(null);
             }
             UpdateCancelCommands();
             Log.Default.Trace("End Transcode: {0} > {1}", musicFile.FileName, destinationFileName);
@@ -217,20 +217,12 @@ internal class TranscodingController
         <= 256000 => 256000,
         _ => 320000
     };
-        
-    private void ThrottledMusicFilesCollectionChanged()
-    {
-        convertToMp3AllCommand.RaiseCanExecuteChanged();
-        convertToMp3SelectedCommand.RaiseCanExecuteChanged();
-    }
+
+    private void ThrottledMusicFilesCollectionChanged() => DelegateCommand.RaiseCanExecuteChanged(convertToMp3AllCommand, convertToMp3SelectedCommand);
 
     private void SelectedMusicFilesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => convertToMp3SelectedCommand.RaiseCanExecuteChanged();
 
     private void SelectedTranscodeItemsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => UpdateCancelCommands();
 
-    private void UpdateCancelCommands()
-    {
-        cancelAllCommand.RaiseCanExecuteChanged();
-        cancelSelectedCommand.RaiseCanExecuteChanged();
-    }
+    private void UpdateCancelCommands() => DelegateCommand.RaiseCanExecuteChanged(cancelAllCommand, cancelSelectedCommand);
 }

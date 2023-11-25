@@ -41,15 +41,15 @@ internal class PlayerController
         this.playlistService = playlistService;
         this.playerViewModel = playerViewModel;
         this.infoViewModelFactory = infoViewModelFactory;
-        playAllCommand = new DelegateCommand(PlayAll, CanPlayAll);
-        playSelectedCommand = new DelegateCommand(PlaySelected, CanPlaySelected);
-        enqueueAllCommand = new DelegateCommand(EnqueueAll, CanEnqueueAll);
-        enqueueSelectedCommand = new DelegateCommand(EnqueueSelected, CanEnqueueSelected);
-        previousTrackCommand = new DelegateCommand(PreviousTrack, CanPreviousTrack);
-        nextTrackCommand = new DelegateCommand(NextTrack, CanNextTrack);
-        infoCommand = new DelegateCommand(ShowInfo);
-        showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
-        showPlaylistCommand = new DelegateCommand(ShowPlaylist);
+        playAllCommand = new(PlayAll, CanPlayAll);
+        playSelectedCommand = new(PlaySelected, CanPlaySelected);
+        enqueueAllCommand = new(EnqueueAll, CanEnqueueAll);
+        enqueueSelectedCommand = new(EnqueueSelected, CanEnqueueSelected);
+        previousTrackCommand = new(PreviousTrack, CanPreviousTrack);
+        nextTrackCommand = new(NextTrack, CanNextTrack);
+        infoCommand = new(ShowInfo);
+        showMusicPropertiesCommand = new(ShowMusicProperties);
+        showPlaylistCommand = new(ShowPlaylist);
     }
 
     public PlaylistManager PlaylistManager { get; set; } = null!;
@@ -198,21 +198,9 @@ internal class PlayerController
         }
     }
 
-    private void UpdateCommands()
-    {
-        previousTrackCommand.RaiseCanExecuteChanged();
-        nextTrackCommand.RaiseCanExecuteChanged();
-    }
+    private void UpdateCommands() => DelegateCommand.RaiseCanExecuteChanged(previousTrackCommand, nextTrackCommand);
 
-    private void MusicFilesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        playAllCommand.RaiseCanExecuteChanged();
-        enqueueAllCommand.RaiseCanExecuteChanged();
-    }
+    private void MusicFilesCollectionChanged(object? _, NotifyCollectionChangedEventArgs e) => DelegateCommand.RaiseCanExecuteChanged(playAllCommand, enqueueAllCommand);
 
-    private void SelectedMusicFilesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        playSelectedCommand.RaiseCanExecuteChanged();
-        enqueueSelectedCommand.RaiseCanExecuteChanged();
-    }
+    private void SelectedMusicFilesCollectionChanged(object? _, NotifyCollectionChangedEventArgs e) => DelegateCommand.RaiseCanExecuteChanged(playSelectedCommand, enqueueSelectedCommand);
 }

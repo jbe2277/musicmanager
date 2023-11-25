@@ -14,13 +14,15 @@ public class MusicPropertiesViewModel : ViewModel<IMusicPropertiesView>
     private readonly IClipboardService clipboardService;
     private readonly DelegateCommand autoFillFromFileNameCommand;
     private MusicFile? musicFile;
+    private IWeakEventProxy? musicFilePropertyChangedProxy;
+    private IWeakEventProxy? metadataPropertyChangedProxy;
 
     [ImportingConstructor]
     public MusicPropertiesViewModel(IMusicPropertiesView view, IClipboardService clipboardService) : base(view)
     {
         this.clipboardService = clipboardService;
         CopyFileNameCommand = new DelegateCommand(CopyFileNameToClipboard);
-        autoFillFromFileNameCommand = new DelegateCommand(AutoFillFromFileName, CanAutoFillFromFileName);
+        autoFillFromFileNameCommand = new(AutoFillFromFileName, CanAutoFillFromFileName);
     }
 
     public ICommand CopyFileNameCommand { get; }
@@ -35,13 +37,13 @@ public class MusicPropertiesViewModel : ViewModel<IMusicPropertiesView>
             if (musicFile == value) return;
             if (musicFile != null)
             {
-                PropertyChangedEventManager.RemoveHandler(musicFile, MusicFilePropertyChanged, "");
-                if (musicFile.IsMetadataLoaded) PropertyChangedEventManager.RemoveHandler(musicFile.Metadata, MetadataPropertyChanged, "");
+                WeakEvent.TryRemove(ref musicFilePropertyChangedProxy);
+                if (musicFile.IsMetadataLoaded) WeakEvent.TryRemove(ref metadataPropertyChangedProxy);
             }
             musicFile = value;
             if (musicFile != null)
             {
-                PropertyChangedEventManager.AddHandler(musicFile, MusicFilePropertyChanged, "");
+                musicFilePropertyChangedProxy = WeakEvent.PropertyChanged.Add(musicFile, MusicFilePropertyChanged);
                 MetadataLoaded();
             }
             RaisePropertyChanged();
@@ -65,7 +67,7 @@ public class MusicPropertiesViewModel : ViewModel<IMusicPropertiesView>
         var metadata = fileName.Split(['-'], 2).Select(x => x.Trim()).ToArray();
         if (metadata.Length == 2)
         {
-            MusicFile!.Metadata!.Artists = new[] { metadata[0] };
+            MusicFile!.Metadata!.Artists = [ metadata[0] ];
             MusicFile.Metadata.Title = metadata[1];
         }
         else
@@ -77,7 +79,7 @@ public class MusicPropertiesViewModel : ViewModel<IMusicPropertiesView>
     private void MetadataLoaded()
     {
         if (MusicFile?.IsMetadataLoaded != true) return;
-        PropertyChangedEventManager.AddHandler(MusicFile.Metadata, MetadataPropertyChanged, "");
+        metadataPropertyChangedProxy = WeakEvent.PropertyChanged.Add(MusicFile.Metadata, MetadataPropertyChanged);
         autoFillFromFileNameCommand.RaiseCanExecuteChanged();
     }
 

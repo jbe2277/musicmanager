@@ -1,10 +1,12 @@
-﻿namespace Waf.MusicManager.Applications.DataModels;
+﻿using Waf.MusicManager.Applications.Services;
+
+namespace Waf.MusicManager.Applications.DataModels;
 
 public class FolderBrowserDataModel : Model
 {
     private string userPath = "";
     private string currentPath = null!;
-    private IReadOnlyList<FolderItem> subDirectories = Array.Empty<FolderItem>();
+    private IReadOnlyList<FolderItem> subDirectories = [];
     private FolderItem? selectedSubDirectory;
 
     public string UserPath

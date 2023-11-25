@@ -44,15 +44,15 @@ internal class ManagerController
         this.managerStatusService = managerStatusService;
         this.fileSystemWatcherService = fileSystemWatcherService;
         this.managerViewModel = managerViewModel;
-        musicFiles = new ObservableCollection<MusicFile>();
-        updateSubDirectoriesCommand = new DelegateCommand(UpdateSubDirectories);
-        navigateDirectoryUpCommand = new DelegateCommand(NavigateDirectoryUp, CanNavigateDirectoryUp);
-        navigateHomeCommand = new DelegateCommand(NavigateHome);
-        navigatePublicHomeCommand = new DelegateCommand(NavigatePublicHome);
-        loadRecursiveCommand = new DelegateCommand(LoadRecursive);
-        navigateToSelectedSubDirectoryCommand = new DelegateCommand(NavigateToSelectedSubDirectory);
-        showMusicPropertiesCommand = new DelegateCommand(ShowMusicProperties);
-        deleteSelectedFilesCommand = new DelegateCommand(DeleteSelectedFiles);
+        musicFiles = [];
+        updateSubDirectoriesCommand = new(UpdateSubDirectories);
+        navigateDirectoryUpCommand = new(NavigateDirectoryUp, CanNavigateDirectoryUp);
+        navigateHomeCommand = new(NavigateHome);
+        navigatePublicHomeCommand = new(NavigatePublicHome);
+        loadRecursiveCommand = new(LoadRecursive);
+        navigateToSelectedSubDirectoryCommand = new(NavigateToSelectedSubDirectory);
+        showMusicPropertiesCommand = new(ShowMusicProperties);
+        deleteSelectedFilesCommand = new(DeleteSelectedFiles);
     }
 
     private ManagerViewModel ManagerViewModel => managerViewModel.Value;

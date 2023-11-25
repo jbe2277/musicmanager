@@ -11,8 +11,6 @@ public class SampleInfoViewModel : InfoViewModel
 
     private class MockInfoView : MockView, IInfoView
     {
-        public void ShowDialog(object owner)
-        {
-        }
+        public void ShowDialog(object owner) { }
     }
 }

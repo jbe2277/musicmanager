@@ -23,8 +23,8 @@ internal class ShellService : Model, IShellService
     public ShellService(Lazy<IShellView> shellView)
     {
         this.shellView = shellView;
-        tasksToCompleteBeforeShutdown = new List<Task>();
-        applicationBusyContext = new List<ApplicationBusyContext>();
+        tasksToCompleteBeforeShutdown = [];
+        applicationBusyContext = [];
     }
 
     public AppSettings Settings { get; set; } = null!;

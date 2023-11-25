@@ -7,5 +7,5 @@ public interface ISelectionService
 {
     ObservableListView<MusicFileDataModel> MusicFiles { get; }
 
-    ObservableCollection<MusicFileDataModel> SelectedMusicFiles { get; }
+    ObservableList<MusicFileDataModel> SelectedMusicFiles { get; }
 }

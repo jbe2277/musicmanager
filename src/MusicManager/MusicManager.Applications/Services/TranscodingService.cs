@@ -38,7 +38,7 @@ internal class TranscodingService : Model, ITranscodingService
 
     public event EventHandler<TranscodingTaskEventArgs>? TranscodingTaskCreated;
 
-    public void RaiseTranscodingTaskCreated(string fileName, Task transcodingTask) => OnTranscodingTaskCreated(new TranscodingTaskEventArgs(fileName, transcodingTask));
+    public void RaiseTranscodingTaskCreated(string fileName, Task transcodingTask) => OnTranscodingTaskCreated(new(fileName, transcodingTask));
 
     protected virtual void OnTranscodingTaskCreated(TranscodingTaskEventArgs e) => TranscodingTaskCreated?.Invoke(this, e);
 }

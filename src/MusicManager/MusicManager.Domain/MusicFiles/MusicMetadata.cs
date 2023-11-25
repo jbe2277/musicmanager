@@ -2,18 +2,18 @@
 
 public class MusicMetadata : Entity
 {
-    private IReadOnlyList<string> artists = Array.Empty<string>();
+    private IReadOnlyList<string> artists = [];
     private string title = "";
     private uint rating;
     private string album = "";
     private uint trackNumber;
     private uint year;
-    private IReadOnlyList<string> genre = Array.Empty<string>();
+    private IReadOnlyList<string> genre = [];
     private string albumArtist = "";
     private string publisher = "";
     private string subtitle = "";
-    private IReadOnlyList<string> composers = Array.Empty<string>();
-    private IReadOnlyList<string> conductors = Array.Empty<string>();
+    private IReadOnlyList<string> composers = [];
+    private IReadOnlyList<string> conductors = [];
 
     private MusicMetadata(TimeSpan duration, long bitrate, bool isSupported)
     {

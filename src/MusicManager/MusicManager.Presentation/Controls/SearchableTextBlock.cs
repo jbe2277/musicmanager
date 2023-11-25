@@ -19,7 +19,7 @@ public class SearchableTextBlock : TextBlock
     public static readonly DependencyProperty IsMatchCaseProperty =
         DependencyProperty.Register(nameof(IsMatchCase), typeof(bool), typeof(SearchableTextBlock), new FrameworkPropertyMetadata(false, ControlPropertyChangedCallback));
 
-    private IReadOnlyList<string> textParts = Array.Empty<string>();
+    private IReadOnlyList<string> textParts = [];
 
     public new string Text
     {

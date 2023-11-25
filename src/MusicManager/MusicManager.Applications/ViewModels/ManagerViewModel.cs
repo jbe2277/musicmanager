@@ -29,8 +29,8 @@ public class ManagerViewModel : ViewModel<IManagerView>
         ManagerStatusService = managerStatusService;
         PlayerService = playerService;
         TranscodingService = transcodingService;
-        FolderBrowser = new FolderBrowserDataModel();
-        SearchFilter = new SearchFilterDataModel();
+        FolderBrowser = new();
+        SearchFilter = new();
         ClearSearchCommand = new DelegateCommand(ClearSearch);
     }
 

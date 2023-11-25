@@ -22,7 +22,7 @@ public class Rating : Slider
 
     public Rating()
     {
-        ratingItems = new ReadOnlyCollection<RatingItem>(Array.Empty<RatingItem>());
+        ratingItems = new([]);
     }
 
     public override void OnApplyTemplate()
@@ -72,7 +72,7 @@ public class Rating : Slider
             item.Click += ItemClick;
             items.Add(item);
         }
-        ratingItems = new ReadOnlyCollection<RatingItem>(items);
+        ratingItems = new(items);
         itemsControl.ItemsSource = ratingItems;
     }
 }

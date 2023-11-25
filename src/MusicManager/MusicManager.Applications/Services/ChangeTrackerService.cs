@@ -4,12 +4,7 @@ namespace Waf.MusicManager.Applications.Services;
 
 internal class ChangeTrackerService : IChangeTrackerService
 {
-    private readonly HashSet<Entity> entitiesWithChanges;
-
-    public ChangeTrackerService()
-    {
-        entitiesWithChanges = new HashSet<Entity>();
-    }
+    private readonly HashSet<Entity> entitiesWithChanges = [];
 
     public IEnumerable<Entity> GetEntitiesWithChanges() => entitiesWithChanges.ToArray();
 

@@ -5,6 +5,8 @@ namespace Waf.MusicManager.Applications.DataModels;
 
 public class MusicFileDataModel : Model
 {
+    private IWeakEventProxy? musicFilePropertyChangedProxy;
+
     public MusicFileDataModel(MusicFile musicFile)
     {
         MusicFile = musicFile;
@@ -14,13 +16,13 @@ public class MusicFileDataModel : Model
         }
         else
         {
-            PropertyChangedEventManager.AddHandler(musicFile, MusicFilePropertyChanged, "");
+            musicFilePropertyChangedProxy = WeakEvent.PropertyChanged.Add(musicFile, MusicFilePropertyChanged);
         }
     }
 
     public MusicFile MusicFile { get; }
 
-    public string ArtistsString => string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : Array.Empty<string>());
+    public string ArtistsString => string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ", MusicFile.IsMetadataLoaded ? MusicFile.Metadata.Artists : []);
 
     private void MetadataLoaded() => PropertyChangedEventManager.AddHandler(MusicFile.Metadata, MetadataPropertyChanged, "");
 
@@ -28,7 +30,7 @@ public class MusicFileDataModel : Model
     {
         if (e.PropertyName == nameof(MusicFile.IsMetadataLoaded))
         {
-            PropertyChangedEventManager.RemoveHandler(MusicFile, MusicFilePropertyChanged, "");
+            WeakEvent.TryRemove(ref musicFilePropertyChangedProxy);
             MetadataLoaded();
             RaisePropertyChanged(nameof(ArtistsString));
         }

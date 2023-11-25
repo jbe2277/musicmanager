@@ -10,14 +10,14 @@ public class MockSelectionService : ISelectionService
 
     public MockSelectionService()
     {
-        innerMusicFiles = new ObservableCollection<MusicFileDataModel>();
-        SelectedMusicFiles = new ObservableCollection<MusicFileDataModel>();
-        MusicFiles = new ObservableListView<MusicFileDataModel>(innerMusicFiles);
+        innerMusicFiles = [];
+        SelectedMusicFiles = [];
+        MusicFiles = new(innerMusicFiles);
     }
 
     public ObservableListView<MusicFileDataModel> MusicFiles { get; }
 
-    public ObservableCollection<MusicFileDataModel> SelectedMusicFiles { get; }
+    public ObservableList<MusicFileDataModel> SelectedMusicFiles { get; }
         
     public void SetMusicFiles(IEnumerable<MusicFileDataModel> musicFiles)
     {

@@ -4,7 +4,7 @@ namespace Waf.MusicManager.Presentation.Services;
 
 public static class StringListConverter
 {
-    public static string ToString(IEnumerable<string>? list, string? separator = null) => string.Join(GetSeparator(separator), list ?? Array.Empty<string>());
+    public static string ToString(IEnumerable<string>? list, string? separator = null) => string.Join(GetSeparator(separator), list ?? []);
 
     public static IReadOnlyList<string> FromString(string text, string? separator = null)
     {

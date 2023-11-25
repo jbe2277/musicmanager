@@ -19,8 +19,8 @@ internal class MusicFileContext : IMusicFileContext
     [ImportingConstructor]
     public MusicFileContext(IFileSystemWatcherService fileSystemWatcherService, ITranscodingService transcodingService)
     {
-        musicFilesCache = new ConcurrentDictionary<string, WeakReference<MusicFile>>();
-        runningTranscodingTasks = new ConcurrentDictionary<string, Task>();
+        musicFilesCache = [];
+        runningTranscodingTasks = [];
         stopwatch = Stopwatch.StartNew();
 
         fileSystemWatcherService.Renamed += FileSystemWatcherServiceRenamed;
@@ -42,7 +42,7 @@ internal class MusicFileContext : IMusicFileContext
         runningTranscodingTasks.TryGetValue(fileName, out var runningTranscodingTask);
         var musicFile = new MusicFile(x => LoadMetadata(x ?? throw new InvalidOperationException("MusicFile does not contain a file name"), runningTranscodingTask)!, fileName);
 
-        if (!musicFilesCache.TryAdd(fileName, new WeakReference<MusicFile>(musicFile))) throw new InvalidOperationException("Race condition: This should not happen.");
+        if (!musicFilesCache.TryAdd(fileName, new(musicFile))) throw new InvalidOperationException("Race condition: This should not happen.");
         return musicFile;
     }
 
@@ -74,17 +74,17 @@ internal class MusicFileContext : IMusicFileContext
         return new MusicMetadata(duration, bitrate)
         {
             Title = GetSharedValueOrDefault(musicFiles, x => x.Title) ?? "",
-            Artists = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Artists, SequenceEqualityComparer<string>.Default) ?? Array.Empty<string>(),
+            Artists = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Artists, SequenceEqualityComparer<string>.Default) ?? [],
             Rating = GetSharedValueOrDefault(musicFiles, x => x.Rating),
             Album = GetSharedValueOrDefault(musicFiles, x => x.Album) ?? "",
             TrackNumber = GetSharedValueOrDefault(musicFiles, x => x.TrackNumber),
             Year = GetSharedValueOrDefault(musicFiles, x => x.Year),
-            Genre = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Genre, SequenceEqualityComparer<string>.Default) ?? Array.Empty<string>(),
+            Genre = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Genre, SequenceEqualityComparer<string>.Default) ?? [],
             AlbumArtist = GetSharedValueOrDefault(musicFiles, x => x.AlbumArtist) ?? "",
             Publisher = GetSharedValueOrDefault(musicFiles, x => x.Publisher) ?? "",
             Subtitle = GetSharedValueOrDefault(musicFiles, x => x.Subtitle) ?? "",
-            Composers = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Composers, SequenceEqualityComparer<string>.Default) ?? Array.Empty<string>(),
-            Conductors = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Conductors, SequenceEqualityComparer<string>.Default) ?? Array.Empty<string>()
+            Composers = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Composers, SequenceEqualityComparer<string>.Default) ?? [],
+            Conductors = GetSharedValueOrDefault<IReadOnlyList<string>>(musicFiles, x => x.Conductors, SequenceEqualityComparer<string>.Default) ?? []
         };
     }
 
@@ -94,7 +94,7 @@ internal class MusicFileContext : IMusicFileContext
 
         var metadata = musicFile.Metadata;
         var changedProperties = metadata.Changes;
-        foreach (var sharedMetadata in musicFile.SharedMusicFiles.Select(x => GetMetadata(x)))
+        foreach (var sharedMetadata in musicFile.SharedMusicFiles.Select(GetMetadata))
         {
             if (changedProperties.Contains(nameof(MusicMetadata.Artists))) { sharedMetadata.Artists = metadata.Artists; }
             if (changedProperties.Contains(nameof(MusicMetadata.Title))) { sharedMetadata.Title = metadata.Title; }

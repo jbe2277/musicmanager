@@ -34,20 +34,20 @@ public partial class PlayerView : IPlayerView
     public PlayerView(PlayerService playerService)
     {
         InitializeComponent();
-        viewModel = new Lazy<PlayerViewModel>(() => this.GetViewModel<PlayerViewModel>()!);
+        viewModel = new(() => this.GetViewModel<PlayerViewModel>()!);
         this.playerService = playerService;
         transportControls = Windows.Media.Playback.BackgroundMediaPlayer.Current.SystemMediaTransportControls;        
-        mediaPlayer = new MediaPlayer();
-        duratonConverter = new Converters.DurationConverter();
+        mediaPlayer = new();
+        duratonConverter = new();
 
         updateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
         updateTimer.Tick += UpdateTimerTick;
 
-        throttledSliderValueChangedAction = new ThrottledAction(ThrottledSliderValueChanged, ThrottledActionMode.InvokeMaxEveryDelayTime, TimeSpan.FromMilliseconds(100));
+        throttledSliderValueChangedAction = new(ThrottledSliderValueChanged, ThrottledActionMode.InvokeMaxEveryDelayTime, TimeSpan.FromMilliseconds(100));
 
-        previousCommand = new DelegateCommand(Previous, CanPrevious);
-        playPauseCommand = new DelegateCommand(PlayPause, CanPlayPause);
-        nextCommand = new DelegateCommand(Next, CanNext);
+        previousCommand = new(Previous, CanPrevious);
+        playPauseCommand = new(PlayPause, CanPlayPause);
+        nextCommand = new(Next, CanNext);
         playerService.PreviousCommand = previousCommand;
         playerService.PlayPauseCommand = playPauseCommand;
         playerService.NextCommand = nextCommand;

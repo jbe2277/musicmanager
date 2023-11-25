@@ -21,8 +21,8 @@ public partial class TranscodingListView : ITranscodingListView
     public TranscodingListView()
     {
         InitializeComponent();
-        viewModel = new Lazy<TranscodingListViewModel>(() => this.GetViewModel<TranscodingListViewModel>()!);
-        listBoxDragDropHelper = new ListBoxDragDropHelper<TranscodeItem>(transcodingListBox, null, TryGetInsertItems, InsertItems);
+        viewModel = new(() => this.GetViewModel<TranscodingListViewModel>()!);
+        listBoxDragDropHelper = new(transcodingListBox, null, TryGetInsertItems, InsertItems);
         Loaded += FirstTimeLoadedHandler;
     }
 
@@ -43,8 +43,8 @@ public partial class TranscodingListView : ITranscodingListView
         var statusGroupDescription = new PropertyGroupDescription(nameof(TranscodeItem.TranscodeStatus));
         transcodeItemsCollectionView.GroupDescriptions.Add(statusGroupDescription);
 
-        foreach (var x in ViewModel.TranscodingManager.TranscodeItems) PropertyChangedEventManager.AddHandler(x, TranscodeItemPropertyChanged, "");
-        CollectionChangedEventManager.AddHandler(ViewModel.TranscodingManager.TranscodeItems, TranscodeItemsCollectionChanged);
+        ViewModel.TranscodingManager.TranscodeItems.CollectionChanged += TranscodeItemsCollectionChanged;
+        ViewModel.TranscodingManager.TranscodeItems.CollectionItemChanged += TranscodeItemPropertyChanged;
     }
 
     private static IEnumerable? TryGetInsertItems(DragEventArgs e) => e.Data.GetData(DataFormats.FileDrop) as IEnumerable ?? e.Data.GetData(typeof(MusicFile[])) as IEnumerable;
@@ -63,16 +63,10 @@ public partial class TranscodingListView : ITranscodingListView
 
     private void TranscodeItemsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        if (e.Action == NotifyCollectionChangedAction.Remove)
+        if (e.Action == NotifyCollectionChangedAction.Add)
         {
-            foreach (var x in e.OldItems!.Cast<TranscodeItem>()) PropertyChangedEventManager.RemoveHandler(x, TranscodeItemPropertyChanged, "");
-        }
-        else if (e.Action == NotifyCollectionChangedAction.Add)
-        {
-            foreach (var x in e.NewItems!.Cast<TranscodeItem>()) PropertyChangedEventManager.AddHandler(x, TranscodeItemPropertyChanged, "");
             transcodingListBox.ScrollIntoView(ViewModel.TranscodingManager.TranscodeItems[^1]);
         }
-        else throw new NotSupportedException("This action type is not supported: " + e.Action);
         transcodeItemsCollectionView.Refresh();  // Workaround because live shaping does not support to sort groupings.
     }
         

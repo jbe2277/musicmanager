@@ -8,10 +8,10 @@ namespace Waf.MusicManager.Presentation.Controls;
 public class Flyout : Popup
 {
     public static readonly DependencyProperty HorizontalFlyoutAlignmentProperty =
-        DependencyProperty.Register(nameof(HorizontalFlyoutAlignment), typeof(HorizontalFlyoutAlignment), typeof(Flyout), new PropertyMetadata(HorizontalFlyoutAlignment.Left));
+        DependencyProperty.Register(nameof(HorizontalFlyoutAlignment), typeof(HorizontalFlyoutAlignment), typeof(Flyout), new(HorizontalFlyoutAlignment.Left));
 
     public new static readonly DependencyProperty HorizontalOffsetProperty = 
-        DependencyProperty.Register(nameof(HorizontalOffset), typeof(double), typeof(Flyout), new PropertyMetadata(0d));
+        DependencyProperty.Register(nameof(HorizontalOffset), typeof(double), typeof(Flyout), new(0d));
 
     private readonly Stopwatch closedStopwatch;
         

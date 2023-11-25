@@ -2,7 +2,7 @@
 
 internal class SequenceEqualityComparer<T> : IEqualityComparer<IEnumerable<T>>
 {
-    public static SequenceEqualityComparer<T> Default { get; } = new SequenceEqualityComparer<T>();
+    public static SequenceEqualityComparer<T> Default { get; } = new();
 
     public bool Equals(IEnumerable<T>? x, IEnumerable<T>? y)
     {

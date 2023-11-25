@@ -35,7 +35,7 @@ internal class ModuleController : IModuleController
         this.playlistController = playlistController;
         this.transcodingController = transcodingController;
         this.shellViewModel = shellViewModel;
-        playlistManager = new PlaylistManager();
+        playlistManager = new();
         settingsService.ErrorOccurred += (sender, e) => Log.Default.Error(e.Error, "Error in SettingsService");
         appSettings = settingsService.Get<AppSettings>();
         playlistSettings = settingsService.Get<PlaylistSettings>();

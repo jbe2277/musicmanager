@@ -11,8 +11,8 @@ public abstract class Entity : Model
 
     protected Entity()
     {
-        changeTrackerService = new Lazy<IChangeTrackerService>(ServiceLocator.Get<IChangeTrackerService>);
-        changes = new HashSet<string>();
+        changeTrackerService = new(ServiceLocator.Get<IChangeTrackerService>);
+        changes = [];
     }
 
     public bool HasChanges
