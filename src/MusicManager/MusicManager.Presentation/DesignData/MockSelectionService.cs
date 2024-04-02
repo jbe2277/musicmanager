@@ -1,5 +1,4 @@
-﻿using System.Waf.Applications;
-using Waf.MusicManager.Applications.DataModels;
+﻿using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Services;
 
 namespace Waf.MusicManager.Presentation.DesignData;
@@ -15,7 +14,7 @@ public class MockSelectionService : ISelectionService
         MusicFiles = new(innerMusicFiles);
     }
 
-    public ObservableListView<MusicFileDataModel> MusicFiles { get; }
+    public ObservableListViewCore<MusicFileDataModel> MusicFiles { get; }
 
     public ObservableList<MusicFileDataModel> SelectedMusicFiles { get; }
         
