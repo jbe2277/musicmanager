@@ -7,8 +7,6 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <NoWarn>$(NoWarn);CA1014</NoWarn>
   </PropertyGroup>
 
   <Choose>
