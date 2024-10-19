@@ -1,0 +1,17 @@
+﻿<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233" />
+    <PackageVersion Include="NLog" Version="5.3.2" />
+    <PackageVersion Include="System.Waf.Core" Version="8.0.1" />
+    <PackageVersion Include="System.Waf.Wpf" Version="8.0.1" />
+    <!-- Unit tests -->
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="3.6.1" />
+    <PackageVersion Include="MSTest.TestFramework" Version="3.6.1" />    
+    <PackageVersion Include="System.Waf.UnitTesting.Core" Version="8.0.1" />    
+    <PackageVersion Include="System.Waf.UnitTesting.Wpf" Version="8.0.1" />
+  </ItemGroup>
+</Project>

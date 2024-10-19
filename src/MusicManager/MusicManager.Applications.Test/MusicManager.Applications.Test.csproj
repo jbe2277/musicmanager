@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Waf.UnitTesting.Wpf" Version="8.0.1" />
+    <PackageReference Include="System.Waf.UnitTesting.Wpf" />
   </ItemGroup>
 
   <ItemGroup>
