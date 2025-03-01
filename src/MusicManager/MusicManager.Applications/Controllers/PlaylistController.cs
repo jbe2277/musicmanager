@@ -123,7 +123,7 @@ internal class PlaylistController : IPlaylistService
 
     private void RemoveSelected()
     {
-        var playListItemsToExclude = PlaylistViewModel.SelectedPlaylistItems.Except(new[] { PlaylistViewModel.SelectedPlaylistItem }).ToArray();
+        var playListItemsToExclude = PlaylistViewModel.SelectedPlaylistItems.Except([PlaylistViewModel.SelectedPlaylistItem]).ToArray();
         var nextPlaylistItem = PlaylistManager.Items.Except(playListItemsToExclude).GetNextElementOrDefault(PlaylistViewModel.SelectedPlaylistItem);
 
         PlaylistManager.RemoveItems(PlaylistViewModel.SelectedPlaylistItems);

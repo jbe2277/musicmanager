@@ -103,7 +103,7 @@ internal class MusicPropertiesController : IMusicPropertiesService
 
         // Filter out the music file that is currently playing
         var playingMusicFile = PlaylistManager.CurrentItem?.MusicFile;
-        var filesToSave = playingMusicFile is null ? allFilesToSave : allFilesToSave.Except(new[] { playingMusicFile }).ToArray();
+        var filesToSave = playingMusicFile is null ? allFilesToSave : allFilesToSave.Except([playingMusicFile]).ToArray();
         if (playingMusicFile != null && allFilesToSave.Contains(playingMusicFile)) musicFilesToSaveAfterPlaying.Add(playingMusicFile);
 
         if (!filesToSave.Any()) return;

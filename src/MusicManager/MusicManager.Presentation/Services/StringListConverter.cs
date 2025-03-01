@@ -8,7 +8,7 @@ public static class StringListConverter
 
     public static IReadOnlyList<string> FromString(string text, string? separator = null)
     {
-        return (text ?? "").Split(new[] { GetSeparator(separator).Trim(' ') }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim(' ')).Where(x => !string.IsNullOrEmpty(x)).ToArray();
+        return (text ?? "").Split([GetSeparator(separator).Trim(' ')], StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim(' ')).Where(x => !string.IsNullOrEmpty(x)).ToArray();
     }
 
     private static string GetSeparator(string? separator) => !string.IsNullOrEmpty(separator) ? separator : CultureInfo.CurrentCulture.TextInfo.ListSeparator + " ";

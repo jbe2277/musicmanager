@@ -70,7 +70,7 @@ public class SearchableTextBlock : TextBlock
         var text = Text;
         var searchText = SearchText;
 
-        if (string.IsNullOrEmpty(searchText)) return new[] { text };
+        if (string.IsNullOrEmpty(searchText)) return [text];
             
         var parts = new List<string>();
         var index = 0;

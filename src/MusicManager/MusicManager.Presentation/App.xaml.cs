@@ -19,15 +19,15 @@ namespace Waf.MusicManager.Presentation;
 
 public partial class App
 {
-    private static readonly Tuple<string, LogLevel>[] logSettings =
-    {
-        Tuple.Create("App", LogLevel.Info),
-        Tuple.Create("MusicManager.*", LogLevel.Warn),
-    };
+    private static readonly IReadOnlyList<(string name, LogLevel level)> logSettings =
+    [
+        ("App", LogLevel.Info),
+        ("MusicManager.*", LogLevel.Warn),
+    ];
 
     private AggregateCatalog? catalog;
     private CompositionContainer? container;
-    private IEnumerable<IModuleController> moduleControllers = Array.Empty<IModuleController>();
+    private IEnumerable<IModuleController> moduleControllers = [];
 
     public App()
     {
@@ -41,7 +41,7 @@ public partial class App
         var logConfig = new LoggingConfiguration { DefaultCultureInfo = CultureInfo.InvariantCulture };
         logConfig.AddTarget(fileTarget);
         var maxLevel = LogLevel.AllLoggingLevels.Last();
-        foreach (var x in logSettings) logConfig.AddRule(x.Item2, maxLevel, fileTarget, x.Item1);
+        foreach (var x in logSettings) logConfig.AddRule(x.level, maxLevel, fileTarget, x.name);
         LogManager.Configuration = logConfig;
     }
 
