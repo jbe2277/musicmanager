@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+Version 3.4.0.100 (Release)
+- Migrate to .NET 9.
+
+
 Version 3.3.2.100 (Release)
 - Update libraries.
 
