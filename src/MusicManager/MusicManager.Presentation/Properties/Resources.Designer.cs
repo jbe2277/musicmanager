@@ -331,24 +331,6 @@ namespace Waf.MusicManager.Presentation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  (32 Bit).
-        /// </summary>
-        public static string Info32Bit {
-            get {
-                return ResourceManager.GetString("Info32Bit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  (64 Bit).
-        /// </summary>
-        public static string Info64Bit {
-            get {
-                return ResourceManager.GetString("Info64Bit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to In Progress.
         /// </summary>
         public static string InProgress {

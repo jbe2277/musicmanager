@@ -195,12 +195,6 @@
   <data name="Info" xml:space="preserve">
     <value>Info</value>
   </data>
-  <data name="Info32Bit" xml:space="preserve">
-    <value> (32 Bit)</value>
-  </data>
-  <data name="Info64Bit" xml:space="preserve">
-    <value> (64 Bit)</value>
-  </data>
   <data name="InternalErrorDescription" xml:space="preserve">
     <value>Internal error description</value>
   </data>

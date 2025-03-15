@@ -59,18 +59,7 @@
                 <Label Grid.Column="1" Grid.Row="5">
                     <TextBlock>
                         <Run Text="{Binding NetVersion, Mode=OneWay}"/>
-                        <Run>
-                            <Run.Style>
-                                <Style TargetType="Run">
-                                    <Setter Property="Text" Value="{x:Static p:Resources.Info32Bit}"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Is64BitProcess}" Value="True">
-                                            <Setter Property="Text" Value="{x:Static p:Resources.Info64Bit}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Run.Style>
-                        </Run>
+                        <Run Text="{Binding ProcessArchitecture, StringFormat=' ({0})', Mode=OneTime}"/>
                     </TextBlock>
                 </Label>
             </Grid>

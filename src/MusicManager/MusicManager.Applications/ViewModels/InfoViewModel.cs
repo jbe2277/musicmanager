@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.MusicManager.Applications.Views;
@@ -25,7 +26,7 @@ public class InfoViewModel : ViewModel<IInfoView>
 
     public string NetVersion => Environment.Version.ToString();
 
-    public bool Is64BitProcess => Environment.Is64BitProcess;
+    public Architecture ProcessArchitecture => RuntimeInformation.ProcessArchitecture;
 
     public void ShowDialog(object owner) => ViewCore.ShowDialog(owner);
 
