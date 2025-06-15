@@ -4,13 +4,13 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-    <PackageVersion Include="NLog" Version="5.4.0" />
+    <PackageVersion Include="NLog" Version="5.5.0" />
     <PackageVersion Include="System.Waf.Core" Version="8.1.0" />
     <PackageVersion Include="System.Waf.Wpf" Version="8.1.0" />
     <!-- Unit tests -->
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageVersion Include="MSTest.TestAdapter" Version="3.8.2" />
-    <PackageVersion Include="MSTest.TestFramework" Version="3.8.2" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="3.9.2" />
+    <PackageVersion Include="MSTest.TestFramework" Version="3.9.2" />
     <PackageVersion Include="System.Waf.UnitTesting.Core" Version="8.1.0" />
     <PackageVersion Include="System.Waf.UnitTesting.Wpf" Version="8.1.0" />
   </ItemGroup>
