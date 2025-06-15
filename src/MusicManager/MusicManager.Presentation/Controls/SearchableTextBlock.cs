@@ -47,7 +47,7 @@ public class SearchableTextBlock : TextBlock
 
     private void UpdateContent()
     {
-        var newTextParts = SplitText();
+        var newTextParts = SplitText(Text, SearchText, IsMatchCase);
         if (textParts.SequenceEqual(newTextParts)) return;
             
         var highlightBackground = HighlightBackground;
@@ -65,25 +65,22 @@ public class SearchableTextBlock : TextBlock
         textParts = newTextParts;
     }
 
-    private IReadOnlyList<string> SplitText()
+    internal static IReadOnlyList<string> SplitText(string text, string searchText, bool isMatchCase)
     {
-        var text = Text;
-        var searchText = SearchText;
-
         if (string.IsNullOrEmpty(searchText)) return [text];
             
         var parts = new List<string>();
-        var index = 0;
-        var comparisonType = IsMatchCase ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase;
+        var comparisonType = isMatchCase ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase;
+        var textSpan = text.AsSpan();
         while (true)
-        {
-            int position = text.IndexOf(searchText, index, comparisonType);
+        {            
+            int position = textSpan.IndexOf(searchText, comparisonType);
             if (position < 0) break;
-            parts.Add(text[index..position]);
-            parts.Add(text.Substring(position, searchText.Length));
-            index = position + searchText.Length;
+            parts.Add(new string(textSpan[..position]));
+            parts.Add(new string(textSpan[position..(position + searchText.Length)]));
+            textSpan = textSpan[(position + searchText.Length)..];
         }
-        parts.Add(text[index..]);
+        parts.Add(new string(textSpan));
         return parts;
     }
 
