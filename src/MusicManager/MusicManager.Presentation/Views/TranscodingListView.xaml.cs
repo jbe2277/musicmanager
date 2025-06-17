@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.ComponentModel.Composition;
 using System.Waf.Applications;
 using System.Windows;
 using System.Windows.Data;
@@ -11,7 +10,6 @@ using Waf.MusicManager.Presentation.Controls;
 
 namespace Waf.MusicManager.Presentation.Views;
 
-[Export(typeof(ITranscodingListView))]
 public partial class TranscodingListView : ITranscodingListView
 {
     private readonly Lazy<TranscodingListViewModel> viewModel;

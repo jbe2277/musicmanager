@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.Composition;
-using Waf.MusicManager.Applications.Services;
+﻿using Waf.MusicManager.Applications.Services;
 
 namespace Test.MusicManager.Applications.Services;
 
-[Export, Export(typeof(IFileSystemWatcherService))]
 public class MockFileSystemWatcherService : IFileSystemWatcherService
 {
     public NotifyFilters NotifyFilter { get; set; }

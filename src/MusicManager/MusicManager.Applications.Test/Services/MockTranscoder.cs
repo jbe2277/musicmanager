@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.Composition;
-using Waf.MusicManager.Applications.Services;
+﻿using Waf.MusicManager.Applications.Services;
 
 namespace Test.MusicManager.Applications.Services;
 
-[Export, Export(typeof(ITranscoder))]
 public class MockTranscoder : ITranscoder
 {
     public Func<string, string, uint, CancellationToken, IProgress<double>, Task>? TranscodeAsyncAction { get; set; }

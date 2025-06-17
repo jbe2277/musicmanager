@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Waf.Applications;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +13,6 @@ using Windows.Media;
 
 namespace Waf.MusicManager.Presentation.Views;
 
-[Export(typeof(IPlayerView))]
 public partial class PlayerView : IPlayerView
 {
     private readonly Lazy<PlayerViewModel> viewModel;
@@ -30,7 +28,6 @@ public partial class PlayerView : IPlayerView
     private bool suppressPositionSliderValueChanged;
     private double lastUserSliderValue;
         
-    [ImportingConstructor]
     public PlayerView(PlayerService playerService)
     {
         InitializeComponent();

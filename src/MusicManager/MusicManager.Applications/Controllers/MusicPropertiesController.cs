@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using Waf.MusicManager.Applications.Properties;
+﻿using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Domain.MusicFiles;
@@ -7,7 +6,6 @@ using Waf.MusicManager.Domain.Playlists;
 
 namespace Waf.MusicManager.Applications.Controllers;
 
-[Export, Export(typeof(IMusicPropertiesService))]
 internal class MusicPropertiesController : IMusicPropertiesService
 {
     private readonly IShellService shellService;
@@ -18,7 +16,6 @@ internal class MusicPropertiesController : IMusicPropertiesService
     private readonly HashSet<MusicFile> musicFilesToSaveAfterPlaying;
     private TaskCompletionSource<object?>? allFilesSavedCompletion;
         
-    [ImportingConstructor]
     public MusicPropertiesController(IShellService shellService, IMusicFileContext musicFileContext, ISelectionService selectionService, Lazy<MusicPropertiesViewModel> musicPropertiesViewModel)
     {
         this.shellService = shellService;

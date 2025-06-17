@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 using Waf.MusicManager.Applications;
@@ -9,14 +8,12 @@ using Windows.Storage;
 
 namespace Waf.MusicManager.Presentation.Services;
 
-[Export, Export(typeof(IMusicFileContext))]
 internal class MusicFileContext : IMusicFileContext
 {
     private readonly ConcurrentDictionary<string, WeakReference<MusicFile>> musicFilesCache;
     private readonly ConcurrentDictionary<string, Task> runningTranscodingTasks;
     private readonly Stopwatch stopwatch;
 
-    [ImportingConstructor]
     public MusicFileContext(IFileSystemWatcherService fileSystemWatcherService, ITranscodingService transcodingService)
     {
         musicFilesCache = [];
@@ -67,7 +64,7 @@ internal class MusicFileContext : IMusicFileContext
     private static async Task<MusicMetadata> LoadMetadataFromMultiple(IReadOnlyList<MusicFile> musicFiles)
     {
         // Ensure that the Metadata of all files are loaded
-        await TaskUtility.WhenAllFast(musicFiles.Select(x => x.GetMetadataAsync()));
+        await TaskUtility.WhenAllFast(musicFiles.Select(x => x.GetMetadataAsync()).ToArray());
 
         var duration = GetSharedValueOrDefault(musicFiles, x => x.Duration);
         var bitrate = GetSharedValueOrDefault(musicFiles, x => x.Bitrate);

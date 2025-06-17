@@ -16,7 +16,7 @@ public class InfoViewModelTest : ApplicationsTest
     [TestMethod]
     public void BasicInfoViewModelTest()
     {
-        var viewModel = Container.GetExportedValue<InfoViewModel>();
+        var viewModel = Get<InfoViewModel>();
         var ownerWindow = new object();
 
         bool isShowDialogCalled = false;

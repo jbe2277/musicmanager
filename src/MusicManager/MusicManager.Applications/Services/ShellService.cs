@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.Composition;
-using Waf.MusicManager.Applications.Properties;
+﻿using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Views;
 
 namespace Waf.MusicManager.Applications.Services;
 
-[Export(typeof(IShellService)), Export]
 internal class ShellService : Model, IShellService
 {
     private readonly Lazy<IShellView> shellView;
@@ -19,7 +17,6 @@ internal class ShellService : Model, IShellService
     private bool isClosingEventInitialized;
     private event CancelEventHandler? closing;
 
-    [ImportingConstructor]
     public ShellService(Lazy<IShellView> shellView)
     {
         this.shellView = shellView;

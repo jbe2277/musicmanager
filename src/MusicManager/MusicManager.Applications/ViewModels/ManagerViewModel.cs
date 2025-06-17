@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Applications.Services;
@@ -7,7 +6,6 @@ using Waf.MusicManager.Applications.Views;
 
 namespace Waf.MusicManager.Applications.ViewModels;
 
-[Export]
 public class ManagerViewModel : ViewModel<IManagerView>
 {
     private readonly Lazy<ISelectionService> selectionService;
@@ -21,7 +19,6 @@ public class ManagerViewModel : ViewModel<IManagerView>
     private ICommand showMusicPropertiesCommand = DelegateCommand.DisabledCommand;
     private ICommand deleteSelectedFilesCommand = DelegateCommand.DisabledCommand;
 
-    [ImportingConstructor]
     public ManagerViewModel(IManagerView view, Lazy<ISelectionService> selectionService, IManagerStatusService managerStatusService, IPlayerService playerService, ITranscodingService transcodingService)
         : base(view)
     {

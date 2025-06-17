@@ -12,8 +12,8 @@ public class MusicPropertiesViewModelTest : ApplicationsTest
 {
     public void CopyFileNameToClipboardTest()
     {
-        var clipboardService = Container.GetExportedValue<MockClipboardService>();
-        var viewModel = Container.GetExportedValue<MusicPropertiesViewModel>();
+        var clipboardService = Get<MockClipboardService>();
+        var viewModel = Get<MusicPropertiesViewModel>();
             
         string? clipboardText = null;
         clipboardService.SetTextAction = txt => clipboardText = txt;
@@ -31,7 +31,7 @@ public class MusicPropertiesViewModelTest : ApplicationsTest
     [TestMethod]
     public void AutoFillFromFileNameTest()
     {
-        var viewModel = Container.GetExportedValue<MusicPropertiesViewModel>();
+        var viewModel = Get<MusicPropertiesViewModel>();
 
         Assert.IsFalse(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
 
@@ -65,7 +65,7 @@ public class MusicPropertiesViewModelTest : ApplicationsTest
     [TestMethod]
     public void UpdateAutoFillFromFileNameTestCommand()
     {
-        var viewModel = Container.GetExportedValue<MusicPropertiesViewModel>();
+        var viewModel = Get<MusicPropertiesViewModel>();
         Assert.IsFalse(viewModel.AutoFillFromFileNameCommand.CanExecute(null));
 
         var musicFile = MockMusicFile.CreateEmpty(@"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.mp3");

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -10,7 +9,6 @@ using Waf.MusicManager.Applications.Views;
 
 namespace Waf.MusicManager.Presentation.Views;
 
-[Export(typeof(IShellView))]
 public partial class ShellWindow : IShellView
 {
     private readonly Lazy<ShellViewModel> viewModel;

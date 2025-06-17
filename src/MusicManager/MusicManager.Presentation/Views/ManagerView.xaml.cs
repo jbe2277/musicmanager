@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Waf.Presentation.Controls;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +13,6 @@ using Waf.MusicManager.Presentation.Services;
 
 namespace Waf.MusicManager.Presentation.Views;
 
-[Export(typeof(IManagerView))]
 public partial class ManagerView : IManagerView
 {
     private readonly Lazy<ManagerViewModel> viewModel;

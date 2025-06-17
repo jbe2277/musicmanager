@@ -10,8 +10,8 @@ public class ShellServiceTest : ApplicationsTest
     [TestMethod]
     public void ClosingEventTest()
     {
-        var service = Container.GetExportedValue<ShellService>();
-        var shellView = Container.GetExportedValue<MockShellView>();
+        var service = Get<ShellService>();
+        var shellView = Get<MockShellView>();
 
         Assert.AreEqual(shellView, service.ShellView);
 
@@ -39,7 +39,7 @@ public class ShellServiceTest : ApplicationsTest
     [TestMethod]
     public void TasksToCompleteBeforeShutdownTest()
     {
-        var service = Container.GetExportedValue<ShellService>();
+        var service = Get<ShellService>();
 
         Assert.IsFalse(service.TasksToCompleteBeforeShutdown.Any());
         var task = Task.CompletedTask;
@@ -50,7 +50,7 @@ public class ShellServiceTest : ApplicationsTest
     [TestMethod]
     public void IsApplicationBusyTest()
     {
-        var service = Container.GetExportedValue<ShellService>();
+        var service = Get<ShellService>();
 
         Assert.IsFalse(service.IsApplicationBusy);
             
@@ -70,7 +70,7 @@ public class ShellServiceTest : ApplicationsTest
     [TestMethod]
     public void ShowErrorTest()
     {
-        var service = Container.GetExportedValue<ShellService>();
+        var service = Get<ShellService>();
 
         Exception? exception = null;
         string? message = null;

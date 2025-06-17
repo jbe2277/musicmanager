@@ -26,20 +26,20 @@ public class MusicPropertiesControllerTest : ApplicationsTest
     {
         base.OnInitialize();
 
-        musicFileContext = Container.GetExportedValue<MockMusicFileContext>();
+        musicFileContext = Get<MockMusicFileContext>();
         musicFiles = [
             musicFileContext.Create(@"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.wav"),
             musicFileContext.Create(@"C:\Culture Beat - Serenity - Epilog.wma"),
         ];
-        selectionService = Container.GetExportedValue<SelectionService>();
+        selectionService = Get<SelectionService>();
         selectionService.Initialize(musicFiles);
 
         playlistManager = new();
-        controller = Container.GetExportedValue<MusicPropertiesController>();
+        controller = Get<MusicPropertiesController>();
         controller.PlaylistManager = playlistManager;
         controller.Initialize();
 
-        var shellService = Container.GetExportedValue<ShellService>();
+        var shellService = Get<ShellService>();
         view = (MockMusicPropertiesView)shellService.MusicPropertiesView!;
         viewModel = ViewHelper.GetViewModel<MusicPropertiesViewModel>(view)!;
     }
@@ -103,7 +103,7 @@ public class MusicPropertiesControllerTest : ApplicationsTest
             return tcs.Task;
         };
 
-        var shellService = Container.GetExportedValue<ShellService>();
+        var shellService = Get<ShellService>();
         var showErrorCalled = false;
         shellService.ShowErrorAction = (ex, msg) =>
         {
@@ -158,7 +158,7 @@ public class MusicPropertiesControllerTest : ApplicationsTest
         //   2. save unsaved files because they were played until now
         selectionService.MusicFiles[0].MusicFile.Metadata!.Rating = 75;
         selectionService.MusicFiles[1].MusicFile.Metadata!.Rating = 75;
-        var shellService = Container.GetExportedValue<ShellService>();
+        var shellService = Get<ShellService>();
         musicFileToSave = musicFiles[0];
         controller.Shutdown();
         var tasks = shellService.TasksToCompleteBeforeShutdown.ToArray();

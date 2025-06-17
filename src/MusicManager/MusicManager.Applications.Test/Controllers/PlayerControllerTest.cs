@@ -29,22 +29,22 @@ public class PlayerControllerTest : ApplicationsTest
     {
         base.OnInitialize();
 
-        var musicFileContext = Container.GetExportedValue<MockMusicFileContext>();
+        var musicFileContext = Get<MockMusicFileContext>();
         musicFiles = [
             musicFileContext.Create(@"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.wav"),
             musicFileContext.Create(@"C:\Culture Beat - Serenity - Epilog.wma"),
         ];
-        selectionService = Container.GetExportedValue<SelectionService>();
+        selectionService = Get<SelectionService>();
         selectionService.Initialize(musicFiles);
 
         playlistManager = new();
         playlistSettings = new();
-        controller = Container.GetExportedValue<PlayerController>();
+        controller = Get<PlayerController>();
         controller.PlaylistSettings = playlistSettings;
         controller.PlaylistManager = playlistManager;
         controller.Initialize();
 
-        shellService = Container.GetExportedValue<ShellService>();
+        shellService = Get<ShellService>();
         shellService.ShowPlaylistViewAction = () => { };
         shellService.ShowMusicPropertiesViewAction = () => { };
         view = (MockPlayerView)shellService.PlayerView!;
@@ -62,14 +62,14 @@ public class PlayerControllerTest : ApplicationsTest
     public void PassMusicFileViaCommandLineParameter()
     {
         // Simulate that a music file was passed via command line parameter
-        var environmentService = Container.GetExportedValue<MockEnvironmentService>();
+        var environmentService = Get<MockEnvironmentService>();
         environmentService.MusicFilesToLoad = new[] { musicFiles.First().FileName! };
 
         // Another controller is responsible to add first the item into the playlist.
         playlistManager.InsertItems(0, musicFiles.Select(x => new PlaylistItem(x)));
 
         // Now auto-play the file.
-        var playerService = Container.GetExportedValue<PlayerService>();
+        var playerService = Get<PlayerService>();
         playerService.IsPlayCommand = true;
         bool playPauseCommandCalled = false;
         playerService.PlayPauseCommand = new DelegateCommand(() => playPauseCommandCalled = true);
@@ -109,7 +109,7 @@ public class PlayerControllerTest : ApplicationsTest
         Assert.AreEqual(1, playlistManager.Items.Count);
 
         // Play all
-        var playerService = Container.GetExportedValue<PlayerService>();
+        var playerService = Get<PlayerService>();
         playerService.IsPlayCommand = true;
         bool playPauseCommandCalled = false;
         playerService.PlayPauseCommand = new DelegateCommand(() => playPauseCommandCalled = true);
@@ -199,7 +199,7 @@ public class PlayerControllerTest : ApplicationsTest
         shellService.ShowMusicPropertiesViewAction = () => { showMusicPropertiesViewActionCalled = true; };
         viewModel.ShowMusicPropertiesCommand.Execute(null);
         Assert.IsTrue(showMusicPropertiesViewActionCalled);
-        var musicPropertiesViewModel = Container.GetExportedValue<MusicPropertiesViewModel>();
+        var musicPropertiesViewModel = Get<MusicPropertiesViewModel>();
         Assert.AreEqual(playlistManager.CurrentItem!.MusicFile, musicPropertiesViewModel.MusicFile);
     }
 
@@ -210,7 +210,7 @@ public class PlayerControllerTest : ApplicationsTest
         viewModel.PlayerService.PlayAllCommand.Execute(null);
         shellService.ShowMusicPropertiesView();
 
-        var playlistController = Container.GetExportedValue<PlaylistController>();
+        var playlistController = Get<PlaylistController>();
         playlistController.PlaylistManager = playlistManager;
         playlistController.Initialize();
 
@@ -219,7 +219,7 @@ public class PlayerControllerTest : ApplicationsTest
         viewModel.ShowPlaylistCommand.Execute(null);
         Assert.IsTrue(showPlaylistViewActionCalled);
 
-        var playlistViewModel = Container.GetExportedValue<PlaylistViewModel>();
+        var playlistViewModel = Get<PlaylistViewModel>();
         Assert.AreEqual(playlistManager.CurrentItem, playlistViewModel.SelectedPlaylistItem);
     }
 }

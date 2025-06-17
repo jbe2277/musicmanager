@@ -13,8 +13,8 @@ public class PlaylistViewModelTest : ApplicationsTest
     [TestMethod]
     public void SearchTextTest()
     {
-        var viewModel = Container.GetExportedValue<PlaylistViewModel>();
-        var view = Container.GetExportedValue<MockPlaylistView>();
+        var viewModel = Get<PlaylistViewModel>();
+        var view = Get<MockPlaylistView>();
         PlaylistItem? scrollIntoViewItem = null;
         view.ScrollIntoViewStub = x => scrollIntoViewItem = x;
         bool focusSearchBoxCalled = false;
@@ -65,8 +65,8 @@ public class PlaylistViewModelTest : ApplicationsTest
     [TestMethod]
     public void SearchNextAndPrevious()
     {
-        var viewModel = Container.GetExportedValue<PlaylistViewModel>();
-        var view = Container.GetExportedValue<MockPlaylistView>();
+        var viewModel = Get<PlaylistViewModel>();
+        var view = Get<MockPlaylistView>();
             
         var musicFiles = new[]
         {
@@ -104,8 +104,8 @@ public class PlaylistViewModelTest : ApplicationsTest
     [TestMethod]
     public void SearchTextIsContainedTest()
     {
-        var viewModel = Container.GetExportedValue<PlaylistViewModel>();
-        var view = Container.GetExportedValue<MockPlaylistView>();
+        var viewModel = Get<PlaylistViewModel>();
+        var view = Get<MockPlaylistView>();
         PlaylistItem? scrollIntoViewItem = null;
         view.ScrollIntoViewStub = x => scrollIntoViewItem = x;
 

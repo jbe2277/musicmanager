@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.Primitives;
-using System.Waf.UnitTesting.Mocks;
+﻿using Autofac;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NLog;
 using Test.MusicManager.Applications;
+using Waf.MusicManager.Applications;
 using Waf.MusicManager.Applications.Services;
-using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Presentation.Services;
 
 namespace Test.MusicManager.Presentation
@@ -13,22 +12,17 @@ namespace Test.MusicManager.Presentation
     [TestClass]
     public class PresentationTest : ApplicationsTest
     {
-        // List of exports which must use the real implementation instead of the mock (integration test)
-        private static readonly Type[] exportNames = [
-            typeof(IFileService),
-            typeof(IFileSystemWatcherService), typeof(FileSystemWatcherService),
-            typeof(IMusicFileContext), typeof(MusicFileContext),
-            typeof(ITranscoder), typeof(Transcoder),
-        ];
-
-        protected override void OnCatalogInitialize(AggregateCatalog catalog)
+        protected override void ConfigureContainer(ContainerBuilder builder)
         {
-            catalog.Catalogs.Add(new AssemblyCatalog(typeof(ShellViewModel).Assembly));
-            catalog.Catalogs.Add(new AssemblyCatalog(typeof(MockMessageService).Assembly));
-            catalog.Catalogs.Add(new FilteredCatalog(new AssemblyCatalog(typeof(ApplicationsTest).Assembly), x => !IsOneOfContractNames(x)));
-            catalog.Catalogs.Add(new FilteredCatalog(new AssemblyCatalog(typeof(FileSystemWatcherService).Assembly), IsOneOfContractNames));
+            builder.RegisterModule(new ApplicationsModule());
+            builder.RegisterModule(new MockPresentationModule(useMock: false));
 
-            static bool IsOneOfContractNames(ComposablePartDefinition d) => d.ExportDefinitions.Any(x => exportNames.Any(y => y.FullName == x.ContractName));
+            builder.RegisterType<FileService>().As<IFileService>().AsSelf().SingleInstance();
+            builder.RegisterType<FileSystemWatcherService>().As<IFileSystemWatcherService>().AsSelf().SingleInstance();
+            builder.RegisterType<MusicFileContext>().As<IMusicFileContext>().AsSelf().SingleInstance();
+            builder.RegisterType<Transcoder>().As<ITranscoder>().AsSelf().SingleInstance();
+
+
         }
     }
 }

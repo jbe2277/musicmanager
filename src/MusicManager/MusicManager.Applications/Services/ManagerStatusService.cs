@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿namespace Waf.MusicManager.Applications.Services;
 
-namespace Waf.MusicManager.Applications.Services;
-
-[Export(typeof(IManagerStatusService)), Export]
 internal class ManagerStatusService : Model, IManagerStatusService
 {
     private bool updatingFilesList;

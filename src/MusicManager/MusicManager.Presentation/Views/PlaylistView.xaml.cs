@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.ComponentModel.Composition;
 using System.Waf.Applications;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +11,6 @@ using Waf.MusicManager.Presentation.Controls;
 
 namespace Waf.MusicManager.Presentation.Views;
 
-[Export(typeof(IPlaylistView))]
 public partial class PlaylistView : IPlaylistView
 {
     private readonly Lazy<PlaylistViewModel> viewModel;

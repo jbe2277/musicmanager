@@ -1,19 +1,18 @@
-﻿using NLog;
+﻿using Autofac;
+using NLog;
 using NLog.Config;
 using NLog.Targets;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
 using System.Globalization;
 using System.IO;
 using System.Waf.Applications;
-using System.Waf.Applications.Services;
 using System.Waf.Presentation;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Threading;
+using Waf.MusicManager.Applications;
 using Waf.MusicManager.Applications.Services;
-using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Presentation.Services;
+using IContainer = Autofac.IContainer;
 
 namespace Waf.MusicManager.Presentation;
 
@@ -25,9 +24,8 @@ public partial class App
         ("MusicManager.*", LogLevel.Warn),
     ];
 
-    private AggregateCatalog? catalog;
-    private CompositionContainer? container;
-    private IEnumerable<IModuleController> moduleControllers = [];
+    private IContainer? container;
+    private IReadOnlyList<IModuleController> moduleControllers = [];
 
     public App()
     {
@@ -54,18 +52,14 @@ public partial class App
         DispatcherUnhandledException += AppDispatcherUnhandledException;
         AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
-        catalog = new AggregateCatalog();
-        catalog.Catalogs.Add(new AssemblyCatalog(typeof(IMessageService).Assembly));
-        catalog.Catalogs.Add(new AssemblyCatalog(typeof(ShellViewModel).Assembly));
-        catalog.Catalogs.Add(new AssemblyCatalog(typeof(App).Assembly));
-        container = new CompositionContainer(catalog, CompositionOptions.DisableSilentRejection);
-        var batch = new CompositionBatch();
-        batch.AddExportedValue(container);
-        container.Compose(batch);
+        var builder = new ContainerBuilder();
+        builder.RegisterModule(new ApplicationsModule());
+        builder.RegisterModule(new PresentationModule());
+        container = builder.Build();
 
         FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
 
-        moduleControllers = container.GetExportedValues<IModuleController>();
+        moduleControllers = container.Resolve<IReadOnlyList<IModuleController>>();
         foreach (var x in moduleControllers) x.Initialize();
         foreach (var x in moduleControllers) x.Run();
     }
@@ -75,7 +69,7 @@ public partial class App
         foreach (var x in moduleControllers.Reverse()) x.Shutdown();
         if (container is not null)
         {
-            var shellService = container.GetExportedValue<IShellService>();
+            var shellService = container.Resolve<IShellService>();
             var tasksToWait = shellService.TasksToCompleteBeforeShutdown.ToArray();
             while (tasksToWait.Any(t => !t.IsCompleted))  // Wait until all registered tasks are finished
             {
@@ -84,7 +78,6 @@ public partial class App
             }
         }
         container?.Dispose();
-        catalog?.Dispose();
         base.OnExit(e);
     }
 

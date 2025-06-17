@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using System.Waf.Applications;
 using Waf.MusicManager.Applications.DataModels;
@@ -10,7 +9,6 @@ using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Waf.MusicManager.Applications.Controllers;
 
-[Export]
 internal class ManagerController
 {
     private readonly IShellService shellService;
@@ -32,7 +30,6 @@ internal class ManagerController
     private readonly DelegateCommand deleteSelectedFilesCommand;
     private CancellationTokenSource? updateMusicFilesCancellation;
         
-    [ImportingConstructor]
     public ManagerController(IShellService shellService, IEnvironmentService environmentService, IFileService fileService, IMusicFileContext musicFileContext, SelectionService selectionService, 
         ManagerStatusService managerStatusService, IFileSystemWatcherService fileSystemWatcherService, Lazy<ManagerViewModel> managerViewModel)
     {

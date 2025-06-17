@@ -42,7 +42,7 @@ public class MusicFileContextTest : PresentationTest
 
     private void SaveAndLoadFileWithMetadataCore(string fileName, bool isFlac = false)
     {
-        var ctx = Container.GetExportedValue<MusicFileContext>();
+        var ctx = Get<MusicFileContext>();
         var musicFile = ctx.Create(fileName);
         musicFile.GetMetadataAsync().Wait(Context);
 
@@ -60,7 +60,7 @@ public class MusicFileContextTest : PresentationTest
         Cleanup();
         Initialize();
 
-        var ctx2 = Container.GetExportedValue<MusicFileContext>();
+        var ctx2 = Get<MusicFileContext>();
         var musicFile2 = ctx2.Create(fileName);
         musicFile2.GetMetadataAsync().Wait(Context);
 
@@ -113,7 +113,7 @@ public class MusicFileContextTest : PresentationTest
 
     private void SaveAndLoadFileWithUnsupportedMetadataCore(string fileName, bool isAudioAvailable)
     {
-        var ctx = Container.GetExportedValue<MusicFileContext>();
+        var ctx = Get<MusicFileContext>();
         var musicFile = ctx.Create(fileName);
         musicFile.GetMetadataAsync().Wait(Context);
 
@@ -140,7 +140,7 @@ public class MusicFileContextTest : PresentationTest
         Cleanup();
         Initialize();
             
-        var ctx2 = Container.GetExportedValue<MusicFileContext>();
+        var ctx2 = Get<MusicFileContext>();
         var musicFile2 = ctx2.Create(fileName);
         musicFile2.GetMetadataAsync().Wait(Context);
 
@@ -157,7 +157,7 @@ public class MusicFileContextTest : PresentationTest
         File.Copy(Environment.CurrentDirectory + @"\Files\TestMP3.mp3", fileName1, true);
         File.Copy(Environment.CurrentDirectory + @"\Files\TestMP3.mp3", fileName2, true);
 
-        var ctx = Container.GetExportedValue<MusicFileContext>();
+        var ctx = Get<MusicFileContext>();
         var musicFile1 = ctx.Create(fileName1);
         var musicFile2 = ctx.Create(fileName2);
         AssertHelper.ExpectedException<ArgumentException>(() => ctx.CreateFromMultiple(Array.Empty<MusicFile>()));

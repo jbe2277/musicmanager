@@ -24,12 +24,12 @@ namespace Test.MusicManager.Presentation.Controllers
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            controller = Container.GetExportedValue<ManagerController>();
+            controller = Get<ManagerController>();
             controller.Initialize();
 
-            shellService = Container.GetExportedValue<ShellService>();
-            selectionService = Container.GetExportedValue<SelectionService>();
-            managerStatusService = Container.GetExportedValue<IManagerStatusService>();
+            shellService = Get<ShellService>();
+            selectionService = Get<SelectionService>();
+            managerStatusService = Get<IManagerStatusService>();
             var view = (MockManagerView)shellService.ContentView!;
             viewModel = ViewHelper.GetViewModel<ManagerViewModel>(view)!;
         }
@@ -57,7 +57,7 @@ namespace Test.MusicManager.Presentation.Controllers
             viewModel.NavigateToSelectedSubDirectoryCommand.Execute(null);
             Assert.AreEqual(subDirectoryPath, viewModel.FolderBrowser.CurrentPath);
 
-            var environmentService = Container.GetExportedValue<MockEnvironmentService>();
+            var environmentService = Get<MockEnvironmentService>();
             environmentService.MusicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             environmentService.PublicMusicPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
 

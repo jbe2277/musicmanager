@@ -20,12 +20,12 @@ public class TranscodingControllerTest : ApplicationsTest
     {
         base.OnInitialize();
 
-        musicFileContext = Container.GetExportedValue<MockMusicFileContext>();
+        musicFileContext = Get<MockMusicFileContext>();
         musicFiles = [
             musicFileContext.Create(@"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.wav"),
             musicFileContext.Create(@"C:\Culture Beat - Serenity - Epilog.wma"),
         ];
-        selectionService = Container.GetExportedValue<SelectionService>();
+        selectionService = Get<SelectionService>();
         selectionService.Initialize(musicFiles);
 
         musicFiles[0].Metadata!.Album = "Serenity";
@@ -34,10 +34,10 @@ public class TranscodingControllerTest : ApplicationsTest
     [TestMethod]
     public void ConvertToMp3Selected()
     {
-        var controller = Container.GetExportedValue<TranscodingController>();
+        var controller = Get<TranscodingController>();
         controller.Initialize();
 
-        var shellService = Container.GetExportedValue<ShellService>();
+        var shellService = Get<ShellService>();
         var view = shellService.TranscodingListView!.Value;
         var viewModel = ViewHelper.GetViewModel<TranscodingListViewModel>((IView)view)!;
         var transcodingService = viewModel.TranscodingService;
@@ -62,7 +62,7 @@ public class TranscodingControllerTest : ApplicationsTest
         bool transcodeCalled = false;
         Task transcodeDelayTask = Task.CompletedTask;
         Exception? transcodeError = null;
-        var transcode = Container.GetExportedValue<MockTranscoder>();
+        var transcode = Get<MockTranscoder>();
         transcode.TranscodeAsyncAction = async (sourceFileName, destinationFileName, bitrate, cancellationToken, progress) => 
         {
             transcodeCalled = true;

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.IO;
+﻿using System.IO;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
 using Waf.MusicManager.Applications.Properties;
@@ -10,7 +9,6 @@ using Waf.MusicManager.Domain.Transcoding;
 
 namespace Waf.MusicManager.Applications.Controllers;
 
-[Export]
 internal class TranscodingController
 {
     private readonly IMessageService messageService;
@@ -30,7 +28,6 @@ internal class TranscodingController
     private readonly ThrottledAction throttledMusicFilesCollectionChangedAction;
     private TaskCompletionSource<object?>? allTranscodingsCanceledCompletion;
 
-    [ImportingConstructor]
     public TranscodingController(IMessageService messageService, IShellService shellService, IMusicFileContext musicFileContext, ISelectionService selectionService, 
         TranscodingService transcodingService, Lazy<ITranscoder> transcoder, Lazy<TranscodingListViewModel> transcodingListViewModel)
     {

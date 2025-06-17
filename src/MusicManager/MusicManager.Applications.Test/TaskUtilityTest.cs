@@ -22,7 +22,7 @@ public class TaskUtilityTest : DomainTest
         assertUnobservedExceptions.Cleanup();
     }        
 
-    // [TestMethod] Instable -> depends on CPU resources that test runs fast enough
+    // [TestMethod] // TODO: Instable -> depends on CPU resources that test runs fast enough
     public void WhenAllFastTest()
     {
         // Check tasks that are completed before calling WhenAllFast.
@@ -31,7 +31,7 @@ public class TaskUtilityTest : DomainTest
 
         Assert.IsTrue(task1.IsCompleted);
         Assert.IsTrue(task2.IsCompleted);
-        TaskUtility.WhenAllFast(new[] { task1, task2 }).Wait();
+        TaskUtility.WhenAllFast([task1, task2]).Wait();
         Assert.IsTrue(task1.IsCompleted);
         Assert.IsTrue(task2.IsCompleted);
 
@@ -41,7 +41,7 @@ public class TaskUtilityTest : DomainTest
 
         Assert.IsFalse(task1.IsCompleted);
         Assert.IsFalse(task2.IsCompleted);
-        TaskUtility.WhenAllFast(new[] { task1, task2 }).Wait();
+        TaskUtility.WhenAllFast([task1, task2]).Wait();
         Assert.IsTrue(task1.IsCompleted);
         Assert.IsTrue(task2.IsCompleted);
 
@@ -59,7 +59,7 @@ public class TaskUtilityTest : DomainTest
 
         Assert.IsFalse(task1.IsCompleted);
         Assert.IsFalse(task2.IsCompleted);
-        AssertHelper.ExpectedException<TaskCanceledException>(() => TaskUtility.WhenAllFast(new[] { task1, task2 }).GetAwaiter().GetResult());
+        AssertHelper.ExpectedException<TaskCanceledException>(() => TaskUtility.WhenAllFast([task1, task2]).GetAwaiter().GetResult());
         Assert.IsTrue(task1.IsCompleted);
         Assert.IsFalse(task2.IsCompleted);
 
@@ -77,7 +77,7 @@ public class TaskUtilityTest : DomainTest
 
         Assert.IsFalse(task1.IsCompleted);
         Assert.IsFalse(task2.IsCompleted);
-        AssertHelper.ExpectedException<ArgumentException>(() => TaskUtility.WhenAllFast(new[] { task1, task2 }).GetAwaiter().GetResult());
+        AssertHelper.ExpectedException<ArgumentException>(() => TaskUtility.WhenAllFast([task1, task2]).GetAwaiter().GetResult());
         Assert.IsFalse(task1.IsCompleted);
         Assert.IsTrue(task2.IsCompleted);
 

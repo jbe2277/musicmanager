@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
@@ -8,7 +7,6 @@ using Waf.MusicManager.Domain.Playlists;
 
 namespace Waf.MusicManager.Applications.Controllers;
 
-[Export]
 internal class PlayerController
 {
     private readonly IShellService shellService;
@@ -18,7 +16,7 @@ internal class PlayerController
     private readonly IMusicPropertiesService musicPropertiesService;
     private readonly IPlaylistService playlistService;
     private readonly Lazy<PlayerViewModel> playerViewModel;
-    private readonly ExportFactory<InfoViewModel> infoViewModelFactory;
+    private readonly Func<InfoViewModel> infoViewModelFactory;
     private readonly DelegateCommand playAllCommand;
     private readonly DelegateCommand playSelectedCommand;
     private readonly DelegateCommand enqueueAllCommand;
@@ -29,9 +27,8 @@ internal class PlayerController
     private readonly DelegateCommand showMusicPropertiesCommand;
     private readonly DelegateCommand showPlaylistCommand;
         
-    [ImportingConstructor]
     public PlayerController(IShellService shellService, IEnvironmentService environmentService, ISelectionService selectionService, PlayerService playerService,
-        IMusicPropertiesService musicPropertiesService, IPlaylistService playlistService, Lazy<PlayerViewModel> playerViewModel, ExportFactory<InfoViewModel> infoViewModelFactory)
+        IMusicPropertiesService musicPropertiesService, IPlaylistService playlistService, Lazy<PlayerViewModel> playerViewModel, Func<InfoViewModel> infoViewModelFactory)
     {
         this.shellService = shellService;
         this.environmentService = environmentService;
@@ -170,7 +167,7 @@ internal class PlayerController
 
     private void ShowInfo()
     {
-        var infoViewModel = infoViewModelFactory.CreateExport().Value;
+        var infoViewModel = infoViewModelFactory();
         infoViewModel.ShowDialog(shellService.ShellView);
     }
 

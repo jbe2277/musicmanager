@@ -17,7 +17,7 @@ public class PlaylistControllerIntegrationTest : PresentationTest
     {
         base.OnInitialize();
 
-        moduleController = Container.GetExportedValue<ModuleController>();
+        moduleController = Get<ModuleController>();
         moduleController.Initialize();
         moduleController.Run();
     }
@@ -35,17 +35,17 @@ public class PlaylistControllerIntegrationTest : PresentationTest
         string musicFileName2 = Environment.CurrentDirectory + @"\Files\TestWMA.wma";
         string playlistFileName = Environment.CurrentDirectory + @"\TestPlaylist.m3u";
             
-        var shellService = Container.GetExportedValue<ShellService>();
+        var shellService = Get<ShellService>();
         var view = shellService.PlaylistView!;
         var viewModel = ViewHelper.GetViewModel<PlaylistViewModel>((IView)view)!;
-        viewModel.InsertFilesAction(0, new[] 
-        { 
+        viewModel.InsertFilesAction(0,
+        [
             musicFileName1,
             musicFileName2
-        });
+        ]);
         Assert.AreEqual(2, viewModel.PlaylistManager.Items.Count);
 
-        var fileDialogService = Container.GetExportedValue<MockFileDialogService>();
+        var fileDialogService = Get<MockFileDialogService>();
         fileDialogService.Result = new(playlistFileName, new FileType("test", ".m3u"));
         viewModel.SaveListCommand.Execute(null);
 

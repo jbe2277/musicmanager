@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.Composition;
-using Test.MusicManager.Domain.MusicFiles;
+﻿using Test.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Test.MusicManager.Applications.Services;
 
-[Export, Export(typeof(IMusicFileContext))]
 public class MockMusicFileContext : IMusicFileContext
 {
     private readonly Dictionary<string, MusicFile> musicFilesCache = new();

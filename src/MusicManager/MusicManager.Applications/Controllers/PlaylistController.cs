@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.IO;
+﻿using System.IO;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
 using Waf.MusicManager.Applications.Properties;
@@ -10,7 +9,6 @@ using Waf.MusicManager.Domain.Playlists;
 
 namespace Waf.MusicManager.Applications.Controllers;
 
-[Export, Export(typeof(IPlaylistService))]
 internal class PlaylistController : IPlaylistService
 {
     private readonly IFileDialogService fileDialogService;
@@ -30,7 +28,6 @@ internal class PlaylistController : IPlaylistService
     private readonly FileType openPlaylistFileType;
     private readonly FileType savePlaylistFileType;
 
-    [ImportingConstructor]
     public PlaylistController(IFileDialogService fileDialogService, IShellService shellService, IEnvironmentService environmentService, IFileService fileService,
         IMusicFileContext musicFileContext, IPlayerService playerService, IMusicPropertiesService musicPropertiesService, Lazy<PlaylistViewModel> playlistViewModel)
     {

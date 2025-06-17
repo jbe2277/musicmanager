@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Waf.Applications;
 using System.Windows.Input;
@@ -7,10 +6,8 @@ using Waf.MusicManager.Applications.Views;
 
 namespace Waf.MusicManager.Applications.ViewModels;
 
-[Export, PartCreationPolicy(CreationPolicy.NonShared)]
 public class InfoViewModel : ViewModel<IInfoView>
 {
-    [ImportingConstructor]
     public InfoViewModel(IInfoView view) : base(view)
     {
         ShowWebsiteCommand = new DelegateCommand(ShowWebsite);

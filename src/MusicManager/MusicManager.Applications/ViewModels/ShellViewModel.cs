@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
@@ -7,14 +6,12 @@ using Waf.MusicManager.Applications.Views;
 
 namespace Waf.MusicManager.Applications.ViewModels;
 
-[Export]
 public class ShellViewModel : ViewModel<IShellView>
 {
     private readonly AppSettings settings;
     private readonly ObservableList<Tuple<Exception?, string>> errors;
     private object? detailsView;
 
-    [ImportingConstructor]
     public ShellViewModel(IShellView view, IShellService shellService, IPlayerService playerService) : base(view)
     {
         ShellService = shellService;

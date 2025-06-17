@@ -26,22 +26,22 @@ public class PlaylistControllerTest : ApplicationsTest
     {
         base.OnInitialize();
 
-        musicFileContext = Container.GetExportedValue<MockMusicFileContext>();
+        musicFileContext = Get<MockMusicFileContext>();
         musicFiles = [
             musicFileContext.Create(@"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.wav"),
             musicFileContext.Create(@"C:\Culture Beat - Serenity - Epilog.wma"),
         ];
-        selectionService = Container.GetExportedValue<SelectionService>();
+        selectionService = Get<SelectionService>();
         selectionService.Initialize(musicFiles);
 
         playlistManager = new();
-        controller = Container.GetExportedValue<PlaylistController>();
+        controller = Get<PlaylistController>();
         controller.PlaylistSettings = new();
         controller.PlaylistManager = playlistManager;
         controller.Initialize();
         controller.Run();
 
-        shellService = Container.GetExportedValue<ShellService>();
+        shellService = Get<ShellService>();
         var view = shellService.PlaylistView!;
         viewModel = ViewHelper.GetViewModel<PlaylistViewModel>((IView)view)!;
     }
@@ -70,7 +70,7 @@ public class PlaylistControllerTest : ApplicationsTest
         Assert.IsTrue(viewModel.RemoveSelectedCommand.CanExecute(null));
 
         // Play the selected item
-        var playerService = Container.GetExportedValue<PlayerService>();
+        var playerService = Get<PlayerService>();
         playerService.IsPlayCommand = true;
         bool playPauseCalled = false;
         playerService.PlayPauseCommand = new DelegateCommand(() => playPauseCalled = true);
@@ -102,7 +102,7 @@ public class PlaylistControllerTest : ApplicationsTest
     public void ShowMusicPropertiesTest()
     {
         // Initialize the MusicPropertiesController
-        var musicPropertiesController = Container.GetExportedValue<MusicPropertiesController>();
+        var musicPropertiesController = Get<MusicPropertiesController>();
         musicPropertiesController.PlaylistManager = playlistManager;
         musicPropertiesController.Initialize();
             

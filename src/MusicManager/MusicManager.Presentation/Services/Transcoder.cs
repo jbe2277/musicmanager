@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.IO;
+﻿using System.IO;
 using Waf.MusicManager.Applications.Services;
 using Windows.Media.MediaProperties;
 using Windows.Media.Transcoding;
@@ -7,7 +6,6 @@ using Windows.Storage;
 
 namespace Waf.MusicManager.Presentation.Services;
 
-[Export, Export(typeof(ITranscoder))]
 internal class Transcoder : ITranscoder
 {
     public async Task TranscodeAsync(string sourceFileName, string destinationFileName, uint bitrate, CancellationToken cancellationToken, IProgress<double> progress)

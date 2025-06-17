@@ -1,24 +1,25 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
+﻿using Autofac;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Waf.UnitTesting;
-using System.Waf.UnitTesting.Mocks;
 using Test.MusicManager.Domain;
+using Waf.MusicManager.Applications;
 using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
-using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Domain.MusicFiles;
+using IContainer = Autofac.IContainer;
 
 namespace Test.MusicManager.Applications;
 
 [TestClass]
 public abstract class ApplicationsTest : DomainTest
 {
-    private AggregateCatalog? catalog;
-
     protected UnitTestSynchronizationContext Context { get; private set; } = null!;
         
-    protected CompositionContainer Container { get; private set; } = null!;
+    protected IContainer Container { get; private set; } = null!;
+
+    public T Get<T>() where T : notnull => Container.Resolve<T>();
+
+    public Lazy<T> GetLazy<T>() where T : notnull => new(Get<T>);
 
     protected override void OnInitialize()
     {
@@ -26,15 +27,11 @@ public abstract class ApplicationsTest : DomainTest
 
         Context = UnitTestSynchronizationContext.Create();
 
-        catalog = new();
-        OnCatalogInitialize(catalog);
+        var builder = new ContainerBuilder();
+        ConfigureContainer(builder);
+        Container = builder.Build();
 
-        Container = new(catalog, CompositionOptions.DisableSilentRejection);
-        var batch = new CompositionBatch();
-        batch.AddExportedValue(Container);
-        Container.Compose(batch);
-
-        var shellService = Container.GetExportedValue<ShellService>();
+        var shellService = Container.Resolve<ShellService>();
         shellService.Settings = new AppSettings();
 
         ServiceLocator.RegisterInstance<IChangeTrackerService>(new ChangeTrackerService());
@@ -43,15 +40,13 @@ public abstract class ApplicationsTest : DomainTest
     protected override void OnCleanup()
     {
         Container.Dispose();
-        catalog?.Dispose();
         Context.Dispose();
         base.OnCleanup();
     }
 
-    protected virtual void OnCatalogInitialize(AggregateCatalog catalog)
+    protected virtual void ConfigureContainer(ContainerBuilder builder)
     {
-        catalog.Catalogs.Add(new AssemblyCatalog(typeof(ShellViewModel).Assembly));
-        catalog.Catalogs.Add(new AssemblyCatalog(typeof(MockMessageService).Assembly));
-        catalog.Catalogs.Add(new AssemblyCatalog(typeof(ApplicationsTest).Assembly));
+        builder.RegisterModule(new ApplicationsModule());
+        builder.RegisterModule(new MockPresentationModule());
     }
 }

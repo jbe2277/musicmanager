@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.IO;
+﻿using System.IO;
 using System.Web;
 using Waf.MusicManager.Applications.Services;
 using Windows.Media.Playlists;
@@ -8,7 +7,6 @@ using Windows.Storage.Search;
 
 namespace Waf.MusicManager.Presentation.Services;
 
-[Export, Export(typeof(IFileService))]
 internal class FileService : IFileService
 {
     public bool IsFileSupported(string fileName) => SupportedFileTypes.MusicFileExtensions.Contains(Path.GetExtension(fileName));

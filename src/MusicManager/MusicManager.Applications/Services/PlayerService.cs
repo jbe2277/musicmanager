@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Waf.MusicManager.Applications.Services;
 
-[Export(typeof(IPlayerService)), Export]
 public class PlayerService : Model, IPlayerService
 {
     private ICommand playAllCommand = DelegateCommand.DisabledCommand;

@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows.Input;
 
 namespace Waf.MusicManager.Applications.Services;
 
-[Export(typeof(ITranscodingService)), Export]
 internal class TranscodingService : Model, ITranscodingService
 {
     private ICommand convertToMp3AllCommand = DelegateCommand.DisabledCommand;

@@ -16,12 +16,12 @@ public class ShellViewModelTest : ApplicationsTest
         var playlistView = new object();
         var transcodingListView = new object();
 
-        var shellService = Container.GetExportedValue<IShellService>();
+        var shellService = Get<IShellService>();
         shellService.MusicPropertiesView = musicPropertiesView;
         shellService.PlaylistView = playlistView;
         shellService.TranscodingListView = new Lazy<object>(() => transcodingListView);
             
-        var viewModel = Container.GetExportedValue<ShellViewModel>();
+        var viewModel = Get<ShellViewModel>();
         Assert.IsNull(viewModel.DetailsView);
 
         AssertHelper.PropertyChangedEvent(viewModel, x => x.IsMusicPropertiesViewVisible, () => viewModel.IsMusicPropertiesViewVisible = true);
@@ -49,7 +49,7 @@ public class ShellViewModelTest : ApplicationsTest
     [TestMethod]
     public void ErrorMessagesTest()
     {
-        var viewModel = Container.GetExportedValue<ShellViewModel>();
+        var viewModel = Get<ShellViewModel>();
         Assert.IsFalse(viewModel.Errors.Any());
             
         viewModel.ShowError(null, "test 1");
@@ -70,11 +70,11 @@ public class ShellViewModelTest : ApplicationsTest
     {
         SetSettingsValues(20, 10, 400, 300, true);
 
-        var shellView = Container.GetExportedValue<MockShellView>();
+        var shellView = Get<MockShellView>();
         shellView.VirtualScreenWidth = 1000;
         shellView.VirtualScreenHeight = 700;
 
-        Container.GetExportedValue<ShellViewModel>();
+        Get<ShellViewModel>();
 
         Assert.AreEqual(20, shellView.Left);
         Assert.AreEqual(10, shellView.Top);
@@ -95,14 +95,14 @@ public class ShellViewModelTest : ApplicationsTest
     [TestMethod]
     public void RestoreWindowLocationAndSizeSpecial()
     {
-        var shellView = Container.GetExportedValue<MockShellView>();
+        var shellView = Get<MockShellView>();
         shellView.VirtualScreenWidth = 1000;
         shellView.VirtualScreenHeight = 700;
 
         shellView.SetNAForLocationAndSize();
 
         SetSettingsValues();
-        var shellService = Container.GetExportedValue<IShellService>();
+        var shellService = Get<IShellService>();
         new ShellViewModel(shellView, shellService, null!).Close();
         AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN, false);
 
@@ -130,7 +130,7 @@ public class ShellViewModelTest : ApplicationsTest
 
     private void SetSettingsValues(double left = 0, double top = 0, double width = 0, double height = 0, bool isMaximized = false)
     {
-        var settings = Container.GetExportedValue<IShellService>().Settings;
+        var settings = Get<IShellService>().Settings;
         settings.Left = left;
         settings.Top = top;
         settings.Width = width;
@@ -140,7 +140,7 @@ public class ShellViewModelTest : ApplicationsTest
 
     private void AssertSettingsValues(double left, double top, double width, double height, bool isMaximized)
     {
-        var settings = Container.GetExportedValue<IShellService>().Settings;
+        var settings = Get<IShellService>().Settings;
         Assert.AreEqual(left, settings.Left);
         Assert.AreEqual(top, settings.Top);
         Assert.AreEqual(width, settings.Width);

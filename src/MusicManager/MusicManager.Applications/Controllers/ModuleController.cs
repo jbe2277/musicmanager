@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Waf.Applications.Services;
 using System.Windows.Threading;
 using Waf.MusicManager.Applications.Properties;
@@ -9,7 +8,6 @@ using Waf.MusicManager.Domain.Playlists;
 
 namespace Waf.MusicManager.Applications.Controllers;
 
-[Export(typeof(IModuleController)), Export]
 internal class ModuleController : IModuleController
 {
     private readonly Lazy<ShellService> shellService;
@@ -23,7 +21,6 @@ internal class ModuleController : IModuleController
     private readonly AppSettings appSettings;
     private readonly PlaylistSettings playlistSettings;
         
-    [ImportingConstructor]
     public ModuleController(Lazy<ShellService> shellService, ISettingsService settingsService, Lazy<ManagerController> managerController, 
         Lazy<MusicPropertiesController> musicPropertiesController, Lazy<PlayerController> playerController, Lazy<PlaylistController> playlistController, 
         Lazy<TranscodingController> transcodingController, Lazy<ShellViewModel> shellViewModel)

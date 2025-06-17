@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.IO;
+﻿using System.IO;
 using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.MusicManager.Applications.Services;
@@ -8,7 +7,6 @@ using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Waf.MusicManager.Applications.ViewModels;
 
-[Export]
 public class MusicPropertiesViewModel : ViewModel<IMusicPropertiesView>
 {
     private readonly IClipboardService clipboardService;
@@ -17,7 +15,6 @@ public class MusicPropertiesViewModel : ViewModel<IMusicPropertiesView>
     private IWeakEventProxy? musicFilePropertyChangedProxy;
     private IWeakEventProxy? metadataPropertyChangedProxy;
 
-    [ImportingConstructor]
     public MusicPropertiesViewModel(IMusicPropertiesView view, IClipboardService clipboardService) : base(view)
     {
         this.clipboardService = clipboardService;

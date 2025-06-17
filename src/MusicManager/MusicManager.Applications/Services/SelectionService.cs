@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.Composition;
-using Waf.MusicManager.Applications.DataModels;
+﻿using Waf.MusicManager.Applications.DataModels;
 using Waf.MusicManager.Domain.MusicFiles;
 
 namespace Waf.MusicManager.Applications.Services;
 
-[Export, Export(typeof(ISelectionService))]
 internal class SelectionService : ISelectionService
 {
     public ObservableListViewCore<MusicFileDataModel> MusicFiles { get; private set; } = null!;

@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.Composition;
-using System.IO;
+﻿using System.IO;
 using Waf.MusicManager.Applications.Services;
 
 namespace Waf.MusicManager.Presentation.Services;
 
-[Export, Export(typeof(IFileSystemWatcherService))]
 internal class FileSystemWatcherService : Disposable, IFileSystemWatcherService
 {
     private readonly TaskScheduler taskScheduler;

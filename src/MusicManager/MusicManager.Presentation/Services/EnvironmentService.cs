@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.Composition;
-using System.IO;
+﻿using System.IO;
 using System.Waf.Applications;
 using Waf.MusicManager.Applications.Services;
 
 namespace Waf.MusicManager.Presentation.Services;
 
-[Export(typeof(IEnvironmentService))]
 internal class EnvironmentService : IEnvironmentService
 {
     private static readonly Lazy<string> appDataPath = new(() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationInfo.ProductName));

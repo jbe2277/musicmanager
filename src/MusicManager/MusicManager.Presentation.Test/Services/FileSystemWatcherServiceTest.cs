@@ -7,7 +7,7 @@ namespace Test.MusicManager.Presentation.Services;
 [TestClass]
 public class FileSystemWatcherServiceTest : PresentationTest
 {
-    private readonly List<string> fileNames = new();
+    private readonly List<string> fileNames = [];
     private string testWatcherDirectory = null!;
         
     protected override void OnInitialize()
@@ -40,7 +40,7 @@ public class FileSystemWatcherServiceTest : PresentationTest
     [TestMethod, TestCategory("IntegrationTest")]
     public void BasicFileSystemWatcherTest()
     {
-        var service = Container.GetExportedValue<FileSystemWatcherService>();
+        var service = Get<FileSystemWatcherService>();
         service.NotifyFilter = NotifyFilters.FileName;
         Assert.AreEqual(NotifyFilters.FileName, service.NotifyFilter);
         var createdEventOccurred = new TaskCompletionSource<FileSystemEventArgs>();

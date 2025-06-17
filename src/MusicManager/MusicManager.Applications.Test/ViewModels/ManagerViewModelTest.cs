@@ -9,7 +9,7 @@ public class ManagerViewModelTest : ApplicationsTest
     [TestMethod]
     public void ClearSearchCommandTest()
     {
-        var viewModel = Container.GetExportedValue<ManagerViewModel>();
+        var viewModel = Get<ManagerViewModel>();
         viewModel.SearchFilter.UserSearchFilter = "test";
         viewModel.ClearSearchCommand.Execute(null);
         Assert.AreEqual("", viewModel.SearchFilter.UserSearchFilter);

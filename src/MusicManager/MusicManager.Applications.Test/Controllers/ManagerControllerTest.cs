@@ -21,12 +21,12 @@ public class ManagerControllerTest : ApplicationsTest
     protected override void OnInitialize()
     {
         base.OnInitialize();
-        controller = Container.GetExportedValue<ManagerController>();
+        controller = Get<ManagerController>();
         controller.Initialize();
 
-        shellService = Container.GetExportedValue<ShellService>();
-        selectionService = Container.GetExportedValue<SelectionService>();
-        managerStatusService = Container.GetExportedValue<IManagerStatusService>();
+        shellService = Get<ShellService>();
+        selectionService = Get<SelectionService>();
+        managerStatusService = Get<IManagerStatusService>();
         var view = (MockManagerView)shellService.ContentView!;
         viewModel = ViewHelper.GetViewModel<ManagerViewModel>(view)!;
     }
@@ -42,10 +42,10 @@ public class ManagerControllerTest : ApplicationsTest
     public void FileSystemWatcherService()
     {
         var path = @"C:\Music";
-        var fileService = Container.GetExportedValue<MockFileService>();
+        var fileService = Get<MockFileService>();
         fileService.GetFilesStub = (dir, deep, f1, f2, c) => Task.FromResult<IReadOnlyList<string>>([ Path.Combine(path, "TestMP3.mp3"), Path.Combine(path, "Test42.mp3") ]);
 
-        var fileSystemWatcherService = Container.GetExportedValue<MockFileSystemWatcherService>();
+        var fileSystemWatcherService = Get<MockFileSystemWatcherService>();
         viewModel.FolderBrowser.CurrentPath = path;
         Assert.IsTrue(path.Equals(fileSystemWatcherService.Path, StringComparison.OrdinalIgnoreCase));
         Assert.IsTrue(fileSystemWatcherService.EnableRaisingEvents);

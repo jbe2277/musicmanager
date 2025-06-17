@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.Views;
@@ -7,7 +6,6 @@ using Waf.MusicManager.Domain.Playlists;
 
 namespace Waf.MusicManager.Applications.ViewModels;
 
-[Export]
 public class PlayerViewModel : ViewModel<IPlayerView>
 {
     private PlaylistManager playlistManager = null!;
@@ -18,7 +16,6 @@ public class PlayerViewModel : ViewModel<IPlayerView>
     private ICommand showPlaylistCommand = DelegateCommand.DisabledCommand;
     private double volume;
 
-    [ImportingConstructor]
     public PlayerViewModel(IPlayerView view, IShellService shellService, IPlayerService playerService) : base(view)
     {
         ShellService = shellService;

@@ -19,8 +19,8 @@ public class ModuleControllerTest : PresentationTest
     protected override void OnInitialize()
     {
         base.OnInitialize();
-        controller = Container.GetExportedValue<ModuleController>();
-        shellService = Container.GetExportedValue<ShellService>();
+        controller = Get<ModuleController>();
+        shellService = Get<ShellService>();
         controller.Initialize();
         controller.Run();
     }
@@ -36,7 +36,7 @@ public class ModuleControllerTest : PresentationTest
     {
         var appSettings = new AppSettings();
         var playlistSettings = new PlaylistSettings();
-        var settingsService = Container.GetExportedValue<MockSettingsService>();
+        var settingsService = Get<MockSettingsService>();
         settingsService.GetStub = type =>
         {
             if (type == typeof(AppSettings)) return appSettings;
@@ -47,7 +47,7 @@ public class ModuleControllerTest : PresentationTest
         controller.Initialize();
         controller.Run();
 
-        var playerController = Container.GetExportedValue<PlayerController>();
+        var playerController = Get<PlayerController>();
         shellService.Settings.Height = 42;
         playerController.PlaylistManager.CurrentItem = new PlaylistItem(MockMusicFile.CreateEmpty("Test"));
 
@@ -66,10 +66,10 @@ public class ModuleControllerTest : PresentationTest
     [TestMethod]
     public void ShowDetailViewsTest()
     {
-        var view = Container.GetExportedValue<MockShellView>();
+        var view = Get<MockShellView>();
         Assert.IsTrue(view.IsVisible);
             
-        var viewModel = Container.GetExportedValue<ShellViewModel>();
+        var viewModel = Get<ShellViewModel>();
         Assert.IsFalse(viewModel.IsMusicPropertiesViewVisible);
         Assert.IsTrue(viewModel.IsPlaylistViewVisible);
         Assert.IsFalse(viewModel.IsTranscodingListViewVisible);

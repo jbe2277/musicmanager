@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.UnitTesting.Mocks;
+﻿using System.Waf.UnitTesting.Mocks;
 using Waf.MusicManager.Applications.Views;
 using Waf.MusicManager.Domain.Playlists;
 
 namespace Test.MusicManager.Applications.Views;
 
-[Export, Export(typeof(IPlaylistView))]
 public class MockPlaylistView : MockView, IPlaylistView
 {
     public Action? FocusSearchBoxStub { get; set; }

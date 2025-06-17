@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.Composition;
-using Waf.MusicManager.Applications.Services;
+﻿using Waf.MusicManager.Applications.Services;
 
 namespace Test.MusicManager.Applications.Services;
 
-[Export, Export(typeof(IEnvironmentService))]
 public class MockEnvironmentService : IEnvironmentService
 {
     public IReadOnlyList<string> MusicFilesToLoad { get; set; } = [];

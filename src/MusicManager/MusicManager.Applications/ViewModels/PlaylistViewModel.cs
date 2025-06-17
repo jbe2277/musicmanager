@@ -8,7 +8,6 @@ using Waf.MusicManager.Domain.Playlists;
 
 namespace Waf.MusicManager.Applications.ViewModels;
 
-[Export]
 public class PlaylistViewModel : ViewModel<IPlaylistView>
 {
     private PlaylistManager playlistManager = null!;
@@ -21,7 +20,6 @@ public class PlaylistViewModel : ViewModel<IPlaylistView>
     private ICommand clearListCommand = DelegateCommand.DisabledCommand;
     private string? searchText;
 
-    [ImportingConstructor]
     public PlaylistViewModel(IPlaylistView view) : base(view)
     {
         SelectedPlaylistItems = [];

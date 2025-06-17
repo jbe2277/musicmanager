@@ -13,11 +13,11 @@ public class TranscoderTest : PresentationTest
         var fileName = TestHelper.GetTempFileName(".wma");
         File.Copy(Environment.CurrentDirectory + @"\Files\TestWMA.wma", fileName, true);
 
-        var ctx = Container.GetExportedValue<MusicFileContext>();
+        var ctx = Get<MusicFileContext>();
         var musicFile = ctx.Create(fileName);
         musicFile.GetMetadataAsync().Wait(Context);
 
-        var transcoder = Container.GetExportedValue<Transcoder>();
+        var transcoder = Get<Transcoder>();
         var destinationFileName = TestHelper.GetTempFileName(".mp3");
         int progressCount = 0;
         double progress = 0;
@@ -46,11 +46,11 @@ public class TranscoderTest : PresentationTest
         var fileName = TestHelper.GetTempFileName(".wma");
         File.Copy(Environment.CurrentDirectory + @"\Files\Corrupt.wma", fileName, true);
 
-        var ctx = Container.GetExportedValue<MusicFileContext>();
+        var ctx = Get<MusicFileContext>();
         var musicFile = ctx.Create(fileName);
         musicFile.GetMetadataAsync().Wait(Context);
 
-        var transcoder = Container.GetExportedValue<Transcoder>();
+        var transcoder = Get<Transcoder>();
         var destinationFileName = TestHelper.GetTempFileName(".mp3");
         int progressCount = 0;
         double progress = 0;
