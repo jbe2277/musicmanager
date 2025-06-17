@@ -11,6 +11,8 @@ public static class TaskUtility
     // Similar as Task.WhenAll but the task completes after the first one throws an exception (does not wait for all other tasks to complete).
     public static Task WhenAllFast(ReadOnlySpan<Task> tasks)
     {
+        if (tasks.IsEmpty) return Task.CompletedTask;
+
         var taskCompletionSource = new TaskCompletionSource<object?>();
         int count = tasks.Length;
 
