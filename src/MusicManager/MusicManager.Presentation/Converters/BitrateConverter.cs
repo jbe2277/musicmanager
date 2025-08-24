@@ -6,6 +6,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class BitrateConverter : IValueConverter
 {
+    public static BitrateConverter Default { get; } = new();
+
     public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
     {
         return string.Format(CultureInfo.CurrentCulture, Resources.KiloBitPerSeconds, ((long)value!) / 1000);

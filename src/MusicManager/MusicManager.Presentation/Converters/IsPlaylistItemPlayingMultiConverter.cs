@@ -6,6 +6,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class IsPlaylistItemPlayingMultiConverter : IMultiValueConverter
 {
+    public static IsPlaylistItemPlayingMultiConverter Default { get; } = new();
+
     public object Convert(object[]? values, Type? targetType, object? parameter, CultureInfo? culture)
     {
         var playingPlaylistItem = (PlaylistItem)values![0];

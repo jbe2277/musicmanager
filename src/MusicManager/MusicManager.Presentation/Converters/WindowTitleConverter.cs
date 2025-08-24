@@ -5,6 +5,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class WindowTitleConverter : IMultiValueConverter
 {
+    public static WindowTitleConverter Default { get; } = new();
+
     public object Convert(object?[] values, Type? targetType, object? parameter, CultureInfo? culture)
     {
         var stringList = values.OfType<string>().Where(x => !string.IsNullOrEmpty(x)).ToArray();

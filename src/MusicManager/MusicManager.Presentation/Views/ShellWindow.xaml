@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:p="clr-namespace:Waf.MusicManager.Presentation.Properties"
+        xmlns:c="clr-namespace:Waf.MusicManager.Presentation.Converters"
         xmlns:ctrl="clr-namespace:Waf.MusicManager.Presentation.Controls"
         xmlns:dd="clr-namespace:Waf.MusicManager.Presentation.DesignData"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -10,8 +11,8 @@
         d:DataContext="{d:DesignInstance dd:SampleShellViewModel, IsDesignTimeCreatable=True}">
 
     <Window.Title>
-        <MultiBinding Converter="{StaticResource WindowTitleConverter}">
-            <Binding Path="PlayerService.PlayingMusicFile.Metadata.Artists" Converter="{StaticResource StringListToStringConverter}" ConverterParameter="ListSeparator"/>
+        <MultiBinding Converter="{x:Static c:WindowTitleConverter.Default}">
+            <Binding Path="PlayerService.PlayingMusicFile.Metadata.Artists" Converter="{x:Static c:StringListToStringConverter.Default}" ConverterParameter="ListSeparator"/>
             <Binding Path="PlayerService.PlayingMusicFile.Metadata.Title"/>
             <Binding Path="Title"/>
         </MultiBinding>
@@ -63,7 +64,7 @@
 
                 <TextBlock Foreground="White" Padding="5,4" TextTrimming="CharacterEllipsis">
                     <TextBlock.Text>
-                        <MultiBinding Converter="{StaticResource ErrorMessagesConverter}">
+                        <MultiBinding Converter="{x:Static c:ErrorMessagesConverter.Default}">
                             <Binding Path="Errors"/>
                             <Binding Path="Errors.Count"/>
                         </MultiBinding>

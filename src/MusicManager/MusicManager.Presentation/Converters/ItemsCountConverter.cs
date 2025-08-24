@@ -6,6 +6,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class ItemsCountConverter : IValueConverter
 {
+    public static ItemsCountConverter Default { get; } = new();
+
     public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
     {
         int itemsCount = (int)value!;

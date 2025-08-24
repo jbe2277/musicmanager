@@ -7,7 +7,6 @@
                 <ResourceDictionary Source="Resources/DataResources.xaml"/>
                 <ResourceDictionary Source="Resources/ImageResources.xaml"/>
                 <ResourceDictionary Source="Resources/BrushResources.xaml"/>
-                <ResourceDictionary Source="Resources/ConverterResources.xaml"/>
                 <ResourceDictionary Source="Resources/ControlResources.xaml"/>
                 <ResourceDictionary Source="Resources/TextBoxResources.xaml"/>
                 <ResourceDictionary Source="Resources/LayoutResources.xaml"/>

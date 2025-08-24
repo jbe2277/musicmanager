@@ -6,9 +6,11 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class MusicPropertiesEnabledConverter : IMultiValueConverter
 {
-    public object Convert(object?[] values, Type? targetType, object? parameter, CultureInfo? culture)
+    public static MusicPropertiesEnabledConverter Default { get; } = new();
+
+    public object? Convert(object?[] values, Type? targetType, object? parameter, CultureInfo? culture)
     {
-        var musicFile = (MusicFile)values[0]!;
+        if (values[0] is not MusicFile musicFile) return null;
         // values[1] = musicFile.IsMetadataLoaded; only used to update the Binding
         return musicFile != null && musicFile.IsMetadataLoaded && musicFile.Metadata.IsSupported;
     }

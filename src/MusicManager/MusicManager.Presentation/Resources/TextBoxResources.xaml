@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:waf="http://waf.codeplex.com/schemas">
 
     <Style TargetType="TextBox">
         <Setter Property="Padding" Value="1,3"/>
@@ -9,7 +10,7 @@
                 <Setter Property="Background" Value="{StaticResource ErrorBackground}"/>
                 <Setter Property="ToolTip">
                     <Setter.Value>
-                        <MultiBinding Converter="{StaticResource ValidationErrorsConverter}">
+                        <MultiBinding Converter="{x:Static waf:ValidationErrorsConverter.Default}">
                             <Binding Path="(Validation.Errors)" RelativeSource="{RelativeSource Self}"/>
                             <Binding Path="(Validation.Errors).Count" RelativeSource="{RelativeSource Self}"/>
                         </MultiBinding>

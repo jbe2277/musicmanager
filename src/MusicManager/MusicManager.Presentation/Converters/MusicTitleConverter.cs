@@ -7,6 +7,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class MusicTitleConverter : IMultiValueConverter
 {
+    public static MusicTitleConverter Default { get; } = new();
+
     public object Convert(object?[] values, Type? targetType, object? parameter, CultureInfo? culture)
     {
         if (values[0] == DependencyProperty.UnsetValue) return DependencyProperty.UnsetValue;

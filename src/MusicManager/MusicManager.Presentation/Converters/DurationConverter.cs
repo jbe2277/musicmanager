@@ -5,6 +5,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class DurationConverter : IValueConverter
 {
+    public static DurationConverter Default { get; } = new();
+
     public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
     {
         var duration = (TimeSpan)value!;

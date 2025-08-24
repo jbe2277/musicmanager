@@ -6,6 +6,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class TotalDurationConverter : IMultiValueConverter
 {
+    public static TotalDurationConverter Default { get; } = new();
+
     public object Convert(object?[] values, Type? targetType, object? parameter, CultureInfo? culture)
     {
         var isTotalDurationEstimated = (bool)values[0]!;

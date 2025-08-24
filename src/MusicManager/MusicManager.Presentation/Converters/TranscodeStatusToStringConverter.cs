@@ -7,6 +7,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class TranscodeStatusToStringConverter : IValueConverter
 {
+    public static TranscodeStatusToStringConverter Default { get; } = new();
+
     public object? Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
     {
         if (value == null) return null;

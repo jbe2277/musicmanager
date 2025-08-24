@@ -5,6 +5,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class RatingToStarsConverter : IValueConverter
 {
+    public static RatingToStarsConverter Default { get; } = new();
+
     public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
     {
         int rating = System.Convert.ToInt32(value, CultureInfo.InvariantCulture);

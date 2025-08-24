@@ -5,6 +5,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class UIntToDisplayValueConverter : IValueConverter
 {
+    public static UIntToDisplayValueConverter Default { get; } = new();
+
     public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
     {
         var number = (uint)value!;

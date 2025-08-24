@@ -1,7 +1,9 @@
 ﻿<UserControl x:Class="Waf.MusicManager.Presentation.Views.TranscodingListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:waf="http://waf.codeplex.com/schemas"
              xmlns:p="clr-namespace:Waf.MusicManager.Presentation.Properties"
+             xmlns:c="clr-namespace:Waf.MusicManager.Presentation.Converters"
              xmlns:ctrl="clr-namespace:Waf.MusicManager.Presentation.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -23,7 +25,7 @@
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
                             <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="0,0,0,2" SnapsToDevicePixels="True">
-                                <TextBlock Text="{Binding Name, Converter={StaticResource TranscodeStatusToStringConverter}}" FontWeight="SemiBold" Margin="5,3,5,3"/>
+                                <TextBlock Text="{Binding Name, Converter={x:Static c:TranscodeStatusToStringConverter.Default}}" FontWeight="SemiBold" Margin="5,3,5,3"/>
                             </Border>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
@@ -62,11 +64,11 @@
                             <RowDefinition Height="2"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="{Binding Source.Metadata.Artists, Converter={StaticResource StringListToStringConverter}, ConverterParameter=ListSeparator}" 
+                        <TextBlock Text="{Binding Source.Metadata.Artists, Converter={x:Static c:StringListToStringConverter.Default}, ConverterParameter=ListSeparator}" 
                                    FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Grid.Row="1" Grid.Column="1" ctrl:ToolTipBehavior.AutoToolTip="True"/>
                         <TextBlock TextTrimming="CharacterEllipsis" Grid.Row="2" Grid.Column="1" ctrl:ToolTipBehavior.AutoToolTip="True">
                             <TextBlock.Text>
-                                <MultiBinding Converter="{StaticResource MusicTitleConverter}">
+                                <MultiBinding Converter="{x:Static c:MusicTitleConverter.Default}">
                                     <Binding Path="Source.FileName"/>
                                     <Binding Path="Source.Metadata.Artists"/>
                                     <Binding Path="Source.Metadata.Title"/>
@@ -74,9 +76,9 @@
                             </TextBlock.Text>
                         </TextBlock>
 
-                        <TextBlock Text="{Binding Source.Metadata.Bitrate, Converter={StaticResource BitrateConverter}}" 
+                        <TextBlock Text="{Binding Source.Metadata.Bitrate, Converter={x:Static c:BitrateConverter.Default}}" 
                                    HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2"/>
-                        <TextBlock Text="{Binding Source.Metadata.Duration, Converter={StaticResource DurationConverter}}" 
+                        <TextBlock Text="{Binding Source.Metadata.Duration, Converter={x:Static c:DurationConverter.Default}}" 
                                    HorizontalAlignment="Right" Grid.Row="2" Grid.Column="2"/>
 
                         <ProgressBar Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="0,2,5,0" 
@@ -95,9 +97,9 @@
                             </ProgressBar.Style>
                         </ProgressBar>
                         <TextBlock Text="{Binding Progress, StringFormat=#0 %}" Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Right"
-                                   Visibility="{Binding Error, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}"/>
+                                   Visibility="{Binding Error, Converter={x:Static waf:NullToVisibilityConverter.Default}, ConverterParameter=invert}"/>
                         <TextBlock Text="{x:Static p:Resources.Error}" Grid.Row="3" Grid.Column="2" TextAlignment="Right" FontWeight="SemiBold" Foreground="{StaticResource ErrorForeground}"
-                                   Visibility="{Binding Error, Converter={StaticResource NullToVisibilityConverter}}">
+                                   Visibility="{Binding Error, Converter={x:Static waf:NullToVisibilityConverter.Default}}">
                             <TextBlock.ToolTip>
                                 <ctrl:SuperToolTip Title="{x:Static p:Resources.InternalErrorDescription}" Description="{Binding Error.Message}"/>
                             </TextBlock.ToolTip>

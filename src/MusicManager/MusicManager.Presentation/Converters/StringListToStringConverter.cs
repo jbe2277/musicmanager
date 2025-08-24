@@ -6,6 +6,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class StringListToStringConverter : IValueConverter
 {
+    public static StringListToStringConverter Default { get; } = new();
+
     public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture) => StringListConverter.ToString((IEnumerable<string>)value!, GetSeparator(parameter));
 
     public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture) => StringListConverter.FromString((string)value!, GetSeparator(parameter));

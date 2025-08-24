@@ -6,6 +6,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class PathToFileNameConverter : IValueConverter
 {
+    public static PathToFileNameConverter Default { get; } = new();
+
     public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
     {
         if (ConverterHelper.IsParameterSet("WithExtension", parameter)) return Path.GetFileName((string)value!);

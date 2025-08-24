@@ -7,6 +7,8 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public sealed class ErrorMessagesConverter : IMultiValueConverter
 {
+    public static ErrorMessagesConverter Default { get; } = new();
+
     public object Convert(object[]? values, Type? targetType, object? parameter, CultureInfo? culture)
     {
         if (values?.FirstOrDefault() is IEnumerable<Tuple<Exception, string>> errorMessages)
