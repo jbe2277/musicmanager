@@ -12,7 +12,7 @@ public class TotalDurationConverterTest
     [TestMethod]
     public void ConvertTest()
     {
-        var converter = new TotalDurationConverter();
+        var converter = TotalDurationConverter.Default;
         Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, Resources.AboutDuration, "0:03"), converter.Convert([ true, TimeSpan.FromSeconds(3) ], null, null, null));
         Assert.AreEqual("0:04", converter.Convert([ false, TimeSpan.FromSeconds(4) ], null, null, null));
 

@@ -9,7 +9,7 @@ public class UIntToDisplayValueConverterTest
     [TestMethod]
     public void ConvertTest()
     {
-        var converter = new UIntToDisplayValueConverter();
+        var converter = UIntToDisplayValueConverter.Default;
         Assert.AreEqual(3u, converter.Convert(3u, null, null, null));
         Assert.AreEqual("", converter.Convert(0u, null, null, null));
     }
@@ -17,7 +17,7 @@ public class UIntToDisplayValueConverterTest
     [TestMethod]
     public void ConvertBackTest()
     {
-        var converter = new UIntToDisplayValueConverter();
+        var converter = UIntToDisplayValueConverter.Default;
         Assert.AreEqual(3u, converter.ConvertBack("3", null, null, null));
         Assert.AreEqual(0u, converter.ConvertBack("", null, null, null));
         Assert.AreEqual(0u, converter.ConvertBack(null, null, null, null));

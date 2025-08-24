@@ -8,9 +8,9 @@ public class MusicPropertiesEnabledConverter : IMultiValueConverter
 {
     public static MusicPropertiesEnabledConverter Default { get; } = new();
 
-    public object? Convert(object?[] values, Type? targetType, object? parameter, CultureInfo? culture)
+    public object Convert(object?[] values, Type? targetType, object? parameter, CultureInfo? culture)
     {
-        if (values[0] is not MusicFile musicFile) return null;
+        var musicFile = (MusicFile)values[0]!;
         // values[1] = musicFile.IsMetadataLoaded; only used to update the Binding
         return musicFile != null && musicFile.IsMetadataLoaded && musicFile.Metadata.IsSupported;
     }

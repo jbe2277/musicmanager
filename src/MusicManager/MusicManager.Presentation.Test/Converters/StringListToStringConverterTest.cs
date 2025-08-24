@@ -13,7 +13,7 @@ public class StringListToStringConverterTest
     {
         var nl = Environment.NewLine;
         var ls = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-        var converter = new StringListToStringConverter();
+        var converter = StringListToStringConverter.Default;
 
         Assert.AreEqual("", converter.Convert(null, null, null, null));
         Assert.AreEqual("", converter.Convert(Array.Empty<string>(), null, null, null));
@@ -29,7 +29,7 @@ public class StringListToStringConverterTest
     {
         var nl = Environment.NewLine;
         var ls = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-        var converter = new StringListToStringConverter();
+        var converter = StringListToStringConverter.Default;
 
         AssertHelper.SequenceEqual([], (string[])converter.ConvertBack("", null, null, null));
 

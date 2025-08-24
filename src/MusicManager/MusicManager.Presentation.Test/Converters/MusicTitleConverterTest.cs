@@ -10,7 +10,7 @@ public class MusicTitleConverterTest
     [TestMethod]
     public void ConvertTest()
     {
-        var converter = new MusicTitleConverter();
+        var converter = MusicTitleConverter.Default;
         var fileName = @"C:\Users\Public\Music\Dancefloor\Culture Beat - Serenity.mp3";
 
         Assert.AreEqual("Culture Beat - Serenity", ConvertCore(converter, fileName, [], null));

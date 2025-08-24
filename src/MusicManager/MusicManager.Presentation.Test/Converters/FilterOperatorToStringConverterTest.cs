@@ -10,7 +10,7 @@ public class FilterOperatorToStringConverterTest
     [TestMethod]
     public void ConvertTest()
     {
-        var converter = new FilterOperatorToStringConverter();
+        var converter = FilterOperatorToStringConverter.Default;
             
         Assert.IsNull(converter.Convert(null, null, null, null));
         Assert.AreEqual("", converter.Convert(FilterOperator.Ignore, null, null, null));

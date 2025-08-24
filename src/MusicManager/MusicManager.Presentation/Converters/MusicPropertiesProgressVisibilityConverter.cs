@@ -6,7 +6,7 @@ namespace Waf.MusicManager.Presentation.Converters;
 
 public class MusicPropertiesProgressVisibilityConverter : IMultiValueConverter
 {
-    public static MusicPropertiesEnabledConverter Default { get; } = new();
+    public static MusicPropertiesProgressVisibilityConverter Default { get; } = new();
 
     public object Convert(object?[] values, Type? targetType, object? parameter, CultureInfo? culture)
     {

@@ -9,7 +9,7 @@ public class PathToDirectoryNameConverterTest
     [TestMethod]
     public void ConvertTest()
     {
-        var converter = new PathToDirectoryNameConverter();
+        var converter = PathToDirectoryNameConverter.Default;
         Assert.AreEqual(@"C:\Users\Test\Music", converter.Convert(@"C:\Users\Test\Music\Test - File.mp3", null, null, null));
     }
 }

@@ -9,7 +9,7 @@ public class RatingToStarsConverterTest
     [TestMethod]
     public void ConvertTest()
     {
-        var converter = new RatingToStarsConverter();
+        var converter = RatingToStarsConverter.Default;
         Assert.AreEqual(5, converter.Convert(100, null, null, null));
         Assert.AreEqual(5, converter.Convert(99, null, null, null));
 
@@ -32,7 +32,7 @@ public class RatingToStarsConverterTest
     [TestMethod]
     public void ConvertBackTest()
     {
-        var converter = new RatingToStarsConverter();
+        var converter = RatingToStarsConverter.Default;
         Assert.AreEqual(99, converter.ConvertBack(5, null, null, null));
         Assert.AreEqual(75, converter.ConvertBack(4, null, null, null));
         Assert.AreEqual(50, converter.ConvertBack(3, null, null, null));

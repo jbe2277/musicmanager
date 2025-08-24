@@ -10,7 +10,7 @@ public class WindowTitleConverterTest
     [TestMethod]
     public void ConvertTest()
     {
-        var converter = new WindowTitleConverter();
+        var converter = WindowTitleConverter.Default;
             
         Assert.AreEqual("Waf Music Manager", converter.Convert([ null, null, "Waf Music Manager" ], null, null, null));
             
