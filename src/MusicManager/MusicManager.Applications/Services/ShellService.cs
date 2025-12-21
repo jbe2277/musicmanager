@@ -3,60 +3,27 @@ using Waf.MusicManager.Applications.Views;
 
 namespace Waf.MusicManager.Applications.Services;
 
-internal class ShellService : Model, IShellService
+internal class ShellService(Lazy<IShellView> shellView) : Model, IShellService
 {
-    private readonly Lazy<IShellView> shellView;
-    private readonly List<Task> tasksToCompleteBeforeShutdown;
-    private readonly List<ApplicationBusyContext> applicationBusyContext;
-    private object? contentView;
-    private object? musicPropertiesView;
-    private object? playlistView;
-    private Lazy<object>? transcodeListView;
-    private object? playerView;
-    private bool isApplicationBusy;
+    private readonly Lazy<IShellView> shellView = shellView;
+    private readonly List<Task> tasksToCompleteBeforeShutdown = [];
+    private readonly List<ApplicationBusyContext> applicationBusyContext = [];
     private bool isClosingEventInitialized;
     private event CancelEventHandler? closing;
-
-    public ShellService(Lazy<IShellView> shellView)
-    {
-        this.shellView = shellView;
-        tasksToCompleteBeforeShutdown = [];
-        applicationBusyContext = [];
-    }
 
     public AppSettings Settings { get; set; } = null!;
 
     public object ShellView => shellView.Value;
 
-    public object? ContentView
-    {
-        get => contentView;
-        set => SetProperty(ref contentView, value);
-    }
+    public object? ContentView { get; set => SetProperty(ref field, value); }
 
-    public object? MusicPropertiesView
-    {
-        get => musicPropertiesView;
-        set => SetProperty(ref musicPropertiesView, value);
-    }
+    public object? MusicPropertiesView { get; set => SetProperty(ref field, value); }
 
-    public object? PlaylistView
-    {
-        get => playlistView;
-        set => SetProperty(ref playlistView, value);
-    }
+    public object? PlaylistView { get; set => SetProperty(ref field, value); }
 
-    public Lazy<object>? TranscodingListView
-    {
-        get => transcodeListView;
-        set => SetProperty(ref transcodeListView, value);
-    }
+    public Lazy<object>? TranscodingListView { get; set => SetProperty(ref field, value); }
 
-    public object? PlayerView
-    {
-        get => playerView;
-        set => SetProperty(ref playerView, value);
-    }
+    public object? PlayerView { get; set => SetProperty(ref field, value); }
 
     public Action<Exception, string> ShowErrorAction { get; set; } = null!;
 
@@ -68,11 +35,7 @@ internal class ShellService : Model, IShellService
 
     public IReadOnlyCollection<Task> TasksToCompleteBeforeShutdown => tasksToCompleteBeforeShutdown;
 
-    public bool IsApplicationBusy
-    {
-        get => isApplicationBusy;
-        private set => SetProperty(ref isApplicationBusy, value);
-    }
+    public bool IsApplicationBusy { get; private set => SetProperty(ref field, value); }
 
     public event CancelEventHandler? Closing
     {

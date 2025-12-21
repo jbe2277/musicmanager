@@ -5,34 +5,13 @@ namespace Waf.MusicManager.Applications.Services;
 
 internal class TranscodingService : Model, ITranscodingService
 {
-    private ICommand convertToMp3AllCommand = DelegateCommand.DisabledCommand;
-    private ICommand convertToMp3SelectedCommand = DelegateCommand.DisabledCommand;
-    private ICommand cancelAllCommand = DelegateCommand.DisabledCommand;
-    private ICommand cancelSelectedCommand = DelegateCommand.DisabledCommand;
+    public ICommand ConvertToMp3AllCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand ConvertToMp3AllCommand
-    {
-        get => convertToMp3AllCommand;
-        set => SetProperty(ref convertToMp3AllCommand, value);
-    }
+    public ICommand ConvertToMp3SelectedCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand ConvertToMp3SelectedCommand
-    {
-        get => convertToMp3SelectedCommand;
-        set => SetProperty(ref convertToMp3SelectedCommand, value);
-    }
+    public ICommand CancelAllCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand CancelAllCommand
-    {
-        get => cancelAllCommand;
-        set => SetProperty(ref cancelAllCommand, value);
-    }
-
-    public ICommand CancelSelectedCommand
-    {
-        get => cancelSelectedCommand;
-        set => SetProperty(ref cancelSelectedCommand, value);
-    }
+    public ICommand CancelSelectedCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
     public event EventHandler<TranscodingTaskEventArgs>? TranscodingTaskCreated;
 

@@ -5,13 +5,6 @@ namespace Waf.MusicManager.Applications.DataModels;
 
 public class SearchFilterDataModel : Model
 {
-    private string userSearchFilter = "";
-    private string artistFilter = "";
-    private string titleFilter = "";
-    private string albumFilter = "";
-    private IReadOnlyList<string> genreFilter = [];
-    private FilterOperator ratingFilterOperator;
-    private uint ratingFilter;
     private uint? fromYearFilter;
     private uint? toYearFilter;
 
@@ -40,48 +33,24 @@ public class SearchFilterDataModel : Model
         }
     }
 
-    public string UserSearchFilter
-    {
-        get => userSearchFilter;
-        set => SetProperty(ref userSearchFilter, value);
-    }
+    public string UserSearchFilter { get; set => SetProperty(ref field, value); } = "";
 
-    public string ArtistFilter
-    {
-        get => artistFilter;
-        set => SetProperty(ref artistFilter, value);
-    }
+    public string ArtistFilter { get; set => SetProperty(ref field, value);} = "";
 
-    public string TitleFilter
-    {
-        get => titleFilter;
-        set => SetProperty(ref titleFilter, value);
-    }
+    public string TitleFilter { get; set => SetProperty(ref field, value); } = "";
 
-    public string AlbumFilter
-    {
-        get => albumFilter;
-        set => SetProperty(ref albumFilter, value);
-    }
+    public string AlbumFilter { get; set => SetProperty(ref field, value); } = "";
 
-    public IReadOnlyList<string> GenreFilter
-    {
-        get => genreFilter;
-        set => SetProperty(ref genreFilter, value);
-    }
+    public IReadOnlyList<string> GenreFilter { get; set => SetProperty(ref field, value); } = [];
 
-    public FilterOperator RatingFilterOperator
-    {
-        get => ratingFilterOperator;
-        set => SetProperty(ref ratingFilterOperator, value);
-    }
+    public FilterOperator RatingFilterOperator { get; set => SetProperty(ref field, value); }
 
     public uint RatingFilter
     {
-        get => ratingFilter;
+        get;
         set
         {
-            if (SetProperty(ref ratingFilter, value) && RatingFilterOperator == FilterOperator.Ignore)
+            if (SetProperty(ref field, value) && RatingFilterOperator == FilterOperator.Ignore)
             {
                 RatingFilterOperator = FilterOperator.GreaterThanOrEqual;
             }

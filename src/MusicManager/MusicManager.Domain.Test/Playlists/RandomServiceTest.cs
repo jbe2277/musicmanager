@@ -2,7 +2,7 @@
 using System.Waf.UnitTesting;
 using Waf.MusicManager.Domain.Playlists;
 
-namespace Test.MusicManager.Domain.MusicFiles;
+namespace Test.MusicManager.Domain.Playlists;
 
 [TestClass]
 public class RandomServiceTest : DomainTest

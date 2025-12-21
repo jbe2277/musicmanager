@@ -2,57 +2,27 @@
 
 namespace Waf.MusicManager.Domain.Transcoding;
 
-public class TranscodeItem : Model
+public class TranscodeItem(MusicFile source, string destinationFileName) : Model
 {
-    private TranscodeStatus transcodeStatus;
-    private double progress;
-    private Exception? error;
+    public MusicFile Source { get; } = source;
 
-    public TranscodeItem(MusicFile source, string destinationFileName)
+    public string DestinationFileName { get; } = destinationFileName;
+
+    public TranscodeStatus TranscodeStatus => this switch
     {
-        Source = source;
-        DestinationFileName = destinationFileName;
-        UpdateStatus();
-    }
+        { Error: not null } => TranscodeStatus.Error,
+        { Progress: 0 } => TranscodeStatus.Pending,
+        { Progress: < 1 } => TranscodeStatus.InProgress,
+        _ => TranscodeStatus.Completed
+    };
 
-    public MusicFile Source { get; }
+    public double Progress { get; set => SetProperty(ref field, value); }
 
-    public string DestinationFileName { get; }
+    public Exception? Error { get; set => SetProperty(ref field, value); }
 
-    public TranscodeStatus TranscodeStatus
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
-        get => transcodeStatus;
-        private set => SetProperty(ref transcodeStatus, value);
-    }
-
-    public double Progress
-    {
-        get => progress;
-        set
-        {
-            if (!SetProperty(ref progress, value)) return;
-            UpdateStatus();
-        }
-    }
-
-    public Exception? Error
-    {
-        get => error;
-        set
-        {
-            if (!SetProperty(ref error, value)) return;
-            UpdateStatus();
-        }
-    }
-
-    private void UpdateStatus()
-    {
-        TranscodeStatus = this switch
-        {
-            { Error: not null } => TranscodeStatus.Error,
-            { Progress: 0 } => TranscodeStatus.Pending,
-            { Progress: < 1} => TranscodeStatus.InProgress,
-            _ => TranscodeStatus.Completed
-        };
+        base.OnPropertyChanged(e);
+        if (e.PropertyName is nameof(Progress) or nameof(Error)) RaisePropertyChanged(nameof(TranscodeStatus));
     }
 }

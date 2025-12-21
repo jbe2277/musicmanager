@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.Views;
@@ -10,73 +9,30 @@ namespace Waf.MusicManager.Applications.ViewModels;
 
 public class PlaylistViewModel : ViewModel<IPlaylistView>
 {
-    private PlaylistManager playlistManager = null!;
-    private PlaylistItem? selectedPlaylistItem;
-    private ICommand playSelectedCommand = DelegateCommand.DisabledCommand;
-    private ICommand removeSelectedCommand = DelegateCommand.DisabledCommand;
-    private ICommand showMusicPropertiesCommand = DelegateCommand.DisabledCommand;
-    private ICommand openListCommand = DelegateCommand.DisabledCommand;
-    private ICommand saveListCommand = DelegateCommand.DisabledCommand;
-    private ICommand clearListCommand = DelegateCommand.DisabledCommand;
-    private string? searchText;
-
     public PlaylistViewModel(IPlaylistView view) : base(view)
     {
-        SelectedPlaylistItems = [];
         SearchNextCommand = new DelegateCommand(SearchNext);
         SearchPreviousCommand = new DelegateCommand(SearchPrevious);
         ClearSearchCommand = new DelegateCommand(ClearSearch);
     }
 
-    public PlaylistManager PlaylistManager
-    {
-        get => playlistManager;
-        set => SetProperty(ref playlistManager, value);
-    }
+    public PlaylistManager PlaylistManager { get; set => SetProperty(ref field, value); } = null!;
 
-    public PlaylistItem? SelectedPlaylistItem
-    {
-        get => selectedPlaylistItem;
-        set => SetProperty(ref selectedPlaylistItem, value);
-    }
+    public PlaylistItem? SelectedPlaylistItem { get; set => SetProperty(ref field, value); }
 
-    public ObservableList<PlaylistItem> SelectedPlaylistItems { get; }
+    public ObservableList<PlaylistItem> SelectedPlaylistItems { get; } = [];
 
-    public ICommand PlaySelectedCommand
-    {
-        get => playSelectedCommand;
-        set => SetProperty(ref playSelectedCommand, value);
-    }
+    public ICommand PlaySelectedCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand RemoveSelectedCommand
-    {
-        get => removeSelectedCommand;
-        set => SetProperty(ref removeSelectedCommand, value);
-    }
+    public ICommand RemoveSelectedCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand ShowMusicPropertiesCommand
-    {
-        get => showMusicPropertiesCommand;
-        set => SetProperty(ref showMusicPropertiesCommand, value);
-    }
+    public ICommand ShowMusicPropertiesCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand OpenListCommand
-    {
-        get => openListCommand;
-        set => SetProperty(ref openListCommand, value);
-    }
+    public ICommand OpenListCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand SaveListCommand
-    {
-        get => saveListCommand;
-        set => SetProperty(ref saveListCommand, value);
-    }
+    public ICommand SaveListCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand ClearListCommand
-    {
-        get => clearListCommand;
-        set => SetProperty(ref clearListCommand, value);
-    }
+    public ICommand ClearListCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
     public Action<int, IEnumerable<string>> InsertFilesAction { get; set; } = null!;
 
@@ -90,8 +46,8 @@ public class PlaylistViewModel : ViewModel<IPlaylistView>
 
     public string? SearchText
     {
-        get => searchText;
-        set { if (SetProperty(ref searchText, value)) SearchTextCore(SearchMode.Default); }
+        get;
+        set { if (SetProperty(ref field, value)) SearchTextCore(SearchMode.Default); }
     }
 
     private void SearchTextCore(SearchMode searchMode)

@@ -3,7 +3,6 @@ using System.Waf.Applications;
 using System.Waf.UnitTesting;
 using Test.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.Controllers;
-using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Domain.MusicFiles;

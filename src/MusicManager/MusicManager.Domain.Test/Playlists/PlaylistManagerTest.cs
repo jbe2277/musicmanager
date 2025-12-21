@@ -1,9 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Waf.UnitTesting;
+using Test.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.MusicFiles;
 using Waf.MusicManager.Domain.Playlists;
 
-namespace Test.MusicManager.Domain.MusicFiles;
+namespace Test.MusicManager.Domain.Playlists;
 
 [TestClass]
 public class PlaylistManagerTest : DomainTest
@@ -232,7 +233,7 @@ public class PlaylistManagerTest : DomainTest
         var manager = new PlaylistManager();
         Assert.AreEqual(TimeSpan.Zero, manager.TotalDuration);
         var firstFile = new MockMusicFile(new(TimeSpan.FromSeconds(10), 0), "");
-        manager.AddAndReplaceItems([ new PlaylistItem(firstFile) ]);
+        manager.AddAndReplaceItems([new PlaylistItem(firstFile)]);
             
         var secondMetadata = new MusicMetadata(TimeSpan.FromSeconds(20), 0);
         var secondFile = new MusicFile(async x =>
@@ -249,7 +250,7 @@ public class PlaylistManagerTest : DomainTest
         Assert.AreEqual(TimeSpan.FromSeconds(30), manager.TotalDuration);
 
         var thirdFile = new MockMusicFile(new MusicMetadata(TimeSpan.FromSeconds(30), 0), "");
-        AssertHelper.PropertyChangedEvent(manager, x => x.TotalDuration, () => manager.AddItems([ new PlaylistItem(thirdFile) ]));
+        AssertHelper.PropertyChangedEvent(manager, x => x.TotalDuration, () => manager.AddItems([new PlaylistItem(thirdFile)]));
         Assert.AreEqual(TimeSpan.FromSeconds(60), manager.TotalDuration);
     }
 }

@@ -6,25 +6,13 @@ using Waf.MusicManager.Domain.Transcoding;
 
 namespace Waf.MusicManager.Applications.ViewModels;
 
-public class TranscodingListViewModel : ViewModel<ITranscodingListView>
+public class TranscodingListViewModel(ITranscodingListView view, ITranscodingService transcodingService) : ViewModel<ITranscodingListView>(view)
 {
-    private TranscodingManager transcodingManager = null!;
+    public ITranscodingService TranscodingService { get; } = transcodingService;
 
-    public TranscodingListViewModel(ITranscodingListView view, ITranscodingService transcodingService) : base(view)
-    {
-        TranscodingService = transcodingService;
-        SelectedTranscodeItems = [];
-    }
+    public ObservableList<TranscodeItem> SelectedTranscodeItems { get; } = [];
 
-    public ITranscodingService TranscodingService { get; }
-
-    public ObservableList<TranscodeItem> SelectedTranscodeItems { get; }
-
-    public TranscodingManager TranscodingManager
-    {
-        get => transcodingManager;
-        set => SetProperty(ref transcodingManager, value);
-    }
+    public TranscodingManager TranscodingManager { get; set => SetProperty(ref field, value); } = null!;
 
     public Action<int, IEnumerable<string>> InsertFilesAction { get; set; } = null!;
 

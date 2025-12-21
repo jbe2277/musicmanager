@@ -5,20 +5,12 @@ namespace Waf.MusicManager.Domain.Playlists;
 public class PlaylistManager : Model
 {
     private readonly IRandomService randomService;
-    private readonly ObservableList<PlaylistItem> items;
+    private readonly ObservableList<PlaylistItem> items = [];
     private readonly PlayedItemsStack<PlaylistItem> playedItemsStack;
-    private bool isTotalDurationEstimated;
-    private TimeSpan totalDuration;
-    private PlaylistItem? currentItem;
-    private bool canPreviousItem;
-    private bool canNextItem;
-    private bool repeat;
-    private bool shuffle;
 
     public PlaylistManager(int playedItemStackCapacity = 1000, IRandomService? randomService = null)
     {
         this.randomService = randomService ?? new RandomService();
-        items = [];
         Items = new ReadOnlyObservableList<PlaylistItem>(items);
         playedItemsStack = new(playedItemStackCapacity);
         items.CollectionChanged += ItemsCollectionChanged;
@@ -26,56 +18,36 @@ public class PlaylistManager : Model
 
     public IReadOnlyObservableList<PlaylistItem> Items { get; }
 
-    public bool IsTotalDurationEstimated
-    {
-        get => isTotalDurationEstimated;
-        private set => SetProperty(ref isTotalDurationEstimated, value);
-    }
+    public bool IsTotalDurationEstimated { get; private set => SetProperty(ref field, value); }
 
-    public TimeSpan TotalDuration
-    {
-        get => totalDuration;
-        private set => SetProperty(ref totalDuration, value);
-    }
+    public TimeSpan TotalDuration { get; private set => SetProperty(ref field, value); }
 
     public PlaylistItem? CurrentItem
     {
-        get => currentItem;
+        get;
         set
         {
-            if (currentItem == value) return;
-            if (currentItem != null && Shuffle && items.Contains(currentItem))
+            if (field == value) return;
+            if (field != null && Shuffle && items.Contains(field))
             {
-                playedItemsStack.RemoveAll(currentItem);
-                playedItemsStack.Add(currentItem);
+                playedItemsStack.RemoveAll(field);
+                playedItemsStack.Add(field);
             }
-            currentItem = value;
+            field = value;
             RaisePropertyChanged();
         }
     }
 
-    public bool CanPreviousItem
-    {
-        get => canPreviousItem;
-        private set => SetProperty(ref canPreviousItem, value);
-    }
+    public bool CanPreviousItem { get; private set => SetProperty(ref field, value); }
 
-    public bool CanNextItem
-    {
-        get => canNextItem;
-        private set => SetProperty(ref canNextItem, value);
-    }
+    public bool CanNextItem { get; private set => SetProperty(ref field, value); }
 
-    public bool Repeat
-    {
-        get => repeat;
-        set => SetProperty(ref repeat, value);
-    }
+    public bool Repeat { get; set => SetProperty(ref field, value); }
 
     public bool Shuffle
     {
-        get => shuffle;
-        set { if (SetProperty(ref shuffle, value)) playedItemsStack.Clear(); }
+        get;
+        set { if (SetProperty(ref field, value)) playedItemsStack.Clear(); }
     }
 
     public void PreviousItem()

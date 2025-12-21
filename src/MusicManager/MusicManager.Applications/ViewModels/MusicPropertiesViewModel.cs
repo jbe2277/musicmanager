@@ -11,7 +11,6 @@ public class MusicPropertiesViewModel : ViewModel<IMusicPropertiesView>
 {
     private readonly IClipboardService clipboardService;
     private readonly DelegateCommand autoFillFromFileNameCommand;
-    private MusicFile? musicFile;
     private IWeakEventProxy? musicFilePropertyChangedProxy;
     private IWeakEventProxy? metadataPropertyChangedProxy;
 
@@ -28,19 +27,19 @@ public class MusicPropertiesViewModel : ViewModel<IMusicPropertiesView>
 
     public MusicFile? MusicFile
     {
-        get => musicFile;
+        get;
         set
         {
-            if (musicFile == value) return;
-            if (musicFile != null)
+            if (field == value) return;
+            if (field != null)
             {
                 WeakEvent.TryRemove(ref musicFilePropertyChangedProxy);
-                if (musicFile.IsMetadataLoaded) WeakEvent.TryRemove(ref metadataPropertyChangedProxy);
+                if (field.IsMetadataLoaded) WeakEvent.TryRemove(ref metadataPropertyChangedProxy);
             }
-            musicFile = value;
-            if (musicFile != null)
+            field = value;
+            if (field != null)
             {
-                musicFilePropertyChangedProxy = WeakEvent.PropertyChanged.Add(musicFile, MusicFilePropertyChanged);
+                musicFilePropertyChangedProxy = WeakEvent.PropertyChanged.Add(field, MusicFilePropertyChanged);
                 MetadataLoaded();
             }
             RaisePropertyChanged();

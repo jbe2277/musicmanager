@@ -1,52 +1,28 @@
 ﻿namespace Waf.MusicManager.Domain.MusicFiles;
 
-public class MusicFile : Model
+public class MusicFile(Func<string?, Task<MusicMetadata?>> loadMetadata, string? fileName) : Model
 {
-    private readonly TaskCompletionSource<MusicMetadata> loadMetadataCompletionSource;
-    private readonly Func<string?, Task<MusicMetadata?>> loadMetadata;
-    private IReadOnlyList<MusicFile> sharedMusicFiles;
-    private MusicMetadata? metadata;
+    private readonly TaskCompletionSource<MusicMetadata> loadMetadataCompletionSource = new();
+    private readonly Func<string?, Task<MusicMetadata?>> loadMetadata = loadMetadata;
     private bool loadCalled;
-    private bool isMetadataLoaded;
-    private Exception? loadError;
 
-    public MusicFile(Func<string?, Task<MusicMetadata?>> loadMetadata, string? fileName)
-    {
-        loadMetadataCompletionSource = new();
-        this.loadMetadata = loadMetadata;
-        FileName = fileName;
-        sharedMusicFiles = [];
-    }
+    public string? FileName { get; } = fileName;
 
-    public string? FileName { get; }
-
-    public IReadOnlyList<MusicFile> SharedMusicFiles
-    {
-        get => sharedMusicFiles;
-        set => SetProperty(ref sharedMusicFiles, value);
-    }
+    public IReadOnlyList<MusicFile> SharedMusicFiles { get; set => SetProperty(ref field, value); } = [];
 
     public MusicMetadata? Metadata
     {
         get
         {
-            if (metadata == null) LoadMetadataCore();
-            return metadata;
+            if (field == null) LoadMetadataCore();
+            return field;
         }
-        private set => SetProperty(ref metadata, value);
+        private set => SetProperty(ref field, value);
     }
 
-    [MemberNotNullWhen(true, nameof(Metadata))] public bool IsMetadataLoaded
-    {
-        get => isMetadataLoaded;
-        private set => SetProperty(ref isMetadataLoaded, value);
-    }
+    [MemberNotNullWhen(true, nameof(Metadata))] public bool IsMetadataLoaded { get; private set => SetProperty(ref field, value); }
 
-    public Exception? LoadError
-    {
-        get => loadError;
-        private set => SetProperty(ref loadError, value);
-    }
+    public Exception? LoadError { get; private set => SetProperty(ref field, value); }
 
     public Task<MusicMetadata> GetMetadataAsync()
     {

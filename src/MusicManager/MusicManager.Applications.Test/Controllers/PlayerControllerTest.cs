@@ -63,7 +63,7 @@ public class PlayerControllerTest : ApplicationsTest
     {
         // Simulate that a music file was passed via command line parameter
         var environmentService = Get<MockEnvironmentService>();
-        environmentService.MusicFilesToLoad = new[] { musicFiles.First().FileName! };
+        environmentService.MusicFilesToLoad = [musicFiles.First().FileName!];
 
         // Another controller is responsible to add first the item into the playlist.
         playlistManager.InsertItems(0, musicFiles.Select(x => new PlaylistItem(x)));

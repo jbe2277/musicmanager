@@ -160,8 +160,8 @@ public class MusicFileContextTest : PresentationTest
         var ctx = Get<MusicFileContext>();
         var musicFile1 = ctx.Create(fileName1);
         var musicFile2 = ctx.Create(fileName2);
-        AssertHelper.ExpectedException<ArgumentException>(() => ctx.CreateFromMultiple(Array.Empty<MusicFile>()));
-        var sharedMusicFile = ctx.CreateFromMultiple(new[] { musicFile1, musicFile2 });
+        AssertHelper.ExpectedException<ArgumentException>(() => ctx.CreateFromMultiple([]));
+        var sharedMusicFile = ctx.CreateFromMultiple([musicFile1, musicFile2]);
         sharedMusicFile.GetMetadataAsync().Wait(Context);
 
         Assert.IsTrue(sharedMusicFile.Metadata!.IsSupported);
@@ -181,7 +181,7 @@ public class MusicFileContextTest : PresentationTest
 
         musicFile1.Metadata.Title = "Title1";
         musicFile2.Metadata.Title = "Title2";
-        sharedMusicFile = ctx.CreateFromMultiple(new[] { musicFile1, musicFile2 });
+        sharedMusicFile = ctx.CreateFromMultiple([musicFile1, musicFile2]);
         sharedMusicFile.GetMetadataAsync().Wait(Context);
         Assert.AreEqual("", sharedMusicFile.Metadata!.Title);
             

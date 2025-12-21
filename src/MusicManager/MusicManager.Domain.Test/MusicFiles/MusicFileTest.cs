@@ -54,7 +54,7 @@ public class MusicFileTest : DomainTest
 
         Assert.IsNull(musicFile.Metadata);
         Assert.IsFalse(musicFile.IsMetadataLoaded);
-        Assert.IsInstanceOfType(musicFile.LoadError, typeof(InvalidOperationException));
+        Assert.IsInstanceOfType<InvalidOperationException>(musicFile.LoadError);
     }
 
     [TestMethod]
@@ -64,6 +64,6 @@ public class MusicFileTest : DomainTest
 
         Assert.IsNull(musicFile.Metadata);
         Assert.IsFalse(musicFile.IsMetadataLoaded);
-        Assert.IsInstanceOfType(musicFile.LoadError, typeof(InvalidOperationException));
+        Assert.IsInstanceOfType<InvalidOperationException>(musicFile.LoadError);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Waf.MusicManager.Domain.Playlists;
 
-namespace Test.MusicManager.Domain.MusicFiles;
+namespace Test.MusicManager.Domain.Playlists;
 
 public class MockRandomService : IRandomService
 {

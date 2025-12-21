@@ -2,20 +2,9 @@
 
 internal class ManagerStatusService : Model, IManagerStatusService
 {
-    private bool updatingFilesList;
-    private int totalFilesCount = -1;
-        
-    public bool UpdatingFilesList
-    {
-        get => updatingFilesList;
-        private set => SetProperty(ref updatingFilesList, value);
-    }
+    public bool UpdatingFilesList { get; private set => SetProperty(ref field, value); }
 
-    public int TotalFilesCount
-    {
-        get => totalFilesCount;
-        private set => SetProperty(ref totalFilesCount, value);
-    }
+    public int TotalFilesCount { get; private set => SetProperty(ref field, value); } = -1;
 
     public void StartUpdatingFilesList()
     {

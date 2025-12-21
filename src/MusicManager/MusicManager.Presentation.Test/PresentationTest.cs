@@ -21,8 +21,6 @@ namespace Test.MusicManager.Presentation
             builder.RegisterType<FileSystemWatcherService>().As<IFileSystemWatcherService>().AsSelf().SingleInstance();
             builder.RegisterType<MusicFileContext>().As<IMusicFileContext>().AsSelf().SingleInstance();
             builder.RegisterType<Transcoder>().As<ITranscoder>().AsSelf().SingleInstance();
-
-
         }
     }
 }

@@ -6,67 +6,25 @@ using Waf.MusicManager.Domain.Playlists;
 
 namespace Waf.MusicManager.Applications.ViewModels;
 
-public class PlayerViewModel : ViewModel<IPlayerView>
+public class PlayerViewModel(IPlayerView view, IShellService shellService, IPlayerService playerService) : ViewModel<IPlayerView>(view)
 {
-    private PlaylistManager playlistManager = null!;
-    private ICommand previousTrackCommand = DelegateCommand.DisabledCommand;
-    private ICommand nextTrackCommand = DelegateCommand.DisabledCommand;
-    private ICommand infoCommand = DelegateCommand.DisabledCommand;
-    private ICommand showMusicPropertiesCommand = DelegateCommand.DisabledCommand;
-    private ICommand showPlaylistCommand = DelegateCommand.DisabledCommand;
-    private double volume;
+    public IShellService ShellService { get; } = shellService;
 
-    public PlayerViewModel(IPlayerView view, IShellService shellService, IPlayerService playerService) : base(view)
-    {
-        ShellService = shellService;
-        PlayerService = playerService;
-    }
+    public IPlayerService PlayerService { get; } = playerService;
 
-    public IShellService ShellService { get; }
+    public PlaylistManager PlaylistManager { get; set => SetProperty(ref field, value); } = null!;
 
-    public IPlayerService PlayerService { get; }
+    public ICommand PreviousTrackCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public PlaylistManager PlaylistManager
-    {
-        get => playlistManager;
-        set => SetProperty(ref playlistManager, value);
-    }
+    public ICommand NextTrackCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand PreviousTrackCommand
-    {
-        get => previousTrackCommand;
-        set => SetProperty(ref previousTrackCommand, value);
-    }
+    public ICommand InfoCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand NextTrackCommand
-    {
-        get => nextTrackCommand;
-        set => SetProperty(ref nextTrackCommand, value);
-    }
+    public ICommand ShowMusicPropertiesCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand InfoCommand
-    {
-        get => infoCommand;
-        set => SetProperty(ref infoCommand, value);
-    }
+    public ICommand ShowPlaylistCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand ShowMusicPropertiesCommand
-    {
-        get => showMusicPropertiesCommand;
-        set => SetProperty(ref showMusicPropertiesCommand, value);
-    }
-
-    public ICommand ShowPlaylistCommand
-    {
-        get => showPlaylistCommand;
-        set => SetProperty(ref showPlaylistCommand, value);
-    }
-
-    public double Volume
-    {
-        get => volume;
-        set => SetProperty(ref volume, value);
-    }
+    public double Volume { get; set => SetProperty(ref field, value); }
 
     public TimeSpan GetPosition() => ViewCore.GetPosition();
 

@@ -2,7 +2,7 @@
 
 public abstract class Disposable : IDisposable
 {
-    private int isDisposed;
+    private bool isDisposed;
 
     public void Dispose()
     {
@@ -14,6 +14,6 @@ public abstract class Disposable : IDisposable
 
     private void DisposeCore(bool isDisposing)
     {
-        if (Interlocked.CompareExchange(ref isDisposed, 1, 0) == 0) Dispose(isDisposing);
+        if (Interlocked.CompareExchange(ref isDisposed, true, false) == false) Dispose(isDisposing);
     }
 }
