@@ -9,15 +9,6 @@ namespace Waf.MusicManager.Applications.ViewModels;
 public class ManagerViewModel : ViewModel<IManagerView>
 {
     private readonly Lazy<ISelectionService> selectionService;
-    private MusicFileDataModel? selectedMusicFile;
-    private ICommand updateSubDirectoriesCommand = DelegateCommand.DisabledCommand;
-    private ICommand navigateDirectoryUpCommand = DelegateCommand.DisabledCommand;
-    private ICommand navigateHomeCommand = DelegateCommand.DisabledCommand;
-    private ICommand navigatePublicHomeCommand = DelegateCommand.DisabledCommand;
-    private ICommand loadRecursiveCommand = DelegateCommand.DisabledCommand;
-    private ICommand navigateToSelectedSubDirectoryCommand = DelegateCommand.DisabledCommand;
-    private ICommand showMusicPropertiesCommand = DelegateCommand.DisabledCommand;
-    private ICommand deleteSelectedFilesCommand = DelegateCommand.DisabledCommand;
 
     public ManagerViewModel(IManagerView view, Lazy<ISelectionService> selectionService, IManagerStatusService managerStatusService, IPlayerService playerService, ITranscodingService transcodingService)
         : base(view)
@@ -26,8 +17,6 @@ public class ManagerViewModel : ViewModel<IManagerView>
         ManagerStatusService = managerStatusService;
         PlayerService = playerService;
         TranscodingService = transcodingService;
-        FolderBrowser = new();
-        SearchFilter = new();
         ClearSearchCommand = new DelegateCommand(ClearSearch);
     }
 
@@ -39,65 +28,29 @@ public class ManagerViewModel : ViewModel<IManagerView>
 
     public ITranscodingService TranscodingService { get; }
 
-    public FolderBrowserDataModel FolderBrowser { get; }
+    public FolderBrowserDataModel FolderBrowser { get; } = new();
 
-    public SearchFilterDataModel SearchFilter { get; }
+    public SearchFilterDataModel SearchFilter { get; } = new();
 
-    public MusicFileDataModel? SelectedMusicFile
-    {
-        get => selectedMusicFile;
-        set => SetProperty(ref selectedMusicFile, value);
-    }
+    public MusicFileDataModel? SelectedMusicFile { get; set => SetProperty(ref field, value); }
 
-    public ICommand UpdateSubDirectoriesCommand
-    {
-        get => updateSubDirectoriesCommand;
-        set => SetProperty(ref updateSubDirectoriesCommand, value);
-    }
+    public ICommand UpdateSubDirectoriesCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand NavigateDirectoryUpCommand
-    {
-        get => navigateDirectoryUpCommand;
-        set => SetProperty(ref navigateDirectoryUpCommand, value);
-    }
+    public ICommand NavigateDirectoryUpCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand NavigateHomeCommand
-    {
-        get => navigateHomeCommand;
-        set => SetProperty(ref navigateHomeCommand, value);
-    }
+    public ICommand NavigateHomeCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand NavigatePublicHomeCommand
-    {
-        get => navigatePublicHomeCommand;
-        set => SetProperty(ref navigatePublicHomeCommand, value);
-    }
+    public ICommand NavigatePublicHomeCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand LoadRecursiveCommand
-    {
-        get => loadRecursiveCommand;
-        set => SetProperty(ref loadRecursiveCommand, value);
-    }
+    public ICommand LoadRecursiveCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand NavigateToSelectedSubDirectoryCommand
-    {
-        get => navigateToSelectedSubDirectoryCommand;
-        set => SetProperty(ref navigateToSelectedSubDirectoryCommand, value);
-    }
+    public ICommand NavigateToSelectedSubDirectoryCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
     public ICommand ClearSearchCommand { get; }
 
-    public ICommand ShowMusicPropertiesCommand
-    {
-        get => showMusicPropertiesCommand;
-        set => SetProperty(ref showMusicPropertiesCommand, value);
-    }
+    public ICommand ShowMusicPropertiesCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand DeleteSelectedFilesCommand
-    {
-        get => deleteSelectedFilesCommand;
-        set => SetProperty(ref deleteSelectedFilesCommand, value);
-    }
+    public ICommand DeleteSelectedFilesCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
     private void ClearSearch() => SearchFilter.Clear();
 }

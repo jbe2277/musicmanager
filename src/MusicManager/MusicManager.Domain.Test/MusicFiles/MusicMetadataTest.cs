@@ -14,18 +14,18 @@ public class MusicMetadataTest : DomainTest
         Assert.IsTrue(metadata1.IsSupported);
         Assert.IsTrue(metadata2.IsSupported);
             
-        metadata2.Artists = new[] { "Artist1", "Artist2" };
+        metadata2.Artists = ["Artist1", "Artist2"];
         metadata2.Title = "Title";
         metadata2.Rating = 80;
         metadata2.Album = "Album";
         metadata2.TrackNumber = 3;
         metadata2.Year = 2000;
-        metadata2.Genre = new[] { "Genre1", "Genre2" };
+        metadata2.Genre = ["Genre1", "Genre2"];
         metadata2.AlbumArtist = "AlbumArtist";
         metadata2.Publisher = "Publisher";
         metadata2.Subtitle = "Subtitle";
-        metadata2.Composers = new[] { "Composer1", "Composer2" };
-        metadata2.Conductors = new[] { "Conductor1", "Conductor2" };
+        metadata2.Composers = ["Composer1", "Composer2"];
+        metadata2.Conductors = ["Conductor1", "Conductor2"];
 
         metadata1.ApplyValuesFrom(metadata2);
 

@@ -64,5 +64,5 @@ internal abstract class ReadMetadata
 
     protected virtual IEnumerable<string> ReadConductors(MusicProperties properties, IDictionary<string, object> customProperties) => properties.Conductors;
 
-    private static IReadOnlyList<T> ToSaveArray<T>(IEnumerable<T> collection) => collection?.ToArray() ?? Array.Empty<T>();
+    private static IReadOnlyList<T> ToSaveArray<T>(IEnumerable<T> collection) => collection?.ToArray() ?? [];
 }

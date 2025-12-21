@@ -5,21 +5,15 @@ namespace Waf.MusicManager.Domain.MusicFiles;
 public abstract class Entity : Model
 {
     private readonly Lazy<IChangeTrackerService> changeTrackerService;
-    private readonly HashSet<string> changes;
+    private readonly HashSet<string> changes = [];
     private bool entityLoaded;
-    private bool hasChanges;
 
     protected Entity()
     {
         changeTrackerService = new(ServiceLocator.Get<IChangeTrackerService>);
-        changes = [];
     }
 
-    public bool HasChanges
-    {
-        get => hasChanges;
-        private set => SetProperty(ref hasChanges, value);
-    }
+    public bool HasChanges { get; private set => SetProperty(ref field, value); }
 
     public IReadOnlySet<string> Changes => changes;
 
@@ -31,7 +25,7 @@ public abstract class Entity : Model
         HasChanges = false;
     }
 
-    protected bool SetPropertyAndTrackChanges<T>([NotNullIfNotNull(parameterName: "value"), MaybeNull] ref T field, [AllowNull] T value, [CallerMemberName] string propertyName = null!)
+    protected bool SetPropertyAndTrackChanges<T>([NotNullIfNotNull(parameterName: nameof(value)), MaybeNull] ref T field, [AllowNull] T value, [CallerMemberName] string propertyName = null!)
     {
         if (!SetProperty(ref field, value, propertyName)) return false;
         if (entityLoaded)

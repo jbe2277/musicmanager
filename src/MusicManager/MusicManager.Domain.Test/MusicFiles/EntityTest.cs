@@ -57,12 +57,6 @@ public class EntityTest : DomainTest
 
     private class MockEntity : Entity
     {
-        private string? name;
-
-        public string? Name
-        {
-            get => name;
-            set => SetPropertyAndTrackChanges(ref name, value);
-        }
+        public string? Name { get; set => SetPropertyAndTrackChanges(ref field, value); }
     }
 }

@@ -2,19 +2,6 @@
 
 public class MusicMetadata : Entity
 {
-    private IReadOnlyList<string> artists = [];
-    private string title = "";
-    private uint rating;
-    private string album = "";
-    private uint trackNumber;
-    private uint year;
-    private IReadOnlyList<string> genre = [];
-    private string albumArtist = "";
-    private string publisher = "";
-    private string subtitle = "";
-    private IReadOnlyList<string> composers = [];
-    private IReadOnlyList<string> conductors = [];
-
     private MusicMetadata(TimeSpan duration, long bitrate, bool isSupported)
     {
         IsSupported = isSupported;
@@ -32,81 +19,33 @@ public class MusicMetadata : Entity
 
     public bool IsSupported { get; }
 
-    public IReadOnlyList<string> Artists
-    {
-        get => artists;
-        set => SetPropertyAndTrackChanges(ref artists, value);
-    }
+    public IReadOnlyList<string> Artists { get; set => SetPropertyAndTrackChanges(ref field, value); } = [];
 
-    public string Title
-    {
-        get => title;
-        set => SetPropertyAndTrackChanges(ref title, value);
-    }
+    public string Title { get; set => SetPropertyAndTrackChanges(ref field, value); } = "";
 
     public TimeSpan Duration { get; }
 
-    public uint Rating
-    {
-        get => rating;
-        set => SetPropertyAndTrackChanges(ref rating, value);
-    }
+    public uint Rating { get; set => SetPropertyAndTrackChanges(ref field, value); }
 
-    public string Album
-    {
-        get => album;
-        set => SetPropertyAndTrackChanges(ref album, value);
-    }
+    public string Album { get; set => SetPropertyAndTrackChanges(ref field, value); } = "";
 
-    public uint TrackNumber
-    {
-        get => trackNumber;
-        set => SetPropertyAndTrackChanges(ref trackNumber, value);
-    }
+    public uint TrackNumber { get; set => SetPropertyAndTrackChanges(ref field, value); }
 
-    public uint Year
-    {
-        get => year;
-        set => SetPropertyAndTrackChanges(ref year, value);
-    }
+    public uint Year { get; set => SetPropertyAndTrackChanges(ref field, value); }
 
-    public IReadOnlyList<string> Genre
-    {
-        get => genre;
-        set => SetPropertyAndTrackChanges(ref genre, value);
-    }
+    public IReadOnlyList<string> Genre { get; set => SetPropertyAndTrackChanges(ref field, value); } = [];
 
     public long Bitrate { get; }
 
-    public string AlbumArtist
-    {
-        get => albumArtist;
-        set => SetPropertyAndTrackChanges(ref albumArtist, value);
-    }
+    public string AlbumArtist { get; set => SetPropertyAndTrackChanges(ref field, value); } = "";
 
-    public string Publisher
-    {
-        get => publisher;
-        set => SetPropertyAndTrackChanges(ref publisher, value);
-    }
+    public string Publisher { get; set => SetPropertyAndTrackChanges(ref field, value); } = "";
 
-    public string Subtitle
-    {
-        get => subtitle;
-        set => SetPropertyAndTrackChanges(ref subtitle, value);
-    }
+    public string Subtitle { get; set => SetPropertyAndTrackChanges(ref field, value); } = "";
 
-    public IReadOnlyList<string> Composers
-    {
-        get => composers;
-        set => SetPropertyAndTrackChanges(ref composers, value);
-    }
+    public IReadOnlyList<string> Composers { get; set => SetPropertyAndTrackChanges(ref field, value); } = [];
 
-    public IReadOnlyList<string> Conductors
-    {
-        get => conductors;
-        set => SetPropertyAndTrackChanges(ref conductors, value);
-    }
+    public IReadOnlyList<string> Conductors { get; set => SetPropertyAndTrackChanges(ref field, value); } = [];
 
     public void ApplyValuesFrom(MusicMetadata sourceMetadata)
     {
