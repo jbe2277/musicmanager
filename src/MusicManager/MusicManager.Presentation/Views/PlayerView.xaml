@@ -17,31 +17,12 @@
         </ContextMenu>
     </UserControl.Resources>
     
-    <Grid Margin="10,5,5,7">
+    <Grid ColumnDefinitions="150,20,Auto,*,Auto,30,Auto,Auto,Auto,20,Auto,Auto" RowDefinitions="Auto,*" Margin="10,5,5,7">
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
         </Grid.Resources>
-        
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
 
         <TextBlock Text="{Binding PlaylistManager.CurrentItem.MusicFile.Metadata.Artists, Converter={x:Static c:StringListToStringConverter.Default}, ConverterParameter=ListSeparator}" 
                    TextTrimming="CharacterEllipsis" Grid.Row="0" Grid.Column="0" ctrl:ToolTipBehavior.AutoToolTip="True" ContextMenu="{StaticResource CurrentMusicFileContextMenu}" />
@@ -100,13 +81,7 @@
         <ctrl:Flyout x:Name="volumePopup" PlacementTarget="{Binding ElementName=volumeButton}"
                Placement="Top" HorizontalFlyoutAlignment="Center" VerticalOffset="-10">
             <Border BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="1" Background="{StaticResource DarkBackground}">
-                <Grid Margin="5,10,5,15">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
+                <Grid RowDefinitions="Auto,10,Auto" Margin="5,10,5,15">
                     <Button x:Name="muteButton" Click="ToggleMuteClick" Content="&#xE15D;" Style="{StaticResource IconButtonStyle}" Grid.Row="0"/>
                     <Slider x:Name="volumeSlider" Value="{Binding Volume}" Maximum="1" LargeChange="0.1" SmallChange="0.01" 
                             Orientation="Vertical" HorizontalAlignment="Center" Height="200" Grid.Row="2" MouseWheel="VolumeSliderMouseWheel"/>
@@ -117,17 +92,7 @@
         <Button x:Name="moreButton" Click="MoreButtonClick" Content="&#xE10C;" Style="{StaticResource IconButtonStyle}" Grid.RowSpan="2" Grid.Column="11"/>
         <ctrl:Flyout x:Name="morePopup" PlacementTarget="{Binding ElementName=moreButton}" Placement="Top" HorizontalFlyoutAlignment="Right" VerticalOffset="-10">
             <Border BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="1" Background="{StaticResource DarkBackground}">
-                <Grid Margin="5,10,5,5" Width="245">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="85"/>
-                        <ColumnDefinition Width="80"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
+                <Grid ColumnDefinitions="80,85,80" RowDefinitions="Auto,Auto" Margin="5,10,5,5" Width="245">
                     <ToggleButton IsChecked="{Binding PlaylistManager.Shuffle}" Content="&#xE14B;" Style="{StaticResource IconToggleButtonStyle}" Grid.Column="0"/>
                     <TextBlock Grid.Row="1">
                         <TextBlock.Style>

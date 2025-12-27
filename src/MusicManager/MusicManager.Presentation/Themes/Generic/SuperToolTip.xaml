@@ -6,12 +6,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ctrl:SuperToolTip">
-                    <Grid Background="{TemplateBinding Background}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        
+                    <Grid RowDefinitions="Auto,Auto" Background="{TemplateBinding Background}">
                         <Label Content="{TemplateBinding Title}" Grid.Row="0" FontWeight="SemiBold"/>
                         <Label Content="{TemplateBinding Description}" Grid.Row="1"/>
                     </Grid>

@@ -11,13 +11,7 @@
              mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleMusicPropertiesViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="500" d:DesignWidth="300" Background="{StaticResource DefaultBackground}">
     
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
+    <Grid RowDefinitions="Auto,*,Auto">
         <Label Content="{x:Static p:Resources.SelectAFile}" BorderThickness="0,0,0,1" Padding="15,7" Grid.Row="0">
             <Label.Style>
                 <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">

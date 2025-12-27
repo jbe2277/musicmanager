@@ -10,12 +10,7 @@
              xmlns:dd="clr-namespace:Waf.MusicManager.Presentation.DesignData"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleTranscodingListViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="500" d:DesignWidth="300" Background="{StaticResource DefaultBackground}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
+    <Grid RowDefinitions="*,Auto">
         <ListBox x:Name="transcodingListBox" ItemsSource="{Binding TranscodingManager.TranscodeItems}" SelectionMode="Extended" HorizontalContentAlignment="Stretch"
                  BorderThickness="0" Background="{StaticResource DefaultBackground}" AllowDrop="True"
                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -114,15 +109,7 @@
                 FontFamily="Segoe UI Symbol" FontSize="10" HorizontalContentAlignment="Center"/>
         <ctrl:Flyout x:Name="menuPopup" PlacementTarget="{Binding ElementName=statusBarButton}" Placement="Top">
             <Border BorderBrush="White" BorderThickness="0,1" Background="{StaticResource DarkBackground}">
-                <Grid Margin="5,10,5,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
+                <Grid ColumnDefinitions="80" RowDefinitions="Auto,Auto" Margin="5,10,5,5">
                     <Button Command="{Binding TranscodingService.CancelAllCommand}" Content="&#xE10A;" Style="{StaticResource IconButtonStyle}" Grid.Row="0" Grid.Column="0"/>
                     <TextBlock Text="{x:Static p:Resources.CancelAll}" Style="{StaticResource AppBarTextBlockStyle}" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
