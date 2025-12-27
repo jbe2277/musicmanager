@@ -13,7 +13,7 @@ public static class TaskUtility
     {
         if (tasks.IsEmpty) return Task.CompletedTask;
 
-        var taskCompletionSource = new TaskCompletionSource<object?>();
+        var taskCompletionSource = new TaskCompletionSource();
         int count = tasks.Length;
 
         foreach (var task in tasks)
@@ -37,7 +37,7 @@ public static class TaskUtility
                 else
                 {
                     // Decrement the count and continue if this was the last task.
-                    if (Interlocked.Decrement(ref count) == 0) taskCompletionSource.SetResult(null);
+                    if (Interlocked.Decrement(ref count) == 0) taskCompletionSource.SetResult();
                 }
 
             }, TaskContinuationOptions.ExecuteSynchronously);
