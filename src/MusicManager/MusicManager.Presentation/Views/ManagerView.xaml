@@ -10,18 +10,7 @@
              xmlns:domain="clr-namespace:Waf.MusicManager.Domain.MusicFiles;assembly=Waf.MusicManager.Domain"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleManagerViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="300" d:DesignWidth="600" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
+    <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,*,Auto">
         <Button x:Name="directoryButton" Click="DirectoryButtonClick" Height="23" HorizontalContentAlignment="Stretch"
                 BorderThickness="0" Padding="5,0" Margin="0,0,1,0" Foreground="White" Background="{StaticResource DarkBackground}">
             <ctrl:PathLabel Path="{Binding FolderBrowser.UserPath}" Padding="0" Foreground="White"/>
@@ -29,21 +18,7 @@
         <ctrl:Flyout x:Name="folderBrowserPopup" PlacementTarget="{Binding ElementName=directoryButton}" Placement="Bottom" VerticalOffset="-23"
                      Closed="FolderBrowserPopupClosed">
             <Border BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="0,0,0,1" Background="{StaticResource DarkTransparentBackground}">
-                <Grid Height="135" Margin="0,0,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="5"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="15"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
+                <Grid ColumnDefinitions="Auto,Auto,*,5" RowDefinitions="Auto,10,Auto,15,*" Height="135" Margin="0,0,0,10">
                     <TextBox x:Name="userPathBox" Text="{Binding FolderBrowser.UserPath, ValidatesOnExceptions=true}" KeyDown="UserPathBoxKeyDown" Grid.ColumnSpan="4" 
                              Height="23" BorderThickness="0" VerticalContentAlignment="Center" Padding="3,0" Style="{StaticResource DarkTextBoxStyle}"/>
 
@@ -116,12 +91,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Content="{x:Static p:Resources.Search}" Grid.Column="1"/>
-                    <Grid Grid.Column="3" Grid.ColumnSpan="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
+                    <Grid ColumnDefinitions="*,Auto" Grid.Column="3" Grid.ColumnSpan="2">
                         <TextBox x:Name="userSearchFilterBox" Text="{Binding SearchFilter.UserSearchFilter}"
                              BorderThickness="1,0,0,0" VerticalContentAlignment="Center" Padding="3,0" Style="{StaticResource DarkTextBoxStyle}"/>
                         <Button Command="{Binding ClearSearchCommand}" Style="{StaticResource CloseButtonStyle}" Grid.Column="1"/>
@@ -163,13 +133,7 @@
                             IsEditable="True" Grid.Column="3" Grid.Row="10"/>
 
                     <Label Content="{x:Static p:Resources.Rating}" Grid.Column="1" Grid.Row="12"/>
-                    <Grid Grid.Column="3" Grid.Row="12">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="20"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
+                    <Grid ColumnDefinitions="50,20,*" Grid.Column="3" Grid.Row="12">
                         <ComboBox ItemsSource="{Binding Source={StaticResource FilterOperatorValues}}" SelectedItem="{Binding SearchFilter.RatingFilterOperator}" 
                                   FontFamily="Consolas" VerticalContentAlignment="Center">
                             <ComboBox.ItemContainerStyle>
@@ -295,13 +259,7 @@
 
         
         <Button x:Name="statusBarButton" Click="StatusBarButtonClick" Height="21" Grid.Row="2" Grid.ColumnSpan="3" Background="{StaticResource DarkBackground}" BorderThickness="0" HorizontalContentAlignment="Stretch" Padding="0">
-            <Grid Margin="7,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                
+            <Grid ColumnDefinitions="*,Auto,*" Margin="7,0">
                 <TextBlock Grid.Column="0">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
@@ -334,17 +292,7 @@
 
         <ctrl:Flyout x:Name="menuPopup" PlacementTarget="{Binding ElementName=statusBarButton}" Placement="Top">
             <Border BorderBrush="White" BorderThickness="0,1" Background="{StaticResource DarkBackground}">
-                <Grid Margin="5,10,5,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="80"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
+                <Grid ColumnDefinitions="80,80,80" RowDefinitions="Auto,Auto" Margin="5,10,5,5">
                     <Button Command="{Binding PlayerService.PlayAllCommand}" Content="&#xE29B;" Style="{StaticResource IconButtonStyle}" Grid.Row="0" Grid.Column="0"/>
                     <TextBlock Text="{x:Static p:Resources.PlayAll}" Style="{StaticResource AppBarTextBlockStyle}" Grid.Row="1" Grid.Column="0"/>
 

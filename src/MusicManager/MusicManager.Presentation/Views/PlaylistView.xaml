@@ -15,22 +15,9 @@
         <KeyBinding Command="{Binding SearchPreviousCommand}" Key="F3" Modifiers="Shift" />
     </UserControl.InputBindings>
     
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
+    <Grid RowDefinitions="Auto,*,Auto">
         <Border BorderThickness="1,0,1,0" BorderBrush="{StaticResource DefaultBackground}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                
+            <Grid ColumnDefinitions="*,Auto,Auto,Auto">
                 <ctrl:SearchBox x:Name="searchBox" Grid.Column="0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" HintText="{x:Static p:Resources.Search}"
                     Height="23" Padding="1,4,1,3" VerticalContentAlignment="Center" BorderThickness="0"/>
                 <Button Grid.Column="1" Command="{Binding SearchPreviousCommand}" Content="&#57618;"
@@ -155,13 +142,7 @@
         </ListBox>
 
         <Button x:Name="statusBarButton" Grid.Row="2" Click="StatusBarButtonClick" Height="21" Background="{StaticResource DarkBackground}" BorderThickness="0" HorizontalContentAlignment="Stretch">
-            <Grid Margin="7,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
+            <Grid ColumnDefinitions="*,Auto,*" Margin="7,0">
                 <TextBlock Text="{Binding PlaylistManager.Items.Count, Converter={x:Static c:ItemsCountConverter.Default}}" Grid.Column="0"/>
 
                 <TextBlock Text="&#xE10C;" FontFamily="Segoe UI Symbol" FontSize="10" VerticalAlignment="Center" Grid.Column="1"/>
@@ -178,17 +159,7 @@
         </Button>
         <ctrl:Flyout x:Name="menuPopup" PlacementTarget="{Binding ElementName=statusBarButton}" Placement="Top">
             <Border BorderBrush="White" BorderThickness="0,1" Background="{StaticResource DarkBackground}">
-                <Grid Margin="5,10,5,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="80"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
+                <Grid ColumnDefinitions="80,80,80" RowDefinitions="Auto,Auto" Margin="5,10,5,5">
                     <Button Command="{Binding OpenListCommand}" Content="&#xE1A5;" Style="{StaticResource IconButtonStyle}" Grid.Row="0" Grid.Column="0"/>
                     <TextBlock Text="{x:Static p:Resources.OpenList}" Style="{StaticResource AppBarTextBlockStyle}" Grid.Row="1" Grid.Column="0"/>
 
