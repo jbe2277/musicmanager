@@ -1,115 +1,93 @@
-Changelog
----------
+﻿# Changelog
 
-Version 3.4.1.100 (Release)
+### Version 3.4.1.100 (Release)
 - Migrate from MEF to Autofac.
 - Update libraries.
 
-
-Version 3.4.0.100 (Release)
+### Version 3.4.0.100 (Release)
 - Migrate to .NET 9.
 
-
-Version 3.3.2.100 (Release)
+### Version 3.3.2.100 (Release)
 - Update libraries.
 
-
-Version 3.3.1.100 (Release)
+### Version 3.3.1.100 (Release)
 - Update libraries.
 
-
-Version 3.3.0.100 (Release)
+### Version 3.3.0.100 (Release)
 - Migrate to .NET 8.
 
-
-Version 3.2.2.100 (Release)
+### Version 3.2.2.100 (Release)
 - Improve compatibility with m3u playlist files (load files from VLC).
 
-
-Version 3.2.1.100 (Release)
+### Version 3.2.1.100 (Release)
 - Fix Repeat mode if only 1 track is in the playlist.
 
-
-Version 3.2.0.100 (Release)
+### Version 3.2.0.100 (Release)
 - Migrate to .NET 7.
 - Improve native support for platforms x64 and ARM64 instead of using x86 as fallback.
 
-
-Version 3.1.0.100 (Release)
+### Version 3.1.0.100 (Release)
 - Support ARM64 systems native (performance).
 - Support Windows media controls.
 
-
-Version 3.0.2.100 (Release)
+### Version 3.0.2.100 (Release)
 - Deploy via Microsoft Store.
 - Improve app shutdown regarding CPU resource usage.
 - Update used packages.
 
-
-Version 3.0.1.100 (Release)
+### Version 3.0.1.100 (Release)
 - Fix crash in file navigation. Details: https://github.com/microsoft/CsWinRT/issues/1112
 - Improve exception logging.
 
-
-Version 3.0.0.100 (Release)
+### Version 3.0.0.100 (Release)
 - Migrate to .NET 6.
 - Update the Win Application Framework (WAF) to 6.4.0.
 - Simplify code by using C# 10 features.
 - Migrate to new Windows Runtime (WinRT) integration.
 
-
-Version 2.0.0.100 (Release)
+### Version 2.0.0.100 (Release)
 - Change required .NET Framework to 4.7.2.
 - Update the Win Application Framework (WAF) to 5.0.0-alpha1.
 - Use NLog for logging.
 - Simplify code by using C# 7 features.
 - Simplify Windows Runtime (WinRT) integration.
 
-
-Version 1.7.2.100 (Release)
+### Version 1.7.2.100 (Release)
 - Update the Win Application Framework (WAF) to 4.3.0.
 
-
-Version 1.7.1.100 (Release)
+### Version 1.7.1.100 (Release)
 - Update the Win Application Framework (WAF) to 4.2.0.
 
-
-Version 1.7.0.100 (Release)
+### Version 1.7.0.100 (Release)
 - Improve performance of loading a lot music files.
 
-
-Version 1.6.0.100 (Release)
+### Version 1.6.0.100 (Release)
 - Support metadata for the Flac file format.
 
-
-Version 1.5.0.100 (Release)
+### Version 1.5.0.100 (Release)
 - Support the MVK file format for audio playback when running on Windows 10.
 
-
-Version 1.4.0.100 (Release)
+### Version 1.4.0.100 (Release)
 - Improve stability of saving music metadata.
 - Add delete file command in the context menu.
 - Add context menu to the current playing music file for showing the music details.
 - Add context menu to the current playing music file for showing it in the playlist.
 
-
-Version 1.3.0.100 (Release)
+### Version 1.3.0.100 (Release)
 - Change license from Microsoft Public License (Ms-PL) to MIT License (MIT).
 - Improve converter view by grouping the tasks.
 - Application target .NET Framework version 4.5.2.
 - Update the WPF Application Framework (WAF) to 3.2.0.
 - Change urls to the new GitHub repository.
 
-
-Version 1.2.0.100 (Release)
+### Version 1.2.0.100 (Release)
 - Add a search box for the playlist view.
 - Add buttons for search next and search previous for the playlist view.
 - Highlight text in playlist entries when they are matching the search text.
 - Throttle the converting files for better throughput.
 - Fix crash: Metadata are sometimes not yet loaded when converting files per drag & drop.
 
-
-Version 1.1.0.100 (Release)
+### Version 1.1.0.100 (Release)
 - Improve Windows 10 support.
 - Support the Flac music file format when running on Windows 10.
   Editing the metadata is not supported for Flac files because of a current Windows 10 bug.
@@ -117,8 +95,7 @@ Version 1.1.0.100 (Release)
 - Fix playing a single file when shuffle and repeat is activated.
 - Disable the auto fill feature when editing the file metadata is not supported.
   
-
-Version 1.0.0.100 (Release)
+### Version 1.0.0.100 (Release)
 - Fix crash when double click is done very fast.
 - Fix a crash that can occur when the user navigates between folders very fast.
 - Fix crash that could happen when file system changes are done of an opened music files.
@@ -126,12 +103,10 @@ Version 1.0.0.100 (Release)
 - Fix removing of drag/drop insert marker.
 - Fix update indicator that does not stop at the first start.
 
-
-Version 1.0.0.91 (Release Candidate 2)
+### Version 1.0.0.91 (Release Candidate 2)
 - Fix that playing stops when the current song ends although more songs are in the playlist.
 
-
-Version 1.0.0.90 (Release Candidate 1)
+### Version 1.0.0.90 (Release Candidate 1)
 - Support localized resources: English and German.
 - Support playing music files via the "Open with" feature of the Windows Explorer.
 - Support sorting for all columns.
@@ -139,59 +114,49 @@ Version 1.0.0.90 (Release Candidate 1)
 - Mouse wheel support for position and volume slider.
 - Fix that the Play command does not start playing the file if it was already loaded.
 
-
-Version 1.0.0.10 (Milestone 10)
+### Version 1.0.0.10 (Milestone 10)
 - Introduce converting of audio files into the MP3 format.
 - Calculate the ideal bitrate for the new MP3 file.
 - Add a FileSystemWatcher and react on changes.
 - Improve error indications. Show detailed error information in the tooltips.
    
-
-Version 1.0.0.9 (Milestone 9)   
+### Version 1.0.0.9 (Milestone 9)   
 - Support MP4 files (audio only), M4A (AAC) files and WAV files.
 - Add further columns that automatically show or hide depending on the available size.
 - Improve indicator for current playing file in Playlist.
 - Fix that after Clear items the Previous and Next commands are updated.
 
-
-Version 1.0.0.8 (Milestone 8)
+### Version 1.0.0.8 (Milestone 8)
 - Performance: Rewrite the metadata loading so that the files will be lazy loaded.
 - Estimate the playlist duration as long not all files are loaded.
 - Show load errors in the Playlist and Details view.
 
-
-Version 1.0.0.7 (Milestone 7)
+### Version 1.0.0.7 (Milestone 7)
 - Fix initializing bug that could crash the application during startup.
  
-
-Version 1.0.0.6 (Milestone 6) 
+### Version 1.0.0.6 (Milestone 6) 
 - Remember the last played file and position. Reload it at the next application start.  
 - Auto select the RatingFilterOperator 'greater than' when the Rating has been changed in the search popup.
 - Save metadata Genre and Conductors in WMA files as list instead of comma separated values.
 
-
-Version 1.0.0.5 (Milestone 5)
+### Version 1.0.0.5 (Milestone 5)
 - Add search filters for Genre, Rating and Year.
 - Trim the folder path if it is too long.
 - Add direct navigation to the public music folder.
   
-
-Version 1.0.0.4 (Milestone 4)
+### Version 1.0.0.4 (Milestone 4)
 - Show the file name as title if a music file does not have any meta data.
 - Show the file name in the Details view.
 - Provide context menu with auto fill from file name command for music files with empty metadata.
 
-
-Version 1.0.0.3 (Milestone 3)
+### Version 1.0.0.3 (Milestone 3)
 - Fix unresponsive application when less than 10 music files are in a directory.
 - Performance: Improve reaction time during loading a lot of music files.
 
-
-Version 1.0.0.2 (Milestone 2)
+### Version 1.0.0.2 (Milestone 2)
 - Performance: Parallelize the reading of music files.
 - Performance: Improve memory usage.
 - Add app commands for Play all and Enqueue all.
 
-
-Version 1.0.0.1 (Milestone 1)
+### Version 1.0.0.1 (Milestone 1)
 - Initial version.
