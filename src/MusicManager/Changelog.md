@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+### Version 4.0.0.100 (Release)
+- Migrate to .NET 10.
+- Update libraries.
+
 ### Version 3.4.1.100 (Release)
 - Migrate from MEF to Autofac.
 - Update libraries.
