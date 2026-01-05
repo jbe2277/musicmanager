@@ -15,8 +15,6 @@
     
     <SolidColorBrush x:Key="DarkBackground" Color="{StaticResource {x:Static SystemColors.ControlDarkColorKey}}"/>
 
-    <SolidColorBrush x:Key="DarkTransparentBackground" Color="#BFA0A0A0"/>
-
     <SolidColorBrush x:Key="ErrorBackground" Color="Red"/>
     
     <SolidColorBrush x:Key="DefaultBorderBrush" Color="White"/>

@@ -32,19 +32,7 @@
         <KeyBinding Command="{Binding GarbageCollectorCommand}" Key="G" Modifiers="Control+Shift"/>
     </Window.InputBindings>
     
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="250"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        
+    <Grid ColumnDefinitions="*,Auto,250" RowDefinitions="Auto,*,2,Auto">
         <Border Grid.ColumnSpan="3" Grid.Row="0" BorderBrush="Transparent" BorderThickness="0,0,0,1" Background="Red">
             <Border.Style>
                 <Style TargetType="Border">
@@ -56,12 +44,7 @@
                 </Style>
             </Border.Style>
             
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
+            <Grid ColumnDefinitions="*,Auto">
                 <TextBlock Foreground="White" Padding="5,4" TextTrimming="CharacterEllipsis">
                     <TextBlock.Text>
                         <MultiBinding Converter="{x:Static c:ErrorMessagesConverter.Default}">

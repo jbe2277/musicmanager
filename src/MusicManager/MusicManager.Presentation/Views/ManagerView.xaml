@@ -15,28 +15,28 @@
                 BorderThickness="0" Padding="5,0" Margin="0,0,1,0" Foreground="White" Background="{StaticResource DarkBackground}">
             <ctrl:PathLabel Path="{Binding FolderBrowser.UserPath}" Padding="0" Foreground="White"/>
         </Button>
-        <ctrl:Flyout x:Name="folderBrowserPopup" PlacementTarget="{Binding ElementName=directoryButton}" Placement="Bottom" VerticalOffset="-23"
+        <ctrl:Flyout x:Name="folderBrowserPopup" PlacementTarget="{Binding ElementName=directoryButton}" Placement="Bottom" VerticalOffset="-23" MinWidth="200"
                      Closed="FolderBrowserPopupClosed">
-            <Border BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="0,0,0,1" Background="{StaticResource DarkTransparentBackground}">
-                <Grid ColumnDefinitions="Auto,Auto,*,5" RowDefinitions="Auto,10,Auto,15,*" Height="135" Margin="0,0,0,10">
-                    <TextBox x:Name="userPathBox" Text="{Binding FolderBrowser.UserPath, ValidatesOnExceptions=true}" KeyDown="UserPathBoxKeyDown" Grid.ColumnSpan="4" 
+            <Border BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="0,0,0,1" Background="{StaticResource DarkBackground}" Opacity="0.95">
+                <Grid ColumnDefinitions="Auto,*,5" RowDefinitions="Auto,10,Auto,10,Auto,10,Auto,15,*" Height="255" Margin="0,0,0,10">
+                    <TextBox x:Name="userPathBox" Grid.ColumnSpan="3" Text="{Binding FolderBrowser.UserPath, ValidatesOnExceptions=true}" KeyDown="UserPathBoxKeyDown" 
                              Height="23" BorderThickness="0" VerticalContentAlignment="Center" Padding="3,0" Style="{StaticResource DarkTextBoxStyle}"/>
 
-                    <Border BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="0,1,0,0" Grid.ColumnSpan="4" Grid.Row="1"/>
+                    <Border Grid.ColumnSpan="3" Grid.Row="1" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="0,1,0,0"/>
 
-                    <Button Command="{Binding NavigateHomeCommand}" Content="&#xE10F;" ToolTip="{x:Static p:Resources.NavigateToMusicFolder}"
-                            Style="{StaticResource IconButtonStyle}" Grid.Row="2" Margin="5,0"/>
+                    <Button Grid.Row="2" Command="{Binding NavigateDirectoryUpCommand}" Content="&#xE110;" ToolTip="{x:Static p:Resources.NavigateFolderUp}"
+                            Style="{StaticResource IconButtonStyle}" Margin="5,0"/>
 
-                    <Button Command="{Binding NavigateDirectoryUpCommand}" Content="&#xE110;" ToolTip="{x:Static p:Resources.NavigateFolderUp}"
-                            Style="{StaticResource IconButtonStyle}" Grid.Column="1" Grid.Row="2" Margin="5,0"/>
+                    <Button Grid.Row="4" Command="{Binding NavigateHomeCommand}" Content="&#xE10F;" ToolTip="{x:Static p:Resources.NavigateToMusicFolder}"
+                            Style="{StaticResource IconButtonStyle}" Margin="5,0"/>
 
-                    <Button Command="{Binding NavigatePublicHomeCommand}" Content="&#xE125;" ToolTip="{x:Static p:Resources.NavigateToPublicMusicFolder}"
-                            VerticalAlignment="Top" Style="{StaticResource IconButtonStyle}" Grid.Row="4" Margin="5,0"/>
+                    <Button Grid.Row="6" Command="{Binding NavigatePublicHomeCommand}" Content="&#xE125;" ToolTip="{x:Static p:Resources.NavigateToPublicMusicFolder}"
+                            VerticalAlignment="Top" Style="{StaticResource IconButtonStyle}" Margin="5,0"/>
 
-                    <Button Command="{Binding LoadRecursiveCommand}" Click="LoadRecursiveClick" Content="&#xE12B;" ToolTip="{x:Static p:Resources.SearchMusicFilesRecursive}"
-                            VerticalAlignment="Top" Style="{StaticResource IconButtonStyle}" Grid.Column="1" Grid.Row="4" Margin="5,0"/>
+                    <Button Grid.Row="8" Command="{Binding LoadRecursiveCommand}" Click="LoadRecursiveClick" Content="&#xE12B;" ToolTip="{x:Static p:Resources.SearchMusicFilesRecursive}"
+                            VerticalAlignment="Top" Style="{StaticResource IconButtonStyle}" Margin="5,0"/>
 
-                    <ListBox ItemsSource="{Binding FolderBrowser.SubDirectories}" SelectedItem="{Binding FolderBrowser.SelectedSubDirectory}" DisplayMemberPath="DisplayName" Grid.Column="2" Grid.Row="2" Grid.RowSpan="3"
+                    <ListBox Grid.Column="1" Grid.Row="2" Grid.RowSpan="7" ItemsSource="{Binding FolderBrowser.SubDirectories}" SelectedItem="{Binding FolderBrowser.SelectedSubDirectory}" DisplayMemberPath="DisplayName" 
                              ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -45,7 +45,6 @@
                         </ListBox.ItemsPanel>
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                                <Setter Property="MinWidth" Value="100"/>
                                 <Setter Property="Padding" Value="4,3,8,3"/>
                                 <EventSetter Event="MouseDoubleClick" Handler="DirectoriesListBoxItemMouseDoubleClick"/>
                             </Style>

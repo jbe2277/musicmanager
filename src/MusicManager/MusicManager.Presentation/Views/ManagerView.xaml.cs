@@ -44,7 +44,7 @@ public partial class ManagerView : IManagerView
     {
         ViewModel.FolderBrowser.UserPath = ViewModel.FolderBrowser.CurrentPath;  // The old UserPath might still be invalid.
         ViewModel.UpdateSubDirectoriesCommand.Execute(null);
-        folderBrowserPopup.Width = directoryButton.ActualWidth + searchButton.ActualWidth + 1;
+        folderBrowserPopup.Width = directoryButton.ActualWidth;
         folderBrowserPopup.IsOpen = true;
         userPathBox.Select(int.MaxValue, 0);
     }
