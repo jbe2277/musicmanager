@@ -12,13 +12,14 @@
     <File Path="Directory.Packages.props" />
   </Folder>
   <Project Path="MusicManager.Applications.Test/MusicManager.Applications.Test.csproj" />
-  <Project Path="MusicManager.Domain.Test/MusicManager.Domain.Test.csproj" />
-  <Project Path="MusicManager.Presentation.Test/MusicManager.Presentation.Test.csproj" />
   <Project Path="MusicManager.Applications/MusicManager.Applications.csproj" />
+  <Project Path="MusicManager.Domain.Test/MusicManager.Domain.Test.csproj" />
   <Project Path="MusicManager.Domain/MusicManager.Domain.csproj" />
+  <Project Path="MusicManager.Interop/MusicManager.Interop.csproj" />
   <Project Path="MusicManager.Packaging/MusicManager.Packaging.wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5">
     <Deploy />
   </Project>
+  <Project Path="MusicManager.Presentation.Test/MusicManager.Presentation.Test.csproj" />
   <Project Path="MusicManager.Presentation/MusicManager.Presentation.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />

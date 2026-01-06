@@ -1,4 +1,6 @@
-﻿namespace Waf.MusicManager.Domain.Transcoding;
+﻿using System.Waf.Foundation;
+
+namespace Waf.MusicManager.Domain.Transcoding;
 
 public class TranscodingManager
 {

@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Waf.Applications;
+using System.Waf.Foundation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,6 +10,7 @@ using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Applications.Views;
 using Waf.MusicManager.Domain.Playlists;
+using Waf.MusicManager.Interop;
 using Waf.MusicManager.Presentation.Services;
 using Windows.Media;
 

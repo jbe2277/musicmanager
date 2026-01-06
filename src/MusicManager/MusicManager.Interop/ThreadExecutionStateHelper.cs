@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Waf.MusicManager.Presentation.Services;
+namespace Waf.MusicManager.Interop;
 
-internal static partial class ThreadExecutionStateHelper
+public static partial class ThreadExecutionStateHelper
 {
     const uint ES_CONTINUOUS = 0x80000000;
     const uint ES_SYSTEM_REQUIRED = 0x00000001;

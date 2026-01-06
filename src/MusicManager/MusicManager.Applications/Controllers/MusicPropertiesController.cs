@@ -1,4 +1,5 @@
-﻿using Waf.MusicManager.Applications.Properties;
+﻿using System.Waf.Foundation;
+using Waf.MusicManager.Applications.Properties;
 using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Domain.MusicFiles;

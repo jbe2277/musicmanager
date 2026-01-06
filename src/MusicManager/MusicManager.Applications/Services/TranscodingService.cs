@@ -1,4 +1,5 @@
 ﻿using System.Waf.Applications;
+using System.Waf.Foundation;
 using System.Windows.Input;
 
 namespace Waf.MusicManager.Applications.Services;

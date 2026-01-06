@@ -1,0 +1,2 @@
+﻿[assembly: SuppressMessage("Performance", "CA1806:Do not ignore method results", Justification = "<Pending>", Scope = "member", Target = "~M:Waf.MusicManager.Interop.ThreadExecutionStateHelper.PreventSleep")]
+[assembly: SuppressMessage("Performance", "CA1806:Do not ignore method results", Justification = "<Pending>", Scope = "member", Target = "~M:Waf.MusicManager.Interop.ThreadExecutionStateHelper.RestoreSleep")]

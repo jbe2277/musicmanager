@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Waf.Foundation;
 using Waf.MusicManager.Applications.Properties;
 
 namespace Waf.MusicManager.Applications.DataModels;

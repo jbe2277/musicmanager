@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Waf.Foundation;
 
 namespace Waf.MusicManager.Domain.MusicFiles;
 

@@ -9,8 +9,6 @@
     <ApplicationIcon>Resources\Images\MusicManager.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64;ARM64</Platforms>
     <GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
-
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
@@ -22,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MusicManager.Applications\MusicManager.Applications.csproj" />
+    <ProjectReference Include="..\MusicManager.Interop\MusicManager.Interop.csproj" />
   </ItemGroup>
 
   <ItemGroup>

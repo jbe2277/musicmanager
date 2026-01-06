@@ -1,4 +1,5 @@
-﻿using Waf.MusicManager.Applications.DataModels;
+﻿using System.Waf.Foundation;
+using Waf.MusicManager.Applications.DataModels;
 
 namespace Waf.MusicManager.Applications.Services;
 

@@ -33,6 +33,5 @@
     <Using Include="System.Collections.Specialized" />
     <Using Include="System.ComponentModel" />
     <Using Include="System.Diagnostics.CodeAnalysis" />
-    <Using Include="System.Waf.Foundation" />
   </ItemGroup>
 </Project>

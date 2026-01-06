@@ -1,4 +1,6 @@
-﻿namespace Waf.MusicManager.Domain.MusicFiles;
+﻿using System.Waf.Foundation;
+
+namespace Waf.MusicManager.Domain.MusicFiles;
 
 public class MusicFile(Func<string?, Task<MusicMetadata?>> loadMetadata, string? fileName) : Model
 {

@@ -1,4 +1,6 @@
-﻿namespace Waf.MusicManager.Applications.Services;
+﻿using System.Waf.Foundation;
+
+namespace Waf.MusicManager.Applications.Services;
 
 internal class ManagerStatusService : Model, IManagerStatusService
 {
