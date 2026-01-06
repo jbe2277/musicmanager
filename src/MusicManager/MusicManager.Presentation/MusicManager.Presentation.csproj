@@ -9,6 +9,8 @@
     <ApplicationIcon>Resources\Images\MusicManager.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64;ARM64</Platforms>
     <GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
+
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Platform)' == 'x64' ">

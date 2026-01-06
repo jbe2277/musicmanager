@@ -9,6 +9,7 @@ using Waf.MusicManager.Applications.Services;
 using Waf.MusicManager.Applications.ViewModels;
 using Waf.MusicManager.Applications.Views;
 using Waf.MusicManager.Domain.Playlists;
+using Waf.MusicManager.Presentation.Services;
 using Windows.Media;
 
 namespace Waf.MusicManager.Presentation.Views;
@@ -88,7 +89,7 @@ public partial class PlayerView : IPlayerView
             if (mediaPlayer.Source != musicUri)
             {
                 mediaPlayer.Open(musicUri);
-                transportControls.PlaybackStatus = MediaPlaybackStatus.Stopped;
+                SetPlaybackStatus(MediaPlaybackStatus.Stopped);
                 positionSlider.Maximum = 1; // Use a default value that will be updated as soon the metadata is loaded.
                 positionSlider.Value = 0;
                 try
@@ -111,7 +112,7 @@ public partial class PlayerView : IPlayerView
         else
         {
             mediaPlayer.Close();
-            transportControls.PlaybackStatus = MediaPlaybackStatus.Closed;
+            SetPlaybackStatus(MediaPlaybackStatus.Closed);
         }
     }
         
@@ -158,15 +159,28 @@ public partial class PlayerView : IPlayerView
     private void PlayCore()
     {
         mediaPlayer.Play();
-        transportControls.PlaybackStatus = MediaPlaybackStatus.Playing;
+        SetPlaybackStatus(MediaPlaybackStatus.Playing);
         playerService.IsPlayCommand = false;
     }
 
     private void PauseCore()
     {
         mediaPlayer.Pause();
-        transportControls.PlaybackStatus = MediaPlaybackStatus.Paused;
+        SetPlaybackStatus(MediaPlaybackStatus.Paused);
         playerService.IsPlayCommand = true;
+    }
+
+    private void SetPlaybackStatus(MediaPlaybackStatus status)
+    {
+        if (transportControls.PlaybackStatus != MediaPlaybackStatus.Playing && status == MediaPlaybackStatus.Playing)
+        {
+            ThreadExecutionStateHelper.PreventSleep();
+        }
+        else if (transportControls.PlaybackStatus == MediaPlaybackStatus.Playing && status != MediaPlaybackStatus.Playing)
+        {
+            ThreadExecutionStateHelper.RestoreSleep();
+        }
+        transportControls.PlaybackStatus = status;
     }
 
     private void UpdateTimerTick(object? sender, EventArgs e)
