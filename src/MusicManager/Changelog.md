@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+### Version 4.1.0.100 (Release)
+- Improve the UI of the folder browser pop-up.
+- Prevent the computer from going to sleep during playback.
+
 ### Version 4.0.0.100 (Release)
 - Migrate to .NET 10.
 - Update libraries.
