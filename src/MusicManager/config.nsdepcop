@@ -9,6 +9,8 @@
   <!-- Domain -->
   <Disallowed From="Waf.MusicManager.Domain.*" To="System.Runtime.InteropServices.*" />
   <Disallowed From="Waf.MusicManager.Domain.*" To="System.Windows.*" />
+  <Disallowed From="Waf.MusicManager.Domain.*" To="System.Waf.Presentation.*" />
+  <Disallowed From="Waf.MusicManager.Domain.*" To="System.Waf.Applications.*" />
   
   <Allowed From="Waf.MusicManager.Domain.Playlists" To="Waf.MusicManager.Domain.MusicFiles" />
   <Allowed From="Waf.MusicManager.Domain.Transcoding" To="Waf.MusicManager.Domain.MusicFiles" />
@@ -16,6 +18,7 @@
   
   <!-- Applications -->
   <Disallowed From="Waf.MusicManager.Applications.*" To="/^System\.Windows\.(?!Input(?:\.|$)).+/" />
+  <Disallowed From="Waf.MusicManager.Applications.*" To="System.Waf.Presentation.*" />
 
   <Allowed From="Waf.MusicManager.Applications" To="Autofac.*" />
   
