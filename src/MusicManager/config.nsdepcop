@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NsDepCopConfig IsEnabled="true" ChildCanDependOnParentImplicitly="true">
+  <!-- Global -->
+  <Allowed From="*" To="System.*" />  
+	<Allowed From="*" To="NLog" />
+
+  <!-- Domain -->
+  <Disallowed From="Waf.MusicManager.Domain.*" To="System.Windows.*" />
+
+  <Allowed From="Waf.MusicManager.Domain.Playlists" To="Waf.MusicManager.Domain.MusicFiles" />
+  <Allowed From="Waf.MusicManager.Domain.Transcoding" To="Waf.MusicManager.Domain.MusicFiles" />
+
+  
+  <!-- Applications -->
+  <!--<Disallowed From="Waf.MusicManager.Applications.*" To="/^System\.Windows\.(?!Input(?:\.|$)).+/" />-->
+
+  <Allowed From="Waf.MusicManager.Applications" To="Autofac.*" />
+  
+  <Allowed From="Waf.MusicManager.Applications.*" To="Waf.MusicManager.Domain.*" />
+  <Allowed From="Waf.MusicManager.Applications.*" To="Waf.MusicManager.Applications.Properties" />
+  <Allowed From="Waf.MusicManager.Applications" To="Waf.MusicManager.Applications.*" />
+
+  <Allowed From="Waf.MusicManager.Applications.Controllers" To="Waf.MusicManager.Applications.DataModels" />
+  <Allowed From="Waf.MusicManager.Applications.Controllers" To="Waf.MusicManager.Applications.Services" />
+  <Allowed From="Waf.MusicManager.Applications.Controllers" To="Waf.MusicManager.Applications.ViewModels" />
+  
+  <Allowed From="Waf.MusicManager.Applications.DataModels" To="Waf.MusicManager.Applications.Services" />
+
+  <!-- Cyclic dep-->
+  <Allowed From="Waf.MusicManager.Applications.Services" To="Waf.MusicManager.Applications.DataModels" />
+  <Allowed From="Waf.MusicManager.Applications.Services" To="Waf.MusicManager.Applications.Views" />
+
+  <Allowed From="Waf.MusicManager.Applications.ViewModels" To="Waf.MusicManager.Applications.DataModels" />
+  <Allowed From="Waf.MusicManager.Applications.ViewModels" To="Waf.MusicManager.Applications.Services" />
+  <Allowed From="Waf.MusicManager.Applications.ViewModels" To="Waf.MusicManager.Applications.Views" />
+
+
+  <!-- Presentation -->
+  <Allowed From="Waf.MusicManager.Presentation" To="Autofac.*" />
+  <Allowed From="Waf.MusicManager.Presentation" To="NLog.*" />
+  <Allowed From="Waf.MusicManager.Presentation.*" To="Windows.*" />
+
+  <Allowed From="Waf.MusicManager.Presentation.*" To="Waf.MusicManager.Interop.*" />
+  <Allowed From="Waf.MusicManager.Presentation.*" To="Waf.MusicManager.Applications.*" />
+  <Allowed From="Waf.MusicManager.Presentation.*" To="Waf.MusicManager.Domain.*" />
+  <Allowed From="Waf.MusicManager.Presentation.*" To="Waf.MusicManager.Presentation.Properties" />
+  <Allowed From="Waf.MusicManager.Presentation" To="Waf.MusicManager.Presentation.*" />
+
+  <Allowed From="Waf.MusicManager.Presentation.Controls" To="Waf.MusicManager.Presentation.Services" />
+
+  <Allowed From="Waf.MusicManager.Presentation.Converters" To="Waf.MusicManager.Presentation.Services" />
+
+  <Allowed From="Waf.MusicManager.Presentation.Services" To="Waf.MusicManager.Presentation.Services.Metadata" />
+
+  <Allowed From="Waf.MusicManager.Presentation.Views" To="Waf.MusicManager.Presentation.Controls" />
+  <Allowed From="Waf.MusicManager.Presentation.Views" To="Waf.MusicManager.Presentation.Converters" />
+  <Allowed From="Waf.MusicManager.Presentation.Views" To="Waf.MusicManager.Presentation.Services" />
+</NsDepCopConfig>
