@@ -26,7 +26,7 @@
         <AnalysisMode>AllEnabledByDefault</AnalysisMode>
       </PropertyGroup>
       <ItemGroup>
-        <AdditionalFiles Include="..\config.nsdepcop" Link="config.nsdepcop" />
+        <AdditionalFiles Include="$(MSBuildThisFileDirectory)config.nsdepcop" Link="config.nsdepcop" />
       </ItemGroup>
     </Otherwise>
   </Choose>
