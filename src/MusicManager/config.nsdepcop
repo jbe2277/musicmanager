@@ -7,14 +7,15 @@
 	<Allowed From="*" To="NLog" />
 
   <!-- Domain -->
+  <Disallowed From="Waf.MusicManager.Domain.*" To="System.Runtime.InteropServices.*" />
   <Disallowed From="Waf.MusicManager.Domain.*" To="System.Windows.*" />
-
+  
   <Allowed From="Waf.MusicManager.Domain.Playlists" To="Waf.MusicManager.Domain.MusicFiles" />
   <Allowed From="Waf.MusicManager.Domain.Transcoding" To="Waf.MusicManager.Domain.MusicFiles" />
 
   
   <!-- Applications -->
-  <!--<Disallowed From="Waf.MusicManager.Applications.*" To="/^System\.Windows\.(?!Input(?:\.|$)).+/" />-->
+  <Disallowed From="Waf.MusicManager.Applications.*" To="/^System\.Windows\.(?!Input(?:\.|$)).+/" />
 
   <Allowed From="Waf.MusicManager.Applications" To="Autofac.*" />
   
@@ -28,7 +29,7 @@
   
   <Allowed From="Waf.MusicManager.Applications.DataModels" To="Waf.MusicManager.Applications.Services" />
 
-  <!-- Cyclic dep-->
+  <!-- Cyclic dep: accepted -->
   <Allowed From="Waf.MusicManager.Applications.Services" To="Waf.MusicManager.Applications.DataModels" />
   <Allowed From="Waf.MusicManager.Applications.Services" To="Waf.MusicManager.Applications.Views" />
 

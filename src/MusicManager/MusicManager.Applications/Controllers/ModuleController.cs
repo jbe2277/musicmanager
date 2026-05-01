@@ -78,10 +78,12 @@ internal class ModuleController : IModuleController
         ShellViewModel.Show();
 
         // Let the UI to initialize first before loading the playlist.
-        await Dispatcher.CurrentDispatcher.InvokeAsync(PlaylistController.Run, DispatcherPriority.ApplicationIdle);
-            
+        await Task.Delay(10);
+        PlaylistController.Run();
+
         // The UI must be initialized completely before we continue to load the last opened music file.
-        await Dispatcher.CurrentDispatcher.InvokeAsync(PlayerController.Run, DispatcherPriority.ApplicationIdle);
+        await Task.Delay(10);
+        PlayerController.Run();
     }
 
     public void Shutdown()
