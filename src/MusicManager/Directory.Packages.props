@@ -15,4 +15,8 @@
     <PackageVersion Include="System.Waf.UnitTesting.Core" Version="8.2.0" />
     <PackageVersion Include="System.Waf.UnitTesting.Wpf" Version="8.2.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <GlobalPackageReference Include="NsDepCop" Version="2.7.0" />
+  </ItemGroup>
 </Project>
