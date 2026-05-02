@@ -8,7 +8,6 @@
     <File Path=".editorconfig" />
     <File Path="Architecture.md" />
     <File Path="Changelog.md" />
-    <File Path="CodeCoverage.runsettings" />
     <File Path="config.nsdepcop" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
