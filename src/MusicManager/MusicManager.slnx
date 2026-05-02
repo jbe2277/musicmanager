@@ -12,6 +12,7 @@
     <File Path="config.nsdepcop" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
   </Folder>
   <Project Path="MusicManager.Applications.Test/MusicManager.Applications.Test.csproj" />
   <Project Path="MusicManager.Applications/MusicManager.Applications.csproj" />
