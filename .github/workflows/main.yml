@@ -30,3 +30,12 @@ jobs:
         echo "## 🕵️ Test Results" >> $Env:GITHUB_STEP_SUMMARY
         cd ./src/MusicManager
         dotnet test --solution ./MusicManager.slnf --coverage        
+
+    - name: 🕵️ Code Coverage
+      run: |
+        dotnet tool update -g dotnet-coverage
+        dotnet-coverage merge --output ./MusicManager.cobertura.xml --output-format cobertura "./src/**/TestResults/**/*.coverage"
+        dotnet tool update -g dotnet-reportgenerator-globaltool
+        reportgenerator -reports:./MusicManager.cobertura.xml -targetdir:./ -reporttypes:"MarkdownSummaryGithub"
+        echo "## 🕵️ Code Coverage" >> $Env:GITHUB_STEP_SUMMARY
+        cat ./SummaryGithub.md >> $Env:GITHUB_STEP_SUMMARY
