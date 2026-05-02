@@ -29,4 +29,4 @@ jobs:
       run: |
         echo "## 🕵️ Test Results" >> $Env:GITHUB_STEP_SUMMARY
         cd ./src/MusicManager
-        dotnet test --solution ./MusicManager.slnx --coverage        
+        dotnet test --solution ./MusicManager.slnf --coverage        

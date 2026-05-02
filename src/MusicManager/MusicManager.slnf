@@ -1,0 +1,14 @@
+{
+  "solution": {
+    "path": "MusicManager.slnx",
+    "projects": [
+      "MusicManager.Applications.Test\\MusicManager.Applications.Test.csproj",
+      "MusicManager.Applications\\MusicManager.Applications.csproj",
+      "MusicManager.Domain.Test\\MusicManager.Domain.Test.csproj",
+      "MusicManager.Domain\\MusicManager.Domain.csproj",
+      "MusicManager.Interop\\MusicManager.Interop.csproj",
+      "MusicManager.Presentation.Test\\MusicManager.Presentation.Test.csproj",
+      "MusicManager.Presentation\\MusicManager.Presentation.csproj"
+    ]
+  }
+}
