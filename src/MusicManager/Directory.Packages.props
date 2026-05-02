@@ -8,10 +8,9 @@
     <PackageVersion Include="NLog" Version="5.5.0" />
     <PackageVersion Include="System.Waf.Core" Version="8.2.0" />
     <PackageVersion Include="System.Waf.Wpf" Version="8.2.0" />
+    
     <!-- Unit tests -->
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
-    <PackageVersion Include="MSTest.TestAdapter" Version="4.1.0" />
-    <PackageVersion Include="MSTest.TestFramework" Version="4.1.0" />
+    <PackageVersion Include="GitHubActionsTestLogger" Version="3.0.4" />
     <PackageVersion Include="System.Waf.UnitTesting.Core" Version="8.2.0" />
     <PackageVersion Include="System.Waf.UnitTesting.Wpf" Version="8.2.0" />
   </ItemGroup>
