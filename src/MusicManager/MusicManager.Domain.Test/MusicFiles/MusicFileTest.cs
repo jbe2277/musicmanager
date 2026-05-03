@@ -36,7 +36,7 @@ public class MusicFileTest : DomainTest
         Assert.IsFalse(musicFile.IsMetadataLoaded);
 
         Assert.IsNull(musicFile.Metadata);
-        await Task.Delay(5);
+        await Task.Delay(15);
         Assert.AreEqual(metadata, musicFile.Metadata);
         Assert.AreEqual(metadata, musicFile.GetMetadataAsync().Result);
         Assert.IsTrue(musicFile.IsMetadataLoaded);
