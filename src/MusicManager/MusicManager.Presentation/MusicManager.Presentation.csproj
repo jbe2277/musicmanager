@@ -19,6 +19,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NLog.Targets.AtomicFile" />
+    <PackageReference Include="NLog.Targets.Trace" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <ProjectReference Include="..\MusicManager.Applications\MusicManager.Applications.csproj" />
     <ProjectReference Include="..\MusicManager.Interop\MusicManager.Interop.csproj" />
   </ItemGroup>

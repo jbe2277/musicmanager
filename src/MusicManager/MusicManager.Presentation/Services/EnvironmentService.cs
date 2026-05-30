@@ -6,9 +6,6 @@ namespace Waf.MusicManager.Presentation.Services;
 
 internal class EnvironmentService : IEnvironmentService
 {
-    private static readonly Lazy<string> appDataPath = new(() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationInfo.ProductName));
-    private static readonly Lazy<string> profilePath = new(() => Path.Combine(AppDataPath, "ProfileOptimization"));
-    private static readonly Lazy<string> logPath = new(() => Path.Combine(AppDataPath, "Log"));
     private readonly Lazy<IReadOnlyList<string>> musicFilesToLoad;
         
     public EnvironmentService()
@@ -18,11 +15,9 @@ internal class EnvironmentService : IEnvironmentService
         PublicMusicPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
     }
 
-    public static string AppDataPath => appDataPath.Value;
+    private static string AppDataPath { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationInfo.ProductName);
 
-    public static string ProfilePath => profilePath.Value;
-
-    public static string LogPath => logPath.Value;
+    public static string LogPath { get; } = Path.Combine(AppDataPath, "Log");
 
     public IReadOnlyList<string> MusicFilesToLoad => musicFilesToLoad.Value;
 

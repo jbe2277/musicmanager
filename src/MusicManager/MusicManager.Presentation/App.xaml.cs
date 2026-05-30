@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using NLog;
-using NLog.Config;
 using NLog.Targets;
+using NLog.Targets.Wrappers;
 using System.Globalization;
 using System.IO;
 using System.Waf.Applications;
@@ -29,24 +29,35 @@ public partial class App
 
     public App()
     {
-        var fileTarget = new FileTarget("fileTarget")
+        LogManager.Setup().LoadConfiguration(c =>
         {
-            FileName = Path.Combine(EnvironmentService.LogPath, "App.log"),
-            Layout = "${date:format=yyyy-MM-dd HH\\:mm\\:ss.ff} ${level} ${processid} ${logger} ${message}  ${exception:format=tostring}",
-            ArchiveAboveSize = 1024 * 1024 * 5,  // 5 MB
-            MaxArchiveFiles = 2,
-        };
-        var logConfig = new LoggingConfiguration { DefaultCultureInfo = CultureInfo.InvariantCulture };
-        logConfig.AddTarget(fileTarget);
-        var maxLevel = LogLevel.AllLoggingLevels.Last();
-        foreach (var x in logSettings) logConfig.AddRule(x.level, maxLevel, fileTarget, x.name);
-        LogManager.Configuration = logConfig;
+            c.Configuration.DefaultCultureInfo = CultureInfo.InvariantCulture;
+            var layout = "${date:universalTime=true:format=yyyy-MM-dd HH\\:mm\\:ss.ff} [${level:format=FirstCharacter}] ${processid} ${logger} ${message} ${exception}";
+            var fileTarget = c.ForTarget("fileTarget").WriteTo(new AtomicFileTarget
+            {
+                FileName = Path.Combine(EnvironmentService.LogPath, "App.log"),
+                Layout = layout,
+                ArchiveAboveSize = 5_000_000,  // 5 MB
+                MaxArchiveFiles = 2,
+            }).WithAsync(AsyncTargetWrapperOverflowAction.Block);
+
+            var traceTarget = c.ForTarget("traceTarget").WriteTo(new TraceTarget
+            {
+                Layout = layout,
+                RawWrite = true
+            }).WithAsync(AsyncTargetWrapperOverflowAction.Block);
+
+            foreach (var (loggerNamePattern, minLevel) in logSettings)
+            {
+                c.ForLogger(loggerNamePattern).FilterMinLevel(minLevel).WriteTo(fileTarget).WriteTo(traceTarget);
+            }
+        });
     }
 
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
-        Log.App.Info("{0} {1} is starting; OS: {2}", ApplicationInfo.ProductName, ApplicationInfo.Version, Environment.OSVersion);
+        Log.App.Info("{0} {1} is starting; OS: {2}; .NET: {3}", ApplicationInfo.ProductName, ApplicationInfo.Version, Environment.OSVersion, Environment.Version);
 
 #if !DEBUG
         DispatcherUnhandledException += AppDispatcherUnhandledException;
