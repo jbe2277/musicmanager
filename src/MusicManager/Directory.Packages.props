@@ -8,13 +8,13 @@
     <PackageVersion Include="NLog" Version="6.1.3" />
     <PackageVersion Include="NLog.Targets.AtomicFile" Version="6.1.3" />
     <PackageVersion Include="NLog.Targets.Trace" Version="6.0.3" />
-    <PackageVersion Include="System.Waf.Core" Version="8.2.0" />
-    <PackageVersion Include="System.Waf.Wpf" Version="8.2.0" />
+    <PackageVersion Include="System.Waf.Core" Version="8.3.0" />
+    <PackageVersion Include="System.Waf.Wpf" Version="8.3.0" />
     
     <!-- Unit tests -->
     <PackageVersion Include="GitHubActionsTestLogger" Version="3.0.4" />
-    <PackageVersion Include="System.Waf.UnitTesting.Core" Version="8.2.0" />
-    <PackageVersion Include="System.Waf.UnitTesting.Wpf" Version="8.2.0" />
+    <PackageVersion Include="System.Waf.UnitTesting.Core" Version="8.3.0" />
+    <PackageVersion Include="System.Waf.UnitTesting.Wpf" Version="8.3.0" />
   </ItemGroup>
 
   <ItemGroup>
