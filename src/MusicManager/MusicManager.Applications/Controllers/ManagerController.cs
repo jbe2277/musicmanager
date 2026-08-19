@@ -152,11 +152,11 @@ internal class ManagerController
     private async void UpdateMusicFiles(bool deep)
     {
         updateMusicFilesCancellation?.Cancel();
-        var cancellation = new CancellationTokenSource();
+        using var cancellation = new CancellationTokenSource();
         updateMusicFilesCancellation = cancellation;
         Log.Default.Trace("ManagerController.UpdateMusicFiles:Start");
         managerStatusService.StartUpdatingFilesList();
-            
+
         musicFiles.Clear();
         var path = ManagerViewModel.FolderBrowser.CurrentPath;
         try
@@ -187,6 +187,12 @@ internal class ManagerController
         catch (OperationCanceledException)
         {
             Log.Default.Trace("ManagerController.UpdateMusicFiles:Canceled");
+            managerStatusService.FinishUpdatingFilesList(-1);
+        }
+        catch (Exception ex)
+        {
+            Log.Default.Error(ex, "ManagerController.UpdateMusicFiles");
+            managerStatusService.FinishUpdatingFilesList(-1);
         }
             
         if (cancellation == updateMusicFilesCancellation) updateMusicFilesCancellation = null;
