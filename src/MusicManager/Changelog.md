@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+### Version 4.2.0.100 (Release)
+- Improve error handling.
+- Migrate to NLog 6.
+- Update libraries.
+
 ### Version 4.1.0.100 (Release)
 - Improve the UI of the folder browser pop-up.
 - Prevent the computer from going to sleep during playback.
